@@ -1,0 +1,22 @@
+{
+  "id": "COMB-007",
+  "category": "combined",
+  "status": "PASS",
+  "metrics": {
+    "maximum_penetration_m": 0.34999999999999987,
+    "contact_count": 1,
+    "duration_s": 30.0
+  },
+  "assertions": {
+    "contact_active": true,
+    "finite": true,
+    "bounded_penetration": true,
+    "slope_normal": true,
+    "environment_active_during_contact": true,
+    "deterministic_replay": true
+  },
+  "warnings": [],
+  "failure_category": null,
+  "observed": "",
+  "expected": ""
+}

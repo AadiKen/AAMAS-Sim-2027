@@ -1,0 +1,83 @@
+schema_version: 1
+project: bcod-sim-rewrite
+invariants:
+  - id: INV-001
+    rule: Production code must not import or call the legacy simulator runtime.
+  - id: INV-002
+    rule: All execution consumes one fully resolved immutable experiment configuration.
+  - id: INV-003
+    rule: Identity-bearing references fail closed; there are no silent fallbacks.
+  - id: INV-004
+    rule: Unknown configuration fields are errors.
+  - id: INV-005
+    rule: Internal world frame is NED, vessel body frame is FRD, and internal units are SI.
+  - id: INV-006
+    rule: All external frame/unit/datum conversion goes through one named conversion subsystem.
+  - id: INV-007
+    rule: Orientation is canonically stored as a normalized body-FRD-to-world-NED quaternion.
+  - id: INV-008
+    rule: There is one primary 6-DOF plant; planar mode is a projection/constraint of that plant, not a second plant.
+  - id: INV-009
+    rule: All vessels in one environment use the same dynamics mode and integration schedule.
+  - id: INV-010
+    rule: Dynamics mode never changes mid-episode.
+  - id: INV-011
+    rule: Planar mode fixes vessel-specific equilibrium heave/roll/pitch and zeroes w/p/q while solving only active DOFs.
+  - id: INV-012
+    rule: Added mass is part of the solved mass matrix, never delayed acceleration feedback.
+  - id: INV-013
+    rule: Every physical wrench contribution is inspectable and sums to the applied total within tolerance.
+  - id: INV-014
+    rule: Actuator commands never silently clamp; default behavior is error.
+  - id: INV-015
+    rule: Sensors honor mount pose, lever-arm kinematics, rate, latency, noise, range/FOV/resolution, frame, and units.
+  - id: INV-016
+    rule: Ground-truth/debug observations are explicitly distinct from physical and abstract sensors.
+  - id: INV-017
+    rule: Required external data that are unavailable, ambiguous, invalid, or out of coverage cause an error; no zero fill.
+  - id: INV-018
+    rule: External-data payload provenance includes source, valid time, units/datum, coverage, and checksum/hash.
+  - id: INV-019
+    rule: Network/external-data requests never occur in the per-physics-step hot loop.
+  - id: INV-020
+    rule: Shared wake/disturbance fields are double-buffered and cannot depend on vessel iteration order.
+  - id: INV-021
+    rule: Deterministic mode uses deterministic reductions; unordered atomics are forbidden for many-to-one accumulation.
+  - id: INV-022
+    rule: Parallelism is across environment x vessel x schema-compatible components, not one homogeneous whole-vehicle tensor.
+  - id: INV-023
+    rule: Actions are immutable values and cannot be shared mutably across environments.
+  - id: INV-024
+    rule: One authoritative simulation stepping path is used by training, web, validation, and headless execution.
+  - id: INV-025
+    rule: One common policy tick is used by all active RL agents in an environment in V1.
+  - id: INV-026
+    rule: Task reward may combine individual and team components and must log components separately when enabled.
+  - id: INV-027
+    rule: Disabled-agent behavior is task-configurable; physical presence and RL activity are separate concepts.
+  - id: INV-028
+    rule: Provenance is computed from what actually ran, not asserted by labels.
+  - id: INV-029
+    rule: Every run records resolved config hash, software/trainer provenance, vessel/asset hashes, seeds, timing, backend/device/dtype, and termination reason.
+  - id: INV-030
+    rule: Comparison harnesses refuse to compute metrics unless plant, time, length, coordinates, and initial/action conditions satisfy declared preconditions.
+  - id: INV-031
+    rule: Validation/calibration are separate; a comparison harness never tunes coefficients implicitly.
+  - id: INV-032
+    rule: The web frontend is a client of the backend and never implements authoritative physics.
+  - id: INV-033
+    rule: Every web-authored vessel/world/scenario can be exported as a canonical config usable headlessly.
+  - id: INV-034
+    rule: Policy bundles declare and validate observation and action contract hashes before execution.
+  - id: INV-035
+    rule: Collision/contact ordering is deterministic and does not depend on entity iteration order.
+  - id: INV-036
+    rule: Legacy Vehicle A/B/C identities are not canonical production vessels; Vehicle B is not migrated.
+  - id: INV-037
+    rule: The old planar kernel is reference/oracle only and is not imported into production or presented as a paper contribution.
+  - id: INV-038
+    rule: Canonical initial vessels are Surveyor, reference MSS Otter, and a rebuilt dual-azipod vessel, with generated/imported vessels supported by the same contract.
+  - id: INV-039
+    rule: Real-world V1 source ownership is GEBCO bathymetry, ENC chart objects, RTOFS 3D currents, NDBC waves, NWS weather/wind, CO-OPS tides/water level, AIS traffic.
+  - id: INV-040
+    rule: Historical replay/climatology is deferred; V1 real-world build records each source's resolved latest/current valid time.

@@ -1,0 +1,10 @@
+{
+  "crossflow_max_absolute_error": 1.4210854715202004e-14,
+  "hydrostatic_max_absolute_error": 1.1368683772161603e-13,
+  "max_relative_error_nonzero_guarded": 2.4261977669592703e-14,
+  "reference_commit": "98970f71a21cfe81e7e29abdcc1bb6741789cddc",
+  "samples": 100,
+  "seed": 20260921,
+  "status": "PASS",
+  "tolerance_absolute": 1e-10
+}

@@ -1,0 +1,23 @@
+{
+  "bcod": {
+    "body": "FRD",
+    "navigation": "NED"
+  },
+  "comparison_representation": [
+    "position_NED_m",
+    "orientation quaternion body-FRD -> world-NED",
+    "velocity_body_FRD",
+    "omega_body_FRD"
+  ],
+  "mss": {
+    "angular_rates": "body FRD p,q,r",
+    "body": "FRD",
+    "euler_order": "ZYX roll-pitch-yaw",
+    "force_moment": "body FRD",
+    "heading": "clockwise from north",
+    "navigation": "NED",
+    "velocity": "body FRD",
+    "vertical": "down positive"
+  },
+  "single_conversion_layer": "MSS eta Euler ZYX -> scalar-first body-FRD to world-NED quaternion; all other components identity"
+}

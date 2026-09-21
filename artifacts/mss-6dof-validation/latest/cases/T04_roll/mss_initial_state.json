@@ -1,0 +1,18 @@
+{
+  "conversion": "identity from canonical plus Euler ZYX",
+  "x": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "x_order": "u,v,w,p,q,r,x,y,z,phi,theta,psi"
+}

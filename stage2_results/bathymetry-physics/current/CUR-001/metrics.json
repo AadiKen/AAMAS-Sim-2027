@@ -1,0 +1,16 @@
+{
+  "id": "CUR-001",
+  "category": "current",
+  "status": "PASS",
+  "metrics": {
+    "max_abs_field_error": 0.0
+  },
+  "assertions": {
+    "uniform_field_exact": true,
+    "deterministic_replay": true
+  },
+  "warnings": [],
+  "failure_category": null,
+  "observed": "",
+  "expected": ""
+}

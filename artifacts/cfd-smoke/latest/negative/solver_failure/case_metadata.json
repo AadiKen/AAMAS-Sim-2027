@@ -1,0 +1,39 @@
+{
+  "adapter_version": "2",
+  "boundary_conditions": {
+    "hull": "noSlip",
+    "inlet": "fixed velocity",
+    "outlet": "fixed kinematic pressure",
+    "sides": "slip"
+  },
+  "case_id": "surge_0p5",
+  "domain_extent_frd_m": {
+    "max": [
+      5,
+      2,
+      1
+    ],
+    "min": [
+      -3,
+      -2,
+      -1
+    ]
+  },
+  "flow_speed_mps": 0.5,
+  "force_output": "postProcessing/forces/*/forces.dat",
+  "free_surface_model": null,
+  "geometry_orientation": "STL x/y/z = body FRD x/y/z",
+  "geometry_scale": 1.0,
+  "geometry_sha256": "0e19660845038bcf53f3a038f599eb853d375d16f6421a23b4cf19d69a427956",
+  "kinematic_viscosity_m2_s": 1e-06,
+  "maximum_iterations": 300,
+  "moment_reference_point_frd_m": [
+    0,
+    0,
+    0
+  ],
+  "solver": "foamRun -solver incompressibleFluid",
+  "steady_state": true,
+  "turbulence_model": "laminar",
+  "water_density_kg_m3": 1000.0
+}

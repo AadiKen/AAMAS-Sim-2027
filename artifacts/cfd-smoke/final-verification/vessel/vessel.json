@@ -1,0 +1,239 @@
+{
+  "added_mass_kg": [
+    [
+      4.8,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      7.199999999999999,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      9.6,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      12.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      14.399999999999999,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      16.8
+    ]
+  ],
+  "buoyancy_n": 1176.798,
+  "center_buoyancy_frd_m": [
+    0.0,
+    0.0,
+    -0.01581679666957917
+  ],
+  "cg_frd_m": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "collision": {
+    "half_extents_m": [
+      1.0,
+      0.2,
+      0.07908398334789585
+    ],
+    "kind": "box"
+  },
+  "components": [
+    {
+      "id": "port",
+      "kind": "actuator",
+      "payload": {
+        "kind": "fixed_thruster",
+        "mount_frd_m": [
+          -0.7,
+          -0.13999999999999999,
+          0
+        ],
+        "mount_q_to_frd": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "thrust_bounds_n": [
+          -30,
+          30
+        ]
+      },
+      "source": "procedural",
+      "version": "1"
+    },
+    {
+      "id": "starboard",
+      "kind": "actuator",
+      "payload": {
+        "kind": "fixed_thruster",
+        "mount_frd_m": [
+          -0.7,
+          0.13999999999999999,
+          0
+        ],
+        "mount_q_to_frd": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "thrust_bounds_n": [
+          -30,
+          30
+        ]
+      },
+      "source": "procedural",
+      "version": "1"
+    }
+  ],
+  "environment_loads": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "equilibrium_heave_roll_pitch": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "geometry": {
+    "beam_m": 0.4,
+    "content_hash": "0e19660845038bcf53f3a038f599eb853d375d16f6421a23b4cf19d69a427956",
+    "draft_m": 0.15,
+    "format": "stl",
+    "length_m": 2.0
+  },
+  "id": "cfd-smoke-vessel",
+  "inertia_cg_kg_m2": [
+    [
+      1.850171056886811,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      40.250171056886806,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      41.6
+    ]
+  ],
+  "linear_damping": [
+    0.09489561400905434,
+    14.399999999999999,
+    18.0,
+    4.8,
+    6.0,
+    12.0
+  ],
+  "mass_kg": 120.0,
+  "max_abs_nu": [
+    15.0,
+    10.0,
+    8.0,
+    3.0,
+    3.0,
+    3.0
+  ],
+  "max_substep_s": 0.05,
+  "min_substep_s": 1e-06,
+  "provenance": {
+    "added_mass_kg": {
+      "original_source": null,
+      "original_value": null,
+      "source_id": "manual_smoke_fixture",
+      "source_kind": "manual",
+      "uncertainty": null
+    },
+    "buoyancy_n": {
+      "original_source": null,
+      "original_value": null,
+      "source_id": "manual_smoke_fixture",
+      "source_kind": "manual",
+      "uncertainty": null
+    },
+    "cg_frd_m": {
+      "original_source": null,
+      "original_value": null,
+      "source_id": "manual_smoke_fixture",
+      "source_kind": "manual",
+      "uncertainty": null
+    },
+    "inertia_cg_kg_m2": {
+      "original_source": null,
+      "original_value": null,
+      "source_id": "manual_smoke_fixture",
+      "source_kind": "manual",
+      "uncertainty": null
+    },
+    "linear_damping": {
+      "original_source": null,
+      "original_value": null,
+      "source_id": "openfoam-smoke-surge",
+      "source_kind": "CFD-derived",
+      "uncertainty": 2.2852361661808968e-05
+    },
+    "mass_kg": {
+      "original_source": null,
+      "original_value": null,
+      "source_id": "manual_smoke_fixture",
+      "source_kind": "manual",
+      "uncertainty": null
+    },
+    "quadratic_damping": {
+      "original_source": null,
+      "original_value": null,
+      "source_id": "openfoam-smoke-surge",
+      "source_kind": "CFD-derived",
+      "uncertainty": 2.2852361661808968e-05
+    }
+  },
+  "quadratic_damping": [
+    1.9245758194907354,
+    4.8,
+    6.0,
+    1.2,
+    1.2,
+    3.5999999999999996
+  ],
+  "schema_version": 1,
+  "validation_claim": "synthetic/reference validation only",
+  "validation_state": "unvalidated",
+  "version": "openfoam-smoke-1"
+}

@@ -1,0 +1,18 @@
+{
+  "id": "WIRR-001",
+  "category": "irregular_waves",
+  "status": "PASS",
+  "metrics": {
+    "same_seed_max_error": 0.0,
+    "different_seed_max_difference": 0.6823122222434432
+  },
+  "assertions": {
+    "same_seed_exact": true,
+    "different_seed_differs": true,
+    "deterministic_replay": true
+  },
+  "warnings": [],
+  "failure_category": null,
+  "observed": "",
+  "expected": ""
+}

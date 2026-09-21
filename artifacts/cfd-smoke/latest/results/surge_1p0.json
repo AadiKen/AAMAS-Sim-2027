@@ -1,0 +1,40 @@
+{
+  "angular_rate_body_frd_radps": [
+    0,
+    0,
+    0
+  ],
+  "case_id": "surge_1p0",
+  "converged": true,
+  "force_body_frd_n": [
+    2.019498675323,
+    0.0640830683149261,
+    -0.234914700419384
+  ],
+  "frame": "body_FRD",
+  "moment_body_frd_nm": [
+    -0.042825492710485996,
+    0.16204160742832,
+    0.0204774730018841
+  ],
+  "moment_reference_point_frd_m": [
+    0,
+    0,
+    0
+  ],
+  "raw_output_sha256": "ac35ea1b9ff1f2faaa77e80cf6ba000cf1585b2611edace81f5d23066bd44876",
+  "solver": "foamRun -solver incompressibleFluid",
+  "source_case": "/Users/aadikenchammanaold/Desktop/LEADCAT/Website/AAMAS27-Sim/artifacts/cfd-smoke/latest/cases/surge_1p0",
+  "units": {
+    "angular_rate": "rad/s",
+    "force": "N",
+    "moment": "N*m",
+    "velocity": "m/s"
+  },
+  "velocity_body_frd_mps": [
+    1.0,
+    0,
+    0
+  ],
+  "wall_seconds": 0.0
+}

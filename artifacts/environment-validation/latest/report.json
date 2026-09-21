@@ -1,0 +1,104 @@
+{
+  "campaign": "environment_response",
+  "dt_s": 0.02,
+  "duration_s": 30.0,
+  "cases": {
+    "still_water": {
+      "position_drift_m": 0.0,
+      "heading_drift_rad": 0.0,
+      "heave_rms_m": 0.0,
+      "roll_rms_rad": 0.0,
+      "pitch_rms_rad": 0.0,
+      "speed_rms_mps": 0.0,
+      "wind_wrench_rms": 0.0,
+      "wave_wrench_rms": 0.0,
+      "control_effort": 0.0,
+      "energy_proxy": 0.0
+    },
+    "current_only": {
+      "position_drift_m": 15.407625218340593,
+      "heading_drift_rad": -1.1900978726072595,
+      "heave_rms_m": 6.654031867571874e-05,
+      "roll_rms_rad": 0.00029297573150115084,
+      "pitch_rms_rad": 0.0003067518568047201,
+      "speed_rms_mps": 0.5171667531082542,
+      "wind_wrench_rms": 0.0,
+      "wave_wrench_rms": 0.0,
+      "control_effort": 0.0,
+      "energy_proxy": 0.0
+    },
+    "wind_only": {
+      "position_drift_m": 6.468278973357958,
+      "heading_drift_rad": 0.2275234233950897,
+      "heave_rms_m": 3.161756527541631e-05,
+      "roll_rms_rad": 0.0005525661566879902,
+      "pitch_rms_rad": 0.00012661283780337996,
+      "speed_rms_mps": 0.21710744011884778,
+      "wind_wrench_rms": 18.443763457527183,
+      "wave_wrench_rms": 0.0,
+      "control_effort": 0.0,
+      "energy_proxy": 0.0
+    },
+    "regular_waves_only": {
+      "position_drift_m": 0.09943278478092987,
+      "heading_drift_rad": -0.4282727498543303,
+      "heave_rms_m": 0.028966339657973357,
+      "roll_rms_rad": 0.0020045638421803316,
+      "pitch_rms_rad": 0.017286787087055885,
+      "speed_rms_mps": 0.17848987816296044,
+      "wind_wrench_rms": 0.0,
+      "wave_wrench_rms": 16.682486008021915,
+      "control_effort": 0.0,
+      "energy_proxy": 0.0
+    },
+    "irregular_waves_only": {
+      "position_drift_m": 0.17683087247533383,
+      "heading_drift_rad": -0.23175467752265874,
+      "heave_rms_m": 0.025081522222439086,
+      "roll_rms_rad": 0.0016651096157418266,
+      "pitch_rms_rad": 0.01608338872782142,
+      "speed_rms_mps": 0.14871834171494996,
+      "wind_wrench_rms": 0.0,
+      "wave_wrench_rms": 14.925661916348751,
+      "control_effort": 0.0,
+      "energy_proxy": 0.0
+    },
+    "current_wind": {
+      "position_drift_m": 21.3417618749347,
+      "heading_drift_rad": -1.043283225716417,
+      "heave_rms_m": 0.00010386245508787559,
+      "roll_rms_rad": 0.0022806611084304957,
+      "pitch_rms_rad": 0.00042118106867589474,
+      "speed_rms_mps": 0.717302954288852,
+      "wind_wrench_rms": 32.67222238453009,
+      "wave_wrench_rms": 0.0,
+      "control_effort": 0.0,
+      "energy_proxy": 0.0
+    },
+    "wind_waves": {
+      "position_drift_m": 5.1119445567738815,
+      "heading_drift_rad": 0.15596800272799516,
+      "heave_rms_m": 0.029011406772613664,
+      "roll_rms_rad": 0.001218140334169152,
+      "pitch_rms_rad": 0.01739418458585345,
+      "speed_rms_mps": 0.25056378570470644,
+      "wind_wrench_rms": 18.90566506651436,
+      "wave_wrench_rms": 17.031430261285543,
+      "control_effort": 0.0,
+      "energy_proxy": 0.0
+    },
+    "current_wind_waves": {
+      "position_drift_m": 17.295875123060284,
+      "heading_drift_rad": -0.9735757755836145,
+      "heave_rms_m": 0.026884036557277127,
+      "roll_rms_rad": 0.003449422390323087,
+      "pitch_rms_rad": 0.015755585619362876,
+      "speed_rms_mps": 0.603825194153584,
+      "wind_wrench_rms": 31.839589683549878,
+      "wave_wrench_rms": 27.387187383184965,
+      "control_effort": 0.0,
+      "energy_proxy": 0.0
+    }
+  },
+  "deterministic": true
+}

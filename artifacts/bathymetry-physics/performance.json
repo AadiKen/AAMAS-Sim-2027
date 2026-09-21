@@ -1,0 +1,13 @@
+{
+  "scenario": "16 simultaneous query points, regular wave",
+  "iterations": 3000,
+  "before_deep_water": {
+    "queries_per_second": 385.2735355423224,
+    "peak_memory_bytes": 6353
+  },
+  "after_finite_depth": {
+    "queries_per_second": 491.6791666129914,
+    "peak_memory_bytes": 1547
+  },
+  "throughput_ratio_after_over_before": 1.2761820401728068
+}

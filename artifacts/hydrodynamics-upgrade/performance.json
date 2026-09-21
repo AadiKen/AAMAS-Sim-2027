@@ -1,0 +1,7 @@
+{
+  "platform_note": "single-process wall-clock microbenchmark; Apple host; float64",
+  "linear_hydrostatics_us_per_call": 62.76277080178261,
+  "exact_mesh_box_12_triangles_us_per_call": 709.7102500265464,
+  "strip_theory_20_strips_us_per_call": 121.68860409874469,
+  "lookup_backend_implemented": false
+}

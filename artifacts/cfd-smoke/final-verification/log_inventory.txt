@@ -1,0 +1,10 @@
+artifacts/cfd-smoke/final-verification/independent_checkMesh.log
+artifacts/cfd-smoke/final-verification/negative/solver_failure/checkMesh.log
+artifacts/cfd-smoke/final-verification/negative/solver_failure/solver.log
+artifacts/cfd-smoke/final-verification/cases/surge_1p5/checkMesh.log
+artifacts/cfd-smoke/final-verification/cases/surge_1p5/solver.log
+artifacts/cfd-smoke/final-verification/cases/surge_1p0/checkMesh.log
+artifacts/cfd-smoke/final-verification/cases/surge_1p0/solver.log
+artifacts/cfd-smoke/final-verification/cases/surge_0p5/checkMesh.log
+artifacts/cfd-smoke/final-verification/cases/surge_0p5/solver.log
+artifacts/cfd-smoke/final-verification/checkMesh.log

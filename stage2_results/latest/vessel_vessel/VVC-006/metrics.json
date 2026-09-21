@@ -1,0 +1,22 @@
+{
+  "id": "VVC-006",
+  "category": "vessel_vessel",
+  "status": "PASS",
+  "metrics": {
+    "contact_count": 1,
+    "impulse_ns": 67.16135462325637,
+    "penetration_m": 0.19999999999999996,
+    "momentum_residual": 0.0
+  },
+  "assertions": {
+    "contact_detected": true,
+    "normal_direction": true,
+    "finite_state": true,
+    "linear_momentum": true,
+    "deterministic_replay": true
+  },
+  "warnings": [],
+  "failure_category": null,
+  "observed": "",
+  "expected": ""
+}

@@ -1,0 +1,72 @@
+/*---------------------------------------------------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  11
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+Build  : 11-e1fc8c682ae6
+Exec   : foamRun -solver incompressibleFluid
+Date   : Sep 21 2026
+Time   : 03:51:43
+Host   : "a60ff28bcc29"
+PID    : 1
+I/O    : uncollated
+Case   : //case
+nProcs : 1
+sigFpe : Enabling floating point exception trapping (FOAM_SIGFPE).
+fileModificationChecking : Monitoring run-time modified files using timeStampMaster (fileModificationSkew 10)
+allowSystemOperations : Allowing user-supplied system call operations
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+Create time
+
+Create mesh for time = 0
+
+Selecting solver incompressibleFluid
+Selecting viscosity model constant
+Selecting turbulence model type laminar
+Selecting laminar stress model Stokes
+No MRF models present
+
+
+SIMPLE: Convergence criteria found
+        p: tolerance 0.0001
+        U: tolerance 1e-05
+
+
+SIMPLE: Operating solver in steady-state mode with 1 outer corrector
+SIMPLE: Operating solver in SIMPLE mode
+
+
+
+Starting time loop
+
+Time = 1s
+
+smoothSolver:  Solving for Ux, Initial residual = 1, Final residual = 0.0360992781, No Iterations 4
+smoothSolver:  Solving for Uy, Initial residual = 1, Final residual = 0.01139659509, No Iterations 5
+smoothSolver:  Solving for Uz, Initial residual = 1, Final residual = 0.03839679644, No Iterations 4
+
+
+--> FOAM FATAL IO ERROR: 
+Unknown symmetric matrix solver definitelyInvalidSolver
+
+Valid symmetric matrix solvers are :
+
+4
+(
+GAMG
+PBiCGStab
+PCG
+smoothSolver
+)
+
+
+file: //case/system/fvSolution/solvers/p from line 5 to line 5.
+
+    From function static Foam::autoPtr<Foam::lduMatrix::solver> Foam::lduMatrix::solver::New(const Foam::word&, const Foam::lduMatrix&, const Foam::FieldField<Foam::Field, double>&, const Foam::FieldField<Foam::Field, double>&, const lduInterfaceFieldPtrsList&, const Foam::dictionary&)
+    in file matrices/lduMatrix/lduMatrix/lduMatrixSolver.C at line 74.
+
+FOAM exiting
+

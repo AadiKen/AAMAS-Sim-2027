@@ -1,0 +1,59 @@
+id,category,status,failure_category,warnings
+BATH-001,bathymetry,PASS,,
+BATH-002,bathymetry,PASS,,
+BATH-003,bathymetry,PASS,,
+BATH-004,bathymetry,PASS,,
+COLL-001,collision,BLOCKED,REFERENCE,Required Stage 2 case runner/reference is not implemented yet
+COLL-002,collision,PASS,,
+COLL-003,collision,BLOCKED,REFERENCE,Required Stage 2 case runner/reference is not implemented yet
+COLL-004,collision,PASS,,
+COLL-005,collision,BLOCKED,REFERENCE,Required Stage 2 case runner/reference is not implemented yet
+COLL-006,collision,BLOCKED,REFERENCE,Required Stage 2 case runner/reference is not implemented yet
+COLL-007,collision,BLOCKED,REFERENCE,Required Stage 2 case runner/reference is not implemented yet
+COLL-008,collision,BLOCKED,REFERENCE,Required Stage 2 case runner/reference is not implemented yet
+COLL-009,collision,BLOCKED,REFERENCE,Required Stage 2 case runner/reference is not implemented yet
+COLL-010,collision,BLOCKED,REFERENCE,Required Stage 2 case runner/reference is not implemented yet
+COLL-011,collision,BLOCKED,REFERENCE,Required Stage 2 case runner/reference is not implemented yet
+COLL-012,collision,BLOCKED,REFERENCE,Required Stage 2 case runner/reference is not implemented yet
+COMB-001,combined,PASS,,
+COMB-002,combined,BLOCKED,REFERENCE,Required Stage 2 case runner/reference is not implemented yet
+COMB-003,combined,BLOCKED,REFERENCE,Required Stage 2 case runner/reference is not implemented yet
+COMB-004,combined,BLOCKED,REFERENCE,Required Stage 2 case runner/reference is not implemented yet
+COMB-005,combined,BLOCKED,REFERENCE,Required Stage 2 case runner/reference is not implemented yet
+COMB-006,combined,PASS,,
+COMB-007,combined,PASS,,
+COMB-008,combined,PASS,,
+CUR-001,current,PASS,,
+CUR-002,current,PASS,,
+CUR-003,current,BLOCKED,REFERENCE,Required Stage 2 case runner/reference is not implemented yet
+CUR-004,current,BLOCKED,REFERENCE,Required Stage 2 case runner/reference is not implemented yet
+CUR-005,current,BLOCKED,REFERENCE,Required Stage 2 case runner/reference is not implemented yet
+CUR-006,current,BLOCKED,REFERENCE,Required Stage 2 case runner/reference is not implemented yet
+ENV-000,baseline,PASS,,
+GROUND-001,grounding,PASS,,
+GROUND-002,grounding,PASS,,
+GROUND-003,grounding,PASS,,
+GROUND-004,grounding,PASS,,
+GROUND-005,grounding,PASS,,
+VVC-001,vessel_vessel,PASS,,
+VVC-002,vessel_vessel,BLOCKED,REFERENCE,Required Stage 2 case runner/reference is not implemented yet
+VVC-003,vessel_vessel,BLOCKED,REFERENCE,Required Stage 2 case runner/reference is not implemented yet
+VVC-004,vessel_vessel,BLOCKED,REFERENCE,Required Stage 2 case runner/reference is not implemented yet
+VVC-005,vessel_vessel,BLOCKED,REFERENCE,Required Stage 2 case runner/reference is not implemented yet
+VVC-006,vessel_vessel,PASS,,
+VVC-007,vessel_vessel,BLOCKED,REFERENCE,Required Stage 2 case runner/reference is not implemented yet
+WIND-001,wind,PASS,,
+WIND-002,wind,BLOCKED,REFERENCE,Required Stage 2 case runner/reference is not implemented yet
+WIND-003,wind,PASS,,
+WIND-004,wind,BLOCKED,REFERENCE,Required Stage 2 case runner/reference is not implemented yet
+WIND-005,wind,BLOCKED,REFERENCE,Required Stage 2 case runner/reference is not implemented yet
+WIND-006,wind,BLOCKED,REFERENCE,Required Stage 2 case runner/reference is not implemented yet
+WIRR-001,irregular_waves,PASS,,
+WIRR-002,irregular_waves,PASS,,
+WIRR-003,irregular_waves,BLOCKED,REFERENCE,Required Stage 2 case runner/reference is not implemented yet
+WREG-001,regular_waves,PASS,,
+WREG-002,regular_waves,PASS,,
+WREG-003,regular_waves,BLOCKED,REFERENCE,Required Stage 2 case runner/reference is not implemented yet
+WREG-004,regular_waves,BLOCKED,REFERENCE,Required Stage 2 case runner/reference is not implemented yet
+WREG-005,regular_waves,BLOCKED,REFERENCE,Required Stage 2 case runner/reference is not implemented yet
+WREG-006,regular_waves,BLOCKED,REFERENCE,Required Stage 2 case runner/reference is not implemented yet

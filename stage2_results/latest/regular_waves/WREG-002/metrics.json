@@ -1,0 +1,16 @@
+{
+  "id": "WREG-002",
+  "category": "regular_waves",
+  "status": "PASS",
+  "metrics": {
+    "max_spatial_error": 0.0
+  },
+  "assertions": {
+    "spatial_phase": true,
+    "deterministic_replay": true
+  },
+  "warnings": [],
+  "failure_category": null,
+  "observed": "",
+  "expected": ""
+}

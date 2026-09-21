@@ -1,0 +1,13 @@
+{
+  "id": "BATH-003",
+  "category": "bathymetry",
+  "status": "BLOCKED",
+  "metrics": {},
+  "assertions": {},
+  "warnings": [
+    "Required Stage 2 case runner/reference is not implemented yet"
+  ],
+  "failure_category": "REFERENCE",
+  "observed": "Required Stage 2 case runner/reference is not implemented yet",
+  "expected": "Production capability and independent validation fixture available"
+}

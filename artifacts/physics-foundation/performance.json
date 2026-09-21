@@ -1,0 +1,24 @@
+{
+  "scalar_base": {
+    "microseconds_per_env_step": 1805.0255564351876,
+    "env_steps_per_second": 554.0087764601723,
+    "peak_memory_bytes": 12960
+  },
+  "scalar_upgraded": {
+    "microseconds_per_env_step": 3058.1127766830227,
+    "env_steps_per_second": 326.9990589047695,
+    "peak_memory_bytes": 11560
+  },
+  "100_env_upgraded": {
+    "microseconds_per_env_step": 3013.453333405778,
+    "env_steps_per_second": 331.84519199765043,
+    "peak_memory_bytes": 108296
+  },
+  "1000_env_upgraded": {
+    "microseconds_per_env_step": 2953.8277079118416,
+    "env_steps_per_second": 338.54378077688665,
+    "peak_memory_bytes": 499368
+  },
+  "execution": "scalar CPU deterministic loop",
+  "gpu_vectorized": false
+}

@@ -1,0 +1,16 @@
+{
+  "id": "BATH-001",
+  "category": "bathymetry",
+  "status": "PASS",
+  "metrics": {
+    "max_depth_error": 0.0
+  },
+  "assertions": {
+    "flat_exact": true,
+    "deterministic_replay": true
+  },
+  "warnings": [],
+  "failure_category": null,
+  "observed": "",
+  "expected": ""
+}

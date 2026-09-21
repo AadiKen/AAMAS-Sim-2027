@@ -1,0 +1,34 @@
+$ pwd
+/Users/aadikenchammanaold/Desktop/LEADCAT/Website/AAMAS27-Sim
+exit=0
+
+$ git rev-parse --show-toplevel
+/Users/aadikenchammanaold/Desktop/LEADCAT/Website/AAMAS27-Sim
+exit=0
+
+$ git status --short
+?? .github/
+?? .gitignore
+?? README.md
+?? artifacts/
+?? audit/
+?? configs/
+?? docs/
+?? pyproject.toml
+?? requirements.lock
+?? scripts/
+?? src/
+?? tests/
+?? tools/
+?? web_client/
+exit=0
+
+$ git branch --show-current
+main
+exit=0
+
+$ git rev-parse HEAD
+HEAD
+exit=128
+
+NOTE: main is an unborn branch; HEAD does not resolve.

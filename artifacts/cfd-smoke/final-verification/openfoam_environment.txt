@@ -1,0 +1,48 @@
+=== foamVersion ===
+bash: line 1: foamVersion: command not found
+=== WM_PROJECT ===
+UNSET
+=== WM_PROJECT_VERSION ===
+UNSET
+=== native binaries ===
+blockMesh               snappyHexMesh           checkMesh               simpleFoam              interFoam               potentialFoam           foamRun                 
+=== Docker ===
+Docker version 29.6.1, build 8900f1d
+{
+  "distribution": "OpenFOAM Foundation",
+  "image": "openfoam/openfoam11-paraview510:11",
+  "image_identity": "openfoam/openfoam11-paraview510@sha256:fd10956e0b1eb70f9808baf2857e4baf846a0f6f272f73b6d00546eae96be181 sha256:fd10956e0b1eb70f9808baf2857e4baf846a0f6f272f73b6d00546eae96be181",
+  "runtime": "docker",
+  "solver": "foamRun",
+  "version": "OpenFOAM-11"
+}
+=== container binaries and solver help ===
+/opt/openfoam11/platforms/linux64GccDPInt32Opt/bin/blockMesh
+/opt/openfoam11/platforms/linux64GccDPInt32Opt/bin/snappyHexMesh
+/opt/openfoam11/platforms/linux64GccDPInt32Opt/bin/checkMesh
+/opt/openfoam11/bin/simpleFoam
+/opt/openfoam11/platforms/linux64GccDPInt32Opt/bin/foamRun
+
+Usage: foamRun [OPTIONS]
+options:
+  -case <dir>       specify alternate case directory, default is the cwd
+  -fileHandler <handler>
+                    override the fileHandler
+  -hostRoots <((host1 dir1) .. (hostN dirN))>
+                    slave root directories (per host) for distributed running
+  -libs '("lib1.so" ... "libN.so")'
+                    pre-load libraries
+  -noFunctionObjects
+                    do not execute functionObjects
+  -parallel         run in parallel
+  -roots <(dir1 .. dirN)>
+                    slave root directories for distributed running
+  -solver <name>    Solver name
+  -srcDoc           display source code in browser
+  -doc              display application documentation in browser
+  -help             print the usage
+
+Using: OpenFOAM-11 (see https://openfoam.org)
+Build: 11-e1fc8c682ae6
+
+OpenFOAM-11

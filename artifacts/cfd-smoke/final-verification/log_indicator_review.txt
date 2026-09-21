@@ -1,0 +1,92 @@
+artifacts/cfd-smoke/final-verification/report.json:70:    "provenance_tampering": "PASS",
+artifacts/cfd-smoke/final-verification/independent_checkMesh.log:17:sigFpe : Enabling floating point exception trapping (FOAM_SIGFPE).
+artifacts/cfd-smoke/final-verification/independent_checkMesh.log:97:    Cell determinant (wellposedness) : minimum: 0.3657517159 average: 8.350806154
+artifacts/cfd-smoke/final-verification/independent_checkMesh.log:98:    Cell determinant check OK.
+artifacts/cfd-smoke/final-verification/REPORT.md:31:- provenance_tampering: PASS
+artifacts/cfd-smoke/final-verification/negative/solver_failure/mesh.log:18:sigFpe : Enabling floating point exception trapping (FOAM_SIGFPE).
+artifacts/cfd-smoke/final-verification/negative/solver_failure/mesh.log:61:Mesh Information
+artifacts/cfd-smoke/final-verification/negative/solver_failure/mesh.log:94:sigFpe : Enabling floating point exception trapping (FOAM_SIGFPE).
+artifacts/cfd-smoke/final-verification/negative/solver_failure/mesh.log:473:    minDeterminant  0.001;
+artifacts/cfd-smoke/final-verification/negative/solver_failure/mesh.log:474:    minFaceWeight   0.05;
+artifacts/cfd-smoke/final-verification/negative/solver_failure/mesh.log:490:    faces on cells with determinant < 0.001                : 0
+artifacts/cfd-smoke/final-verification/negative/solver_failure/mesh.log:509:    faces on cells with determinant < 0.001                : 0
+artifacts/cfd-smoke/final-verification/negative/solver_failure/mesh.log:525:    faces on cells with determinant < 0.001                : 0
+artifacts/cfd-smoke/final-verification/negative/solver_failure/mesh.log:541:    faces on cells with determinant < 0.001                : 0
+artifacts/cfd-smoke/final-verification/negative/solver_failure/mesh.log:577:    faces on cells with determinant < 0.001                : 0
+artifacts/cfd-smoke/final-verification/negative/solver_failure/mesh.log:589:    faces on cells with determinant < 0.001                : 0
+artifacts/cfd-smoke/final-verification/negative/solver_failure/mesh.log:619:    faces on cells with determinant < 0.001                : 0
+artifacts/cfd-smoke/final-verification/negative/solver_failure/mesh.log:642:    faces on cells with determinant < 0.001                : 0
+artifacts/cfd-smoke/final-verification/negative/solver_failure/mesh.log:660:    faces on cells with determinant < 0.001                : 0
+artifacts/cfd-smoke/final-verification/negative/solver_failure/system/snappyHexMeshDict:7:castellatedMeshControls {maxLocalCells 300000; maxGlobalCells 600000; minRefinementCells 0; nCellsBetweenLevels 2; features (); refinementSurfaces {hull {level (2 2); patchInfo {type wall;}}} resolveFeatureAngle 30; refinementRegions {}; locationInMesh (4 0 0); allowFreeStandingZoneFaces true;}
+artifacts/cfd-smoke/final-verification/negative/solver_failure/system/controlDict:6:functions { forces {type forces; libs ("libforces.so"); patches (hull); rho rhoInf; rhoInf 1000; CofR (0 0 0); writeControl timeStep; writeInterval 1;} }
+artifacts/cfd-smoke/final-verification/negative/solver_failure/checkMesh.log:18:sigFpe : Enabling floating point exception trapping (FOAM_SIGFPE).
+artifacts/cfd-smoke/final-verification/negative/solver_failure/checkMesh.log:98:    Cell determinant (wellposedness) : minimum: 0.3657517159 average: 8.350806154
+artifacts/cfd-smoke/final-verification/negative/solver_failure/checkMesh.log:99:    Cell determinant check OK.
+artifacts/cfd-smoke/final-verification/negative/solver_failure/solver.log:17:sigFpe : Enabling floating point exception trapping (FOAM_SIGFPE).
+artifacts/cfd-smoke/final-verification/negative/solver_failure/solver.log:52:--> FOAM FATAL IO ERROR: 
+artifacts/cfd-smoke/final-verification/cases/surge_1p5/mesh.log:18:sigFpe : Enabling floating point exception trapping (FOAM_SIGFPE).
+artifacts/cfd-smoke/final-verification/cases/surge_1p5/mesh.log:61:Mesh Information
+artifacts/cfd-smoke/final-verification/cases/surge_1p5/mesh.log:94:sigFpe : Enabling floating point exception trapping (FOAM_SIGFPE).
+artifacts/cfd-smoke/final-verification/cases/surge_1p5/mesh.log:473:    minDeterminant  0.001;
+artifacts/cfd-smoke/final-verification/cases/surge_1p5/mesh.log:474:    minFaceWeight   0.05;
+artifacts/cfd-smoke/final-verification/cases/surge_1p5/mesh.log:490:    faces on cells with determinant < 0.001                : 0
+artifacts/cfd-smoke/final-verification/cases/surge_1p5/mesh.log:509:    faces on cells with determinant < 0.001                : 0
+artifacts/cfd-smoke/final-verification/cases/surge_1p5/mesh.log:525:    faces on cells with determinant < 0.001                : 0
+artifacts/cfd-smoke/final-verification/cases/surge_1p5/mesh.log:541:    faces on cells with determinant < 0.001                : 0
+artifacts/cfd-smoke/final-verification/cases/surge_1p5/mesh.log:577:    faces on cells with determinant < 0.001                : 0
+artifacts/cfd-smoke/final-verification/cases/surge_1p5/mesh.log:589:    faces on cells with determinant < 0.001                : 0
+artifacts/cfd-smoke/final-verification/cases/surge_1p5/mesh.log:619:    faces on cells with determinant < 0.001                : 0
+artifacts/cfd-smoke/final-verification/cases/surge_1p5/mesh.log:642:    faces on cells with determinant < 0.001                : 0
+artifacts/cfd-smoke/final-verification/cases/surge_1p5/mesh.log:660:    faces on cells with determinant < 0.001                : 0
+artifacts/cfd-smoke/final-verification/cases/surge_1p5/system/snappyHexMeshDict:7:castellatedMeshControls {maxLocalCells 300000; maxGlobalCells 600000; minRefinementCells 0; nCellsBetweenLevels 2; features (); refinementSurfaces {hull {level (2 2); patchInfo {type wall;}}} resolveFeatureAngle 30; refinementRegions {}; locationInMesh (4 0 0); allowFreeStandingZoneFaces true;}
+artifacts/cfd-smoke/final-verification/cases/surge_1p5/system/controlDict:6:functions { forces {type forces; libs ("libforces.so"); patches (hull); rho rhoInf; rhoInf 1000; CofR (0 0 0); writeControl timeStep; writeInterval 1;} }
+artifacts/cfd-smoke/final-verification/cases/surge_1p5/checkMesh.log:18:sigFpe : Enabling floating point exception trapping (FOAM_SIGFPE).
+artifacts/cfd-smoke/final-verification/cases/surge_1p5/checkMesh.log:98:    Cell determinant (wellposedness) : minimum: 0.3657517159 average: 8.350806154
+artifacts/cfd-smoke/final-verification/cases/surge_1p5/checkMesh.log:99:    Cell determinant check OK.
+artifacts/cfd-smoke/final-verification/cases/surge_1p5/solver.log:17:sigFpe : Enabling floating point exception trapping (FOAM_SIGFPE).
+artifacts/cfd-smoke/final-verification/cases/surge_1p0/mesh.log:18:sigFpe : Enabling floating point exception trapping (FOAM_SIGFPE).
+artifacts/cfd-smoke/final-verification/cases/surge_1p0/mesh.log:61:Mesh Information
+artifacts/cfd-smoke/final-verification/cases/surge_1p0/mesh.log:94:sigFpe : Enabling floating point exception trapping (FOAM_SIGFPE).
+artifacts/cfd-smoke/final-verification/cases/surge_1p0/mesh.log:473:    minDeterminant  0.001;
+artifacts/cfd-smoke/final-verification/cases/surge_1p0/mesh.log:474:    minFaceWeight   0.05;
+artifacts/cfd-smoke/final-verification/cases/surge_1p0/mesh.log:490:    faces on cells with determinant < 0.001                : 0
+artifacts/cfd-smoke/final-verification/cases/surge_1p0/mesh.log:509:    faces on cells with determinant < 0.001                : 0
+artifacts/cfd-smoke/final-verification/cases/surge_1p0/mesh.log:525:    faces on cells with determinant < 0.001                : 0
+artifacts/cfd-smoke/final-verification/cases/surge_1p0/mesh.log:541:    faces on cells with determinant < 0.001                : 0
+artifacts/cfd-smoke/final-verification/cases/surge_1p0/mesh.log:577:    faces on cells with determinant < 0.001                : 0
+artifacts/cfd-smoke/final-verification/cases/surge_1p0/mesh.log:589:    faces on cells with determinant < 0.001                : 0
+artifacts/cfd-smoke/final-verification/cases/surge_1p0/mesh.log:619:    faces on cells with determinant < 0.001                : 0
+artifacts/cfd-smoke/final-verification/cases/surge_1p0/mesh.log:642:    faces on cells with determinant < 0.001                : 0
+artifacts/cfd-smoke/final-verification/cases/surge_1p0/mesh.log:660:    faces on cells with determinant < 0.001                : 0
+artifacts/cfd-smoke/final-verification/cases/surge_1p0/system/snappyHexMeshDict:7:castellatedMeshControls {maxLocalCells 300000; maxGlobalCells 600000; minRefinementCells 0; nCellsBetweenLevels 2; features (); refinementSurfaces {hull {level (2 2); patchInfo {type wall;}}} resolveFeatureAngle 30; refinementRegions {}; locationInMesh (4 0 0); allowFreeStandingZoneFaces true;}
+artifacts/cfd-smoke/final-verification/cases/surge_1p0/system/controlDict:6:functions { forces {type forces; libs ("libforces.so"); patches (hull); rho rhoInf; rhoInf 1000; CofR (0 0 0); writeControl timeStep; writeInterval 1;} }
+artifacts/cfd-smoke/final-verification/cases/surge_1p0/checkMesh.log:18:sigFpe : Enabling floating point exception trapping (FOAM_SIGFPE).
+artifacts/cfd-smoke/final-verification/cases/surge_1p0/checkMesh.log:98:    Cell determinant (wellposedness) : minimum: 0.3657517159 average: 8.350806154
+artifacts/cfd-smoke/final-verification/cases/surge_1p0/checkMesh.log:99:    Cell determinant check OK.
+artifacts/cfd-smoke/final-verification/cases/surge_1p0/solver.log:17:sigFpe : Enabling floating point exception trapping (FOAM_SIGFPE).
+artifacts/cfd-smoke/final-verification/cases/surge_0p5/mesh.log:18:sigFpe : Enabling floating point exception trapping (FOAM_SIGFPE).
+artifacts/cfd-smoke/final-verification/cases/surge_0p5/mesh.log:61:Mesh Information
+artifacts/cfd-smoke/final-verification/cases/surge_0p5/mesh.log:94:sigFpe : Enabling floating point exception trapping (FOAM_SIGFPE).
+artifacts/cfd-smoke/final-verification/cases/surge_0p5/mesh.log:473:    minDeterminant  0.001;
+artifacts/cfd-smoke/final-verification/cases/surge_0p5/mesh.log:474:    minFaceWeight   0.05;
+artifacts/cfd-smoke/final-verification/cases/surge_0p5/mesh.log:490:    faces on cells with determinant < 0.001                : 0
+artifacts/cfd-smoke/final-verification/cases/surge_0p5/mesh.log:509:    faces on cells with determinant < 0.001                : 0
+artifacts/cfd-smoke/final-verification/cases/surge_0p5/mesh.log:525:    faces on cells with determinant < 0.001                : 0
+artifacts/cfd-smoke/final-verification/cases/surge_0p5/mesh.log:541:    faces on cells with determinant < 0.001                : 0
+artifacts/cfd-smoke/final-verification/cases/surge_0p5/mesh.log:577:    faces on cells with determinant < 0.001                : 0
+artifacts/cfd-smoke/final-verification/cases/surge_0p5/mesh.log:589:    faces on cells with determinant < 0.001                : 0
+artifacts/cfd-smoke/final-verification/cases/surge_0p5/mesh.log:619:    faces on cells with determinant < 0.001                : 0
+artifacts/cfd-smoke/final-verification/cases/surge_0p5/mesh.log:642:    faces on cells with determinant < 0.001                : 0
+artifacts/cfd-smoke/final-verification/cases/surge_0p5/mesh.log:660:    faces on cells with determinant < 0.001                : 0
+artifacts/cfd-smoke/final-verification/cases/surge_0p5/system/snappyHexMeshDict:7:castellatedMeshControls {maxLocalCells 300000; maxGlobalCells 600000; minRefinementCells 0; nCellsBetweenLevels 2; features (); refinementSurfaces {hull {level (2 2); patchInfo {type wall;}}} resolveFeatureAngle 30; refinementRegions {}; locationInMesh (4 0 0); allowFreeStandingZoneFaces true;}
+artifacts/cfd-smoke/final-verification/cases/surge_0p5/system/controlDict:6:functions { forces {type forces; libs ("libforces.so"); patches (hull); rho rhoInf; rhoInf 1000; CofR (0 0 0); writeControl timeStep; writeInterval 1;} }
+artifacts/cfd-smoke/final-verification/cases/surge_0p5/checkMesh.log:18:sigFpe : Enabling floating point exception trapping (FOAM_SIGFPE).
+artifacts/cfd-smoke/final-verification/cases/surge_0p5/checkMesh.log:98:    Cell determinant (wellposedness) : minimum: 0.3657517159 average: 8.350806154
+artifacts/cfd-smoke/final-verification/cases/surge_0p5/checkMesh.log:99:    Cell determinant check OK.
+artifacts/cfd-smoke/final-verification/cases/surge_0p5/solver.log:17:sigFpe : Enabling floating point exception trapping (FOAM_SIGFPE).
+artifacts/cfd-smoke/final-verification/discovery.md:17:| Provenance/integrity | `ParameterLineage`, canonical definition hashes, `cfd_manifest.json`, and `write_hash_manifest/verify_hash_manifest` |
+artifacts/cfd-smoke/final-verification/checkMesh.log:18:sigFpe : Enabling floating point exception trapping (FOAM_SIGFPE).
+artifacts/cfd-smoke/final-verification/checkMesh.log:98:    Cell determinant (wellposedness) : minimum: 0.3657517159 average: 8.350806154
+artifacts/cfd-smoke/final-verification/checkMesh.log:99:    Cell determinant check OK.
+artifacts/cfd-smoke/final-verification/vessel/vessel.json:176:  "provenance": {
+artifacts/cfd-smoke/final-verification/vessel/seed.json:176:  "provenance": {

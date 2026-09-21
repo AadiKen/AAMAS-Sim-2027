@@ -1,0 +1,37 @@
+{
+  "double_count_audit": "PASS: no sway/heave/pitch quadratic coefficient duplicates strip theory",
+  "linear_damping": {
+    "coefficients": [
+      77.55443234836703,
+      137.5,
+      546.4804891302158,
+      50.02366181248714,
+      218.18785613297183,
+      39.325
+    ],
+    "provenance": "MSS parity"
+  },
+  "other_damping": [],
+  "quadratic_coefficient_damping": {
+    "coefficients": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      393.25
+    ],
+    "provenance": "MSS parity",
+    "scope": "nonlinear yaw only"
+  },
+  "strip_theory_crossflow": {
+    "beam_m": 0.25,
+    "draft_m": 0.13414634146341461,
+    "include_vertical": true,
+    "length_m": 2.0,
+    "model": "strip_theory",
+    "provenance": "MSS parity",
+    "strips": 20
+  },
+  "total": "linear + nonlinear yaw + strip-theory crossflow"
+}

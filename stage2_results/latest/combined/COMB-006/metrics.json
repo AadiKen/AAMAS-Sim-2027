@@ -1,0 +1,13 @@
+{
+  "id": "COMB-006",
+  "category": "combined",
+  "status": "BLOCKED",
+  "metrics": {},
+  "assertions": {},
+  "warnings": [
+    "Grounding prerequisite is not implemented"
+  ],
+  "failure_category": "REFERENCE",
+  "observed": "Grounding prerequisite is not implemented",
+  "expected": "Production capability and independent validation fixture available"
+}

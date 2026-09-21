@@ -1,0 +1,112 @@
+{
+  "cases": [
+    {
+      "cell_count": 12920,
+      "converged": true,
+      "id": "surge_0p5",
+      "mesh": "PASS",
+      "mesh_quality_findings": [
+        "Concave cells (using face planes) found, number of cells: 345"
+      ],
+      "mesh_seconds": 10.59384875104297,
+      "result": "PASS",
+      "solver": "PASS",
+      "solver_seconds": 4.506059875013307
+    },
+    {
+      "cell_count": 12920,
+      "converged": true,
+      "id": "surge_1p0",
+      "mesh": "PASS",
+      "mesh_quality_findings": [
+        "Concave cells (using face planes) found, number of cells: 345"
+      ],
+      "mesh_seconds": 10.659930666093715,
+      "result": "PASS",
+      "solver": "PASS",
+      "solver_seconds": 4.581486040959135
+    },
+    {
+      "cell_count": 12920,
+      "converged": true,
+      "id": "surge_1p5",
+      "mesh": "PASS",
+      "mesh_quality_findings": [
+        "Concave cells (using face planes) found, number of cells: 345"
+      ],
+      "mesh_seconds": 10.681149124866351,
+      "result": "PASS",
+      "solver": "PASS",
+      "solver_seconds": 4.550998833030462
+    }
+  ],
+  "coefficient_fit": {
+    "condition_number": 8.717797887081348,
+    "identifiability": "PASS",
+    "linear_damping": 0.09489561400905434,
+    "parameters_fitted": [
+      "linear_damping[0]",
+      "quadratic_damping[0]"
+    ],
+    "quadratic_damping": 1.9245758194907354,
+    "rank": 2,
+    "residual_rms": 2.2852361661808968e-05,
+    "status": "PASS"
+  },
+  "geometry": {
+    "dimensions_m": {
+      "beam": 0.4,
+      "draft": 0.15,
+      "length": 2.0
+    },
+    "path": "/Users/aadikenchammanaold/Desktop/LEADCAT/Website/AAMAS27-Sim/artifacts/cfd-smoke/latest/input/smoke_hull.stl",
+    "sha256": "0e19660845038bcf53f3a038f599eb853d375d16f6421a23b4cf19d69a427956",
+    "source": "deterministic symmetric ellipsoidal smoke hull"
+  },
+  "keep_cases": true,
+  "negative_tests": {
+    "missing_force_output": "PASS",
+    "nonfinite_input": "PASS",
+    "provenance_tampering": "PASS",
+    "solver_failure": "PASS",
+    "unidentifiable_fit": "PASS"
+  },
+  "openfoam": {
+    "distribution": "OpenFOAM Foundation",
+    "image": "openfoam/openfoam11-paraview510:11",
+    "image_identity": "openfoam/openfoam11-paraview510@sha256:fd10956e0b1eb70f9808baf2857e4baf846a0f6f272f73b6d00546eae96be181 sha256:fd10956e0b1eb70f9808baf2857e4baf846a0f6f272f73b6d00546eae96be181",
+    "runtime": "docker",
+    "solver": "foamRun",
+    "version": "OpenFOAM-11"
+  },
+  "overall": "PASS",
+  "repeatability": "PASS",
+  "repeatability_metrics": {
+    "max_difference": 0.0
+  },
+  "repository": {
+    "branch": "main",
+    "commit": "UNBORN",
+    "dirty": true
+  },
+  "runtime": {
+    "config_hash": "a932af7f914c0bea0f207115a2a032c7de003120871f32cb4fa73bf36619c221",
+    "definition_hash": "d12781fcdaa2caf9ff82a21e20af585d57f2e87823f7cb3466814b2233a1abe0",
+    "duration_s": 5.0,
+    "final_displacement_m": [
+      0.995235072298653,
+      0.0,
+      0.0
+    ],
+    "max_state_magnitude": 10.0
+  },
+  "runtime_rollout": "PASS",
+  "simulator_load": "PASS",
+  "vessel": {
+    "artifact": "/Users/aadikenchammanaold/Desktop/LEADCAT/Website/AAMAS27-Sim/artifacts/cfd-smoke/latest/vessel/vessel.json",
+    "fingerprint": "48e9dc19434e0725066ece0b32d8c7a47ea6c9ed2eedb222c85847197cb958ea",
+    "validation_state": "unvalidated"
+  },
+  "vessel_generation": "PASS",
+  "vessel_validation": "PASS"
+}

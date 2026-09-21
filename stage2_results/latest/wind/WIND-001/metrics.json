@@ -1,0 +1,16 @@
+{
+  "id": "WIND-001",
+  "category": "wind",
+  "status": "PASS",
+  "metrics": {
+    "max_abs_wrench": 0.0
+  },
+  "assertions": {
+    "zero_wind_zero_wrench": true,
+    "deterministic_replay": true
+  },
+  "warnings": [],
+  "failure_category": null,
+  "observed": "",
+  "expected": ""
+}

@@ -1,0 +1,15 @@
+{
+  "kind": "vessel",
+  "id": "mss-otter-parity-v1",
+  "version": "1",
+  "source": "cybergalactic/MSS CRAFT/USV/models/otter.m@98970f71a21cfe81e7e29abdcc1bb6741789cddc",
+  "load_condition": {"payload_mass_kg": 0.0, "payload_position_frd_m": [0.0, 0.0, 0.0]},
+  "runtime_profile": {
+    "dynamics_mode": "full6",
+    "water_density_kg_m3": 1025.0,
+    "gravity_mps2": 9.81,
+    "environment": "still_water",
+    "validation_claim": "synthetic/reference validation only"
+  },
+  "notes": "Runtime-resolved numeric matrices are generated in plant/bcod_otter_parameters.json by the campaign."
+}

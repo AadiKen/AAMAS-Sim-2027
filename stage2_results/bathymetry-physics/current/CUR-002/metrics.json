@@ -1,0 +1,19 @@
+{
+  "id": "CUR-002",
+  "category": "current",
+  "status": "PASS",
+  "metrics": {
+    "matched_relative_flow_wrench": 0.0,
+    "stationary_surge_force": 54.28810264385692,
+    "stationary_sway_force": -32.15869381203331
+  },
+  "assertions": {
+    "matched_flow_zero_drag": true,
+    "force_opposes_relative_flow": true,
+    "deterministic_replay": true
+  },
+  "warnings": [],
+  "failure_category": null,
+  "observed": "",
+  "expected": ""
+}

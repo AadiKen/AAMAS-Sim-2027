@@ -1,0 +1,16 @@
+{
+  "id": "WIND-003",
+  "category": "wind",
+  "status": "PASS",
+  "metrics": {
+    "max_abs_wrench_error": 1.9895196601282805e-13
+  },
+  "assertions": {
+    "independent_wrench_match": true,
+    "deterministic_replay": true
+  },
+  "warnings": [],
+  "failure_category": null,
+  "observed": "",
+  "expected": ""
+}

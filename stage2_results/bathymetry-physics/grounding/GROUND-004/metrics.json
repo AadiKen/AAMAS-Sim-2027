@@ -1,0 +1,21 @@
+{
+  "id": "GROUND-004",
+  "category": "grounding",
+  "status": "PASS",
+  "metrics": {
+    "maximum_penetration_m": 0.2999999999999998,
+    "contact_count": 1,
+    "duration_s": 0.02
+  },
+  "assertions": {
+    "contact_active": true,
+    "finite": true,
+    "bounded_penetration": true,
+    "slope_normal": true,
+    "deterministic_replay": true
+  },
+  "warnings": [],
+  "failure_category": null,
+  "observed": "",
+  "expected": ""
+}

@@ -1,0 +1,29 @@
+{
+  "campaign": "BCOD Stage 2",
+  "created_utc": "2026-09-21T19:28:17.900543+00:00",
+  "git_commit": "unavailable",
+  "git_branch": "main",
+  "python_version": "3.14.6 (main, Jun 10 2026, 10:03:53) [Clang 21.0.0 (clang-2100.0.123.102)]",
+  "platform": "macOS-26.5.1-arm64-arm-64bit-Mach-O",
+  "plant": "Plant6",
+  "integrator": "RK4",
+  "dt_base_s": 0.02,
+  "vessel_config": "configs/mss-otter-parity-v2.json",
+  "random_seed": 17,
+  "contact_config": {
+    "restitution": 0.2,
+    "friction": 0.3,
+    "position_correction_fraction": 1.0
+  },
+  "coordinate_conventions": {
+    "world": "NED: +north,+east,+down",
+    "body": "FRD: +forward,+right,+down",
+    "angles": "right-handed roll/pitch/yaw",
+    "current": "water velocity in world NED",
+    "wind": "air velocity in world NED",
+    "wave_direction": "NED horizontal propagation azimuth",
+    "bathymetry": "positive NED down",
+    "contact_normal": "body A toward body B",
+    "wrench_reference": "body reference point; contact moment r_cross_F"
+  }
+}

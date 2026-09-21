@@ -1,0 +1,70 @@
+{
+  "counts": {
+    "APPROXIMATE": 0,
+    "EQUIVALENT_REPARAMETERIZATION": 2,
+    "EXACT": 10,
+    "UNREPRESENTABLE": 0
+  },
+  "terms": [
+    {
+      "classification": "EXACT",
+      "detail": "55 kg, mp=0",
+      "term": "mass"
+    },
+    {
+      "classification": "EXACT",
+      "detail": "same CG dyadic",
+      "term": "rigid_body_inertia"
+    },
+    {
+      "classification": "EXACT",
+      "detail": "[0.2,0,-0.2] FRD",
+      "term": "CG"
+    },
+    {
+      "classification": "EXACT",
+      "detail": "same diagonal MA",
+      "term": "added_mass"
+    },
+    {
+      "classification": "EQUIVALENT_REPARAMETERIZATION",
+      "detail": "power-neutral spatial form",
+      "term": "Coriolis"
+    },
+    {
+      "classification": "EXACT",
+      "detail": "same resolved diagonal coefficients",
+      "term": "linear_damping"
+    },
+    {
+      "classification": "EXACT",
+      "detail": "same |r|r coefficient",
+      "term": "quadratic_yaw_damping"
+    },
+    {
+      "classification": "EXACT",
+      "detail": "generic 20-strip Hoerner model matches pinned MSS horizontal and vertical strips",
+      "term": "cross_flow_drag"
+    },
+    {
+      "classification": "EXACT",
+      "detail": "resolved MSS G applied to full eta displacement",
+      "term": "full_coupled_linear_restoring"
+    },
+    {
+      "classification": "EXACT",
+      "detail": "piecewise k*n*|n| and measured transverse lever arms",
+      "term": "thrust_mapping"
+    },
+    {
+      "classification": "EXACT",
+      "detail": "same MSS bounds",
+      "term": "shaft_speed_saturation"
+    },
+    {
+      "classification": "EQUIVALENT_REPARAMETERIZATION",
+      "detail": "same discrete Euler shaft-speed history fed to canonical thrusters",
+      "term": "actuator_dynamics"
+    }
+  ]
+}

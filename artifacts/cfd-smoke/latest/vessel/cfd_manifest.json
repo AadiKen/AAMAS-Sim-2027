@@ -1,0 +1,75 @@
+{
+  "adapter_version": "2",
+  "case_matrix_sha256": "b65178b400b1552adcbe3bfc5cfca573f82d8daae6f14b58eb32ce8983613048",
+  "fitted_coefficients": {
+    "axis": 0,
+    "condition_number": 8.717797887081348,
+    "design_matrix": [
+      [
+        0.5,
+        0.25
+      ],
+      [
+        1.0,
+        1.0
+      ],
+      [
+        1.5,
+        2.25
+      ]
+    ],
+    "input_cases": [
+      "surge_0p5",
+      "surge_1p0",
+      "surge_1p5"
+    ],
+    "input_hashes": [
+      "3c8959bc185fb3dd6c2da20d33775e6f20353cd1739c75f081dbe93c6b310681",
+      "ac35ea1b9ff1f2faaa77e80cf6ba000cf1585b2611edace81f5d23066bd44876",
+      "879842e878fb4d50d5220ce4bdd1c8e68679b0139d448a5f4385d75c50ad60f4"
+    ],
+    "linear_damping": 0.09489561400905434,
+    "not_identifiable": [
+      "sway",
+      "heave",
+      "roll",
+      "pitch",
+      "yaw"
+    ],
+    "parameters_fitted": [
+      "linear_damping[0]",
+      "quadratic_damping[0]"
+    ],
+    "parameters_requested": [
+      "linear_damping[0]",
+      "quadratic_damping[0]"
+    ],
+    "quadratic_damping": 1.9245758194907354,
+    "rank": 2,
+    "residual_rms": 2.2852361661808968e-05,
+    "unchanged_seed_parameters": [
+      "added_mass_kg",
+      "linear_damping[1:6]",
+      "quadratic_damping[1:6]"
+    ]
+  },
+  "fitter": "CoefficientFitter.fit_damping_axis",
+  "geometry_sha256": "0e19660845038bcf53f3a038f599eb853d375d16f6421a23b4cf19d69a427956",
+  "meshing_settings": "blockMesh + snappyHexMesh v11 dictionaries",
+  "openfoam": {
+    "distribution": "OpenFOAM Foundation",
+    "image": "openfoam/openfoam11-paraview510:11",
+    "image_identity": "openfoam/openfoam11-paraview510@sha256:fd10956e0b1eb70f9808baf2857e4baf846a0f6f272f73b6d00546eae96be181 sha256:fd10956e0b1eb70f9808baf2857e4baf846a0f6f272f73b6d00546eae96be181",
+    "runtime": "docker",
+    "solver": "foamRun",
+    "version": "OpenFOAM-11"
+  },
+  "raw_result_hashes": [
+    "3c8959bc185fb3dd6c2da20d33775e6f20353cd1739c75f081dbe93c6b310681",
+    "ac35ea1b9ff1f2faaa77e80cf6ba000cf1585b2611edace81f5d23066bd44876",
+    "879842e878fb4d50d5220ce4bdd1c8e68679b0139d448a5f4385d75c50ad60f4"
+  ],
+  "solver": "foamRun -solver incompressibleFluid",
+  "validation_state": "unvalidated",
+  "vessel_fingerprint": "48e9dc19434e0725066ece0b32d8c7a47ea6c9ed2eedb222c85847197cb958ea"
+}

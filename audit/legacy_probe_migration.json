@@ -1,0 +1,1943 @@
+{
+  "new_invariants": [
+    "config-provenance",
+    "physics-analytic",
+    "frames-units",
+    "sensor-contracts",
+    "external-fixtures",
+    "lifecycle-replay",
+    "batch-determinism",
+    "web-headless",
+    "vessel-identification",
+    "legacy-isolation"
+  ],
+  "probes": [
+    {
+      "legacy_claim": "unregistered vehicle preset",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "config-provenance",
+        "legacy-isolation"
+      ],
+      "probe_id": "L1-P01",
+      "reason": "Legacy call-path inspection is replaced by closed identity resolution, recorded provenance, and production legacy isolation.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "unregistered preset variant/suffix",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "config-provenance",
+        "legacy-isolation"
+      ],
+      "probe_id": "L1-P02",
+      "reason": "Legacy call-path inspection is replaced by closed identity resolution, recorded provenance, and production legacy isolation.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "NaN inertia tensor",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "config-provenance",
+        "legacy-isolation"
+      ],
+      "probe_id": "L1-P03",
+      "reason": "Legacy call-path inspection is replaced by closed identity resolution, recorded provenance, and production legacy isolation.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "negative linear damping",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "config-provenance",
+        "legacy-isolation"
+      ],
+      "probe_id": "L1-P04",
+      "reason": "Legacy call-path inspection is replaced by closed identity resolution, recorded provenance, and production legacy isolation.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "negative quadratic damping",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "config-provenance",
+        "legacy-isolation"
+      ],
+      "probe_id": "L1-P05",
+      "reason": "Legacy call-path inspection is replaced by closed identity resolution, recorded provenance, and production legacy isolation.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "duplicate effector IDs",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "config-provenance",
+        "legacy-isolation"
+      ],
+      "probe_id": "L1-P06",
+      "reason": "Legacy call-path inspection is replaced by closed identity resolution, recorded provenance, and production legacy isolation.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "NaN actuator bound",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "config-provenance",
+        "legacy-isolation"
+      ],
+      "probe_id": "L1-P07",
+      "reason": "Legacy call-path inspection is replaced by closed identity resolution, recorded provenance, and production legacy isolation.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "mass <= 0",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "config-provenance",
+        "legacy-isolation"
+      ],
+      "probe_id": "L1-P08",
+      "reason": "Legacy call-path inspection is replaced by closed identity resolution, recorded provenance, and production legacy isolation.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "non-positive-definite rigid-plus-added mass matrix",
+      "legacy_verdict": "FAIL",
+      "oracles": [
+        "config-provenance",
+        "legacy-isolation"
+      ],
+      "probe_id": "L1-P09",
+      "reason": "Legacy call-path inspection is replaced by closed identity resolution, recorded provenance, and production legacy isolation.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "missing required mesh/bathymetry asset",
+      "legacy_verdict": "SKIP",
+      "oracles": [
+        "config-provenance",
+        "legacy-isolation"
+      ],
+      "probe_id": "L1-P10",
+      "reason": "Legacy call-path inspection is replaced by closed identity resolution, recorded provenance, and production legacy isolation.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "observation contract mismatch with policy bundle",
+      "legacy_verdict": "SKIP",
+      "oracles": [
+        "config-provenance",
+        "legacy-isolation"
+      ],
+      "probe_id": "L1-P11",
+      "reason": "Legacy call-path inspection is replaced by closed identity resolution, recorded provenance, and production legacy isolation.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "unknown config field",
+      "legacy_verdict": "FAIL",
+      "oracles": [
+        "config-provenance",
+        "legacy-isolation"
+      ],
+      "probe_id": "L1-P12",
+      "reason": "Legacy call-path inspection is replaced by closed identity resolution, recorded provenance, and production legacy isolation.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "parameter with omitted units",
+      "legacy_verdict": "FAIL",
+      "oracles": [
+        "config-provenance",
+        "legacy-isolation"
+      ],
+      "probe_id": "L1-P13",
+      "reason": "Legacy call-path inspection is replaced by closed identity resolution, recorded provenance, and production legacy isolation.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "timestep exceeds declared stability requirement",
+      "legacy_verdict": "SKIP",
+      "oracles": [
+        "config-provenance",
+        "legacy-isolation"
+      ],
+      "probe_id": "L1-P14",
+      "reason": "Legacy call-path inspection is replaced by closed identity resolution, recorded provenance, and production legacy isolation.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "actuator command outside declared bounds",
+      "legacy_verdict": "FAIL",
+      "oracles": [
+        "config-provenance",
+        "legacy-isolation"
+      ],
+      "probe_id": "L1-P15",
+      "reason": "Legacy call-path inspection is replaced by closed identity resolution, recorded provenance, and production legacy isolation.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "environment query outside data coverage",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "config-provenance",
+        "legacy-isolation"
+      ],
+      "probe_id": "L1-P16",
+      "reason": "Legacy call-path inspection is replaced by closed identity resolution, recorded provenance, and production legacy isolation.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "nonexistent sensor type",
+      "legacy_verdict": "FAIL",
+      "oracles": [
+        "config-provenance",
+        "legacy-isolation"
+      ],
+      "probe_id": "L1-P17",
+      "reason": "Legacy call-path inspection is replaced by closed identity resolution, recorded provenance, and production legacy isolation.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "nonexistent task",
+      "legacy_verdict": "FAIL",
+      "oracles": [
+        "config-provenance",
+        "legacy-isolation"
+      ],
+      "probe_id": "L1-P18",
+      "reason": "Legacy call-path inspection is replaced by closed identity resolution, recorded provenance, and production legacy isolation.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "seed omitted",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "config-provenance",
+        "legacy-isolation"
+      ],
+      "probe_id": "L1-P19",
+      "reason": "Legacy call-path inspection is replaced by closed identity resolution, recorded provenance, and production legacy isolation.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "duplicate vessel IDs",
+      "legacy_verdict": "SKIP",
+      "oracles": [
+        "config-provenance",
+        "legacy-isolation"
+      ],
+      "probe_id": "L1-P20",
+      "reason": "Legacy call-path inspection is replaced by closed identity resolution, recorded provenance, and production legacy isolation.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "Invalid P12 input must not receive a validated-run label; inspect retained-input blast radius",
+      "legacy_verdict": "FAIL",
+      "oracles": [
+        "config-provenance",
+        "legacy-isolation"
+      ],
+      "probe_id": "L1-P21",
+      "reason": "Legacy call-path inspection is replaced by closed identity resolution, recorded provenance, and production legacy isolation.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "Invalid P15 input must not receive a validated-run label; inspect retained-input blast radius",
+      "legacy_verdict": "FAIL",
+      "oracles": [
+        "config-provenance",
+        "legacy-isolation"
+      ],
+      "probe_id": "L1-P22",
+      "reason": "Legacy call-path inspection is replaced by closed identity resolution, recorded provenance, and production legacy isolation.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "Invalid P17 input must not receive a validated-run label; inspect retained-input blast radius",
+      "legacy_verdict": "FAIL",
+      "oracles": [
+        "config-provenance",
+        "legacy-isolation"
+      ],
+      "probe_id": "L1-P23",
+      "reason": "Legacy call-path inspection is replaced by closed identity resolution, recorded provenance, and production legacy isolation.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "Invalid P18 input must not receive a validated-run label; inspect retained-input blast radius",
+      "legacy_verdict": "FAIL",
+      "oracles": [
+        "config-provenance",
+        "legacy-isolation"
+      ],
+      "probe_id": "L1-P24",
+      "reason": "Legacy call-path inspection is replaced by closed identity resolution, recorded provenance, and production legacy isolation.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "Constant surge plus linear damping matches closed-form velocity",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "config-provenance",
+        "physics-analytic",
+        "legacy-isolation"
+      ],
+      "probe_id": "L2-P01",
+      "reason": "Legacy production-dispatch behavior is replaced by canonical resolution and independent analytic physics anchors.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "Linear-damping steady speed is F/d",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "config-provenance",
+        "physics-analytic",
+        "legacy-isolation"
+      ],
+      "probe_id": "L2-P02",
+      "reason": "Legacy production-dispatch behavior is replaced by canonical resolution and independent analytic physics anchors.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "Kinetic energy remains constant during dissipation-free coast",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "config-provenance",
+        "physics-analytic",
+        "legacy-isolation"
+      ],
+      "probe_id": "L2-P03",
+      "reason": "Legacy production-dispatch behavior is replaced by canonical resolution and independent analytic physics anchors.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "Zero command from rest in still water produces no motion",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "config-provenance",
+        "physics-analytic",
+        "legacy-isolation"
+      ],
+      "probe_id": "L2-P04",
+      "reason": "Legacy production-dispatch behavior is replaced by canonical resolution and independent analytic physics anchors.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "Unforced initial surge decays monotonically without yaw",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "config-provenance",
+        "physics-analytic",
+        "legacy-isolation"
+      ],
+      "probe_id": "L2-P05",
+      "reason": "Legacy production-dispatch behavior is replaced by canonical resolution and independent analytic physics anchors.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "Otter configured rated command reaches the published model design speed",
+      "legacy_verdict": "FAIL",
+      "oracles": [
+        "config-provenance",
+        "physics-analytic",
+        "legacy-isolation"
+      ],
+      "probe_id": "L2-P06",
+      "reason": "Legacy production-dispatch behavior is replaced by canonical resolution and independent analytic physics anchors.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "Otter steady turn matches independently executed MSS radius",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "config-provenance",
+        "physics-analytic",
+        "legacy-isolation"
+      ],
+      "probe_id": "L2-P07",
+      "reason": "Legacy production-dispatch behavior is replaced by canonical resolution and independent analytic physics anchors.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "Otter added-mass diagonal equals primary MSS equations",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "config-provenance",
+        "physics-analytic",
+        "legacy-isolation"
+      ],
+      "probe_id": "L2-P08",
+      "reason": "Legacy production-dispatch behavior is replaced by canonical resolution and independent analytic physics anchors.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "Coupled Otter linear equilibrium pose has zero net vertical wrench",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "config-provenance",
+        "physics-analytic",
+        "legacy-isolation"
+      ],
+      "probe_id": "L2-P09",
+      "reason": "Legacy production-dispatch behavior is replaced by canonical resolution and independent analytic physics anchors.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "Every coefficient magnitude is externally grounded for this hull",
+      "legacy_verdict": "SKIP",
+      "oracles": [
+        "config-provenance",
+        "physics-analytic",
+        "legacy-isolation"
+      ],
+      "probe_id": "L2-P10",
+      "reason": "Legacy production-dispatch behavior is replaced by canonical resolution and independent analytic physics anchors.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "Vehicle C symmetric thrust has zero yaw and lateral drift",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "config-provenance",
+        "physics-analytic",
+        "legacy-isolation"
+      ],
+      "probe_id": "L2-P11",
+      "reason": "Legacy production-dispatch behavior is replaced by canonical resolution and independent analytic physics anchors.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "Reflected hull mounting and mapped commands produce a reflected trajectory",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "config-provenance",
+        "physics-analytic",
+        "legacy-isolation"
+      ],
+      "probe_id": "L2-P12",
+      "reason": "Legacy production-dispatch behavior is replaced by canonical resolution and independent analytic physics anchors.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "Rotate vessel, current and wind together and trajectory rotates",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "config-provenance",
+        "physics-analytic",
+        "legacy-isolation"
+      ],
+      "probe_id": "L2-P13",
+      "reason": "Legacy production-dispatch behavior is replaced by canonical resolution and independent analytic physics anchors.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "Planar trajectory is invariant to world translation",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "config-provenance",
+        "physics-analytic",
+        "legacy-isolation"
+      ],
+      "probe_id": "L2-P14",
+      "reason": "Legacy production-dispatch behavior is replaced by canonical resolution and independent analytic physics anchors.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "More starboard thrust turns toward port in NED yaw convention",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "config-provenance",
+        "physics-analytic",
+        "legacy-isolation"
+      ],
+      "probe_id": "L2-P15",
+      "reason": "Legacy production-dispatch behavior is replaced by canonical resolution and independent analytic physics anchors.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "Planar damping never supplies mechanical power in the declared regime",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "config-provenance",
+        "physics-analytic",
+        "legacy-isolation"
+      ],
+      "probe_id": "L2-P16",
+      "reason": "Legacy production-dispatch behavior is replaced by canonical resolution and independent analytic physics anchors.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "Configured fluid loads vanish at zero relative current and wind flow",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "config-provenance",
+        "physics-analytic",
+        "legacy-isolation"
+      ],
+      "probe_id": "L2-P17",
+      "reason": "Legacy production-dispatch behavior is replaced by canonical resolution and independent analytic physics anchors.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "Double rigid mass at rest with added mass off halves acceleration",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "config-provenance",
+        "physics-analytic",
+        "legacy-isolation"
+      ],
+      "probe_id": "L2-P18",
+      "reason": "Legacy production-dispatch behavior is replaced by canonical resolution and independent analytic physics anchors.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "Dissipation-free time reversal returns to the starting pose",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "config-provenance",
+        "physics-analytic",
+        "legacy-isolation"
+      ],
+      "probe_id": "L2-P19",
+      "reason": "Legacy production-dispatch behavior is replaced by canonical resolution and independent analytic physics anchors.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "Halving timestep gives fourth-order convergence for RK4",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "config-provenance",
+        "physics-analytic",
+        "legacy-isolation"
+      ],
+      "probe_id": "L2-P20",
+      "reason": "Legacy production-dispatch behavior is replaced by canonical resolution and independent analytic physics anchors.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "Vehicle C yaw-instability threshold is stable across three timesteps",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "config-provenance",
+        "physics-analytic",
+        "legacy-isolation"
+      ],
+      "probe_id": "L2-P21",
+      "reason": "Legacy production-dispatch behavior is replaced by canonical resolution and independent analytic physics anchors.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "Public production Otter impulse agrees with primary total mass",
+      "legacy_verdict": "FAIL",
+      "oracles": [
+        "config-provenance",
+        "physics-analytic",
+        "legacy-isolation"
+      ],
+      "probe_id": "L2-P22",
+      "reason": "Legacy production-dispatch behavior is replaced by canonical resolution and independent analytic physics anchors.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "Production adapter resolves primary Otter mass and geometry",
+      "legacy_verdict": "FAIL",
+      "oracles": [
+        "config-provenance",
+        "physics-analytic",
+        "legacy-isolation"
+      ],
+      "probe_id": "L2-P23",
+      "reason": "Legacy production-dispatch behavior is replaced by canonical resolution and independent analytic physics anchors.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "Public production rated force scale agrees with published Otter bollard force",
+      "legacy_verdict": "SKIP",
+      "oracles": [
+        "config-provenance",
+        "physics-analytic",
+        "legacy-isolation"
+      ],
+      "probe_id": "L2-P24",
+      "reason": "Legacy production-dispatch behavior is replaced by canonical resolution and independent analytic physics anchors.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "Production impulse discrepancy disappears as dt tends to zero",
+      "legacy_verdict": "FAIL",
+      "oracles": [
+        "config-provenance",
+        "physics-analytic",
+        "legacy-isolation"
+      ],
+      "probe_id": "L2-P25",
+      "reason": "Legacy production-dispatch behavior is replaced by canonical resolution and independent analytic physics anchors.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "Production vehicle-a-otter loads the primary Otter parameter identity",
+      "legacy_verdict": "FAIL",
+      "oracles": [
+        "config-provenance",
+        "physics-analytic",
+        "legacy-isolation"
+      ],
+      "probe_id": "L2-P26",
+      "reason": "Legacy production-dispatch behavior is replaced by canonical resolution and independent analytic physics anchors.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "All permitted L3 frozen-state contributions sum to the actual total",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "physics-analytic",
+        "frames-units"
+      ],
+      "probe_id": "L3-P01",
+      "reason": "Legacy plant-specific behavior is replaced by independent 6-DOF analytic and frame oracles.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "Zero velocity eliminates Coriolis and damping",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "physics-analytic",
+        "frames-units"
+      ],
+      "probe_id": "L3-P02",
+      "reason": "Legacy plant-specific behavior is replaced by independent 6-DOF analytic and frame oracles.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "Zero relative flow eliminates environment velocity loads",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "physics-analytic",
+        "frames-units"
+      ],
+      "probe_id": "L3-P03",
+      "reason": "Legacy plant-specific behavior is replaced by independent 6-DOF analytic and frame oracles.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "Pure surge produces no lateral/yaw damping",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "physics-analytic",
+        "frames-units"
+      ],
+      "probe_id": "L3-P04",
+      "reason": "Legacy plant-specific behavior is replaced by independent 6-DOF analytic and frame oracles.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "Pure yaw damping matches declared coefficients",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "physics-analytic",
+        "frames-units"
+      ],
+      "probe_id": "L3-P05",
+      "reason": "Legacy plant-specific behavior is replaced by independent 6-DOF analytic and frame oracles.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "Added mass is in the inverted mass matrix and does not consume previous-step acceleration as a wrench",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "physics-analytic",
+        "frames-units"
+      ],
+      "probe_id": "L3-P06",
+      "reason": "Legacy plant-specific behavior is replaced by independent 6-DOF analytic and frame oracles.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "Added-mass Coriolis agrees with the mass matrix",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "physics-analytic",
+        "frames-units"
+      ],
+      "probe_id": "L3-P07",
+      "reason": "Legacy plant-specific behavior is replaced by independent 6-DOF analytic and frame oracles.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "Command-force mapping matches rating scale and declared linearity",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "physics-analytic",
+        "frames-units"
+      ],
+      "probe_id": "L3-P08",
+      "reason": "Legacy plant-specific behavior is replaced by independent 6-DOF analytic and frame oracles.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "Pod force moments match mounting geometry",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "physics-analytic",
+        "frames-units"
+      ],
+      "probe_id": "L3-P09",
+      "reason": "Legacy plant-specific behavior is replaced by independent 6-DOF analytic and frame oracles.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "Actuator lag matches declared time constant",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "physics-analytic",
+        "frames-units"
+      ],
+      "probe_id": "L3-P10",
+      "reason": "Legacy plant-specific behavior is replaced by independent 6-DOF analytic and frame oracles.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "Current response linearity at fixed velocity",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "physics-analytic",
+        "frames-units"
+      ],
+      "probe_id": "L3-P11",
+      "reason": "Legacy plant-specific behavior is replaced by independent 6-DOF analytic and frame oracles.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "Vehicle C symmetric thrust preserves lateral/yaw symmetry in the isolated wave-off envelope",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "physics-analytic",
+        "frames-units"
+      ],
+      "probe_id": "L3-P12",
+      "reason": "Legacy plant-specific behavior is replaced by independent 6-DOF analytic and frame oracles.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "Wind load agrees with declared coefficients",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "physics-analytic",
+        "frames-units"
+      ],
+      "probe_id": "L3-P13",
+      "reason": "Legacy plant-specific behavior is replaced by independent 6-DOF analytic and frame oracles.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "Live wave spatial phase and positive-frequency complex transfer agree",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "physics-analytic",
+        "frames-units"
+      ],
+      "probe_id": "L3-P14",
+      "reason": "Legacy plant-specific behavior is replaced by independent 6-DOF analytic and frame oracles.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "Current MMG regularization prevents the historical one-step amplification, which remains reproducible with the old normalization",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "physics-analytic",
+        "frames-units"
+      ],
+      "probe_id": "L3-P15",
+      "reason": "Legacy plant-specific behavior is replaced by independent 6-DOF analytic and frame oracles.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "Contact impulse uses total inertia",
+      "legacy_verdict": "SKIP",
+      "oracles": [
+        "physics-analytic",
+        "frames-units"
+      ],
+      "probe_id": "L3-P16",
+      "reason": "Legacy plant-specific behavior is replaced by independent 6-DOF analytic and frame oracles.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "Off-equilibrium restoring matches declared stiffness",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "physics-analytic",
+        "frames-units"
+      ],
+      "probe_id": "L3-P17",
+      "reason": "Legacy plant-specific behavior is replaced by independent 6-DOF analytic and frame oracles.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "Reserved term-isolation slot",
+      "legacy_verdict": "SKIP",
+      "oracles": [
+        "physics-analytic",
+        "frames-units"
+      ],
+      "probe_id": "L3-P18",
+      "reason": "Legacy plant-specific behavior is replaced by independent 6-DOF analytic and frame oracles.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "Every operational vehicle-a-otter construction path loads dedicated Otter parameters",
+      "legacy_verdict": "FAIL",
+      "oracles": [
+        "physics-analytic",
+        "config-provenance",
+        "legacy-isolation"
+      ],
+      "probe_id": "L4-P00",
+      "reason": "Legacy identity and implementation inspection is replaced by explicit new-core physics, provenance, and isolation oracles.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "Retained comparison harnesses compare parameter-equivalent plants",
+      "legacy_verdict": "FAIL",
+      "oracles": [
+        "physics-analytic",
+        "config-provenance",
+        "legacy-isolation"
+      ],
+      "probe_id": "L4-P01",
+      "reason": "Legacy identity and implementation inspection is replaced by explicit new-core physics, provenance, and isolation oracles.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "Retained synchronized Gazebo harness advances exactly one authoritative iteration per request",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "physics-analytic",
+        "config-provenance",
+        "legacy-isolation"
+      ],
+      "probe_id": "L4-P02",
+      "reason": "Legacy identity and implementation inspection is replaced by explicit new-core physics, provenance, and isolation oracles.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "Golden samples are aligned by time",
+      "legacy_verdict": "FAIL",
+      "oracles": [
+        "physics-analytic",
+        "config-provenance",
+        "legacy-isolation"
+      ],
+      "probe_id": "L4-P03",
+      "reason": "Legacy identity and implementation inspection is replaced by explicit new-core physics, provenance, and isolation oracles.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "Determinism sweep uses fresh engine-mutated actuator objects across calls/slots",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "physics-analytic",
+        "config-provenance",
+        "legacy-isolation"
+      ],
+      "probe_id": "L4-P04",
+      "reason": "Legacy identity and implementation inspection is replaced by explicit new-core physics, provenance, and isolation oracles.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "Corrected Vehicle C schedules command the explicitly intended fraction of actuator rating",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "physics-analytic",
+        "config-provenance",
+        "legacy-isolation"
+      ],
+      "probe_id": "L4-P05",
+      "reason": "Legacy identity and implementation inspection is replaced by explicit new-core physics, provenance, and isolation oracles.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "SDF export preserves declared FRD-to-FLU body coordinate transformation",
+      "legacy_verdict": "FAIL",
+      "oracles": [
+        "physics-analytic",
+        "config-provenance",
+        "legacy-isolation"
+      ],
+      "probe_id": "L4-P06",
+      "reason": "Legacy identity and implementation inspection is replaced by explicit new-core physics, provenance, and isolation oracles.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "Production body acceleration measurement includes rotating-frame transport correction",
+      "legacy_verdict": "FAIL",
+      "oracles": [
+        "physics-analytic",
+        "config-provenance",
+        "legacy-isolation"
+      ],
+      "probe_id": "L4-P07",
+      "reason": "Legacy identity and implementation inspection is replaced by explicit new-core physics, provenance, and isolation oracles.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "Production reset applies requested initial velocity at t=0",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "physics-analytic",
+        "config-provenance",
+        "legacy-isolation"
+      ],
+      "probe_id": "L4-P08",
+      "reason": "Legacy identity and implementation inspection is replaced by explicit new-core physics, provenance, and isolation oracles.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "Every diagnostic path equals production path",
+      "legacy_verdict": "SKIP",
+      "oracles": [
+        "physics-analytic",
+        "config-provenance",
+        "legacy-isolation"
+      ],
+      "probe_id": "L4-P09",
+      "reason": "Legacy identity and implementation inspection is replaced by explicit new-core physics, provenance, and isolation oracles.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "Every retained figure has executed vessel provenance",
+      "legacy_verdict": "SKIP",
+      "oracles": [
+        "physics-analytic",
+        "config-provenance",
+        "legacy-isolation"
+      ],
+      "probe_id": "L4-P10",
+      "reason": "Legacy identity and implementation inspection is replaced by explicit new-core physics, provenance, and isolation oracles.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "Declared seed reaches each stochastic sensor component",
+      "legacy_verdict": "SKIP",
+      "oracles": [
+        "physics-analytic",
+        "config-provenance",
+        "legacy-isolation"
+      ],
+      "probe_id": "L4-P11",
+      "reason": "Legacy identity and implementation inspection is replaced by explicit new-core physics, provenance, and isolation oracles.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "Golden comparison checks missing/nonfinite values and exercises added-mass-off",
+      "legacy_verdict": "FAIL",
+      "oracles": [
+        "physics-analytic",
+        "config-provenance",
+        "legacy-isolation"
+      ],
+      "probe_id": "L4-P12",
+      "reason": "Legacy identity and implementation inspection is replaced by explicit new-core physics, provenance, and isolation oracles.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "Comparison tooling never silently omits samples/cases",
+      "legacy_verdict": "FAIL",
+      "oracles": [
+        "physics-analytic",
+        "config-provenance",
+        "legacy-isolation"
+      ],
+      "probe_id": "L4-P13",
+      "reason": "Legacy identity and implementation inspection is replaced by explicit new-core physics, provenance, and isolation oracles.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "Existing not-applicable/divergence classifications have machine-checkable justification",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "physics-analytic",
+        "config-provenance",
+        "legacy-isolation"
+      ],
+      "probe_id": "L4-P14",
+      "reason": "Legacy identity and implementation inspection is replaced by explicit new-core physics, provenance, and isolation oracles.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "Reserved harness slot",
+      "legacy_verdict": "SKIP",
+      "oracles": [
+        "physics-analytic",
+        "config-provenance",
+        "legacy-isolation"
+      ],
+      "probe_id": "L4-P15",
+      "reason": "Legacy identity and implementation inspection is replaced by explicit new-core physics, provenance, and isolation oracles.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "Corrected retained RTOFS surface-current evidence uses 3-D shallowest velocity, not 2ds barotropic flow",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "physics-analytic",
+        "frames-units"
+      ],
+      "probe_id": "L5-P01",
+      "reason": "Legacy plant-specific behavior is replaced by independent 6-DOF analytic and frame oracles.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "Datum and vertical conventions are correctly normalized",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "physics-analytic",
+        "frames-units"
+      ],
+      "probe_id": "L5-P02",
+      "reason": "Legacy plant-specific behavior is replaced by independent 6-DOF analytic and frame oracles.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "Evidence timestamps and cycle selection use UTC",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "physics-analytic",
+        "frames-units"
+      ],
+      "probe_id": "L5-P03",
+      "reason": "Legacy plant-specific behavior is replaced by independent 6-DOF analytic and frame oracles.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "Unscored/wet-mask cells are excluded rather than zero-filled",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "physics-analytic",
+        "frames-units"
+      ],
+      "probe_id": "L5-P04",
+      "reason": "Legacy plant-specific behavior is replaced by independent 6-DOF analytic and frame oracles.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "Claimed operating envelope is exercised",
+      "legacy_verdict": "SKIP",
+      "oracles": [
+        "physics-analytic",
+        "frames-units"
+      ],
+      "probe_id": "L5-P05",
+      "reason": "Legacy plant-specific behavior is replaced by independent 6-DOF analytic and frame oracles.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "Anomalous field fit is retained, or any exclusion has a predeclared independent justification",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "physics-analytic",
+        "frames-units"
+      ],
+      "probe_id": "L5-P06",
+      "reason": "Legacy plant-specific behavior is replaced by independent 6-DOF analytic and frame oracles.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "Held-out calibration uses only other runs",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "physics-analytic",
+        "frames-units"
+      ],
+      "probe_id": "L5-P07",
+      "reason": "Legacy plant-specific behavior is replaced by independent 6-DOF analytic and frame oracles.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "Known field-replay accuracy claims have negative controls and paired order beats every draw",
+      "legacy_verdict": "FAIL",
+      "oracles": [
+        "physics-analytic",
+        "frames-units"
+      ],
+      "probe_id": "L5-P08",
+      "reason": "Legacy plant-specific behavior is replaced by independent 6-DOF analytic and frame oracles.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "Physical population identity is confirmed",
+      "legacy_verdict": "SKIP",
+      "oracles": [
+        "physics-analytic",
+        "frames-units"
+      ],
+      "probe_id": "L5-P09",
+      "reason": "Legacy plant-specific behavior is replaced by independent 6-DOF analytic and frame oracles.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "All cached fixtures match current upstream",
+      "legacy_verdict": "SKIP",
+      "oracles": [
+        "physics-analytic",
+        "frames-units"
+      ],
+      "probe_id": "L5-P10",
+      "reason": "Legacy plant-specific behavior is replaced by independent 6-DOF analytic and frame oracles.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "Nearest match agrees with a hand-computed case",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "physics-analytic",
+        "frames-units"
+      ],
+      "probe_id": "L5-P11",
+      "reason": "Legacy plant-specific behavior is replaced by independent 6-DOF analytic and frame oracles.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "Reserved evidence slot",
+      "legacy_verdict": "SKIP",
+      "oracles": [
+        "physics-analytic",
+        "frames-units"
+      ],
+      "probe_id": "L5-P12",
+      "reason": "Legacy plant-specific behavior is replaced by independent 6-DOF analytic and frame oracles.",
+      "status": "REPLACED_BY_NEW_ORACLE"
+    },
+    {
+      "legacy_claim": "Mounted position follows body mount transform",
+      "legacy_verdict": "FAIL",
+      "oracles": [
+        "sensor-contracts",
+        "frames-units"
+      ],
+      "probe_id": "L6-P01",
+      "reason": "Portable sensor contract reruns against typed new-core sensors.",
+      "status": "PORTABLE"
+    },
+    {
+      "legacy_claim": "Offset sensor velocity contains omega cross lever arm",
+      "legacy_verdict": "FAIL",
+      "oracles": [
+        "sensor-contracts",
+        "frames-units"
+      ],
+      "probe_id": "L6-P02",
+      "reason": "Portable sensor contract reruns against typed new-core sensors.",
+      "status": "PORTABLE"
+    },
+    {
+      "legacy_claim": "Reported output uses declared frame under yaw90",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "sensor-contracts",
+        "frames-units"
+      ],
+      "probe_id": "L6-P03",
+      "reason": "Portable sensor contract reruns against typed new-core sensors.",
+      "status": "PORTABLE"
+    },
+    {
+      "legacy_claim": "Sensor rates follow master clock",
+      "legacy_verdict": "FAIL",
+      "oracles": [
+        "sensor-contracts",
+        "frames-units"
+      ],
+      "probe_id": "L6-P04",
+      "reason": "Portable sensor contract reruns against typed new-core sensors.",
+      "status": "PORTABLE"
+    },
+    {
+      "legacy_claim": "Declared latency matches delivered step response",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "sensor-contracts",
+        "frames-units"
+      ],
+      "probe_id": "L6-P05",
+      "reason": "Portable sensor contract reruns against typed new-core sensors.",
+      "status": "PORTABLE"
+    },
+    {
+      "legacy_claim": "Sensor noise same-seed reproducible and different-seed distinct",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "sensor-contracts",
+        "frames-units"
+      ],
+      "probe_id": "L6-P06",
+      "reason": "Portable sensor contract reruns against typed new-core sensors.",
+      "status": "PORTABLE"
+    },
+    {
+      "legacy_claim": "Declared Gaussian measurement-noise moments",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "sensor-contracts",
+        "frames-units"
+      ],
+      "probe_id": "L6-P07",
+      "reason": "Portable sensor contract reruns against typed new-core sensors.",
+      "status": "PORTABLE"
+    },
+    {
+      "legacy_claim": "Ray/lidar geometry matches flat wall, corner and gap",
+      "legacy_verdict": "FAIL",
+      "oracles": [
+        "sensor-contracts",
+        "frames-units"
+      ],
+      "probe_id": "L6-P08",
+      "reason": "Portable sensor contract reruns against typed new-core sensors.",
+      "status": "PORTABLE"
+    },
+    {
+      "legacy_claim": "Range/FOV exact boundaries respected",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "sensor-contracts",
+        "frames-units"
+      ],
+      "probe_id": "L6-P09",
+      "reason": "Portable sensor contract reruns against typed new-core sensors.",
+      "status": "PORTABLE"
+    },
+    {
+      "legacy_claim": "Unobservable world perturbation does not leak into sensor outputs",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "sensor-contracts",
+        "frames-units"
+      ],
+      "probe_id": "L6-P10",
+      "reason": "Portable sensor contract reruns against typed new-core sensors.",
+      "status": "PORTABLE"
+    },
+    {
+      "legacy_claim": "Abstract sensor range/FOV declared and respected",
+      "legacy_verdict": "FAIL",
+      "oracles": [
+        "sensor-contracts",
+        "frames-units"
+      ],
+      "probe_id": "L6-P11",
+      "reason": "Portable sensor contract reruns against typed new-core sensors.",
+      "status": "PORTABLE"
+    },
+    {
+      "legacy_claim": "Sensor numeric units/schema match declaration",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "sensor-contracts",
+        "frames-units"
+      ],
+      "probe_id": "L6-P12",
+      "reason": "Portable sensor contract reruns against typed new-core sensors.",
+      "status": "PORTABLE"
+    },
+    {
+      "legacy_claim": "Heave-dependent sensor reduced-mode behavior has trustworthy contract",
+      "legacy_verdict": "SKIP",
+      "oracles": [
+        "sensor-contracts",
+        "frames-units"
+      ],
+      "probe_id": "L6-P13",
+      "reason": "Portable sensor contract reruns against typed new-core sensors.",
+      "status": "PORTABLE"
+    },
+    {
+      "legacy_claim": "Camera/sonar resolution follows configuration",
+      "legacy_verdict": "FAIL",
+      "oracles": [
+        "sensor-contracts",
+        "frames-units"
+      ],
+      "probe_id": "L6-P14",
+      "reason": "Portable sensor contract reruns against typed new-core sensors.",
+      "status": "PORTABLE"
+    },
+    {
+      "legacy_claim": "AIS: Live payload matches frozen fixture",
+      "legacy_verdict": "SKIP",
+      "oracles": [],
+      "probe_id": "L7-AIS-I01",
+      "reason": "Live-provider endpoint smoke checks were explicitly deferred; offline checksummed fixtures remain authoritative CI evidence.",
+      "status": "LIVE_GATE_DEFERRED"
+    },
+    {
+      "legacy_claim": "AIS: Units and datum declarations/conversion",
+      "legacy_verdict": "SKIP",
+      "oracles": [
+        "external-fixtures"
+      ],
+      "probe_id": "L7-AIS-I02",
+      "reason": "Supported adapter behavior reruns against deterministic checksummed offline fixtures.",
+      "status": "PORTABLE"
+    },
+    {
+      "legacy_claim": "AIS: Vertical sign convention normalization",
+      "legacy_verdict": "SKIP",
+      "oracles": [
+        "external-fixtures"
+      ],
+      "probe_id": "L7-AIS-I03",
+      "reason": "Supported adapter behavior reruns against deterministic checksummed offline fixtures.",
+      "status": "PORTABLE"
+    },
+    {
+      "legacy_claim": "AIS: UTC valid time and cycle selection",
+      "legacy_verdict": "SKIP",
+      "oracles": [
+        "external-fixtures"
+      ],
+      "probe_id": "L7-AIS-I04",
+      "reason": "Supported adapter behavior reruns against deterministic checksummed offline fixtures.",
+      "status": "PORTABLE"
+    },
+    {
+      "legacy_claim": "AIS: Hand-computed spatial indexing",
+      "legacy_verdict": "SKIP",
+      "oracles": [
+        "external-fixtures"
+      ],
+      "probe_id": "L7-AIS-I05",
+      "reason": "Supported adapter behavior reruns against deterministic checksummed offline fixtures.",
+      "status": "PORTABLE"
+    },
+    {
+      "legacy_claim": "AIS: Explicit out-of-coverage signal",
+      "legacy_verdict": "SKIP",
+      "oracles": [
+        "external-fixtures"
+      ],
+      "probe_id": "L7-AIS-I06",
+      "reason": "Supported adapter behavior reruns against deterministic checksummed offline fixtures.",
+      "status": "PORTABLE"
+    },
+    {
+      "legacy_claim": "AIS: Checksum/provenance recorded per retrieval",
+      "legacy_verdict": "SKIP",
+      "oracles": [
+        "external-fixtures"
+      ],
+      "probe_id": "L7-AIS-I07",
+      "reason": "Supported adapter behavior reruns against deterministic checksummed offline fixtures.",
+      "status": "PORTABLE"
+    },
+    {
+      "legacy_claim": "CO-OPS pinned live response matches stored fixture",
+      "legacy_verdict": "PASS",
+      "oracles": [],
+      "probe_id": "L7-CO-OPS-I01",
+      "reason": "Live-provider endpoint smoke checks were explicitly deferred; offline checksummed fixtures remain authoritative CI evidence.",
+      "status": "LIVE_GATE_DEFERRED"
+    },
+    {
+      "legacy_claim": "CO-OPS: Units and datum declarations/conversion",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "external-fixtures"
+      ],
+      "probe_id": "L7-CO-OPS-I02",
+      "reason": "Supported adapter behavior reruns against deterministic checksummed offline fixtures.",
+      "status": "PORTABLE"
+    },
+    {
+      "legacy_claim": "CO-OPS: Vertical sign convention normalization",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "external-fixtures"
+      ],
+      "probe_id": "L7-CO-OPS-I03",
+      "reason": "Supported adapter behavior reruns against deterministic checksummed offline fixtures.",
+      "status": "PORTABLE"
+    },
+    {
+      "legacy_claim": "CO-OPS: UTC valid time and cycle selection",
+      "legacy_verdict": "FAIL",
+      "oracles": [
+        "external-fixtures"
+      ],
+      "probe_id": "L7-CO-OPS-I04",
+      "reason": "Supported adapter behavior reruns against deterministic checksummed offline fixtures.",
+      "status": "PORTABLE"
+    },
+    {
+      "legacy_claim": "CO-OPS: Hand-computed spatial indexing",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "external-fixtures"
+      ],
+      "probe_id": "L7-CO-OPS-I05",
+      "reason": "Supported adapter behavior reruns against deterministic checksummed offline fixtures.",
+      "status": "PORTABLE"
+    },
+    {
+      "legacy_claim": "CO-OPS signals outside coverage explicitly",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "external-fixtures"
+      ],
+      "probe_id": "L7-CO-OPS-I06",
+      "reason": "Supported adapter behavior reruns against deterministic checksummed offline fixtures.",
+      "status": "PORTABLE"
+    },
+    {
+      "legacy_claim": "CO-OPS: Checksum/provenance recorded per retrieval",
+      "legacy_verdict": "FAIL",
+      "oracles": [
+        "external-fixtures"
+      ],
+      "probe_id": "L7-CO-OPS-I07",
+      "reason": "Supported adapter behavior reruns against deterministic checksummed offline fixtures.",
+      "status": "PORTABLE"
+    },
+    {
+      "legacy_claim": "ENC: Live payload matches frozen fixture",
+      "legacy_verdict": "FAIL",
+      "oracles": [],
+      "probe_id": "L7-ENC-I01",
+      "reason": "Live-provider endpoint smoke checks were explicitly deferred; offline checksummed fixtures remain authoritative CI evidence.",
+      "status": "LIVE_GATE_DEFERRED"
+    },
+    {
+      "legacy_claim": "ENC: Units and datum declarations/conversion",
+      "legacy_verdict": "SKIP",
+      "oracles": [
+        "external-fixtures"
+      ],
+      "probe_id": "L7-ENC-I02",
+      "reason": "Supported adapter behavior reruns against deterministic checksummed offline fixtures.",
+      "status": "PORTABLE"
+    },
+    {
+      "legacy_claim": "ENC: Vertical sign convention normalization",
+      "legacy_verdict": "SKIP",
+      "oracles": [
+        "external-fixtures"
+      ],
+      "probe_id": "L7-ENC-I03",
+      "reason": "Supported adapter behavior reruns against deterministic checksummed offline fixtures.",
+      "status": "PORTABLE"
+    },
+    {
+      "legacy_claim": "ENC: UTC valid time and cycle selection",
+      "legacy_verdict": "SKIP",
+      "oracles": [
+        "external-fixtures"
+      ],
+      "probe_id": "L7-ENC-I04",
+      "reason": "Supported adapter behavior reruns against deterministic checksummed offline fixtures.",
+      "status": "PORTABLE"
+    },
+    {
+      "legacy_claim": "ENC: Hand-computed spatial indexing",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "external-fixtures"
+      ],
+      "probe_id": "L7-ENC-I05",
+      "reason": "Supported adapter behavior reruns against deterministic checksummed offline fixtures.",
+      "status": "PORTABLE"
+    },
+    {
+      "legacy_claim": "ENC: Explicit out-of-coverage signal",
+      "legacy_verdict": "FAIL",
+      "oracles": [
+        "external-fixtures"
+      ],
+      "probe_id": "L7-ENC-I06",
+      "reason": "Supported adapter behavior reruns against deterministic checksummed offline fixtures.",
+      "status": "PORTABLE"
+    },
+    {
+      "legacy_claim": "ENC: Checksum/provenance recorded per retrieval",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "external-fixtures"
+      ],
+      "probe_id": "L7-ENC-I07",
+      "reason": "Supported adapter behavior reruns against deterministic checksummed offline fixtures.",
+      "status": "PORTABLE"
+    },
+    {
+      "legacy_claim": "ERA5: Live payload matches frozen fixture",
+      "legacy_verdict": "PASS",
+      "oracles": [],
+      "probe_id": "L7-ERA5-I01",
+      "reason": "ERA5 is explicitly deferred from the coordinated V1 source stack.",
+      "status": "OUT_OF_SCOPE"
+    },
+    {
+      "legacy_claim": "ERA5: Units and datum declarations/conversion",
+      "legacy_verdict": "PASS",
+      "oracles": [],
+      "probe_id": "L7-ERA5-I02",
+      "reason": "ERA5 is explicitly deferred from the coordinated V1 source stack.",
+      "status": "OUT_OF_SCOPE"
+    },
+    {
+      "legacy_claim": "ERA5: Vertical sign convention normalization",
+      "legacy_verdict": "SKIP",
+      "oracles": [],
+      "probe_id": "L7-ERA5-I03",
+      "reason": "ERA5 is explicitly deferred from the coordinated V1 source stack.",
+      "status": "OUT_OF_SCOPE"
+    },
+    {
+      "legacy_claim": "ERA5: UTC valid time and cycle selection",
+      "legacy_verdict": "FAIL",
+      "oracles": [],
+      "probe_id": "L7-ERA5-I04",
+      "reason": "ERA5 is explicitly deferred from the coordinated V1 source stack.",
+      "status": "OUT_OF_SCOPE"
+    },
+    {
+      "legacy_claim": "ERA5: Hand-computed spatial indexing",
+      "legacy_verdict": "FAIL",
+      "oracles": [],
+      "probe_id": "L7-ERA5-I05",
+      "reason": "ERA5 is explicitly deferred from the coordinated V1 source stack.",
+      "status": "OUT_OF_SCOPE"
+    },
+    {
+      "legacy_claim": "ERA5: Explicit out-of-coverage signal",
+      "legacy_verdict": "FAIL",
+      "oracles": [],
+      "probe_id": "L7-ERA5-I06",
+      "reason": "ERA5 is explicitly deferred from the coordinated V1 source stack.",
+      "status": "OUT_OF_SCOPE"
+    },
+    {
+      "legacy_claim": "ERA5: Checksum/provenance recorded per retrieval",
+      "legacy_verdict": "FAIL",
+      "oracles": [],
+      "probe_id": "L7-ERA5-I07",
+      "reason": "ERA5 is explicitly deferred from the coordinated V1 source stack.",
+      "status": "OUT_OF_SCOPE"
+    },
+    {
+      "legacy_claim": "GEBCO: Live payload matches frozen fixture",
+      "legacy_verdict": "PASS",
+      "oracles": [],
+      "probe_id": "L7-GEBCO-I01",
+      "reason": "Live-provider endpoint smoke checks were explicitly deferred; offline checksummed fixtures remain authoritative CI evidence.",
+      "status": "LIVE_GATE_DEFERRED"
+    },
+    {
+      "legacy_claim": "GEBCO: Units and datum declarations/conversion",
+      "legacy_verdict": "FAIL",
+      "oracles": [
+        "external-fixtures"
+      ],
+      "probe_id": "L7-GEBCO-I02",
+      "reason": "Supported adapter behavior reruns against deterministic checksummed offline fixtures.",
+      "status": "PORTABLE"
+    },
+    {
+      "legacy_claim": "GEBCO: Vertical sign convention normalization",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "external-fixtures"
+      ],
+      "probe_id": "L7-GEBCO-I03",
+      "reason": "Supported adapter behavior reruns against deterministic checksummed offline fixtures.",
+      "status": "PORTABLE"
+    },
+    {
+      "legacy_claim": "GEBCO: UTC valid time and cycle selection",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "external-fixtures"
+      ],
+      "probe_id": "L7-GEBCO-I04",
+      "reason": "Supported adapter behavior reruns against deterministic checksummed offline fixtures.",
+      "status": "PORTABLE"
+    },
+    {
+      "legacy_claim": "GEBCO: Hand-computed spatial indexing",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "external-fixtures"
+      ],
+      "probe_id": "L7-GEBCO-I05",
+      "reason": "Supported adapter behavior reruns against deterministic checksummed offline fixtures.",
+      "status": "PORTABLE"
+    },
+    {
+      "legacy_claim": "GEBCO: Explicit out-of-coverage signal",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "external-fixtures"
+      ],
+      "probe_id": "L7-GEBCO-I06",
+      "reason": "Supported adapter behavior reruns against deterministic checksummed offline fixtures.",
+      "status": "PORTABLE"
+    },
+    {
+      "legacy_claim": "GEBCO: Checksum/provenance recorded per retrieval",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "external-fixtures"
+      ],
+      "probe_id": "L7-GEBCO-I07",
+      "reason": "Supported adapter behavior reruns against deterministic checksummed offline fixtures.",
+      "status": "PORTABLE"
+    },
+    {
+      "legacy_claim": "NDBC pinned live response matches stored fixture",
+      "legacy_verdict": "PASS",
+      "oracles": [],
+      "probe_id": "L7-NDBC-I01",
+      "reason": "Live-provider endpoint smoke checks were explicitly deferred; offline checksummed fixtures remain authoritative CI evidence.",
+      "status": "LIVE_GATE_DEFERRED"
+    },
+    {
+      "legacy_claim": "NDBC: Units and datum declarations/conversion",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "external-fixtures"
+      ],
+      "probe_id": "L7-NDBC-I02",
+      "reason": "Supported adapter behavior reruns against deterministic checksummed offline fixtures.",
+      "status": "PORTABLE"
+    },
+    {
+      "legacy_claim": "NDBC: Vertical sign convention normalization",
+      "legacy_verdict": "SKIP",
+      "oracles": [
+        "external-fixtures"
+      ],
+      "probe_id": "L7-NDBC-I03",
+      "reason": "Supported adapter behavior reruns against deterministic checksummed offline fixtures.",
+      "status": "PORTABLE"
+    },
+    {
+      "legacy_claim": "NDBC: UTC valid time and cycle selection",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "external-fixtures"
+      ],
+      "probe_id": "L7-NDBC-I04",
+      "reason": "Supported adapter behavior reruns against deterministic checksummed offline fixtures.",
+      "status": "PORTABLE"
+    },
+    {
+      "legacy_claim": "NDBC: Hand-computed spatial indexing",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "external-fixtures"
+      ],
+      "probe_id": "L7-NDBC-I05",
+      "reason": "Supported adapter behavior reruns against deterministic checksummed offline fixtures.",
+      "status": "PORTABLE"
+    },
+    {
+      "legacy_claim": "NDBC signals outside coverage explicitly",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "external-fixtures"
+      ],
+      "probe_id": "L7-NDBC-I06",
+      "reason": "Supported adapter behavior reruns against deterministic checksummed offline fixtures.",
+      "status": "PORTABLE"
+    },
+    {
+      "legacy_claim": "NDBC: Checksum/provenance recorded per retrieval",
+      "legacy_verdict": "FAIL",
+      "oracles": [
+        "external-fixtures"
+      ],
+      "probe_id": "L7-NDBC-I07",
+      "reason": "Supported adapter behavior reruns against deterministic checksummed offline fixtures.",
+      "status": "PORTABLE"
+    },
+    {
+      "legacy_claim": "NWS: Live payload matches frozen fixture",
+      "legacy_verdict": "FAIL",
+      "oracles": [],
+      "probe_id": "L7-NWS-I01",
+      "reason": "Live-provider endpoint smoke checks were explicitly deferred; offline checksummed fixtures remain authoritative CI evidence.",
+      "status": "LIVE_GATE_DEFERRED"
+    },
+    {
+      "legacy_claim": "NWS: Units and datum declarations/conversion",
+      "legacy_verdict": "FAIL",
+      "oracles": [
+        "external-fixtures"
+      ],
+      "probe_id": "L7-NWS-I02",
+      "reason": "Supported adapter behavior reruns against deterministic checksummed offline fixtures.",
+      "status": "PORTABLE"
+    },
+    {
+      "legacy_claim": "NWS: Vertical sign convention normalization",
+      "legacy_verdict": "SKIP",
+      "oracles": [
+        "external-fixtures"
+      ],
+      "probe_id": "L7-NWS-I03",
+      "reason": "Supported adapter behavior reruns against deterministic checksummed offline fixtures.",
+      "status": "PORTABLE"
+    },
+    {
+      "legacy_claim": "NWS: UTC valid time and cycle selection",
+      "legacy_verdict": "FAIL",
+      "oracles": [
+        "external-fixtures"
+      ],
+      "probe_id": "L7-NWS-I04",
+      "reason": "Supported adapter behavior reruns against deterministic checksummed offline fixtures.",
+      "status": "PORTABLE"
+    },
+    {
+      "legacy_claim": "NWS: Hand-computed spatial indexing",
+      "legacy_verdict": "SKIP",
+      "oracles": [
+        "external-fixtures"
+      ],
+      "probe_id": "L7-NWS-I05",
+      "reason": "Supported adapter behavior reruns against deterministic checksummed offline fixtures.",
+      "status": "PORTABLE"
+    },
+    {
+      "legacy_claim": "NWS: Explicit out-of-coverage signal",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "external-fixtures"
+      ],
+      "probe_id": "L7-NWS-I06",
+      "reason": "Supported adapter behavior reruns against deterministic checksummed offline fixtures.",
+      "status": "PORTABLE"
+    },
+    {
+      "legacy_claim": "NWS: Checksum/provenance recorded per retrieval",
+      "legacy_verdict": "FAIL",
+      "oracles": [
+        "external-fixtures"
+      ],
+      "probe_id": "L7-NWS-I07",
+      "reason": "Supported adapter behavior reruns against deterministic checksummed offline fixtures.",
+      "status": "PORTABLE"
+    },
+    {
+      "legacy_claim": "RTOFS pinned live response matches stored fixture",
+      "legacy_verdict": "PASS",
+      "oracles": [],
+      "probe_id": "L7-RTOFS-I01",
+      "reason": "Live-provider endpoint smoke checks were explicitly deferred; offline checksummed fixtures remain authoritative CI evidence.",
+      "status": "LIVE_GATE_DEFERRED"
+    },
+    {
+      "legacy_claim": "RTOFS: Units and datum declarations/conversion",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "external-fixtures"
+      ],
+      "probe_id": "L7-RTOFS-I02",
+      "reason": "Supported adapter behavior reruns against deterministic checksummed offline fixtures.",
+      "status": "PORTABLE"
+    },
+    {
+      "legacy_claim": "RTOFS: Vertical sign convention normalization",
+      "legacy_verdict": "SKIP",
+      "oracles": [
+        "external-fixtures"
+      ],
+      "probe_id": "L7-RTOFS-I03",
+      "reason": "Supported adapter behavior reruns against deterministic checksummed offline fixtures.",
+      "status": "PORTABLE"
+    },
+    {
+      "legacy_claim": "RTOFS: UTC valid time and cycle selection",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "external-fixtures"
+      ],
+      "probe_id": "L7-RTOFS-I04",
+      "reason": "Supported adapter behavior reruns against deterministic checksummed offline fixtures.",
+      "status": "PORTABLE"
+    },
+    {
+      "legacy_claim": "RTOFS: Hand-computed spatial indexing",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "external-fixtures"
+      ],
+      "probe_id": "L7-RTOFS-I05",
+      "reason": "Supported adapter behavior reruns against deterministic checksummed offline fixtures.",
+      "status": "PORTABLE"
+    },
+    {
+      "legacy_claim": "RTOFS signals outside coverage explicitly",
+      "legacy_verdict": "FAIL",
+      "oracles": [
+        "external-fixtures"
+      ],
+      "probe_id": "L7-RTOFS-I06",
+      "reason": "Supported adapter behavior reruns against deterministic checksummed offline fixtures.",
+      "status": "PORTABLE"
+    },
+    {
+      "legacy_claim": "RTOFS: Checksum/provenance recorded per retrieval",
+      "legacy_verdict": "FAIL",
+      "oracles": [
+        "external-fixtures"
+      ],
+      "probe_id": "L7-RTOFS-I07",
+      "reason": "Supported adapter behavior reruns against deterministic checksummed offline fixtures.",
+      "status": "PORTABLE"
+    },
+    {
+      "legacy_claim": "Mirrored waypoints yield mirrored closed-loop trajectory",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "lifecycle-replay",
+        "batch-determinism",
+        "frames-units"
+      ],
+      "probe_id": "L8-P01",
+      "reason": "Portable metamorphic and episode-state behavior reruns against the authoritative new engine.",
+      "status": "PORTABLE"
+    },
+    {
+      "legacy_claim": "Rotated scenario yields rotated closed-loop trajectory",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "lifecycle-replay",
+        "batch-determinism",
+        "frames-units"
+      ],
+      "probe_id": "L8-P02",
+      "reason": "Portable metamorphic and episode-state behavior reruns against the authoritative new engine.",
+      "status": "PORTABLE"
+    },
+    {
+      "legacy_claim": "Translated scenario yields translated closed-loop trajectory",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "lifecycle-replay",
+        "batch-determinism",
+        "frames-units"
+      ],
+      "probe_id": "L8-P03",
+      "reason": "Portable metamorphic and episode-state behavior reruns against the authoritative new engine.",
+      "status": "PORTABLE"
+    },
+    {
+      "legacy_claim": "LOS cross-track sign matches analytic reference",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "lifecycle-replay",
+        "batch-determinism",
+        "frames-units"
+      ],
+      "probe_id": "L8-P04",
+      "reason": "Portable metamorphic and episode-state behavior reruns against the authoritative new engine.",
+      "status": "PORTABLE"
+    },
+    {
+      "legacy_claim": "Heading wrap continuity across plus/minus pi",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "lifecycle-replay",
+        "batch-determinism",
+        "frames-units"
+      ],
+      "probe_id": "L8-P05",
+      "reason": "Portable metamorphic and episode-state behavior reruns against the authoritative new engine.",
+      "status": "PORTABLE"
+    },
+    {
+      "legacy_claim": "Same seed/config gives identical closed-loop trace",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "lifecycle-replay",
+        "batch-determinism",
+        "frames-units"
+      ],
+      "probe_id": "L8-P06",
+      "reason": "Portable metamorphic and episode-state behavior reruns against the authoritative new engine.",
+      "status": "PORTABLE"
+    },
+    {
+      "legacy_claim": "A then B reset matches fresh-process B",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "lifecycle-replay",
+        "batch-determinism",
+        "frames-units"
+      ],
+      "probe_id": "L8-P07",
+      "reason": "Portable metamorphic and episode-state behavior reruns against the authoritative new engine.",
+      "status": "PORTABLE"
+    },
+    {
+      "legacy_claim": "Twenty resets then episode matches one reset",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "lifecycle-replay",
+        "batch-determinism",
+        "frames-units"
+      ],
+      "probe_id": "L8-P08",
+      "reason": "Portable metamorphic and episode-state behavior reruns against the authoritative new engine.",
+      "status": "PORTABLE"
+    },
+    {
+      "legacy_claim": "JSON checkpoint roundtrip continuation is exact",
+      "legacy_verdict": "FAIL",
+      "oracles": [
+        "lifecycle-replay",
+        "batch-determinism",
+        "frames-units"
+      ],
+      "probe_id": "L8-P09",
+      "reason": "Portable metamorphic and episode-state behavior reruns against the authoritative new engine.",
+      "status": "PORTABLE"
+    },
+    {
+      "legacy_claim": "Vector slot index does not affect result",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "lifecycle-replay",
+        "batch-determinism",
+        "frames-units"
+      ],
+      "probe_id": "L8-P10",
+      "reason": "Portable metamorphic and episode-state behavior reruns against the authoritative new engine.",
+      "status": "PORTABLE"
+    },
+    {
+      "legacy_claim": "Episode boundary clears actuator/sensor/field state",
+      "legacy_verdict": "PASS",
+      "oracles": [
+        "lifecycle-replay",
+        "batch-determinism",
+        "frames-units"
+      ],
+      "probe_id": "L8-P11",
+      "reason": "Portable metamorphic and episode-state behavior reruns against the authoritative new engine.",
+      "status": "PORTABLE"
+    },
+    {
+      "legacy_claim": "Reserved closed-loop slot",
+      "legacy_verdict": "SKIP",
+      "oracles": [],
+      "probe_id": "L8-P12",
+      "reason": "The preserved audit marks this as a reserved slot with no acceptance claim.",
+      "status": "NO_ACCEPTANCE_CLAIM"
+    }
+  ],
+  "schema_version": 1,
+  "source_audit_commit": "fac3fd0fa46bb6ebb69de6f8f3978745b83d5a40",
+  "source_probe_count": 178
+}

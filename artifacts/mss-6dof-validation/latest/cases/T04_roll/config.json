@@ -1,0 +1,12 @@
+{
+  "command_update_rate_hz": 100,
+  "dt_s": 0.01,
+  "duration_s": 20.0,
+  "dynamics_mode": "full6",
+  "environment": "still water; current/wind/wave/wake/contact zero",
+  "id": "T04",
+  "name": "roll",
+  "sample_rate_hz": 100,
+  "timestamps": "identical; no resampling",
+  "track": "A"
+}

@@ -1,0 +1,16 @@
+{
+  "id": "COMB-001",
+  "category": "combined",
+  "status": "PASS",
+  "metrics": {
+    "composition_max_abs_error": 1.4210854715202004e-14
+  },
+  "assertions": {
+    "additive": true,
+    "deterministic_replay": true
+  },
+  "warnings": [],
+  "failure_category": null,
+  "observed": "",
+  "expected": ""
+}

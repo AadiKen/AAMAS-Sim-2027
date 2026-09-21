@@ -1,0 +1,10 @@
+{
+  "definition_hash": "b4ba3bb8974acc1df6bd4b95744c0ddccb8bec2fe764b2c7f51eb7fe123ca430",
+  "fallback_used": false,
+  "legacy_preset_used": false,
+  "loaded_fingerprint_matches": true,
+  "loaded_vessel_id": "cfd-smoke-vessel",
+  "requested_vessel_id": "cfd-smoke-vessel",
+  "validation_state": "unvalidated",
+  "vessel_fingerprint": "d097cb5942df21557f2cfe22be2654e53313cc77b39bfc6b8a344d4178d293a5"
+}

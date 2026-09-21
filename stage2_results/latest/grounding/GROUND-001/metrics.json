@@ -1,0 +1,13 @@
+{
+  "id": "GROUND-001",
+  "category": "grounding",
+  "status": "BLOCKED",
+  "metrics": {},
+  "assertions": {},
+  "warnings": [
+    "No production seabed-contact/grounding solver exists"
+  ],
+  "failure_category": "REFERENCE",
+  "observed": "No production seabed-contact/grounding solver exists",
+  "expected": "Production capability and independent validation fixture available"
+}

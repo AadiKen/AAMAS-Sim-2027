@@ -1,0 +1,156 @@
+{
+  "agreement": "NEAR PARITY",
+  "channels": {
+    "p": {
+      "final_abs": 0.0,
+      "mae": 0.0,
+      "max_abs": 0.0,
+      "normalized_rmse": null,
+      "rmse": 0.0
+    },
+    "pitch": {
+      "final_abs": 0.0,
+      "mae": 0.0,
+      "max_abs": 0.0,
+      "normalized_rmse": null,
+      "rmse": 0.0
+    },
+    "q": {
+      "final_abs": 0.0,
+      "mae": 0.0,
+      "max_abs": 0.0,
+      "normalized_rmse": null,
+      "rmse": 0.0
+    },
+    "r": {
+      "final_abs": 0.0,
+      "mae": 0.0,
+      "max_abs": 0.0,
+      "normalized_rmse": null,
+      "rmse": 0.0
+    },
+    "roll": {
+      "final_abs": 0.0,
+      "mae": 0.0,
+      "max_abs": 0.0,
+      "normalized_rmse": null,
+      "rmse": 0.0
+    },
+    "u": {
+      "final_abs": 0.0,
+      "mae": 0.0,
+      "max_abs": 0.0,
+      "normalized_rmse": null,
+      "rmse": 0.0
+    },
+    "v": {
+      "final_abs": 0.0,
+      "mae": 0.0,
+      "max_abs": 0.0,
+      "normalized_rmse": null,
+      "rmse": 0.0
+    },
+    "w": {
+      "final_abs": 0.0,
+      "mae": 0.0,
+      "max_abs": 0.0,
+      "normalized_rmse": null,
+      "rmse": 0.0
+    },
+    "x": {
+      "final_abs": 0.0,
+      "mae": 0.0,
+      "max_abs": 0.0,
+      "normalized_rmse": null,
+      "rmse": 0.0
+    },
+    "y": {
+      "final_abs": 0.0,
+      "mae": 0.0,
+      "max_abs": 0.0,
+      "normalized_rmse": null,
+      "rmse": 0.0
+    },
+    "yaw": {
+      "final_abs": 0.0,
+      "mae": 0.0,
+      "max_abs": 0.0,
+      "normalized_rmse": null,
+      "rmse": 0.0
+    },
+    "z": {
+      "final_abs": 0.0,
+      "mae": 0.0,
+      "max_abs": 0.0,
+      "normalized_rmse": null,
+      "rmse": 0.0
+    }
+  },
+  "preconditions": {
+    "finite_trajectories": true,
+    "no_operating_envelope_violation": true,
+    "same_frames_after_conversion": true,
+    "same_gravity": true,
+    "same_initial_state": true,
+    "same_input_history": true,
+    "same_parameter_set_to_declared_equivalence": true,
+    "same_water_density": true,
+    "timestamps_matched": true
+  },
+  "vectors": {
+    "angular_velocity": {
+      "final_abs": 0.0,
+      "mae": 0.0,
+      "max_abs": 0.0,
+      "normalized_rmse": null,
+      "rmse": 0.0
+    },
+    "linear_velocity": {
+      "final_abs": 0.0,
+      "mae": 0.0,
+      "max_abs": 0.0,
+      "normalized_rmse": null,
+      "rmse": 0.0
+    },
+    "orientation_geodesic_deg": {
+      "final_abs": 0.0,
+      "mae": 0.0,
+      "max_abs": 0.0,
+      "normalized_rmse": null,
+      "rmse": 0.0
+    },
+    "position": {
+      "final_abs": 0.0,
+      "mae": 0.0,
+      "max_abs": 0.0,
+      "normalized_rmse": null,
+      "rmse": 0.0
+    }
+  },
+  "windows": {
+    "0-0.1s": {
+      "angular_velocity_max_radps": 0.0,
+      "linear_velocity_max_mps": 0.0,
+      "orientation_max_deg": 0.0,
+      "position_max_m": 0.0
+    },
+    "0-1s": {
+      "angular_velocity_max_radps": 0.0,
+      "linear_velocity_max_mps": 0.0,
+      "orientation_max_deg": 0.0,
+      "position_max_m": 0.0
+    },
+    "0-5s": {
+      "angular_velocity_max_radps": 0.0,
+      "linear_velocity_max_mps": 0.0,
+      "orientation_max_deg": 0.0,
+      "position_max_m": 0.0
+    },
+    "full": {
+      "angular_velocity_max_radps": 0.0,
+      "linear_velocity_max_mps": 0.0,
+      "orientation_max_deg": 0.0,
+      "position_max_m": 0.0
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "CRAFT/USV/models/otter.m": "66c144fea629cee4bea0ad55b62a1bc5e55b46e68ac8e94860ddc7f0aff12248",
+  "GNC/satlim.m": "6f2fe5f1d382e6642945e70202533c468eff4fba470f82c62705edefc8e0e688",
+  "HYDRO/Hoerner.m": "fa1873ccf3244e7f33ab0e75c72a1022023bb28f0cc5ab192a111c109060b78c",
+  "LIBRARY/kinematics/Hmtrx.m": "3791e12789ecc2de0b5f6c8d05c5d6e54a8a2e547fa3a1a215bb3da2c0611d8e",
+  "LIBRARY/kinematics/Rzyx.m": "c45efd0b5d62f6813b45216a211511803e374c2dd4668dbc4801f26f93f45390",
+  "LIBRARY/kinematics/Smtrx.m": "47441ebf29d338e41d5c5055a2379883feed6e07ffa1ee379755f3d1cdcef678",
+  "LIBRARY/kinematics/Tzyx.m": "1e20d293b5dca02d332ed6993681b58a8d19f5435ea92f7b6dd7be50c79e93ba",
+  "LIBRARY/kinematics/eulerang.m": "657c45e3d1ad44a4f9367cff0881967b0116e0f5845a18e508df49af88d5eda5",
+  "LIBRARY/modeling/addedMassSurge.m": "b9e174d21ef15e3625a89155468cf38b4ed2c16b9c33b3920bbb6fb5798532eb",
+  "LIBRARY/modeling/crossFlowDrag.m": "704d954959b5112f5a3b1828b53acee74ade07900cbf32ea0354bf81707c0b8f",
+  "LIBRARY/modeling/m2c.m": "9aa45803c41a100059b98df229ced6f6e12237bf638904bd232ad3a9173e1f0c",
+  "LIBRARY/numericalMethods/rk4.m": "d87f54915979659a473488b54971c8aef08da49470ca9057dbe79cfa5cb045b0"
+}

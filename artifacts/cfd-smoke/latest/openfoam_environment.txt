@@ -1,0 +1,8 @@
+{
+  "distribution": "OpenFOAM Foundation",
+  "image": "openfoam/openfoam11-paraview510:11",
+  "image_identity": "openfoam/openfoam11-paraview510@sha256:fd10956e0b1eb70f9808baf2857e4baf846a0f6f272f73b6d00546eae96be181 sha256:fd10956e0b1eb70f9808baf2857e4baf846a0f6f272f73b6d00546eae96be181",
+  "runtime": "docker",
+  "solver": "foamRun",
+  "version": "OpenFOAM-11"
+}

@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "bcod-sim"
+version = "0.0.0"
+description = "BCOD-Sim ground-up rewrite (phase 0 scaffold)"
+requires-python = ">=3.12"
+dependencies = ["fastapi>=0.115,<1", "numpy>=2,<3", "onnx>=1.17,<2", "onnxruntime>=1.20,<2", "pyarrow>=18,<24", "pydantic>=2,<3", "PyYAML>=6,<7", "torch>=2.4", "uvicorn>=0.34,<1"]
+
+[project.optional-dependencies]
+test = ["httpx>=0.28,<1", "numpy>=2,<3", "pytest>=8,<10", "hypothesis>=6,<7"]
+validation = ["matplotlib>=3.9,<4"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

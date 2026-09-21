@@ -1,0 +1,156 @@
+{
+  "agreement": "NEAR PARITY",
+  "channels": {
+    "p": {
+      "final_abs": 0.0,
+      "mae": 0.0,
+      "max_abs": 0.0,
+      "normalized_rmse": null,
+      "rmse": 0.0
+    },
+    "pitch": {
+      "final_abs": 5.169878828456423e-26,
+      "mae": 1.1249800858417197e-18,
+      "max_abs": 5.637851296924623e-17,
+      "normalized_rmse": null,
+      "rmse": 5.771541932017626e-18
+    },
+    "q": {
+      "final_abs": 1.1632227364026952e-25,
+      "mae": 1.2389682840050184e-17,
+      "max_abs": 6.192962809237201e-16,
+      "normalized_rmse": 4.789612395874496e-15,
+      "rmse": 6.746716745876244e-17
+    },
+    "r": {
+      "final_abs": 0.0,
+      "mae": 0.0,
+      "max_abs": 0.0,
+      "normalized_rmse": null,
+      "rmse": 0.0
+    },
+    "roll": {
+      "final_abs": 0.0,
+      "mae": 0.0,
+      "max_abs": 0.0,
+      "normalized_rmse": null,
+      "rmse": 0.0
+    },
+    "u": {
+      "final_abs": 6.617444900424222e-24,
+      "mae": 8.245044087020219e-18,
+      "max_abs": 1.6653345369377348e-16,
+      "normalized_rmse": 8.001396160188082e-17,
+      "rmse": 2.0601300776624944e-17
+    },
+    "v": {
+      "final_abs": 0.0,
+      "mae": 0.0,
+      "max_abs": 0.0,
+      "normalized_rmse": null,
+      "rmse": 0.0
+    },
+    "w": {
+      "final_abs": 3.2311742677852644e-27,
+      "mae": 4.0620272533716545e-18,
+      "max_abs": 1.3261147822213326e-16,
+      "normalized_rmse": 4.6110183198455174e-15,
+      "rmse": 1.5850513940573656e-17
+    },
+    "x": {
+      "final_abs": 0.0,
+      "mae": 6.0241355716968515e-19,
+      "max_abs": 2.7755575615628914e-17,
+      "normalized_rmse": 2.2284375425328415e-18,
+      "rmse": 2.873393130863959e-18
+    },
+    "y": {
+      "final_abs": 0.0,
+      "mae": 0.0,
+      "max_abs": 0.0,
+      "normalized_rmse": null,
+      "rmse": 0.0
+    },
+    "yaw": {
+      "final_abs": 0.0,
+      "mae": 0.0,
+      "max_abs": 0.0,
+      "normalized_rmse": null,
+      "rmse": 0.0
+    },
+    "z": {
+      "final_abs": 1.2924697071141057e-26,
+      "mae": 4.457075588491795e-19,
+      "max_abs": 9.86623976961809e-18,
+      "normalized_rmse": 1.9907482987715757e-15,
+      "rmse": 1.5598339036120652e-18
+    }
+  },
+  "preconditions": {
+    "finite_trajectories": true,
+    "no_operating_envelope_violation": true,
+    "same_frames_after_conversion": true,
+    "same_gravity": true,
+    "same_initial_state": true,
+    "same_input_history": true,
+    "same_parameter_set_to_declared_equivalence": true,
+    "same_water_density": true,
+    "timestamps_matched": true
+  },
+  "vectors": {
+    "angular_velocity": {
+      "final_abs": 1.1632227364026952e-25,
+      "mae": 1.2389682840050184e-17,
+      "max_abs": 6.192962809237201e-16,
+      "normalized_rmse": null,
+      "rmse": 6.746716745876244e-17
+    },
+    "linear_velocity": {
+      "final_abs": 6.61744568928508e-24,
+      "mae": 1.0557686193553614e-17,
+      "max_abs": 2.1219256860450768e-16,
+      "normalized_rmse": null,
+      "rmse": 2.5993314253270734e-17
+    },
+    "orientation_geodesic_deg": {
+      "final_abs": 0.0,
+      "mae": 4.010730771996493e-08,
+      "max_abs": 1.7075472925031877e-06,
+      "normalized_rmse": null,
+      "rmse": 2.6169662723623e-07
+    },
+    "position": {
+      "final_abs": 1.2924697071141057e-26,
+      "mae": 9.155230412591945e-19,
+      "max_abs": 2.778032127310897e-17,
+      "normalized_rmse": null,
+      "rmse": 3.2694754764876027e-18
+    }
+  },
+  "windows": {
+    "0-0.1s": {
+      "angular_velocity_max_radps": 0.0,
+      "linear_velocity_max_mps": 0.0,
+      "orientation_max_deg": 0.0,
+      "position_max_m": 0.0
+    },
+    "0-1s": {
+      "angular_velocity_max_radps": 0.0,
+      "linear_velocity_max_mps": 0.0,
+      "orientation_max_deg": 0.0,
+      "position_max_m": 0.0
+    },
+    "0-5s": {
+      "angular_velocity_max_radps": 6.192962809237201e-16,
+      "linear_velocity_max_mps": 1.6857983299741854e-16,
+      "orientation_max_deg": 1.7075472925031877e-06,
+      "position_max_m": 2.778032127310897e-17
+    },
+    "full": {
+      "angular_velocity_max_radps": 6.192962809237201e-16,
+      "linear_velocity_max_mps": 2.1219256860450768e-16,
+      "orientation_max_deg": 1.7075472925031877e-06,
+      "position_max_m": 2.778032127310897e-17
+    }
+  }
+}

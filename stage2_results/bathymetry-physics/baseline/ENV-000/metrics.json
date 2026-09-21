@@ -1,0 +1,17 @@
+{
+  "id": "ENV-000",
+  "category": "baseline",
+  "status": "PASS",
+  "metrics": {
+    "max_environment_wrench": 0.0
+  },
+  "assertions": {
+    "environment_disabled_is_zero": true,
+    "state_finite": true,
+    "deterministic_replay": true
+  },
+  "warnings": [],
+  "failure_category": null,
+  "observed": "",
+  "expected": ""
+}

@@ -1,0 +1,19 @@
+{
+  "id": "BATH-003",
+  "category": "bathymetry",
+  "status": "PASS",
+  "metrics": {
+    "exact_cell": 20.0,
+    "bilinear_value": 8.25
+  },
+  "assertions": {
+    "axis_and_origin": true,
+    "bilinear_interpolation": true,
+    "bounds": true,
+    "deterministic_replay": true
+  },
+  "warnings": [],
+  "failure_category": null,
+  "observed": "",
+  "expected": ""
+}

@@ -1,0 +1,12 @@
+{
+  "command_update_rate_hz": 100,
+  "dt_s": 0.01,
+  "duration_s": 30.0,
+  "dynamics_mode": "full6",
+  "environment": "still water; current/wind/wave/wake/contact zero",
+  "id": "T10",
+  "name": "turn_left",
+  "sample_rate_hz": 100,
+  "timestamps": "identical; no resampling",
+  "track": "B"
+}

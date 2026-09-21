@@ -1,0 +1,3737 @@
+[
+  {
+    "master_step": 0,
+    "reward": {},
+    "sim_time_s": 0.0,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.0
+        ],
+        "position_ned_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 1,
+    "reward": {
+      "agent": 0.00010015893553827482
+    },
+    "sim_time_s": 0.05,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.004006329971996148,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.00010015893552120239
+        ],
+        "position_ned_m": [
+          0.00010015893552120239,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 2,
+    "reward": {
+      "agent": 0.0003004711105631941
+    },
+    "sim_time_s": 0.1,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.008012482878919583,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.0004006300461124377
+        ],
+        "position_ned_m": [
+          0.0004006300461124377,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 3,
+    "reward": {
+      "agent": 0.0005007738138829154
+    },
+    "sim_time_s": 0.15000000000000002,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.0120184339797758,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.000901403859975704
+        ],
+        "position_ned_m": [
+          0.000901403859975704,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 4,
+    "reward": {
+      "agent": 0.0007010658083572707
+    },
+    "sim_time_s": 0.2,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.01602415853855666,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.0016024696683853879
+        ],
+        "position_ned_m": [
+          0.0016024696683853879,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 5,
+    "reward": {
+      "agent": 0.0009013458576418998
+    },
+    "sim_time_s": 0.25,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.02002963182485114,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.0025038155259528524
+        ],
+        "position_ned_m": [
+          0.0025038155259528524,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 6,
+    "reward": {
+      "agent": 0.001101612724937695
+    },
+    "sim_time_s": 0.30000000000000004,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.02403482911445578,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.003605428250921556
+        ],
+        "position_ned_m": [
+          0.003605428250921556,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 7,
+    "reward": {
+      "agent": 0.0013018651745824172
+    },
+    "sim_time_s": 0.35000000000000003,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.028039725689984796,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.0049072934254926846
+        ],
+        "position_ned_m": [
+          0.0049072934254926846,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 8,
+    "reward": {
+      "agent": 0.0015021019706864536
+    },
+    "sim_time_s": 0.4,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.032044296841479886,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.006409395396181281
+        ],
+        "position_ned_m": [
+          0.006409395396181281,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 9,
+    "reward": {
+      "agent": 0.0017023218780423122
+    },
+    "sim_time_s": 0.45,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.03604851786701956,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.008111717274202858
+        ],
+        "position_ned_m": [
+          0.008111717274202858,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 10,
+    "reward": {
+      "agent": 0.0019025236616698749
+    },
+    "sim_time_s": 0.5,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.04005236407332815,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.010014240935890458
+        ],
+        "position_ned_m": [
+          0.010014240935890458,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 11,
+    "reward": {
+      "agent": 0.0021027060872711445
+    },
+    "sim_time_s": 0.55,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.044055810776384256,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.012116947023142166
+        ],
+        "position_ned_m": [
+          0.012116947023142166,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 12,
+    "reward": {
+      "agent": 0.0023028679207754976
+    },
+    "sim_time_s": 0.6000000000000001,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.048058833302028814,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.014419814943899024
+        ],
+        "position_ned_m": [
+          0.014419814943899024,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 13,
+    "reward": {
+      "agent": 0.002503007928680745
+    },
+    "sim_time_s": 0.65,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.052061406986572564,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.016922822872653336
+        ],
+        "position_ned_m": [
+          0.016922822872653336,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 14,
+    "reward": {
+      "agent": 0.002703124878394192
+    },
+    "sim_time_s": 0.7000000000000001,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.05606350717740303,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.019625947750987326
+        ],
+        "position_ned_m": [
+          0.019625947750987326,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 15,
+    "reward": {
+      "agent": 0.0029032175370957702
+    },
+    "sim_time_s": 0.75,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.06006510923359085,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.02252916528814216
+        ],
+        "position_ned_m": [
+          0.02252916528814216,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 16,
+    "reward": {
+      "agent": 0.0031032846734433406
+    },
+    "sim_time_s": 0.8,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.0640661885264956,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.025632449961617225
+        ],
+        "position_ned_m": [
+          0.025632449961617225,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 17,
+    "reward": {
+      "agent": 0.0033033250562084504
+    },
+    "sim_time_s": 0.8500000000000001,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.06806672044037082,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.028935775017799724
+        ],
+        "position_ned_m": [
+          0.028935775017799724,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 18,
+    "reward": {
+      "agent": 0.0035033374548447682
+    },
+    "sim_time_s": 0.9,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.07206668037296854,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.03243911247262448
+        ],
+        "position_ned_m": [
+          0.03243911247262448,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 19,
+    "reward": {
+      "agent": 0.0037033206396017704
+    },
+    "sim_time_s": 0.9500000000000001,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.07606604373614298,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.03614243311226396
+        ],
+        "position_ned_m": [
+          0.03614243311226396,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 20,
+    "reward": {
+      "agent": 0.003903273381638428
+    },
+    "sim_time_s": 1.0,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.08006478595645351,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.04004570649384845
+        ],
+        "position_ned_m": [
+          0.04004570649384845,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 21,
+    "reward": {
+      "agent": 0.004103194452341086
+    },
+    "sim_time_s": 1.05,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.08406288247576696,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.044148900946216395
+        ],
+        "position_ned_m": [
+          0.044148900946216395,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 22,
+    "reward": {
+      "agent": 0.00430308262446033
+    },
+    "sim_time_s": 1.1,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.08806030875185894,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.048451983570694794
+        ],
+        "position_ned_m": [
+          0.048451983570694794,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 23,
+    "reward": {
+      "agent": 0.004502936671201496
+    },
+    "sim_time_s": 1.1500000000000001,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.09205704025901451,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.05295492024190966
+        ],
+        "position_ned_m": [
+          0.05295492024190966,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 24,
+    "reward": {
+      "agent": 0.004702755366793099
+    },
+    "sim_time_s": 1.2000000000000002,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.0960530524886279,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.057657675608626495
+        ],
+        "position_ned_m": [
+          0.057657675608626495,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 25,
+    "reward": {
+      "agent": 0.004902537485918401
+    },
+    "sim_time_s": 1.25,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.10004832094980132,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.0625602130946207
+        ],
+        "position_ned_m": [
+          0.0625602130946207,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 26,
+    "reward": {
+      "agent": 0.005102281804965969
+    },
+    "sim_time_s": 1.3,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.10404282116994287,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.06766249489957799
+        ],
+        "position_ned_m": [
+          0.06766249489957799,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 27,
+    "reward": {
+      "agent": 0.005301987100438055
+    },
+    "sim_time_s": 1.35,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.10803652869536352,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.0729644820000245
+        ],
+        "position_ned_m": [
+          0.0729644820000245,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 28,
+    "reward": {
+      "agent": 0.00550165215031484
+    },
+    "sim_time_s": 1.4000000000000001,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.11202941909187307,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.07846613415028698
+        ],
+        "position_ned_m": [
+          0.07846613415028698,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 29,
+    "reward": {
+      "agent": 0.005701275733144939
+    },
+    "sim_time_s": 1.4500000000000002,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.11602146794537509,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.0841674098834825
+        ],
+        "position_ned_m": [
+          0.0841674098834825,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 30,
+    "reward": {
+      "agent": 0.005900856629068585
+    },
+    "sim_time_s": 1.5,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.12001265086246081,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.090068266512538
+        ],
+        "position_ned_m": [
+          0.090068266512538,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 31,
+    "reward": {
+      "agent": 0.006100393618680755
+    },
+    "sim_time_s": 1.55,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.12400294347100199,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.0961686601312396
+        ],
+        "position_ned_m": [
+          0.0961686601312396,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 32,
+    "reward": {
+      "agent": 0.006299885484168044
+    },
+    "sim_time_s": 1.6,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.12799232142074257,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.10246854561531128
+        ],
+        "position_ned_m": [
+          0.10246854561531128,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 33,
+    "reward": {
+      "agent": 0.006499331008171794
+    },
+    "sim_time_s": 1.6500000000000001,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.13198076038388934,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.10896787662352336
+        ],
+        "position_ned_m": [
+          0.10896787662352336,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 34,
+    "reward": {
+      "agent": 0.006698728975266022
+    },
+    "sim_time_s": 1.7000000000000002,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.1359682360557012,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.11566660559883034
+        ],
+        "position_ned_m": [
+          0.11566660559883034,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 35,
+    "reward": {
+      "agent": 0.006898078170706867
+    },
+    "sim_time_s": 1.75,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.13995472415507754,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.12256468376953823
+        ],
+        "position_ned_m": [
+          0.12256468376953823,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 36,
+    "reward": {
+      "agent": 0.007097377381001024
+    },
+    "sim_time_s": 1.8,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.14394020042514505,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.12966206115050127
+        ],
+        "position_ned_m": [
+          0.12966206115050127,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 37,
+    "reward": {
+      "agent": 0.007296625393905742
+    },
+    "sim_time_s": 1.85,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.14792464063384358,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.1369586865443479
+        ],
+        "position_ned_m": [
+          0.1369586865443479,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 38,
+    "reward": {
+      "agent": 0.007495820998315139
+    },
+    "sim_time_s": 1.9000000000000001,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.15190802057451047,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.14445450754273606
+        ],
+        "position_ned_m": [
+          0.14445450754273606,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 39,
+    "reward": {
+      "agent": 0.007694962984942322
+    },
+    "sim_time_s": 1.9500000000000002,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.1558903160664637,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.15214947052763766
+        ],
+        "position_ned_m": [
+          0.15214947052763766,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 40,
+    "reward": {
+      "agent": 0.007894050144955145
+    },
+    "sim_time_s": 2.0,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.15987150295558358,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.16004352067265215
+        ],
+        "position_ned_m": [
+          0.16004352067265215,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 41,
+    "reward": {
+      "agent": 0.008093081271681513
+    },
+    "sim_time_s": 2.0500000000000003,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.1638515571148933,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.16813660194434912
+        ],
+        "position_ned_m": [
+          0.16813660194434912,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 42,
+    "reward": {
+      "agent": 0.008292055159358824
+    },
+    "sim_time_s": 2.1,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.1678304544451377,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.17642865710363997
+        ],
+        "position_ned_m": [
+          0.17642865710363997,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 43,
+    "reward": {
+      "agent": 0.008490970603475034
+    },
+    "sim_time_s": 2.15,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.17180817087536093,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.18491962770717843
+        ],
+        "position_ned_m": [
+          0.18491962770717843,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 44,
+    "reward": {
+      "agent": 0.008689826401678147
+    },
+    "sim_time_s": 2.2,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.17578468236348252,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.1936094541087899
+        ],
+        "position_ned_m": [
+          0.1936094541087899,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 45,
+    "reward": {
+      "agent": 0.008888621352070913
+    },
+    "sim_time_s": 2.25,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.1797599648968719,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.20249807546092968
+        ],
+        "position_ned_m": [
+          0.20249807546092968,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 46,
+    "reward": {
+      "agent": 0.009087354255257196
+    },
+    "sim_time_s": 2.3000000000000003,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.1837339944929215,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.21158542971616964
+        ],
+        "position_ned_m": [
+          0.21158542971616964,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 47,
+    "reward": {
+      "agent": 0.009286023912522978
+    },
+    "sim_time_s": 2.35,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.1877067471996182,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.2208714536287138
+        ],
+        "position_ned_m": [
+          0.2208714536287138,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 48,
+    "reward": {
+      "agent": 0.009484629127314292
+    },
+    "sim_time_s": 2.4000000000000004,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.1916781990961133,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.23035608275594227
+        ],
+        "position_ned_m": [
+          0.23035608275594227,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 49,
+    "reward": {
+      "agent": 0.009683168703986667
+    },
+    "sim_time_s": 2.45,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.19564832629329085,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.24003925145998367
+        ],
+        "position_ned_m": [
+          0.24003925145998367,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 50,
+    "reward": {
+      "agent": 0.009881641449396739
+    },
+    "sim_time_s": 2.5,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.19961710493433427,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.24992089290931596
+        ],
+        "position_ned_m": [
+          0.24992089290931596,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 51,
+    "reward": {
+      "agent": 0.010080046171083268
+    },
+    "sim_time_s": 2.5500000000000003,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.20358451119529133,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.2600009390803955
+        ],
+        "position_ned_m": [
+          0.2600009390803955,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 52,
+    "reward": {
+      "agent": 0.01027838167885875
+    },
+    "sim_time_s": 2.6,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.2075505212856376,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.27027932075931443
+        ],
+        "position_ned_m": [
+          0.27027932075931443,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 53,
+    "reward": {
+      "agent": 0.010476646784240984
+    },
+    "sim_time_s": 2.6500000000000004,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.21151511144883792,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.28075596754348603
+        ],
+        "position_ned_m": [
+          0.28075596754348603,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 54,
+    "reward": {
+      "agent": 0.010674840299770949
+    },
+    "sim_time_s": 2.7,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.21547825796290626,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.29143080784335823
+        ],
+        "position_ned_m": [
+          0.29143080784335823,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 55,
+    "reward": {
+      "agent": 0.010872961040831797
+    },
+    "sim_time_s": 2.75,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.21943993714096388,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.302303768884155
+        ],
+        "position_ned_m": [
+          0.302303768884155,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 56,
+    "reward": {
+      "agent": 0.011071007823488799
+    },
+    "sim_time_s": 2.8000000000000003,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.22340012533179546,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.3133747767076457
+        ],
+        "position_ned_m": [
+          0.3133747767076457,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 57,
+    "reward": {
+      "agent": 0.011268979466308338
+    },
+    "sim_time_s": 2.85,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.22735879892040364,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.324643756173942
+        ],
+        "position_ned_m": [
+          0.324643756173942,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 58,
+    "reward": {
+      "agent": 0.011466874789334724
+    },
+    "sim_time_s": 2.9000000000000004,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.2313159343285616,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.3361106309633227
+        ],
+        "position_ned_m": [
+          0.3361106309633227,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 59,
+    "reward": {
+      "agent": 0.01166469261477232
+    },
+    "sim_time_s": 2.95,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.23527150801536367,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.3477753235780861
+        ],
+        "position_ned_m": [
+          0.3477753235780861,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 60,
+    "reward": {
+      "agent": 0.011862431766417103
+    },
+    "sim_time_s": 3.0,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.23922549647777416,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.3596377553444295
+        ],
+        "position_ned_m": [
+          0.3596377553444295,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 61,
+    "reward": {
+      "agent": 0.012060091069884038
+    },
+    "sim_time_s": 3.0500000000000003,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.24317787625117424,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.3716978464143566
+        ],
+        "position_ned_m": [
+          0.3716978464143566,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 62,
+    "reward": {
+      "agent": 0.012257669353289202
+    },
+    "sim_time_s": 3.1,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.24712862390990673,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.38395551576761205
+        ],
+        "position_ned_m": [
+          0.38395551576761205,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 63,
+    "reward": {
+      "agent": 0.012455165445999228
+    },
+    "sim_time_s": 3.1500000000000004,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.25107771606781903,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.39641068121364287
+        ],
+        "position_ned_m": [
+          0.39641068121364287,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 64,
+    "reward": {
+      "agent": 0.012652578179995544
+    },
+    "sim_time_s": 3.2,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.2550251293788041,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.40906325939358745
+        ],
+        "position_ned_m": [
+          0.40906325939358745,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 65,
+    "reward": {
+      "agent": 0.012849906388623822
+    },
+    "sim_time_s": 3.25,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.2589708405373391,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.4219131657822911
+        ],
+        "position_ned_m": [
+          0.4219131657822911,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 66,
+    "reward": {
+      "agent": 0.013047148908071904
+    },
+    "sim_time_s": 3.3000000000000003,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.2629148262790222,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.4349603146903488
+        ],
+        "position_ned_m": [
+          0.4349603146903488,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 67,
+    "reward": {
+      "agent": 0.013244304575891874
+    },
+    "sim_time_s": 3.35,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.2668570633811074,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.44820461926617466
+        ],
+        "position_ned_m": [
+          0.44820461926617466,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 68,
+    "reward": {
+      "agent": 0.013441372231909554
+    },
+    "sim_time_s": 3.4000000000000004,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.27079752866303686,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.46164599149809793
+        ],
+        "position_ned_m": [
+          0.46164599149809793,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 69,
+    "reward": {
+      "agent": 0.013638350718338188
+    },
+    "sim_time_s": 3.45,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.27473619898697155,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.4752843422164858
+        ],
+        "position_ned_m": [
+          0.4752843422164858,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 70,
+    "reward": {
+      "agent": 0.013835238879437384
+    },
+    "sim_time_s": 3.5,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.2786730512583192,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.4891195810958924
+        ],
+        "position_ned_m": [
+          0.4891195810958924,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 71,
+    "reward": {
+      "agent": 0.014032035561285738
+    },
+    "sim_time_s": 3.5500000000000003,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.2826080624262605,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.5031516166572344
+        ],
+        "position_ned_m": [
+          0.5031516166572344,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 72,
+    "reward": {
+      "agent": 0.01422873961280402
+    },
+    "sim_time_s": 3.6,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.2865412094842731,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.5173803562699928
+        ],
+        "position_ned_m": [
+          0.5173803562699928,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 73,
+    "reward": {
+      "agent": 0.014425349884390926
+    },
+    "sim_time_s": 3.6500000000000004,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.2904724694706527,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.5318057061544407
+        ],
+        "position_ned_m": [
+          0.5318057061544407,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 74,
+    "reward": {
+      "agent": 0.014621865229514697
+    },
+    "sim_time_s": 3.7,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.29440181946903293,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.5464275713838973
+        ],
+        "position_ned_m": [
+          0.5464275713838973,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 75,
+    "reward": {
+      "agent": 0.014818284503121504
+    },
+    "sim_time_s": 3.75,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.298329236608902,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.5612458558870077
+        ],
+        "position_ned_m": [
+          0.5612458558870077,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 76,
+    "reward": {
+      "agent": 0.015014606562999688
+    },
+    "sim_time_s": 3.8000000000000003,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.3022546980661175,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.5762604624500485
+        ],
+        "position_ned_m": [
+          0.5762604624500485,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 77,
+    "reward": {
+      "agent": 0.015210830269211328
+    },
+    "sim_time_s": 3.85,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.3061781810634188,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.5914712927192591
+        ],
+        "position_ned_m": [
+          0.5914712927192591,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 78,
+    "reward": {
+      "agent": 0.015406954483978552
+    },
+    "sim_time_s": 3.9000000000000004,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.3100996628709371,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.6068782472031986
+        ],
+        "position_ned_m": [
+          0.6068782472031986,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 79,
+    "reward": {
+      "agent": 0.015602978071910911
+    },
+    "sim_time_s": 3.95,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.31401912080670297,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.622481225275128
+        ],
+        "position_ned_m": [
+          0.622481225275128,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 80,
+    "reward": {
+      "agent": 0.01579889990034644
+    },
+    "sim_time_s": 4.0,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.31793653223715157,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.6382801251754177
+        ],
+        "position_ned_m": [
+          0.6382801251754177,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 81,
+    "reward": {
+      "agent": 0.015994718838555855
+    },
+    "sim_time_s": 4.05,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.32185187457762554,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.6542748440139806
+        ],
+        "position_ned_m": [
+          0.6542748440139806,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 82,
+    "reward": {
+      "agent": 0.016190433758652034
+    },
+    "sim_time_s": 4.1000000000000005,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.3257651252928752,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.67046527777273
+        ],
+        "position_ned_m": [
+          0.67046527777273,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 83,
+    "reward": {
+      "agent": 0.01638604353536266
+    },
+    "sim_time_s": 4.15,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.3296762618975565,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.6868513213080619
+        ],
+        "position_ned_m": [
+          0.6868513213080619,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 84,
+    "reward": {
+      "agent": 0.01658154704534809
+    },
+    "sim_time_s": 4.2,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.3335852619567263,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.7034328683533634
+        ],
+        "position_ned_m": [
+          0.7034328683533634,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 85,
+    "reward": {
+      "agent": 0.016776943168110847
+    },
+    "sim_time_s": 4.25,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.3374921030863352,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.7202098115215445
+        ],
+        "position_ned_m": [
+          0.7202098115215445,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 86,
+    "reward": {
+      "agent": 0.01697223078610932
+    },
+    "sim_time_s": 4.3,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.3413967629537181,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.7371820423075955
+        ],
+        "position_ned_m": [
+          0.7371820423075955,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 87,
+    "reward": {
+      "agent": 0.0171674087835072
+    },
+    "sim_time_s": 4.3500000000000005,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.34529921927808155,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.7543494510911681
+        ],
+        "position_ned_m": [
+          0.7543494510911681,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 88,
+    "reward": {
+      "agent": 0.017362476048106146
+    },
+    "sim_time_s": 4.4,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.3491994498309891,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.7717119271391812
+        ],
+        "position_ned_m": [
+          0.7717119271391812,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 89,
+    "reward": {
+      "agent": 0.017557431469185758
+    },
+    "sim_time_s": 4.45,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.3530974324368439,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.789269358608451
+        ],
+        "position_ned_m": [
+          0.789269358608451,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 90,
+    "reward": {
+      "agent": 0.017752273939890983
+    },
+    "sim_time_s": 4.5,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.3569931449733685,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.8070216325483448
+        ],
+        "position_ned_m": [
+          0.8070216325483448,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 91,
+    "reward": {
+      "agent": 0.01794700235518576
+    },
+    "sim_time_s": 4.55,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.36088656537208214,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.8249686349034587
+        ],
+        "position_ned_m": [
+          0.8249686349034587,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 92,
+    "reward": {
+      "agent": 0.018141615612876194
+    },
+    "sim_time_s": 4.6000000000000005,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.36477767161877545,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.84311025051632
+        ],
+        "position_ned_m": [
+          0.84311025051632,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 93,
+    "reward": {
+      "agent": 0.018336112613724254
+    },
+    "sim_time_s": 4.65,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.3686664417539823,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.8614463631301119
+        ],
+        "position_ned_m": [
+          0.8614463631301119,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 94,
+    "reward": {
+      "agent": 0.018530492261334075
+    },
+    "sim_time_s": 4.7,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.37255285387344894,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.8799768553914228
+        ],
+        "position_ned_m": [
+          0.8799768553914228,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 95,
+    "reward": {
+      "agent": 0.018724753461583532
+    },
+    "sim_time_s": 4.75,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.37643688612860066,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.8987016088530182
+        ],
+        "position_ned_m": [
+          0.8987016088530182,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 96,
+    "reward": {
+      "agent": 0.018918895123647417
+    },
+    "sim_time_s": 4.800000000000001,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.3803185167270054,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.9176205039766367
+        ],
+        "position_ned_m": [
+          0.9176205039766367,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 97,
+    "reward": {
+      "agent": 0.01911291615920163
+    },
+    "sim_time_s": 4.8500000000000005,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.3841977239328347,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.9367334201358086
+        ],
+        "position_ned_m": [
+          0.9367334201358086,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 98,
+    "reward": {
+      "agent": 0.019306815482877937
+    },
+    "sim_time_s": 4.9,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.388074486067322,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.9560402356186971
+        ],
+        "position_ned_m": [
+          0.9560402356186971,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 99,
+    "reward": {
+      "agent": 0.01950059201226395
+    },
+    "sim_time_s": 4.95,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.3919487815092179,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.9755408276309633
+        ],
+        "position_ned_m": [
+          0.9755408276309633,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": false,
+    "termination_reason": null
+  },
+  {
+    "master_step": 100,
+    "reward": {
+      "agent": 0.019694244667675775
+    },
+    "sim_time_s": 5.0,
+    "states": {
+      "agent": {
+        "nu_body": [
+          0.39582058869524295,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "position_display_m": [
+          0.0,
+          -0.0,
+          0.995235072298653
+        ],
+        "position_ned_m": [
+          0.995235072298653,
+          0.0,
+          0.0
+        ],
+        "q_body_to_ned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "terminated": true,
+    "termination_reason": "time_limit"
+  }
+]

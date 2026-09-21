@@ -1,0 +1,6 @@
+FoamFile
+{
+ version 2.0; format ascii; class dictionary; location "system"; object controlDict;
+}
+application foamRun; solver incompressibleFluid; startFrom startTime; startTime 0; stopAt endTime; endTime 300; deltaT 1; writeControl timeStep; writeInterval 100; writeFormat ascii; writePrecision 10; runTimeModifiable false;
+functions { forces {type forces; libs ("libforces.so"); patches (hull); rho rhoInf; rhoInf 1000; CofR (0 0 0); writeControl timeStep; writeInterval 1;} }

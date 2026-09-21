@@ -1,0 +1,200 @@
+[
+  {
+    "bytes": 336,
+    "case": "surge_0p5",
+    "path": "0/U",
+    "sha256": "0881b048c77c3557ba335ba96b476a45d4b3e43f132137747a999f60c4f27341"
+  },
+  {
+    "bytes": 280,
+    "case": "surge_0p5",
+    "path": "0/p",
+    "sha256": "bac3167eeb99579bcc7e3fa3e7ada3356a574250b381865e42bc2d65506c1c2a"
+  },
+  {
+    "bytes": 876,
+    "case": "surge_0p5",
+    "path": "case_metadata.json",
+    "sha256": "2a055109892e0c6ac91eba7b9055be41e11386493c0a3e5a7fa9e0fe2c9a9f1d"
+  },
+  {
+    "bytes": 130,
+    "case": "surge_0p5",
+    "path": "constant/momentumTransport",
+    "sha256": "95bbf09c5faaea722d1741c8a03c9e8e89eeed870b72c42979e7c4ffb44fc7c1"
+  },
+  {
+    "bytes": 158,
+    "case": "surge_0p5",
+    "path": "constant/physicalProperties",
+    "sha256": "41b595cb8c68af5760a2e79fcfb7f7ce5b8335233d3c545ce667de7efeabf629"
+  },
+  {
+    "bytes": 187559,
+    "case": "surge_0p5",
+    "path": "constant/triSurface/hull.stl",
+    "sha256": "0e19660845038bcf53f3a038f599eb853d375d16f6421a23b4cf19d69a427956"
+  },
+  {
+    "bytes": 431,
+    "case": "surge_0p5",
+    "path": "system/blockMeshDict",
+    "sha256": "dd4681d6266063b84185e01a0d7a2a1fd48d25f99b3737070a8b2769cbd94e1d"
+  },
+  {
+    "bytes": 479,
+    "case": "surge_0p5",
+    "path": "system/controlDict",
+    "sha256": "3d63c93df4735076479868dc2ddb7b3370a50f3c6917ff539a7e2f2baecfd88b"
+  },
+  {
+    "bytes": 446,
+    "case": "surge_0p5",
+    "path": "system/fvSchemes",
+    "sha256": "0ac0e402895f622e19a5a47c182b1b1fcb4c08f583176543c199259b15c801ab"
+  },
+  {
+    "bytes": 415,
+    "case": "surge_0p5",
+    "path": "system/fvSolution",
+    "sha256": "85b685d737c8f1137412b13a07c5b36ecc916f88f01cf30b3cfc6c1375af3863"
+  },
+  {
+    "bytes": 731,
+    "case": "surge_0p5",
+    "path": "system/snappyHexMeshDict",
+    "sha256": "e51ce2c75481f85bac693c84a74fa0ed4d382b80065835b9976e0f36c4586039"
+  },
+  {
+    "bytes": 336,
+    "case": "surge_1p0",
+    "path": "0/U",
+    "sha256": "cbe938edc712f801e52484d9647d1d8706b9894568bb39abdc2ca4292029cfea"
+  },
+  {
+    "bytes": 280,
+    "case": "surge_1p0",
+    "path": "0/p",
+    "sha256": "bac3167eeb99579bcc7e3fa3e7ada3356a574250b381865e42bc2d65506c1c2a"
+  },
+  {
+    "bytes": 876,
+    "case": "surge_1p0",
+    "path": "case_metadata.json",
+    "sha256": "4ffa2796d9b6ebf2082a3b766be926b0f147060bde80c4449e674d5ec599f0b7"
+  },
+  {
+    "bytes": 130,
+    "case": "surge_1p0",
+    "path": "constant/momentumTransport",
+    "sha256": "95bbf09c5faaea722d1741c8a03c9e8e89eeed870b72c42979e7c4ffb44fc7c1"
+  },
+  {
+    "bytes": 158,
+    "case": "surge_1p0",
+    "path": "constant/physicalProperties",
+    "sha256": "41b595cb8c68af5760a2e79fcfb7f7ce5b8335233d3c545ce667de7efeabf629"
+  },
+  {
+    "bytes": 187559,
+    "case": "surge_1p0",
+    "path": "constant/triSurface/hull.stl",
+    "sha256": "0e19660845038bcf53f3a038f599eb853d375d16f6421a23b4cf19d69a427956"
+  },
+  {
+    "bytes": 431,
+    "case": "surge_1p0",
+    "path": "system/blockMeshDict",
+    "sha256": "dd4681d6266063b84185e01a0d7a2a1fd48d25f99b3737070a8b2769cbd94e1d"
+  },
+  {
+    "bytes": 479,
+    "case": "surge_1p0",
+    "path": "system/controlDict",
+    "sha256": "3d63c93df4735076479868dc2ddb7b3370a50f3c6917ff539a7e2f2baecfd88b"
+  },
+  {
+    "bytes": 446,
+    "case": "surge_1p0",
+    "path": "system/fvSchemes",
+    "sha256": "0ac0e402895f622e19a5a47c182b1b1fcb4c08f583176543c199259b15c801ab"
+  },
+  {
+    "bytes": 415,
+    "case": "surge_1p0",
+    "path": "system/fvSolution",
+    "sha256": "85b685d737c8f1137412b13a07c5b36ecc916f88f01cf30b3cfc6c1375af3863"
+  },
+  {
+    "bytes": 731,
+    "case": "surge_1p0",
+    "path": "system/snappyHexMeshDict",
+    "sha256": "e51ce2c75481f85bac693c84a74fa0ed4d382b80065835b9976e0f36c4586039"
+  },
+  {
+    "bytes": 336,
+    "case": "surge_1p5",
+    "path": "0/U",
+    "sha256": "5c531c09ef9fa701590570527d2e5126f92e61725a5a54e03cb746bd45be587b"
+  },
+  {
+    "bytes": 280,
+    "case": "surge_1p5",
+    "path": "0/p",
+    "sha256": "bac3167eeb99579bcc7e3fa3e7ada3356a574250b381865e42bc2d65506c1c2a"
+  },
+  {
+    "bytes": 876,
+    "case": "surge_1p5",
+    "path": "case_metadata.json",
+    "sha256": "54b18278efa1f3de84bf795635e8d22e4a6227a9b84a71a96f3cc7c04a35f9c4"
+  },
+  {
+    "bytes": 130,
+    "case": "surge_1p5",
+    "path": "constant/momentumTransport",
+    "sha256": "95bbf09c5faaea722d1741c8a03c9e8e89eeed870b72c42979e7c4ffb44fc7c1"
+  },
+  {
+    "bytes": 158,
+    "case": "surge_1p5",
+    "path": "constant/physicalProperties",
+    "sha256": "41b595cb8c68af5760a2e79fcfb7f7ce5b8335233d3c545ce667de7efeabf629"
+  },
+  {
+    "bytes": 187559,
+    "case": "surge_1p5",
+    "path": "constant/triSurface/hull.stl",
+    "sha256": "0e19660845038bcf53f3a038f599eb853d375d16f6421a23b4cf19d69a427956"
+  },
+  {
+    "bytes": 431,
+    "case": "surge_1p5",
+    "path": "system/blockMeshDict",
+    "sha256": "dd4681d6266063b84185e01a0d7a2a1fd48d25f99b3737070a8b2769cbd94e1d"
+  },
+  {
+    "bytes": 479,
+    "case": "surge_1p5",
+    "path": "system/controlDict",
+    "sha256": "3d63c93df4735076479868dc2ddb7b3370a50f3c6917ff539a7e2f2baecfd88b"
+  },
+  {
+    "bytes": 446,
+    "case": "surge_1p5",
+    "path": "system/fvSchemes",
+    "sha256": "0ac0e402895f622e19a5a47c182b1b1fcb4c08f583176543c199259b15c801ab"
+  },
+  {
+    "bytes": 415,
+    "case": "surge_1p5",
+    "path": "system/fvSolution",
+    "sha256": "85b685d737c8f1137412b13a07c5b36ecc916f88f01cf30b3cfc6c1375af3863"
+  },
+  {
+    "bytes": 731,
+    "case": "surge_1p5",
+    "path": "system/snappyHexMeshDict",
+    "sha256": "e51ce2c75481f85bac693c84a74fa0ed4d382b80065835b9976e0f36c4586039"
+  }
+]

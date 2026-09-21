@@ -1,0 +1,29 @@
+{
+  "commit": "98970f71a21cfe81e7e29abdcc1bb6741789cddc",
+  "exact_source_file": "CRAFT/USV/models/otter.m",
+  "reference_files": [
+    "CRAFT/USV/models/otter.m",
+    "GNC/satlim.m",
+    "HYDRO/Hoerner.m",
+    "LIBRARY/kinematics/Hmtrx.m",
+    "LIBRARY/kinematics/Rzyx.m",
+    "LIBRARY/kinematics/Smtrx.m",
+    "LIBRARY/kinematics/Tzyx.m",
+    "LIBRARY/kinematics/eulerang.m",
+    "LIBRARY/modeling/addedMassSurge.m",
+    "LIBRARY/modeling/crossFlowDrag.m",
+    "LIBRARY/modeling/m2c.m",
+    "LIBRARY/numericalMethods/rk4.m"
+  ],
+  "repository": "cybergalactic/MSS",
+  "runtime": "GNU Octave",
+  "source_sha256": "66c144fea629cee4bea0ad55b62a1bc5e55b46e68ac8e94860ddc7f0aff12248",
+  "track_a_instrumentation": {
+    "instrumented_sha256": "8dbe79627ea579f30db15415a8f903d9d52e1bc8cfec78d5cd5292102ea1e067",
+    "interface_change": "Added tau_external to the existing RHS sum before M\\(...)",
+    "model_equations_changed": false,
+    "original_sha256": "66c144fea629cee4bea0ad55b62a1bc5e55b46e68ac8e94860ddc7f0aff12248",
+    "purpose": "Track A generalized-wrench boundary instrumentation"
+  },
+  "url": "https://github.com/cybergalactic/MSS.git"
+}

@@ -1,0 +1,18 @@
+{
+  "id": "WREG-001",
+  "category": "regular_waves",
+  "status": "PASS",
+  "metrics": {
+    "amplitude_relative_error": 4.455184596394157e-05,
+    "max_value_error": 2.7755575615628914e-17
+  },
+  "assertions": {
+    "amplitude": true,
+    "analytic_trace": true,
+    "deterministic_replay": true
+  },
+  "warnings": [],
+  "failure_category": null,
+  "observed": "",
+  "expected": ""
+}

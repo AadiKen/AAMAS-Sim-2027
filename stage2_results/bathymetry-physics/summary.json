@@ -1,0 +1,90 @@
+{
+  "stage2_status": "FAIL",
+  "counts": {
+    "PASS": 26,
+    "FAIL": 0,
+    "BLOCKED": 32
+  },
+  "subsystems": {
+    "baseline": {
+      "status": "PASS",
+      "cases": 1,
+      "passed": 1,
+      "failed": 0,
+      "blocked": 0,
+      "warnings": 0
+    },
+    "bathymetry": {
+      "status": "PASS",
+      "cases": 4,
+      "passed": 4,
+      "failed": 0,
+      "blocked": 0,
+      "warnings": 0
+    },
+    "collision": {
+      "status": "FAIL",
+      "cases": 12,
+      "passed": 2,
+      "failed": 0,
+      "blocked": 10,
+      "warnings": 10
+    },
+    "combined": {
+      "status": "FAIL",
+      "cases": 8,
+      "passed": 4,
+      "failed": 0,
+      "blocked": 4,
+      "warnings": 4
+    },
+    "current": {
+      "status": "FAIL",
+      "cases": 6,
+      "passed": 2,
+      "failed": 0,
+      "blocked": 4,
+      "warnings": 4
+    },
+    "grounding": {
+      "status": "PASS",
+      "cases": 5,
+      "passed": 5,
+      "failed": 0,
+      "blocked": 0,
+      "warnings": 0
+    },
+    "irregular_waves": {
+      "status": "FAIL",
+      "cases": 3,
+      "passed": 2,
+      "failed": 0,
+      "blocked": 1,
+      "warnings": 1
+    },
+    "regular_waves": {
+      "status": "FAIL",
+      "cases": 6,
+      "passed": 2,
+      "failed": 0,
+      "blocked": 4,
+      "warnings": 4
+    },
+    "vessel_vessel": {
+      "status": "FAIL",
+      "cases": 7,
+      "passed": 2,
+      "failed": 0,
+      "blocked": 5,
+      "warnings": 5
+    },
+    "wind": {
+      "status": "FAIL",
+      "cases": 6,
+      "passed": 2,
+      "failed": 0,
+      "blocked": 4,
+      "warnings": 4
+    }
+  }
+}
