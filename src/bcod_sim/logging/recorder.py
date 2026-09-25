@@ -7,9 +7,12 @@ import queue
 import re
 import threading
 from typing import Mapping
+from dataclasses import asdict, is_dataclass
 
 import pyarrow as pa
 import pyarrow.parquet as pq
+import numpy as np
+import torch
 import yaml
 
 from bcod_sim.config.resolver import ResolvedExperiment
@@ -94,8 +97,8 @@ class RunRecorder:
                         kind, payload = item
                         if kind == "metric": self.metric_rows.append(payload)
                         elif kind == "state": self.state_rows.append(payload)
-                        elif kind == "sensor": sensors.write(json.dumps(payload, sort_keys=True, default=str)+"\n")
-                        else: events.write(json.dumps(payload, sort_keys=True, default=str)+"\n")
+                        elif kind == "sensor": sensors.write(json.dumps(payload, sort_keys=True, allow_nan=False)+"\n")
+                        else: events.write(json.dumps(payload, sort_keys=True, allow_nan=False)+"\n")
                     finally:
                         self.queue.task_done()
                 with self.lock: dropped = self.dropped
@@ -131,8 +134,18 @@ class RunRecorder:
                 "friction_impulse_ns": event.friction_impulse_ns}, critical=True)
         if self.sensor_payloads:
             for packet in frame.delivered_packets:
+                values = {}
+                values = _encode_sensor_values(self.root/"sensors", packet.sensor_id,
+                                               packet.sample_step, packet.values)
                 self.submit("sensor", {"step": frame.master_step, "sensor_id": packet.sensor_id,
-                    "owner_vessel_id": packet.owner_vessel_id, "values": packet.values})
+                    "sensor_type": packet.sensor_type, "sensor_version": packet.sensor_version,
+                    "sensor_config_fingerprint": packet.config_fingerprint,
+                    "vehicle_id": packet.owner_vessel_id, "sample_step": packet.sample_step,
+                    "delivery_step": packet.delivery_step, "sample_time_s": packet.sample_time_s,
+                    "delivery_time_s": packet.delivery_time_s, "units": dict(packet.units),
+                    "frames": dict(packet.frames), "schema": _json_safe(packet.schema),
+                    "validity": packet.validity, "provenance": _json_safe(packet.provenance),
+                    "measurement": values})
 
     def close(self, *, final_frame: EpisodeFrame, external_stop: bool = False) -> Path:
         if not final_frame.terminated and not external_stop:
@@ -153,3 +166,28 @@ class RunRecorder:
             "termination_reason": reason})
         _write_json(self.root/"manifest.json", self.manifest.model_dump(mode="json"))
         return self.root
+
+
+def _json_safe(value):
+    if isinstance(value, torch.Tensor): return value.detach().cpu().tolist()
+    if is_dataclass(value): return _json_safe(asdict(value))
+    if isinstance(value, Mapping): return {str(key): _json_safe(child) for key, child in value.items()}
+    if isinstance(value, (tuple, list)): return [_json_safe(child) for child in value]
+    if isinstance(value, (str, bool, int, float)) or value is None: return value
+    raise PhysicalValidationError(f"Sensor output is not JSON-safe: {type(value).__name__}")
+
+
+def _encode_sensor_values(sensor_root: Path, sensor_id: str, sample_step: int,
+                          values: Mapping[str, object]) -> dict[str, object]:
+    encoded = {}
+    for name, value in values.items():
+        if isinstance(value, torch.Tensor) and value.numel() > 4096:
+            relative = Path("arrays")/f"{sensor_id}_{sample_step}_{name}.npy"
+            target = sensor_root/relative
+            target.parent.mkdir(parents=True, exist_ok=True)
+            np.save(target, value.detach().cpu().numpy(), allow_pickle=False)
+            encoded[name] = {"array_artifact": str(relative), "dtype": str(value.dtype).removeprefix("torch."),
+                             "shape": list(value.shape), "encoding": "npy"}
+        else:
+            encoded[name] = _json_safe(value)
+    return encoded

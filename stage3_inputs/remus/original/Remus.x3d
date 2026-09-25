@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 3.0//EN" "https://www.web3d.org/specifications/x3d-3.0.dtd">
+<X3D profile='Immersive' version='3.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-3.0.xsd'>
+  <head>
+    <meta content='Remus.x3d' name='title'/>
+    <meta content='Remote Environmental Monitoring UnitS (REMUS) is a low-cost autonomous underwater vehicle (AUV) for coastal monitoring and multiple vehicle survey operations. REMUS is developed and operated by the Woods Hole Oceanographic Institute (WHOI) Oceanographic Systems Laboratory. Red fin is topside. p.s. Jeff Weekley&apos;s first model!' name='description'/>
+    <meta content='Jeffrey Weekley' name='creator'/>
+    <meta content='16 March 2001' name='created'/>
+    <meta content='20 October 2019' name='modified'/>
+    <meta content='http://adcp.whoi.edu' name='reference'/>
+    <meta content='http://www.whoi.edu/home/marine/remus_main.html' name='reference'/>
+    <meta content='remus_main_May2001.pdf' name='reference'/>
+    <meta content='marine_remus_top.jpg' name='photo'/>
+    <meta content='SAHRV-SemiAutonomousHydrographicReconnaissainceVehicle.pdf' name='reference'/>
+    <meta content='http://www.onr.navy.mil/sci_tech/ocean/info/yerpts/oeye00/oe5vona1.pdf' name='reference'/>
+    <meta content='oe5vona1-NavalSpecialWarfareSupportWithREMUS.pdf' name='reference'/>
+    <meta content='https://savage.nps.edu/Savage/Robots/UnmannedUnderwaterVehicles/Remus.x3d' name='identifier'/>
+    <meta content='X3D-Edit 3.2, https://savage.nps.edu/X3D-Edit' name='generator'/>
+    <meta content='../../license.html' name='license'/>
+  </head>
+  <Scene>
+    <WorldInfo info='"Only unclassified open resources were used to create this model."' title='Remus AUV'/>
+    <Background skyColor='0.2 0.8 0.8'/>
+    <Transform rotation='0 1 0 -1.57' translation='-5 1 0'>
+      <Viewpoint description='Remus over-the-shoulder 5m' orientation='1 0 0 -0.25' position='0 0 0'/>
+    </Transform>
+    <Group>
+      <Viewpoint description='Remus from above 100m' orientation='-0.58 -0.58 -0.58 2.09' position='0 100 0'/>
+      <Viewpoint description='Remus starboard side 30m' position='0 0 30'/>
+      <Viewpoint description='Remus starboard side 3m' position='0 0 3'/>
+      <Viewpoint description='Remus astern 30m' orientation='0 1 0 -1.57' position='-30 0.1 0'/>
+      <Viewpoint description='Remus astern 3m' orientation='0 1 0 -1.57' position='-3 0.1 0'/>
+      <Viewpoint description='Remus port side 30m' orientation='0 1 0 3.14' position='0 0 -30'/>
+      <Viewpoint description='Remus port side 3m' orientation='0 1 0 3.14' position='0 0 -3'/>
+    </Group>
+    <WorldInfo info='"null node outside of LOD range"'/>
+    <!-- This file builds the REMUS Autonomous Underwater Vehicle (AUV). The dimensions were originally provided in English units and is converted to metric using a scale that 39.3 inches equal one meter. -->
+    <Transform rotation='0.0 0.0 1.0 1.57079' scale='0.2145 0.2145 0.2145' translation='1 0 0'>
+      <Transform DEF='torpedoband1' translation='0.0 2.475 0.0'>
+        <Shape>
+          <Cylinder bottom='false' height='0.45' radius='.267' top='false'/>
+          <Appearance>
+            <Material diffuseColor='0 0.5 0.5'/>
+          </Appearance>
+        </Shape>
+      </Transform>
+      <Transform DEF='torpedoband2' translation='0.0 2.735 0.0'>
+        <Shape>
+          <Cylinder bottom='false' height='.07' radius='.267' top='false'/>
+          <Appearance>
+            <Material diffuseColor='0 0.5 0.5'/>
+          </Appearance>
+        </Shape>
+      </Transform>
+      <Transform DEF='torpedobody2' translation='0.0 3.37 0.0'>
+        <Shape>
+          <Cylinder bottom='false' height='1.2' radius='0.267' top='false'/>
+          <Appearance>
+            <Material diffuseColor='1.0 1.0 0.0'/>
+          </Appearance>
+        </Shape>
+      </Transform>
+      <Transform DEF='torpedoband3' translation='0.0 4.005 0.0'>
+        <Shape>
+          <Cylinder bottom='false' height='.07' radius='.267' top='false'/>
+          <Appearance>
+            <Material diffuseColor='1.0 1.0 0.0'/>
+          </Appearance>
+        </Shape>
+      </Transform>
+      <Transform DEF='torpedobody3' translation='0.0 4.638 0.0'>
+        <Shape>
+          <Cylinder bottom='false' height='1.2' radius='0.267' top='false'/>
+          <Appearance>
+            <Material diffuseColor='1.0 1.0 0.0'/>
+          </Appearance>
+        </Shape>
+      </Transform>
+      <Transform DEF='torpedoband4' translation='0.0 3.8075 0.0'>
+        <Transform translation='0.0 1.465 0.0'>
+          <Shape>
+            <Cylinder bottom='false' height='.07' radius='.267' top='false'/>
+            <Appearance>
+              <Material diffuseColor='1.0 1.0 0.0'/>
+            </Appearance>
+          </Shape>
+        </Transform>
+      </Transform>
+      <Transform DEF='torpedobody4' translation='0.0 3.8075 0.0'>
+        <Transform translation='0.0 2.1 0.0'>
+          <Shape>
+            <Cylinder bottom='false' height='1.2' radius='.267' top='false'/>
+            <Appearance>
+              <Material diffuseColor='1.0 1.0 0.0'/>
+            </Appearance>
+          </Shape>
+        </Transform>
+      </Transform>
+      <Transform DEF='torpedonose' rotation='1.0 0.0 0.0 3.1416' translation='0 2.2525 0'>
+        <Shape>
+          <Appearance>
+            <Material shininess='0.5'/>
+          </Appearance>
+          <Extrusion creaseAngle='1.785' crossSection='0.267 0.000 0.231 -0.134 0.134 -0.231 0.0 -0.267 -0.134 -0.231 -0.231 -0.134 -0.267 0.000 -0.231 0.134 -0.134 0.231 0.0 0.267 0.134 0.231 0.231 0.134 0.267 0.0' scale='1.00 1.00 0.95 0.95 0.88 0.88 0.76 0.76 0.48 0.48' spine='0.00 0.00 0.00 0.00 0.10 0.00 0.00 0.20 0.00 0.00 0.30 0.00 0.00 0.40 0.00'/>
+        </Shape>
+      </Transform>
+      <Group DEF='controlfins'>
+        <Transform translation='0.0 -0.25 0.0'>
+          <Transform DEF='ControlFin1'>
+            <Transform translation='0.19 7.81 0.0'>
+              <Shape>
+                <Box size='0.4 .2 0.02'/>
+                <Appearance>
+                  <Material diffuseColor='1.0 0.0 0.0' shininess='0.5'/>
+                </Appearance>
+              </Shape>
+            </Transform>
+          </Transform>
+          <Transform DEF='ControlFin2' rotation='0 1 0 3.17'>
+            <Transform translation='0.19 7.81 0.0'>
+              <Shape>
+                <Box size='0.4 .2 0.02'/>
+                <Appearance>
+                  <Material diffuseColor='0.1 0.1 0.1' shininess='0.5'/>
+                </Appearance>
+              </Shape>
+            </Transform>
+          </Transform>
+          <Transform DEF='ControlFin3' rotation='0 1 0 1.57'>
+            <Transform translation='0.19 7.81 0.0'>
+              <Shape>
+                <Box size='0.4 .2 0.02'/>
+                <Appearance>
+                  <Material diffuseColor='0.1 0.1 0.1' shininess='0.5'/>
+                </Appearance>
+              </Shape>
+            </Transform>
+          </Transform>
+          <Transform DEF='ControlFin4' rotation='0.0 1.0 0.0 4.74'>
+            <Transform translation='0.19 7.81 0.0'>
+              <Shape>
+                <Box size='0.4 .2 0.02'/>
+                <Appearance>
+                  <Material diffuseColor='0.1 0.1 0.1' shininess='0.5'/>
+                </Appearance>
+              </Shape>
+            </Transform>
+          </Transform>
+        </Transform>
+      </Group>
+      <Group DEF='stabilzerfins'/>
+      <Group DEF='TailSection'>
+        <Transform DEF='torpedotail' rotation='1.0 0.0 0.0 3.1416' translation='0.0 7.9375 0.0'>
+          <Shape>
+            <Appearance>
+              <Material shininess='1.0'/>
+            </Appearance>
+            <Extrusion creaseAngle='2.0' crossSection='0.267 0.000 0.231 -0.134 0.134 -0.231 0.0 -0.267 -0.134 -0.231 -0.231 -0.134 -0.267 0.000 -0.231 0.134 -0.134 0.231 0.0 0.267 0.134 0.231 0.231 0.134 0.267 0.0' endCap='false' scale='0.342 0.342 0.500 0.500 0.643 0.643 0.766 0.766 0.866 0.866 0.940 0.940 0.985 0.985 1.0 1.0' spine='0.0 0.0 0.000 0.0 0.114 0.000 0.0 0.266 0.000 0.0 0.453 0.000 0.0 0.670 0.000 0.0 0.910 0.000 0.0 1.166 0.000 0.0 1.431 0.0'/>
+          </Shape>
+          <LOD range='20'>
+            <Group DEF='torpedostator'>
+              <Transform DEF='propeller' translation='0.0 -0.15 0.0'>
+                <Group DEF='statorblade1'>
+                  <Transform DEF='torpedostatorblade1'>
+                    <Transform rotation='-1.0 0.0 0.0 1.0472' translation='0.075 0.0 0.0'>
+                      <Shape>
+                        <Box size='0.125 0.09 0.015'/>
+                        <Appearance>
+                          <Material diffuseColor='0.1 0.1 0.1' shininess='0.75'/>
+                        </Appearance>
+                      </Shape>
+                    </Transform>
+                  </Transform>
+                  <Transform DEF='torpedostatorblade2' rotation='0.0 1.0 0.0 1.0472'>
+                    <Transform rotation='1 0 0 1.0472' translation='-0.075 0.0 0.0'>
+                      <Shape>
+                        <Box size='0.125 0.09 0.015'/>
+                        <Appearance>
+                          <Material diffuseColor='0.1 0.1 0.1' shininess='0.5'/>
+                        </Appearance>
+                      </Shape>
+                    </Transform>
+                  </Transform>
+                  <Transform DEF='torpedostatorblade3' rotation='0.0 1.0 0.0 -1.0472'>
+                    <Transform rotation='1 0 0 1.0472' translation='-0.075 0.0 0.0'>
+                      <Shape>
+                        <Box size='0.125 0.09 0.015'/>
+                        <Appearance>
+                          <Material diffuseColor='0.1 0.1 0.1'/>
+                        </Appearance>
+                      </Shape>
+                    </Transform>
+                  </Transform>
+                </Group>
+                <Transform DEF='statorcrankshaft' rotation='1.0 0.0 0.0 3.1416' translation='0.0 0.05 0.0'>
+                  <Shape>
+                    <Cone bottomRadius='0.09' height='0.2'/>
+                    <Appearance>
+                      <Material diffuseColor='0.1 0.1 0.1'/>
+                    </Appearance>
+                  </Shape>
+                </Transform>
+              </Transform>
+              <!-- Spins the propellor and stator once every 4 seconds -->
+              <TimeSensor DEF='Clock' cycleInterval='0.5' loop='true'/>
+              <OrientationInterpolator DEF='PropSpin' key='0.0 0.5 1.0' keyValue='0.0 1.0 0.0 0.00 0.0 1.0 0.0 3.14 0.0 1.0 0.0 6.28'/>
+              <ROUTE fromField='fraction_changed' fromNode='Clock' toField='set_fraction' toNode='PropSpin'/>
+              <ROUTE fromField='value_changed' fromNode='PropSpin' toField='rotation' toNode='propeller'/>
+            </Group>
+            <WorldInfo info='"null node"'/>
+          </LOD>
+        </Transform>
+      </Group>
+      <Transform DEF='SideScanningSonarArray1' translation='0.0 4.5 0.27'>
+        <Shape>
+          <Box size='0.04 2.0 0.025'/>
+          <Appearance>
+            <Material diffuseColor='0.1 0.1 0.1' shininess='0.5'/>
+          </Appearance>
+        </Shape>
+      </Transform>
+      <Transform DEF='SideScanningSonarArray2' translation='0.0 0.0 -.54'>
+        <Transform USE='SideScanningSonarArray1'/>
+      </Transform>
+      <Transform DEF='TopHook' translation='0.27 4.25 0.0'>
+        <Shape>
+          <Box size='0.04 0.1 0.04'/>
+          <Appearance>
+            <Material diffuseColor='0.1 0.1 0.1' shininess='.75'/>
+          </Appearance>
+        </Shape>
+      </Transform>
+    </Transform>
+    <Group DEF='GPSTransiever'>
+      <Transform rotation='0 1 0 1.57' scale='0.0125 0.0125 0.0125' translation='-0.3 0.06 0'>
+        <Transform DEF='Top'>
+          <Shape>
+            <Extrusion creaseAngle='3.14' crossSection='0 1.1 0.65 0.4 0.7 0.2 0.7 -0.2 0 -1.6 -0.7 -0.2 -0.7 0.2 -0.65 0.4 0 1.1' scale='0.9 0.9 1 1 1 1 0.9 0.9' spine='0 5 0 0 5.1 0 0 5.9 0 0 6 0'/>
+            <Appearance>
+              <Material diffuseColor='0.8 0.63 0.7' transparency='0.2'/>
+            </Appearance>
+          </Shape>
+        </Transform>
+        <Transform DEF='Fin'>
+          <Shape>
+            <Extrusion creaseAngle='3.14' crossSection='0 2.2 0.2 1.8 0 -2.2 -0.2 1.8 0 2.2' scale='1 1 0.4 0.4' spine='0 0 0 0 5.9 0'/>
+            <Appearance DEF='Orange'>
+              <Material diffuseColor='0.8 0.43 0.3'/>
+            </Appearance>
+          </Shape>
+        </Transform>
+        <Transform DEF='Base'>
+          <Shape>
+            <Extrusion creaseAngle='2' crossSection='0 2.3 0.2 2.2 0.4 2 0.5 1.6 0.5 -1.6 0.3 -2 0 -2.3 -0.3 -2 -0.5 -1.6 -0.5 1.6 -0.4 2 -0.2 2.2 0 2.3' scale='1 1 1 1 0.9 0.9' spine='0 -0.5 0 0 0.1 0 0 0.11 0'/>
+            <Appearance USE='Orange'/>
+          </Shape>
+        </Transform>
+        <Transform translation='0 5.825 0'>
+          <Shape>
+            <Box size='0.8 0.3 1'/>
+            <Appearance>
+              <Material diffuseColor='0.15 0.15 0.25'/>
+            </Appearance>
+          </Shape>
+        </Transform>
+      </Transform>
+    </Group>
+  </Scene>
+</X3D>

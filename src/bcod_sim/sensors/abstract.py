@@ -20,6 +20,7 @@ class EntityDetection:
 
 class AbstractEntitySensor:
     kind = "abstract"
+    requirements = frozenset({"geometry.entities"})
 
     def __init__(self, config: SensorConfig, *, max_range_m: float, horizontal_fov_rad: float) -> None:
         if config.sensor_type != "abstract_entities" or not math.isfinite(max_range_m) or max_range_m <= 0:

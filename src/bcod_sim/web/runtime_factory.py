@@ -13,7 +13,7 @@ from bcod_sim.config.resolver import ResolvedExperiment
 from bcod_sim.core.engine import EpisodeEngine, EpisodeVessel
 from bcod_sim.core.environment_loads import LinearEnvironmentLoads
 from bcod_sim.core.errors import ConfigSchemaError
-from bcod_sim.dynamics.damping import Damping
+from bcod_sim.dynamics.damping import Damping, CoupledDampingTerm
 from bcod_sim.dynamics.crossflow import StripTheoryCrossflow
 from bcod_sim.dynamics.matrices import MassProperties
 from bcod_sim.dynamics.mesh_buoyancy import MeshBuoyancy, TriangleMesh
@@ -27,6 +27,9 @@ from bcod_sim.sensors.ground_truth import GroundTruthState
 from bcod_sim.sensors.imu import IMU
 from bcod_sim.sensors.lidar import LiDAR
 from bcod_sim.sensors.sonar import Sonar
+from bcod_sim.sensors.configs import GPSErrorModel, IMUErrorModel
+from bcod_sim.sensors.registry import register_sensor_type, runtime_sensor_registry
+from bcod_sim.config.hashing import content_hash
 
 
 class Strict(BaseModel): model_config = ConfigDict(extra="forbid", frozen=True, allow_inf_nan=False)
@@ -39,6 +42,8 @@ class VesselRuntime(Strict):
     added_mass_kg: tuple[tuple[float, float, float, float, float, float], ...]
     linear_damping: tuple[float, float, float, float, float, float]
     quadratic_damping: tuple[float, float, float, float, float, float]
+    linear_damping_matrix: tuple[tuple[float, float, float, float, float, float], ...] | None = None
+    coupled_damping_terms: tuple[dict, ...] = ()
     buoyancy_n: float | None = Field(default=None, gt=0, allow_inf_nan=False)
     center_buoyancy_frd_m: tuple[float, float, float] | None = None
     hydrostatics: dict | None = None
@@ -81,7 +86,7 @@ class FixedThrusterRuntime(Strict):
 
 
 class SensorRuntime(Strict):
-    kind: Literal["gps", "imu", "lidar", "sonar", "ground_truth_state"]
+    kind: str = Field(min_length=1)
     mount_frd_m: tuple[float, float, float] = (0, 0, 0)
     mount_q_to_frd: tuple[float, float, float, float] = (1, 0, 0, 0)
     rate_hz: float = Field(gt=0, allow_inf_nan=False)
@@ -94,6 +99,12 @@ class SensorRuntime(Strict):
     fov_rad: float | None = Field(default=None, ge=0, allow_inf_nan=False)
     ray_count: int | None = Field(default=None, ge=1)
     beam_count: int | None = Field(default=None, ge=1)
+    power_w: float | None = Field(default=None, ge=0, allow_inf_nan=False)
+    data_rate_bps: float | None = Field(default=None, ge=0, allow_inf_nan=False)
+    warmup_s: float = Field(default=0, ge=0, allow_inf_nan=False)
+    dropout_probability: float = Field(default=0, ge=0, le=1, allow_inf_nan=False)
+    max_age_s: float | None = Field(default=None, ge=0, allow_inf_nan=False)
+    parameters: dict = {}
 
 
 def _definition(resolved: ResolvedExperiment, kind: str, reference: str):
@@ -106,14 +117,25 @@ def _definition(resolved: ResolvedExperiment, kind: str, reference: str):
 def _sensor(definition, vessel_id: int):
     try:
         spec = SensorRuntime.model_validate(dict(definition.payload))
+        fingerprint = content_hash({"id": definition.id, "version": definition.version,
+                                    "source": definition.source, "payload": dict(definition.payload),
+                                    "env_id": 0, "owner_vessel_id": vessel_id})
         config = SensorConfig(definition.id, spec.kind, 0, vessel_id, spec.mount_frd_m,
                               spec.mount_q_to_frd, spec.rate_hz, spec.latency_steps,
-                              spec.noise_std, spec.seed, definition.version, definition.source)
+                              spec.noise_std, spec.seed, definition.version, definition.source,
+                              spec.power_w, spec.data_rate_bps, spec.warmup_s,
+                              spec.dropout_probability, fingerprint, spec.max_age_s)
         if spec.kind == "gps":
             if spec.origin_wgs84_rad_m is None: raise ValueError("GPS origin is required")
-            return GPS(config, origin_wgs84_rad_m=spec.origin_wgs84_rad_m)
-        if spec.kind == "imu": return IMU(config)
+            model = GPSErrorModel(**spec.parameters) if spec.parameters else None
+            return GPS(config, origin_wgs84_rad_m=spec.origin_wgs84_rad_m, error_model=model)
+        if spec.kind == "imu":
+            model = IMUErrorModel(**spec.parameters) if spec.parameters else None
+            return IMU(config, error_model=model)
         if spec.kind == "ground_truth_state": return GroundTruthState(config)
+        if spec.kind not in {"lidar", "sonar"}:
+            return runtime_sensor_registry.create(config, definition=dict(definition.payload),
+                                                  parameters=dict(spec.parameters))
         if spec.min_range_m is None or spec.max_range_m is None or spec.fov_rad is None:
             raise ValueError("Range and FOV are required")
         if spec.kind == "lidar":
@@ -169,7 +191,9 @@ def build_engine(resolved: ResolvedExperiment) -> EpisodeEngine:
             crossflow = StripTheoryCrossflow.constant_section(geometry["length_m"], geometry["beam_m"],
                 geometry["draft_m"], item["integration"]["strips"], water_density_kg_m3=item.get("water_density_kg_m3",1025),
                 include_vertical=item.get("include_vertical",False), dtype=dtype)
-        plant = Plant6(properties, Damping(tensor(spec.linear_damping), tensor(spec.quadratic_damping)), hydro,
+        linear_matrix=tensor(spec.linear_damping_matrix) if spec.linear_damping_matrix is not None else None
+        coupled=tuple(CoupledDampingTerm(**term) for term in spec.coupled_damping_terms)
+        plant = Plant6(properties, Damping(tensor(spec.linear_damping), tensor(spec.quadratic_damping),linear_matrix,coupled), hydro,
             OperatingEnvelope(tensor(spec.max_abs_nu), spec.min_substep_s, spec.max_substep_s),
             mode=resolved.config.simulation.dynamics_mode, planar_equilibrium=equilibrium, crossflow=crossflow)
         collision = spec.collision

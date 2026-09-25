@@ -43,7 +43,12 @@ class AIS:
                 width = number(report, "width_m", strictly_positive=True)
                 entity = ScriptedEntity(id=f"ais:{report['mmsi']}", position_ned_m=position,
                     shape=BoxShape(kind="box", half_extents_m=(length/2, width/2, max(0.5, width/4))),
-                    collision_enabled=True, velocity_ned_mps=velocity, start_time_s=0)
+                    collision_enabled=True, velocity_ned_mps=velocity, start_time_s=0,
+                    orientation_q_to_ned=(math.cos(course/2), 0.0, 0.0, math.sin(course/2)),
+                    semantic_class="vessel", source="USCG AIS",
+                    provenance={"mmsi": report["mmsi"], "product": self.provenance.product,
+                                "version": self.provenance.version,
+                                "payload_sha256": self.provenance.payload_sha256})
             except (KeyError, TypeError, ValueError) as exc:
                 raise ExternalDataUnavailableError("Malformed AIS report") from exc
             traffic.append(AISTraffic(str(report["mmsi"]), entity, self.provenance))

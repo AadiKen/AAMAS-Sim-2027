@@ -45,6 +45,18 @@ class ExternalDataCoverageError(BCODSimError):
     pass
 
 
+class DomainQueryError(BCODSimError):
+    """A capability is missing or cannot be sampled at the requested point."""
+
+
+class MissingCapabilityError(DomainQueryError):
+    pass
+
+
+class InvalidMediumError(DomainQueryError):
+    pass
+
+
 class CollisionSolverError(BCODSimError):
     pass
 

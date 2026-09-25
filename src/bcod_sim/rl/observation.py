@@ -66,9 +66,15 @@ class ObservationContract:
             if isinstance(value, torch.Tensor):
                 shape = tuple(value.shape)
                 dtype = str(value.dtype).removeprefix("torch.")
-            elif isinstance(value, tuple):
+            elif isinstance(value, (tuple, list)):
                 shape = (len(value),)
                 dtype = "detections"
+            elif isinstance(value, Mapping):
+                shape = ()
+                dtype = "record"
+            elif isinstance(value, (bool, int, float)):
+                shape = ()
+                dtype = type(value).__name__
             else:
                 raise PhysicalValidationError(f"Unsupported observation value: {field.name}")
             if len(shape) != len(field.shape) or any(expected is not None and expected != actual

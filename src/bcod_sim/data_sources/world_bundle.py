@@ -41,15 +41,25 @@ class RealWorldBundle:
             raise PhysicalValidationError("Real-world bundle requires real_world spec and nonnegative env ID")
         self.spec, self.env_id, self.origin, self.sources = spec, env_id, origin_wgs84_rad_m, sources
         self.wake = WakeField()
+        self.capability_extensions: dict[str, tuple[object, object]] = {}
         self.bathymetry = self
         self._collision_tiles = {}
         self.vertical_datum = sources.gebco.provenance.datum
+        water_datum = sources.coops.provenance.datum
+        if water_datum != self.vertical_datum:
+            raise PhysicalValidationError(
+                f"Bathymetry datum {self.vertical_datum!r} is incompatible with water-level datum {water_datum!r}")
         self.provenance = tuple(getattr(sources, name).provenance for name in
             ("gebco", "enc", "rtofs", "ndbc", "nws", "coops", "ais"))
         self.content_hash = content_hash({"origin_wgs84_rad_m": origin_wgs84_rad_m,
             "sources": [{"source": p.source, "product": p.product, "version": p.version,
                          "valid_time": p.valid_time, "checksum": p.payload_sha256,
                          "datum": p.datum} for p in self.provenance]})
+
+    def register_capability(self, name: str, provider, descriptor) -> None:
+        if name in self.capability_extensions:
+            raise PhysicalValidationError(f"Duplicate environment capability extension: {name}")
+        self.capability_extensions[name] = (provider, descriptor)
 
     def manifest(self) -> dict:
         return {"bundle_hash": self.content_hash, "origin_wgs84_rad_m": self.origin,
@@ -119,7 +129,7 @@ class RealWorldBundle:
             positions_ned_m.new_tensor(bottoms), self.vertical_datum,
             current_valid=positions_ned_m[:,2] <= positions_ned_m.new_tensor(bottoms),
             current_depth_semantics="source_derived_3d",
-            local_water_depth_m=positions_ned_m.new_tensor(bottoms))
+            local_water_depth_m=positions_ned_m.new_tensor(bottoms) - positions_ned_m.new_tensor(surface_values))
 
     def depth_at(self,north_m:float,east_m:float,*,surface_ned_z_m:float=0.)->float:
         p=torch.tensor(((north_m,east_m,0.),),dtype=torch.float64)

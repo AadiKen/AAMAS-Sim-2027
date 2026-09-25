@@ -30,6 +30,9 @@ from bcod_sim.dynamics.matrices import MassProperties
 from bcod_sim.dynamics.operating_envelope import OperatingEnvelope
 from bcod_sim.dynamics.plant6 import Plant6
 from bcod_sim.dynamics.restoring import Hydrostatics
+from bcod_sim.sensors.base import SensorConfig, SensorContext
+from bcod_sim.sensors.sonar import Sonar
+from bcod_sim.state.vessel_state import VesselState
 
 
 BUILD_TIME = datetime(2026, 1, 1, tzinfo=timezone.utc)
@@ -71,7 +74,7 @@ def fixtures():
                            "fog_extinction_per_m": 0.002}]}, extra={"max_sample_radius_m": 20000}),
         "coops": encoded("NOAA CO-OPS", {"water_level": "m"},
             {"stations": [{"station_id": "872", "lat_deg": 0, "lon_deg": 0, "water_level_m": 1.2}]},
-            datum="MLLW"),
+            datum="MSL"),
         "ais": encoded("USCG AIS", {"speed_over_ground": "kn", "course_over_ground": "deg", "dimensions": "m"},
             {"reports": [{"mmsi": "123456789", "lat_deg": 0, "lon_deg": 0, "sog_kn": 10,
                            "cog_deg": 90, "length_m": 20, "width_m": 6}]}, datum=None),
@@ -113,6 +116,8 @@ def test_enc_entities_have_collision_geometry_identity_and_provenance():
     row = adapter.entities[0]
     assert row.entity.id == "buoy-1" and row.entity.collision_enabled
     assert row.entity.shape.radius_m == 1.5 and row.feature_class == "BOYLAT"
+    assert row.entity.semantic_class == "BOYLAT" and row.entity.source == "NOAA ENC"
+    assert row.entity.provenance["payload_sha256"] == row.provenance.payload_sha256
     assert row.provenance.source == "NOAA ENC"
 
 
@@ -126,6 +131,17 @@ def test_rtofs_uses_requested_3d_depth_and_enu_to_ned_conversion():
     invalid = json.dumps(document).encode()
     with pytest.raises(ExternalDataUnavailableError):
         RTOFS3D(invalid, hashlib.sha256(invalid).hexdigest(), request_coverage=REQUEST, build_time=BUILD_TIME)
+
+
+def test_rtofs_interpolates_between_depth_levels():
+    payload, checksum = encoded("NOAA RTOFS",
+        {"horizontal_velocity": "m/s", "vertical_velocity": "m/s", "depth": "m"},
+        {"samples": [
+            {"lat_deg": 0, "lon_deg": 0, "depth_m": 0, "u_east_mps": 0, "v_north_mps": 2, "w_up_mps": 0},
+            {"lat_deg": 0, "lon_deg": 0, "depth_m": 10, "u_east_mps": 10, "v_north_mps": 4, "w_up_mps": 2}]},
+        frame="geographic_ENU", datum=None, extra={"variable": "3d", "max_sample_radius_m": 20000})
+    adapter = RTOFS3D(payload, checksum, request_coverage=REQUEST, build_time=BUILD_TIME)
+    assert adapter.current_ned_mps(0, 0, 5) == pytest.approx((3, 5, -1))
 
 
 def test_ndbc_station_radius_units_and_known_fixture():
@@ -146,7 +162,8 @@ def test_nws_kmh_regression_and_all_si_conversions():
 
 
 def test_coops_datum_station_radius_and_ned_surface_sign():
-    payload, checksum = fixtures()["coops"]
+    payload, checksum = encoded("NOAA CO-OPS", {"water_level": "m"},
+        {"stations": [{"station_id": "872", "lat_deg": 0, "lon_deg": 0, "water_level_m": 1.2}]}, datum="MLLW")
     adapter = COOPS(payload, checksum, request_coverage=REQUEST, build_time=BUILD_TIME, station_radius_m=1000)
     water = adapter.water_level(0, 0)
     assert water.surface_ned_z_m == -1.2 and water.datum == "MLLW"
@@ -159,6 +176,8 @@ def test_ais_known_fixture_velocity_geometry_identity_and_provenance():
     assert traffic.mmsi == "123456789" and traffic.entity.collision_enabled
     assert traffic.entity.shape.half_extents_m[:2] == (10, 3)
     assert traffic.entity.velocity_ned_mps == pytest.approx((0, 10*1852/3600, 0), abs=1e-12)
+    assert traffic.entity.orientation_q_to_ned == pytest.approx((math.sqrt(.5), 0, 0, math.sqrt(.5)))
+    assert traffic.entity.semantic_class == "vessel" and traffic.entity.source == "USCG AIS"
     assert traffic.provenance.source == "USCG AIS"
 
 
@@ -206,6 +225,30 @@ def test_frozen_bundle_exposes_canonical_world_without_source_access():
     assert [entity.id for entity in bundle.entities(sim_time_s=0, env_id=0)] == ["ais:123456789", "buoy-1"]
     assert len(bundle.content_hash) == 64 and len(bundle.provenance) == 7
     assert bundle.manifest()["bundle_hash"] == bundle.content_hash
+
+
+def test_real_world_bundle_rejects_incompatible_vertical_datums():
+    data = fixtures()
+    data["coops"] = encoded("NOAA CO-OPS", {"water_level": "m"},
+        {"stations": [{"station_id": "872", "lat_deg": 0, "lon_deg": 0, "water_level_m": 1.2}]}, datum="MLLW")
+    adapters = build_all(data)
+    spec = World.model_validate({"source": {"kind": "real_world", "data_product": "bundle@1"},
+        "boundary": {"id": "local", "min_ned_m": [-100, -100, -10], "max_ned_m": [100, 100, 50]}})
+    with pytest.raises(PhysicalValidationError, match="datum"):
+        RealWorldBundle(spec, 0, origin_wgs84_rad_m=ORIGIN, sources=RealWorldSources(**adapters))
+
+
+def test_sonar_uses_real_world_bundle_canonical_bathymetry():
+    adapters = build_all()
+    spec = World.model_validate({"source": {"kind": "real_world", "data_product": "bundle@1"},
+        "boundary": {"id": "local", "min_ned_m": [-100, -100, -10], "max_ned_m": [100, 100, 50]}})
+    bundle = RealWorldBundle(spec, 0, origin_wgs84_rad_m=ORIGIN, sources=RealWorldSources(**adapters))
+    config = SensorConfig("depth", "sonar", 0, 1, (0, 0, 0), (1, 0, 0, 0), 10, 0, 0, 1, "1", "test")
+    sonar = Sonar(config, min_range_m=0, max_range_m=30, fov_rad=0, beam_count=1)
+    state = VesselState(torch.tensor((0., 0, 1), dtype=torch.float64),
+                        torch.tensor((1., 0, 0, 0), dtype=torch.float64), torch.zeros(6, dtype=torch.float64))
+    result = sonar.sample(SensorContext(state, bundle, 0), sample_step=0)
+    assert result.values["range_m"].item() == pytest.approx(19)
 
 
 def test_resolved_real_world_requires_exact_bundle_hash_and_runs_authoritative_engine():

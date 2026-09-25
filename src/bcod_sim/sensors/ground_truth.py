@@ -6,6 +6,7 @@ from bcod_sim.sensors.base import SensorConfig, SensorContext, SensorPacket, pac
 
 class GroundTruthState:
     kind = "ground_truth"
+    requirements = frozenset({"vehicle.pose", "vehicle.velocity"})
 
     def __init__(self, config: SensorConfig) -> None:
         if config.sensor_type != "ground_truth_state" or config.noise_std != 0:

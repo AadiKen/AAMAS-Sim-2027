@@ -8,11 +8,11 @@ from bcod_sim.core.errors import PhysicalValidationError
 from bcod_sim.frames.tensor import rotate_body_to_world
 from bcod_sim.sensors.base import SensorConfig, SensorContext, SensorPacket, packet, stable_noise
 from bcod_sim.sensors.kinematics import mount_kinematics
-from bcod_sim.sensors.raycast import entity_distance
 
 
 class LiDAR:
     kind = "physical"
+    requirements = frozenset({"geometry.raycast", "weather.visibility"})
 
     def __init__(self, config: SensorConfig, *, min_range_m: float, max_range_m: float,
                  fov_rad: float, ray_count: int) -> None:
@@ -28,18 +28,20 @@ class LiDAR:
     def sample(self, context: SensorContext, *, sample_step: int) -> SensorPacket:
         mount = mount_kinematics(self.config, context)
         origin = tuple(mount.position_ned_m.tolist())
-        entities = context.world.entities(sim_time_s=context.sim_time_s, env_id=self.config.env_id)
-        world_sample = context.world.sample(mount.position_ned_m.unsqueeze(0),
-                                            sim_time_s=context.sim_time_s, env_id=self.config.env_id)
-        effective_range = min(self.max_range_m, world_sample.visibility_m[0].item())
+        environment = context.environment
+        environment.require(self.requirements)
+        visibility = environment.sample("weather.visibility", mount.position_ned_m,
+                                        context.sim_time_s).value[0].item()
+        effective_range = min(self.max_range_m, visibility)
         ranges, hit = [], []
         for index in range(self.ray_count):
             angle = -self.fov_rad / 2 + (self.fov_rad * index / (self.ray_count - 1) if self.ray_count > 1 else 0)
             local = mount.position_ned_m.new_tensor((math.cos(angle), math.sin(angle), 0.0))
             direction = tuple(rotate_body_to_world(local, mount.q_mount_to_ned).tolist())
-            distances = [distance for entity in entities
-                         if (distance := entity_distance(origin, direction, entity)) is not None]
-            nearest = min(distances, default=math.inf)
+            result = environment.sample("geometry.raycast", mount.position_ned_m,
+                context.sim_time_s, direction_ned=mount.position_ned_m.new_tensor(direction),
+                max_range_m=effective_range, include_bathymetry=False).value
+            nearest = result["distance_m"] if result["hit"] else math.inf
             valid = self.min_range_m <= nearest <= effective_range
             ranges.append(nearest if valid else self.max_range_m)
             hit.append(valid)
@@ -51,4 +53,5 @@ class LiDAR:
         mask = mask & (noisy >= self.min_range_m) & (noisy <= self.max_range_m)
         ranges_tensor = torch.where(mask, noisy, torch.full_like(noisy, self.max_range_m))
         return packet(self.config, self.kind, sample_step, {"range_m": ranges_tensor, "hit": mask},
-                      {"range_m": "m", "hit": "bool"}, {"range_m": "mount", "hit": "mount"})
+                      {"range_m": "m", "hit": "bool"}, {"range_m": "mount", "hit": "mount"},
+                      sample_time_s=context.sim_time_s)

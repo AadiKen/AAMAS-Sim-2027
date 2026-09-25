@@ -190,6 +190,35 @@ def cur_002(_: Path) -> Result:
         "matched_flow_zero_drag": matched_drag <= 1e-10,
         "force_opposes_relative_flow": float(torch.dot(stationary_force[:3], -water)) <= 1e-10}))
 
+def cur_003(_:Path)->Result:
+    plant=build_plant(bcod_parameters(resolved_parameters())); errors=[]
+    for speed in (.25,.5,1,1.5):
+        relative=tensor((-speed,0,0,0,0,0)); linear=-(plant.damping.linear_matrix@relative if plant.damping.linear_matrix is not None else plant.damping.linear*relative); nonlinear=-plant.damping.quadratic*relative.abs()*relative
+        ledger=plant.diagnostics(state(),zero_external(),water_velocity_ned=tensor((speed,0,0))); actual=ledger.terms["linear_damping"]+ledger.terms["nonlinear_damping"]
+        errors.append(float(torch.max(torch.abs(actual-(linear+nonlinear)))))
+    return finalize(Result("CUR-003","current","",{"max_wrench_error":max(errors)},{"independent_damping_match":max(errors)<=1e-10}))
+
+def cur_004(_:Path)->Result:
+    plant=build_plant(bcod_parameters(resolved_parameters())); a=plant.diagnostics(state(),zero_external(),water_velocity_ned=tensor((0,.7,0))); b=plant.diagnostics(state(),zero_external(),water_velocity_ned=tensor((0,-.7,0)))
+    wa=a.terms["linear_damping"]+a.terms["nonlinear_damping"]+a.terms["crossflow"]; wb=b.terms["linear_damping"]+b.terms["nonlinear_damping"]+b.terms["crossflow"]
+    error=mirrored_error(wa,wb,(1,-1,1,-1,1,-1))
+    return finalize(Result("CUR-004","current","",{"mirror_error":error},{"mirror_symmetry":error<=1e-9}))
+
+def cur_005(case_dir:Path)->Result:
+    runs=[]
+    for speed in (.25,.5,1.):
+        rows,_,metrics=response_run(current=(speed,0,0)); runs.append((speed,rows,metrics))
+    write_response(case_dir,runs[-1][1]); drift=[float(row[1][-1,1]) for row in runs]
+    convergence=run_case_at_dt(lambda d:response_run(dt_s=d,current=(.5,0,0))[2],.04)
+    return finalize(Result("CUR-005","current","",{"terminal_drifts":str(drift),"dt_change":convergence["normalized_dt_to_dt2"]},{"direction":all(x>0 for x in drift),"smooth_scaling":drift==sorted(drift),"dt_convergence":convergence["passed"]}))
+
+def cur_006(case_dir:Path)->Result:
+    metrics=[]
+    for speed in (0,.25,.5,1.):
+        rows,_,item=response_run(current=(speed,0,0),controlled=True);metrics.append(item)
+    write_response(case_dir,rows); errors=[m["tracking_rmse"] for m in metrics]
+    return finalize(Result("CUR-006","current","",{"tracking_rmse_sweep":str(errors),"control_effort":metrics[-1]["control_effort"],"saturation_fraction":metrics[-1]["saturation_fraction"]},{"finite":all(math.isfinite(x) for x in errors),"smooth_degradation":all(b>=a-1e-9 for a,b in zip(errors,errors[1:]))}))
+
 
 def wind_001(_: Path) -> Result:
     model = wind_model()
@@ -197,6 +226,30 @@ def wind_001(_: Path) -> Result:
     maximum = float(torch.max(torch.abs(value)))
     return finalize(Result("WIND-001", "wind", "", {"max_abs_wrench": maximum},
                            {"zero_wind_zero_wrench": maximum <= 1e-12}))
+
+def wind_002(_:Path)->Result:
+    model=wind_model(); signs=[]
+    for angle in np.arange(0,2*math.pi,math.pi/4):
+        vector=(10*math.cos(angle),10*math.sin(angle),0); wrench=model.evaluate(state(),sample(wind=vector)).tau_body
+        signs.append(float(torch.dot(wrench[:2],tensor(vector[:2])))>0)
+    return finalize(Result("WIND-002","wind","",{"directions":len(signs)},{"force_has_downwind_component":all(signs)}))
+
+def wind_004(_:Path)->Result:
+    model=wind_model(); left=model.evaluate(state(),sample(wind=(0,8,0))).tau_body; right=model.evaluate(state(),sample(wind=(0,-8,0))).tau_body; error=mirrored_error(left,right,(1,-1,1,-1,1,-1))
+    return finalize(Result("WIND-004","wind","",{"mirror_error":error},{"mirror_symmetry":error<=1e-10}))
+
+def wind_005(case_dir:Path)->Result:
+    runs=[]
+    for speed in (2,5,10): runs.append(response_run(wind=(speed,0,0)))
+    write_response(case_dir,runs[-1][0]); drift=[float(r[0][-1,1]) for r in runs]; convergence=run_case_at_dt(lambda d:response_run(dt_s=d,wind=(5,0,0))[2],.04)
+    return finalize(Result("WIND-005","wind","",{"drift":str(drift),"dt_change":convergence["normalized_dt_to_dt2"]},{"downwind":all(x>0 for x in drift),"scaling":drift==sorted(drift),"dt_convergence":convergence["passed"]}))
+
+def wind_006(case_dir:Path)->Result:
+    metrics=[]
+    for speed in (0,2,5,10):
+        rows,_,item=response_run(wind=(speed,0,0),controlled=True);metrics.append(item)
+    write_response(case_dir,rows); errors=[m["tracking_rmse"] for m in metrics]
+    return finalize(Result("WIND-006","wind","",{"tracking_rmse_sweep":str(errors),"control_effort":metrics[-1]["control_effort"],"saturation_fraction":metrics[-1]["saturation_fraction"]},{"finite":all(math.isfinite(x) for x in errors),"smooth_degradation":all(b>=a-1e-9 for a,b in zip(errors,errors[1:]))}))
 
 
 def wind_003(case_dir: Path) -> Result:
@@ -247,6 +300,37 @@ def wreg_002(_: Path) -> Result:
     error = float(np.max(np.abs(actual-expected)))
     return finalize(Result("WREG-002", "regular_waves", "", {"max_spatial_error": error}, {"spatial_phase": error <= 1e-10}))
 
+def wave_metrics(rows:np.ndarray,transient_fraction=.25):
+    values=rows[int(len(rows)*transient_fraction):]
+    return {"heave_rms":float(np.sqrt(np.mean(values[:,3]**2))),"roll_rms":float(np.sqrt(np.mean(values[:,4]**2))),"pitch_rms":float(np.sqrt(np.mean(values[:,5]**2))),"heading_drift":float(values[-1,6]-values[0,6])}
+
+def wreg_003(case_dir:Path)->Result:
+    metrics=[]
+    for direction in (0,math.pi/4,math.pi/2,3*math.pi/4,math.pi):
+        wave=RegularWaves(kind="regular",height_m=.4,period_s=3,direction_rad=direction);rows,_,_=response_run(wave=wave,duration_s=12);metrics.append(wave_metrics(rows))
+    write_response(case_dir,rows); values=[m["heave_rms"]+m["roll_rms"]+m["pitch_rms"] for m in metrics]
+    convergence=run_case_at_dt(lambda d:wave_metrics(response_run(dt_s=d,wave=RegularWaves(kind="regular",height_m=.4,period_s=3,direction_rad=0),duration_s=8)[0]),.04)
+    return finalize(Result("WREG-003","regular_waves","",{"direction_response":str(values),"dt_change":convergence["normalized_dt_to_dt2"]},{"finite":all(math.isfinite(x) for x in values),"direction_sensitive":max(values)-min(values)>1e-6,"dt_convergence":convergence["passed"]}))
+
+def wreg_004(case_dir:Path)->Result:
+    values=[]
+    for height in (.1,.3,.6):
+        rows,_,_=response_run(wave=RegularWaves(kind="regular",height_m=height,period_s=3,direction_rad=0),duration_s=12); values.append(wave_metrics(rows)["heave_rms"])
+    write_response(case_dir,rows)
+    return finalize(Result("WREG-004","regular_waves","",{"heave_rms_sweep":str(values)},{"monotonic":all(b>a for a,b in zip(values,values[1:])),"finite":all(math.isfinite(x) for x in values)}))
+
+def wreg_005(case_dir:Path)->Result:
+    values=[]
+    for period in (1.5,3,6):
+        rows,_,_=response_run(wave=RegularWaves(kind="regular",height_m=.3,period_s=period,direction_rad=0),duration_s=max(12,period*8));values.append(wave_metrics(rows))
+    write_response(case_dir,rows); response=[m["heave_rms"]+m["pitch_rms"] for m in values]
+    return finalize(Result("WREG-005","regular_waves","",{"response_sweep":str(response)},{"finite":all(math.isfinite(x) for x in response),"frequency_sensitive":max(response)-min(response)>1e-6}))
+
+def wreg_006(case_dir:Path)->Result:
+    period=3.; rows,_,_=response_run(dt_s=.05,wave=RegularWaves(kind="regular",height_m=.3,period_s=period,direction_rad=0),duration_s=40*period);write_response(case_dir,rows)
+    early=wave_metrics(rows[int(10*period/.05):int(25*period/.05)],0);late=wave_metrics(rows[int(25*period/.05):],0); ratio=late["heave_rms"]/max(1e-12,early["heave_rms"])
+    return finalize(Result("WREG-006","regular_waves","",{"late_early_heave_ratio":ratio},{"bounded":np.isfinite(rows).all(),"no_artificial_growth":ratio<1.2}))
+
 
 def wirr_001(_: Path) -> Result:
     spec = dict(kind="irregular", spectrum="jonswap", significant_height_m=.8, peak_period_s=4,
@@ -274,6 +358,16 @@ def wirr_002(case_dir: Path) -> Result:
     return finalize(Result("WIRR-002", "irregular_waves", "", {"realized_Hs": realized_hs, "peak_period": peak_period,
                            "Hs_relative_error": hs_error, "Tp_relative_error": tp_error},
                            {"Hs": hs_error <= .10, "Tp": tp_error <= .05}))
+
+def wirr_003(case_dir:Path)->Result:
+    metrics=[]; traces=[]
+    for hs,seed in ((.2,7),(.5,7),(.8,7),(.5,8)):
+        wave=IrregularWaves(kind="irregular",spectrum="jonswap",significant_height_m=hs,peak_period_s=3,direction_rad=.4,component_count=32,seed=seed)
+        rows,_,_=response_run(wave=wave,duration_s=30);metrics.append(wave_metrics(rows));traces.append(rows)
+    write_response(case_dir,traces[2]);severity=[m["heave_rms"]+m["roll_rms"]+m["pitch_rms"] for m in metrics[:3]]
+    replay=response_run(wave=IrregularWaves(kind="irregular",spectrum="jonswap",significant_height_m=.5,peak_period_s=3,direction_rad=.4,component_count=32,seed=7),duration_s=30)[0]
+    convergence=run_case_at_dt(lambda d:wave_metrics(response_run(dt_s=d,wave=IrregularWaves(kind="irregular",spectrum="jonswap",significant_height_m=.5,peak_period_s=3,direction_rad=.4,component_count=16,seed=7),duration_s=12)[0]),.04)
+    return finalize(Result("WIRR-003","irregular_waves","",{"severity_response":str(severity),"dt_change":convergence["normalized_dt_to_dt2"]},{"severity_scaling":severity==sorted(severity),"same_seed_exact":np.array_equal(traces[1],replay),"different_seed_differs":not np.array_equal(traces[1],traces[3]),"dt_convergence":convergence["passed"]}))
 
 
 def bath_001(_: Path) -> Result:
@@ -336,6 +430,66 @@ def collision_case(case_id: str, oblique: bool = False, dynamic_target: bool = F
         if dynamic_target: assertions["linear_momentum"] = momentum_error <= 1e-8
         if oblique: assertions["friction_impulse"] = bool(result.events and result.events[0].friction_impulse_ns > 0)
         return finalize(Result(case_id, "vessel_vessel" if dynamic_target else "collision", "", metrics, assertions))
+    return run
+
+def impact(speed=1.,tangent=0.,mass_scale=1.,y=0.,shape=None,friction=.3):
+    p=simple_collision_plant(mass_scale); vessel=CollisionBody(0,"vessel",shape or Sphere(1),state((0,y,0),(speed,tangent,0,0,0,0)),p); wall=CollisionBody(0,"wall",Box((1,5,5)),static_position_ned_m=(1.8,0,0)); before=kinetic(vessel,vessel.state)
+    result=resolve_contacts((vessel,wall),material=ContactMaterial(.2,friction,1),dt_s=.02); after=result.states[(0,"vessel")]; event=result.events[0] if result.events else None
+    return vessel,result,event,{"pre_energy":before,"post_energy":kinetic(vessel,after),"post_u":float(after.nu_body[0]),"post_v":float(after.nu_body[1]),"yaw_rate":float(after.nu_body[5]),"penetration":max((c.penetration_m for c in result.contacts),default=0.)}
+
+def collision_matrix_case(case_id:str)->Callable[[Path],Result]:
+    def run(case_dir:Path)->Result:
+        assertions={}; metrics={}; rows=[]
+        if case_id=="COLL-001":
+            p=simple_collision_plant(); vessel=CollisionBody(0,"vessel",Sphere(1),state((-.2,0,0)),p); wall=CollisionBody(0,"wall",Box((1,5,5)),static_position_ned_m=(1.8,0,0)); result=resolve_contacts((vessel,wall),material=ContactMaterial(),dt_s=.02); assertions={"no_launch":not result.events or sum(e.normal_impulse_ns for e in result.events)==0,"no_penetration":not result.contacts}
+        elif case_id=="COLL-003":
+            outcomes=[]
+            for speed in (.1,.25,.5,1,1.5):
+                _,result,event,item=impact(speed,friction=0);outcomes.append((speed,item["post_energy"],0 if event is None else event.normal_impulse_ns,item["penetration"]));rows.append(outcomes[-1])
+            impulses=[x[2] for x in outcomes]; assertions={"smooth_impulse":impulses==sorted(impulses),"dissipative":all(e<=.5*10*s*s+1e-9 for s,e,_,_ in outcomes)};metrics={"impulses":str(impulses)}
+        elif case_id=="COLL-005":
+            _,_,left,li=impact(1,.2,y=.3);_,_,right,ri=impact(1,-.2,y=-.3); error=mirrored_error(left.body_a_equivalent_wrench_frd,right.body_a_equivalent_wrench_frd,(1,-1,1,-1,1,-1));assertions={"mirror":error<=1e-9};metrics={"mirror_error":error}
+        elif case_id=="COLL-006":
+            values=[]
+            for scale in (.5,1,2):
+                _,_,event,item=impact(1,mass_scale=scale,friction=0);values.append((scale,event.normal_impulse_ns,item["post_u"]));rows.append(values[-1])
+            assertions={"impulse_scales_with_mass":values[0][1]<values[1][1]<values[2][1],"same_velocity_law":max(x[2] for x in values)-min(x[2] for x in values)<1e-10};metrics={"mass_results":str(values)}
+        elif case_id=="COLL-007":
+            _,_,event,item=impact(1,.2,y=.6,shape=Box((1,1,1))); expected=torch.linalg.cross(event.point_ned_m-tensor((0,.6,0)),event.contact_force_on_a_ned_n); actual=event.body_a_equivalent_wrench_frd[3:]; error=float(torch.max(torch.abs(expected-actual)));assertions={"r_cross_force":error<=1e-9,"yaw_response":abs(item["yaw_rate"])>0};metrics={"torque_error":error}
+        elif case_id=="COLL-008":
+            p=simple_collision_plant(); vessel=CollisionBody(0,"vessel",Box((1,1,1)),state((0,.8,0),(1,-.2,0,0,0,0)),p); walls=(CollisionBody(0,"wall-x",Box((1,5,5)),static_position_ned_m=(1.8,0,0)),CollisionBody(0,"wall-y",Box((5,1,5)),static_position_ned_m=(0,-.8,0))); result=resolve_contacts((vessel,*walls),material=ContactMaterial(0,.3,1),dt_s=.02);assertions={"multi_contact":len(result.contacts)==2,"finite":torch.isfinite(result.states[(0,"vessel")].nu_body).all()};metrics={"contact_count":len(result.contacts)}
+        elif case_id=="COLL-009":
+            def sustained(local_dt):
+                max_pen=peak_force=0.;s=state((-.2,0,0));p=simple_collision_plant();wall=CollisionBody(0,"wall",Box((1,5,5)),static_position_ned_m=(1.8,0,0)); acceleration=2.5
+                for _ in range(round(5/local_dt)):
+                    nu=s.nu_body.clone();nu[0]+=acceleration*local_dt;position=s.position_ned.clone();position[0]+=nu[0]*local_dt;s=VesselState(position,s.q_body_to_ned,nu)
+                    b=CollisionBody(0,"vessel",Sphere(1),s,p);result=resolve_contacts((b,wall),material=ContactMaterial(0,.5,1),dt_s=local_dt);max_pen=max(max_pen,max((c.penetration_m for c in result.contacts),default=0));peak_force=max(peak_force,max((abs(e.normal_impulse_ns/local_dt) for e in result.events),default=0));s=result.states[(0,"vessel")]
+                return {"peak_contact_force":peak_force,"max_penetration":max_pen,"terminal_speed":float(torch.linalg.vector_norm(s.nu_body))}
+            conv=run_case_at_dt(sustained,.02,contact=True);base=conv["outputs"][0];assertions={"bounded":base["max_penetration"]<=.01,"finite":all(math.isfinite(x) for x in base.values()),"dt_convergence":conv["passed"]};metrics={"max_penetration":base["max_penetration"],"peak_contact_force":base["peak_contact_force"],"dt_change":conv["normalized_dt_to_dt2"]}
+        elif case_id in ("COLL-010","COLL-011","COLL-012"):
+            _,_,event,item=impact(1,.2); ext=zero_external(); current=(.5,0,0) if case_id in ("COLL-010","COLL-012") else (0,0,0); wind=(5,2,0) if case_id in ("COLL-011","COLL-012") else (0,0,0); p=build_plant(bcod_parameters(resolved_parameters())); ledger=p.diagnostics(state(),ext,water_velocity_ned=tensor(current)); wind_wrench=wind_model().evaluate(state(),sample(wind=wind)).tau_body if wind!=(0,0,0) else torch.zeros(6,dtype=DTYPE); env_norm=float(torch.linalg.vector_norm(ledger.terms["linear_damping"]+ledger.terms["nonlinear_damping"]+wind_wrench));assertions={"contact_active":event is not None,"environment_active":env_norm>0};metrics={"environment_wrench_norm":env_norm,"contact_impulse":event.normal_impulse_ns}
+        else: raise ValueError(case_id)
+        if rows: write_csv(case_dir/"timeseries.csv",tuple(f"value_{i}" for i in range(len(rows[0]))),rows)
+        return finalize(Result(case_id,"collision","",metrics,assertions))
+    return run
+
+def vessel_pair(mass_a=1.,mass_b=1.,va=(1,0,0),vb=(-1,0,0),offset=.0):
+    pa,pb=simple_collision_plant(mass_a),simple_collision_plant(mass_b);a=CollisionBody(0,"a",Sphere(1),state((0,offset,0),(*va,0,0,0)),pa);b=CollisionBody(0,"b",Sphere(1),state((1.8,0,0),(*vb,0,0,0)),pb);before=pa.mass.mass_kg*a.state.nu_body[:3]+pb.mass.mass_kg*b.state.nu_body[:3];result=resolve_contacts((a,b),material=ContactMaterial(.2,.2,1),dt_s=.02);after=pa.mass.mass_kg*result.states[(0,"a")].nu_body[:3]+pb.mass.mass_kg*result.states[(0,"b")].nu_body[:3];return a,b,result,float(torch.linalg.vector_norm(after-before))
+
+def vvc_case(case_id:str)->Callable[[Path],Result]:
+    def run(_:Path)->Result:
+        if case_id=="VVC-002":
+            a,b,r,res=vessel_pair(vb=(0,0,0)); assertions={"momentum":res<=1e-9,"transfer":float(r.states[(0,"b")].nu_body[0])>0};metrics={"momentum_residual":res}
+        elif case_id=="VVC-003":
+            residuals=[]
+            for ma,mb in ((1,1),(1,2),(1,5),(2,1),(5,1)): residuals.append(vessel_pair(ma,mb)[3])
+            assertions={"all_ratios_conserve":max(residuals)<=1e-8};metrics={"max_momentum_residual":max(residuals)}
+        elif case_id in ("VVC-004","VVC-005"):
+            offset=.3 if case_id=="VVC-005" else 0.;a,b,r,res=vessel_pair(va=(1,.3,0),vb=(-1,-.2,0),offset=offset); yaw=(float(r.states[(0,"a")].nu_body[5]),float(r.states[(0,"b")].nu_body[5]));assertions={"momentum":res<=1e-8,"angular_response":any(abs(x)>1e-8 for x in yaw)};metrics={"momentum_residual":res,"yaw_rates":str(yaw)}
+        elif case_id=="VVC-007":
+            a,b,r,res=vessel_pair(); before=kinetic(a,a.state)+kinetic(b,b.state);after=kinetic(a,r.states[(0,"a")])+kinetic(b,r.states[(0,"b")]); angular_before=float(torch.linalg.cross(a.state.position_ned,a.plant.mass.mass_kg*a.state.nu_body[:3])[2]+torch.linalg.cross(b.state.position_ned,b.plant.mass.mass_kg*b.state.nu_body[:3])[2]);angular_after=float(torch.linalg.cross(r.states[(0,"a")].position_ned,a.plant.mass.mass_kg*r.states[(0,"a")].nu_body[:3])[2]+torch.linalg.cross(r.states[(0,"b")].position_ned,b.plant.mass.mass_kg*r.states[(0,"b")].nu_body[:3])[2]);assertions={"linear_momentum":res<=1e-8,"energy_nonincreasing":after<=before+1e-9,"angular_momentum":abs(angular_after-angular_before)<=1e-8};metrics={"momentum_residual":res,"energy_change":after-before,"angular_residual":angular_after-angular_before}
+        else: raise ValueError(case_id)
+        return finalize(Result(case_id,"vessel_vessel","",metrics,assertions))
     return run
 
 
@@ -407,6 +561,26 @@ def comb_001(_: Path) -> Result:
     residual = both-(current+wind_only-still); error = float(torch.max(torch.abs(residual)))
     return finalize(Result("COMB-001", "combined", "", {"composition_max_abs_error": error}, {"additive": error <= 1e-9}))
 
+def combined_case(case_id:str)->Callable[[Path],Result]:
+    def run(case_dir:Path)->Result:
+        current=(.5,.2,0); wind=(5,2,0); wave=RegularWaves(kind="regular",height_m=.3,period_s=3,direction_rad=.4)
+        if case_id=="COMB-002": enabled=(current,(0,0,0),wave)
+        elif case_id=="COMB-003": enabled=((0,0,0),wind,wave)
+        else: enabled=(current,wind,wave)
+        if case_id in ("COMB-002","COMB-003","COMB-004"):
+            p=build_plant(bcod_parameters(resolved_parameters()));s=state();field=WaveField(enabled[2]);surface,orbital,acc=field.sample_kinematics(s.position_ned[None,:],.7);env=WorldSample(tensor((enabled[0],)),tensor((enabled[1],)),torch.zeros((1,3),dtype=DTYPE),surface,orbital,acc,tensor((1025,)),tensor((1.225,)),tensor((10000,)),torch.zeros(1,dtype=DTYPE),torch.zeros(1,dtype=DTYPE),None,None)
+            wind_tau=wind_model().evaluate(s,env).tau_body if enabled[1]!=(0,0,0) else torch.zeros(6,dtype=DTYPE);wave_tau=KinematicWaveLoads((20,30,40),(8,12,15),(8,8,15)).evaluate(s,env).tau_body;ext=zero_external();ext["wind"],ext["wave"]=wind_tau,wave_tau
+            combined=p.diagnostics(s,ext,water_velocity_ned=tensor(enabled[0])+orbital[0]).total
+            still=p.diagnostics(s,zero_external(),water_velocity_ned=torch.zeros(3,dtype=DTYPE)).total
+            current_only=p.diagnostics(s,zero_external(),water_velocity_ned=tensor(enabled[0])+orbital[0]).total
+            residual=combined-(current_only+wind_tau+wave_tau); error=float(torch.max(torch.abs(residual)))
+            assertions={"additive":error<=1e-9,"finite":torch.isfinite(combined).all()};metrics={"composition_error":error}
+        else:
+            baseline=response_run(controlled=True)[2];rows,_,metrics_run=response_run(current=current,wind=wind,wave=wave,controlled=True,duration_s=15);write_response(case_dir,rows)
+            assertions={"finite":np.isfinite(rows).all(),"environment_degrades_tracking":metrics_run["tracking_rmse"]>=baseline["tracking_rmse"],"controller_active":metrics_run["control_effort"]>0};metrics={"tracking_rmse":metrics_run["tracking_rmse"],"heading_rmse":metrics_run["heading_rmse"],"control_effort":metrics_run["control_effort"],"saturation_fraction":metrics_run["saturation_fraction"]}
+        return finalize(Result(case_id,"combined","",metrics,assertions))
+    return run
+
 
 def blocked(case_id: str, category: str, reason: str) -> Callable[[Path], Result]:
     return lambda _: Result(case_id, category, "BLOCKED", warnings=[reason], failure_category="REFERENCE",
@@ -424,10 +598,11 @@ def wind_model():
 
 
 CASES: list[tuple[str, str, Callable[[Path], Result]]] = [
-    ("ENV-000", "baseline", env_000), ("CUR-001", "current", cur_001), ("CUR-002", "current", cur_002),
-    ("WIND-001", "wind", wind_001), ("WIND-003", "wind", wind_003),
-    ("WREG-001", "regular_waves", wreg_001), ("WREG-002", "regular_waves", wreg_002),
-    ("WIRR-001", "irregular_waves", wirr_001), ("WIRR-002", "irregular_waves", wirr_002),
+    ("ENV-000", "baseline", env_000),
+    *[(f"CUR-{i:03d}","current",runner) for i,runner in enumerate((cur_001,cur_002,cur_003,cur_004,cur_005,cur_006),1)],
+    *[(f"WIND-{i:03d}","wind",runner) for i,runner in enumerate((wind_001,wind_002,wind_003,wind_004,wind_005,wind_006),1)],
+    *[(f"WREG-{i:03d}","regular_waves",runner) for i,runner in enumerate((wreg_001,wreg_002,wreg_003,wreg_004,wreg_005,wreg_006),1)],
+    *[(f"WIRR-{i:03d}","irregular_waves",runner) for i,runner in enumerate((wirr_001,wirr_002,wirr_003),1)],
     ("BATH-001", "bathymetry", bath_001), ("BATH-002", "bathymetry", bath_002),
     ("BATH-003", "bathymetry", bath_003), ("BATH-004", "bathymetry", bath_004),
     ("GROUND-001", "grounding", grounding_case("GROUND-001","clearance")),
@@ -435,11 +610,17 @@ CASES: list[tuple[str, str, Callable[[Path], Result]]] = [
     ("GROUND-003", "grounding", grounding_case("GROUND-003","vertical")),
     ("GROUND-004", "grounding", grounding_case("GROUND-004","forward")),
     ("GROUND-005", "grounding", grounding_case("GROUND-005","sustained")),
+    ("COLL-001", "collision", collision_matrix_case("COLL-001")),
     ("COLL-002", "collision", collision_case("COLL-002")),
+    ("COLL-003", "collision", collision_matrix_case("COLL-003")),
     ("COLL-004", "collision", collision_case("COLL-004", oblique=True)),
+    *[(f"COLL-{i:03d}","collision",collision_matrix_case(f"COLL-{i:03d}")) for i in range(5,13)],
     ("VVC-001", "vessel_vessel", collision_case("VVC-001", dynamic_target=True)),
+    *[(f"VVC-{i:03d}","vessel_vessel",vvc_case(f"VVC-{i:03d}")) for i in range(2,6)],
     ("VVC-006", "vessel_vessel", collision_case("VVC-006", dynamic_target=True)),
+    ("VVC-007", "vessel_vessel", vvc_case("VVC-007")),
     ("COMB-001", "combined", comb_001),
+    *[(f"COMB-{i:03d}","combined",combined_case(f"COMB-{i:03d}")) for i in range(2,6)],
     ("COMB-006", "combined", grounding_case("COMB-006","combined")),
     ("COMB-007", "combined", grounding_case("COMB-007","combined")),
     ("COMB-008", "combined", grounding_case("COMB-008","combined")),
@@ -461,11 +642,9 @@ REQUIRED_CASES = {
     "combined": tuple(f"COMB-{i:03d}" for i in range(1, 9)),
 }
 _registered = {case_id for case_id, _, _ in CASES}
-for _category, _ids in REQUIRED_CASES.items():
-    for _case_id in _ids:
-        if _case_id not in _registered:
-            CASES.append((_case_id, _category, blocked(
-                _case_id, _category, "Required Stage 2 case runner/reference is not implemented yet")))
+_required={case_id for ids in REQUIRED_CASES.values() for case_id in ids}
+if _registered != _required:
+    raise RuntimeError(f"Stage 2 registry mismatch: missing={sorted(_required-_registered)}, extra={sorted(_registered-_required)}")
 CASES.sort(key=lambda item: item[0])
 
 

@@ -2,6 +2,8 @@ __pycache__/
 *.py[cod]
 .pytest_cache/
 .venv/
+.venv-pyquaticus/
+.benchmark-deps/
 build/
 dist/
 node_modules/
@@ -9,3 +11,15 @@ node_modules/
 *.ses
 .bcod_runs/
 *.egg-info/
+# Generated benchmark and experiment outputs
+**/results/
+**/*_results/
+# Generated logs
+**/logs/
+*.log
+*.log.*
+stage2_results/
+stage3_results/
+stage4_results/
+stage5_results/
+experiments/

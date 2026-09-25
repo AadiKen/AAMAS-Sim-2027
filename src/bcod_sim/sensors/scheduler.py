@@ -1,6 +1,8 @@
 """Master-step sensor rate and integer-step latency scheduler."""
 
 import math
+import hashlib
+from dataclasses import replace
 from typing import Mapping
 
 from bcod_sim.core.errors import DuplicateIdentityError, PhysicalValidationError
@@ -18,6 +20,9 @@ class SensorScheduler:
         self.disabled_owners: set[tuple[int, int]] = set()
         self.last_step = -1
         for sensor in sensors:
+            reset = getattr(sensor, "reset", None)
+            if reset is not None:
+                reset()
             config = sensor.config
             key = (config.env_id, config.owner_vessel_id, config.instance_id)
             if key in self.sensors:
@@ -47,7 +52,18 @@ class SensorScheduler:
             expected_time = step_index * self.master_dt_s
             if not math.isclose(context.sim_time_s, expected_time, rel_tol=0, abs_tol=1e-9):
                 raise PhysicalValidationError("Sensor context time disagrees with master clock")
+            if expected_time < self.sensors[key].config.warmup_s:
+                continue
+            probability = self.sensors[key].config.dropout_probability
+            if probability:
+                token = f"{self.sensors[key].config.seed}|{key}|{step_index}|dropout".encode()
+                draw = int.from_bytes(hashlib.sha256(token).digest()[:8], "big") / 2**64
+                if draw < probability:
+                    continue
             sample = self.sensors[key].sample(context, sample_step=step_index)
+            sample = replace(sample,
+                sample_time_s=expected_time if sample.sample_time_s is None else sample.sample_time_s,
+                delivery_time_s=(sample.delivery_step*self.master_dt_s))
             self.pending.setdefault(sample.delivery_step, []).append(sample)
         return tuple(sorted(self.pending.pop(step_index, []), key=lambda packet: (
             packet.env_id, packet.owner_vessel_id, packet.sensor_id)))

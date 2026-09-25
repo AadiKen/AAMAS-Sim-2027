@@ -16,6 +16,7 @@ def world_collision_bodies(world: ParametricWorld, *, sim_time_s: float) -> tupl
                  else Box(entity.shape.half_extents_m))
         result.append(CollisionBody(world.env_id, entity.id, shape,
                                     static_position_ned_m=entity.position_ned_m,
+                                    static_q_to_ned=entity.orientation_q_to_ned,
                                     kinematic_velocity_ned_mps=entity.velocity_ned_mps))
     return tuple(result)
 

@@ -26,10 +26,22 @@ class RTOFS3D:
 
     def current_ned_mps(self, lat_deg: float, lon_deg: float, depth_m: float) -> tuple[float, float, float]:
         self.provenance.coverage.require(lat_deg, lon_deg)
-        candidates = [row for row in self.samples if float(row["depth_m"]) == depth_m]
-        if not candidates:
-            raise ExternalDataCoverageError("Requested RTOFS depth level is unavailable")
-        row = min(candidates, key=lambda x: distance_m(lat_deg, lon_deg, x["lat_deg"], x["lon_deg"]))
-        if distance_m(lat_deg, lon_deg, row["lat_deg"], row["lon_deg"]) > self.max_sample_radius_m:
+        if depth_m < 0:
+            raise ExternalDataCoverageError("Requested RTOFS depth must be nonnegative")
+        # Select the nearest horizontal column, then interpolate its vertical levels.
+        horizontal = min(self.samples, key=lambda x: distance_m(lat_deg, lon_deg, x["lat_deg"], x["lon_deg"]))
+        column = [row for row in self.samples if row["lat_deg"] == horizontal["lat_deg"] and
+                  row["lon_deg"] == horizontal["lon_deg"]]
+        if distance_m(lat_deg, lon_deg, horizontal["lat_deg"], horizontal["lon_deg"]) > self.max_sample_radius_m:
             raise ExternalDataCoverageError("No RTOFS grid sample covers requested coordinate")
-        return float(row["v_north_mps"]), float(row["u_east_mps"]), -float(row["w_up_mps"])
+        levels = sorted(column, key=lambda row: float(row["depth_m"]))
+        if depth_m < float(levels[0]["depth_m"]) or depth_m > float(levels[-1]["depth_m"]):
+            raise ExternalDataCoverageError("Requested RTOFS depth lies outside the source column")
+        lower = max((row for row in levels if float(row["depth_m"]) <= depth_m),
+                    key=lambda row: float(row["depth_m"]))
+        upper = min((row for row in levels if float(row["depth_m"]) >= depth_m),
+                    key=lambda row: float(row["depth_m"]))
+        low_depth, high_depth = float(lower["depth_m"]), float(upper["depth_m"])
+        fraction = 0.0 if high_depth == low_depth else (depth_m-low_depth)/(high_depth-low_depth)
+        interpolate = lambda key: float(lower[key]) + fraction*(float(upper[key])-float(lower[key]))
+        return interpolate("v_north_mps"), interpolate("u_east_mps"), -interpolate("w_up_mps")

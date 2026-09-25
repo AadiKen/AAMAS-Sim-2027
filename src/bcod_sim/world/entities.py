@@ -15,11 +15,17 @@ class EntitySnapshot:
     collision_enabled: bool
     scripted: bool
     velocity_ned_mps: tuple[float, float, float]
+    orientation_q_to_ned: tuple[float, float, float, float] = (1.0, 0.0, 0.0, 0.0)
+    semantic_class: str | None = None
+    source: str | None = None
+    provenance: object | None = None
+    material: object | None = None
 
 
 def snapshot_static(entity: StaticEntity) -> EntitySnapshot:
     return EntitySnapshot(entity.id, entity.position_ned_m, entity.shape, entity.collision_enabled,
-                          False, (0.0, 0.0, 0.0))
+                          False, (0.0, 0.0, 0.0), entity.orientation_q_to_ned,
+                          entity.semantic_class, entity.source, entity.provenance, entity.material)
 
 
 def snapshot_scripted(entity: ScriptedEntity, sim_time_s: float) -> EntitySnapshot | None:
@@ -30,4 +36,5 @@ def snapshot_scripted(entity: ScriptedEntity, sim_time_s: float) -> EntitySnapsh
     if not all(math.isfinite(value) for value in position):
         raise PhysicalValidationError(f"Scripted entity {entity.id} produced nonfinite position")
     return EntitySnapshot(entity.id, position, entity.shape, entity.collision_enabled,
-                          True, entity.velocity_ned_mps)
+                          True, entity.velocity_ned_mps, entity.orientation_q_to_ned,
+                          entity.semantic_class, entity.source, entity.provenance, entity.material)

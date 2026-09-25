@@ -55,8 +55,14 @@ class ParametricWorld:
         self.wind = build_vector_field(spec.environment.wind, env_id)
         self.waves = WaveField(spec.environment.waves)
         self.wake = WakeField()
+        self.capability_extensions: dict[str, tuple[object, object]] = {}
         self.bathymetry = Bathymetry(spec.bathymetry) if spec.bathymetry else None
         self._check_spawn_regions()
+
+    def register_capability(self, name: str, provider, descriptor) -> None:
+        if name in self.capability_extensions:
+            raise PhysicalValidationError(f"Duplicate environment capability extension: {name}")
+        self.capability_extensions[name] = (provider, descriptor)
 
     @classmethod
     def from_resolved(cls, resolved: ResolvedExperiment, *, env_id: int) -> "ParametricWorld":
@@ -97,10 +103,11 @@ class ParametricWorld:
         count = positions_ned_m.shape[0]
         bottom = self.bathymetry.bottom_ned_z_m(positions_ned_m) if self.bathymetry else None
         current = self.current.sample(positions_ned_m, sim_time_s, env_id)
-        local_depth = bottom if bottom is not None else None
+        mean_local_depth = bottom if bottom is not None else None
         current_valid = ((positions_ned_m[:,2] <= bottom) & (bottom > 0)) if bottom is not None else positions_ned_m.new_ones(count,dtype=torch.bool)
         surface, orbital, wave_acceleration, wave_diagnostics = self.waves.sample_kinematics(
-            positions_ned_m, sim_time_s, local_depth_m=local_depth, current_ned_mps=current, diagnostics=True)
+            positions_ned_m, sim_time_s, local_depth_m=mean_local_depth, current_ned_mps=current, diagnostics=True)
+        local_depth = None if bottom is None else bottom - surface
         result = WorldSample(
             current_ned_mps=current,
             wind_ned_mps=self.wind.sample(positions_ned_m, sim_time_s, env_id),

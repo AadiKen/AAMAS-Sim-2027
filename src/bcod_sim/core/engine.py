@@ -32,6 +32,8 @@ from bcod_sim.tasks.base import RewardReport, TaskEvaluation, compose_reward
 from bcod_sim.tasks.registry import build_task
 from bcod_sim.world.wake import GaussianWakeEmitter, WakeEmission
 from bcod_sim.world.world import ParametricWorld
+from bcod_sim.world.environment import Environment
+from bcod_sim.config.hashing import content_hash
 
 
 @dataclass(frozen=True)
@@ -72,6 +74,7 @@ class EpisodeFrame:
     terminated: bool
     termination_reason: TerminationReason | None
     grounding_telemetry: Mapping[str, Mapping[str, object]] = field(default_factory=dict)
+    observation_freshness: Mapping[str, Mapping[str, Mapping[str, object]]] = field(default_factory=dict)
 
 
 @dataclass(frozen=True)
@@ -92,6 +95,7 @@ class EpisodeCheckpoint:
     task_snapshot: object
     terminated: bool
     termination_reason: TerminationReason | None
+    sensor_states: Mapping[tuple[int, int, str], object] = field(default_factory=dict)
 
 
 class EpisodeEngine:
@@ -144,6 +148,23 @@ class EpisodeEngine:
             for component in (*vessel.actuators, *vessel.sensors):
                 if component.config.env_id != 0 or component.config.owner_vessel_id != vessel.vessel_id:
                     raise PhysicalValidationError("Component owner mismatch")
+            environment = Environment(self.world)
+            for sensor in vessel.sensors:
+                requirements = frozenset(getattr(sensor, "requirements", ()))
+                environment.require(item for item in requirements if not item.startswith("vehicle."))
+                if sensor.config.config_fingerprint is not None:
+                    reference = next((ref for ref in authoring.sensors
+                                      if ref.partition("@")[0] == sensor.config.instance_id), None)
+                    definition = next((d for d in resolved.definitions if d.kind == "sensor" and
+                                       reference == f"{d.id}@{d.version}"), None)
+                    if definition is None:
+                        raise PhysicalValidationError(f"Runtime sensor {sensor.config.instance_id} is not resolved")
+                    expected_fingerprint = content_hash({"id": definition.id, "version": definition.version,
+                        "source": definition.source, "payload": dict(definition.payload), "env_id": 0,
+                        "owner_vessel_id": vessel.vessel_id})
+                    if sensor.config.fingerprint != expected_fingerprint:
+                        raise PhysicalValidationError(
+                            f"Runtime sensor fingerprint mismatch: {sensor.config.instance_id}")
             all_actuators.extend(vessel.actuators)
             all_sensors.extend(vessel.sensors)
         self.all_actuators = tuple(all_actuators)
@@ -242,10 +263,11 @@ class EpisodeEngine:
                                                               acceleration[:3], acceleration[3:])
         return contexts
 
-    def _deliver(self, packets: tuple[SensorPacket, ...]) -> tuple[dict[str, Mapping[str, object]], tuple[str, ...]]:
+    def _deliver(self, packets: tuple[SensorPacket, ...], current_time_s: float) -> tuple[
+            dict[str, Mapping[str, object]], tuple[str, ...], dict[str, Mapping[str, Mapping[str, object]]]]:
         for packet in packets:
             self.latest_packets[(packet.owner_vessel_id, packet.sensor_id)] = packet
-        observations, pending = {}, []
+        observations, pending, freshness = {}, [], {}
         for name, contract in self.observation_contracts.items():
             if not self.statuses[name].rl_active:
                 continue
@@ -256,7 +278,12 @@ class EpisodeEngine:
                 pending.append(name)
             else:
                 observations[name] = contract.assemble(source_packets)
-        return observations, tuple(sorted(pending))
+                sensor_configs = {sensor.config.instance_id: sensor.config
+                                  for sensor in self.vessels[name].sensors}
+                freshness[name] = {sensor_id: packet.freshness(
+                    current_time_s, sensor_configs[sensor_id].max_age_s)
+                    for sensor_id, packet in source_packets.items() if sensor_id in sensor_configs}
+        return observations, tuple(sorted(pending)), freshness
 
     def reset(self, *, seed: int | None = None, episode_index: int = 0) -> EpisodeFrame:
         effective_seed = self.resolved.config.experiment.seed if seed is None else seed
@@ -289,9 +316,9 @@ class EpisodeEngine:
         self.termination_reason = None
         self.task.reset(self.states)
         delivered = self.scheduler.tick(0, self._sensor_contexts(0.0))
-        observations, pending = self._deliver(delivered)
+        observations, pending, freshness = self._deliver(delivered, 0.0)
         return EpisodeFrame(0, 0.0, self._state_snapshot(), observations, pending, delivered,
-                            None, None, (), False, None)
+                            None, None, (), False, None, observation_freshness=freshness)
 
     def _action_commands(self, actions: Mapping[str, DirectAction | HighLevelCommand],
                          *, policy_tick: bool) -> None:
@@ -404,7 +431,7 @@ class EpisodeEngine:
             self.master_step += 1
             sim_time_s = self.master_step * dt
             delivered = self.scheduler.tick(self.master_step, self._sensor_contexts(sim_time_s))
-            observations, pending = self._deliver(delivered)
+            observations, pending, freshness = self._deliver(delivered, sim_time_s)
             active = tuple(sorted(name for name, status in self.statuses.items() if status.rl_active))
             evaluation = self.task.evaluate(self.states, active)
             reward = compose_reward(evaluation, self.resolved.config.task.reward, active)
@@ -417,7 +444,7 @@ class EpisodeEngine:
             return EpisodeFrame(self.master_step, sim_time_s, self._state_snapshot(), observations,
                                 pending, delivered, reward, evaluation, tuple(contact_events),
                                 self.terminated, self.termination_reason,
-                                self._grounding_telemetry(tuple(contact_events),sim_time_s))
+                                self._grounding_telemetry(tuple(contact_events),sim_time_s), freshness)
         except BCODSimError as exc:
             self.terminated = True
             if isinstance(exc, (ExternalDataUnavailableError, ExternalDataCoverageError)):
@@ -437,7 +464,9 @@ class EpisodeEngine:
             {name: wrench.clone() for name, wrench in self.last_propulsion.items()},
             self.scheduler.last_step, copy.deepcopy(self.scheduler.pending),
             frozenset(self.scheduler.disabled_owners), self.world.wake._current,
-            self.world.wake.generation, self.task.snapshot(), self.terminated, self.termination_reason)
+            self.world.wake.generation, self.task.snapshot(), self.terminated, self.termination_reason,
+            {key: copy.deepcopy(sensor.snapshot()) for key, sensor in self.scheduler.sensors.items()
+             if callable(getattr(sensor, "snapshot", None))})
 
     def restore(self, checkpoint: EpisodeCheckpoint) -> None:
         if self.scenario is None or self.scheduler is None or self.scenario.content_hash != checkpoint.scenario_hash:
@@ -454,6 +483,9 @@ class EpisodeEngine:
         self.scheduler.last_step = checkpoint.scheduler_last_step
         self.scheduler.pending = copy.deepcopy(dict(checkpoint.scheduler_pending))
         self.scheduler.disabled_owners = set(checkpoint.scheduler_disabled_owners)
+        for key, state in checkpoint.sensor_states.items():
+            sensor = self.scheduler.sensors[key]
+            sensor.restore(copy.deepcopy(state))
         self.world.wake._current = checkpoint.wake_current
         self.world.wake.generation = checkpoint.wake_generation
         self.task.restore(checkpoint.task_snapshot)

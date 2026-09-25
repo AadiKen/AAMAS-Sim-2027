@@ -45,6 +45,9 @@ class CanonicalVessel(Strict):
     added_mass_kg: tuple[tuple[float, float, float, float, float, float], ...]
     linear_damping: tuple[float, float, float, float, float, float]
     quadratic_damping: tuple[float, float, float, float, float, float]
+    linear_damping_matrix: tuple[tuple[float, float, float, float, float, float], ...] | None = None
+    coupled_damping_terms: tuple[dict[str, Any], ...] = ()
+    hydrostatics: dict[str, Any] | None = None
     buoyancy_n: float = Field(gt=0)
     center_buoyancy_frd_m: tuple[float, float, float]
     equilibrium_heave_roll_pitch: tuple[float, float, float]
@@ -68,6 +71,10 @@ class CanonicalVessel(Strict):
             raise ValueError("inertia must be positive definite and satisfy the triangle inequality")
         if min(self.linear_damping) < 0 or min(self.quadratic_damping) < 0 or min(self.max_abs_nu) <= 0:
             raise ValueError("damping and operating envelope must be physically valid")
+        if self.linear_damping_matrix is not None:
+            linear=np.asarray(self.linear_damping_matrix)
+            if linear.shape!=(6,6) or not np.isfinite(linear).all() or np.linalg.eigvalsh((linear+linear.T)/2).min() < -1e-9:
+                raise ValueError("linear damping matrix must be finite 6x6 and dissipative")
         if self.collision.get("kind") not in {"sphere", "box"}:
             raise ValueError("collision geometry must use a supported shape")
         required = {"mass_kg", "cg_frd_m", "inertia_cg_kg_m2", "added_mass_kg",
@@ -79,7 +86,10 @@ class CanonicalVessel(Strict):
     def simulator_definitions(self) -> list[dict[str, Any]]:
         payload = self.model_dump(include={"mass_kg", "cg_frd_m", "inertia_cg_kg_m2", "added_mass_kg",
             "linear_damping", "quadratic_damping", "buoyancy_n", "center_buoyancy_frd_m", "max_abs_nu",
-            "min_substep_s", "max_substep_s", "collision", "environment_loads"}, mode="json")
+            "linear_damping_matrix", "coupled_damping_terms", "hydrostatics", "min_substep_s", "max_substep_s",
+            "collision", "environment_loads"}, mode="json")
+        if self.hydrostatics is not None:
+            payload.pop("buoyancy_n",None);payload.pop("center_buoyancy_frd_m",None)
         payload.update({"geometry": self.geometry.model_dump(mode="json"),
                         "equilibrium_heave_roll_pitch": list(self.equilibrium_heave_roll_pitch),
                         "provenance": {k: v.model_dump(mode="json") for k, v in self.provenance.items()},

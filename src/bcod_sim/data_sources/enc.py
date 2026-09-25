@@ -45,7 +45,11 @@ class NOAAENC:
                 if not isinstance(feature["collision_enabled"], bool):
                     raise ValueError("collision")
                 entity = StaticEntity(id=feature["id"], position_ned_m=position, shape=shape,
-                                      collision_enabled=feature["collision_enabled"])
+                                      collision_enabled=feature["collision_enabled"],
+                                      semantic_class=str(feature["feature_class"]), source="NOAA ENC",
+                                      provenance={"product": self.provenance.product,
+                                                  "version": self.provenance.version,
+                                                  "payload_sha256": self.provenance.payload_sha256})
                 feature_class = feature["feature_class"]
             except (KeyError, TypeError, ValueError) as exc:
                 raise ExternalDataUnavailableError("Malformed ENC feature") from exc

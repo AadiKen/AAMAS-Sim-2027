@@ -17,10 +17,12 @@ class ImportedGeometry:
     content_hash: str
     bounds_m: tuple[tuple[float, float, float], tuple[float, float, float]]
     source_frame: str
-    normalized_frame: str = "FRD_m"
+    normalized_frame: str = "FPU_m"
 
 
 def import_ascii_stl(source: str|Path, destination: str|Path, *, source_frame: str) -> ImportedGeometry:
+    if source_frame != "FPU_m":
+        raise CFDExecutionError("ASCII STL import requires declared FPU_m frame (X forward, Y port, Z up)")
     source, destination = Path(source), Path(destination)
     data=source.read_bytes()
     if not data.startswith(b"solid ") or b"endsolid" not in data:

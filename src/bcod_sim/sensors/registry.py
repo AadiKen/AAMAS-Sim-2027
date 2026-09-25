@@ -31,3 +31,14 @@ class SensorRegistry:
         except KeyError as exc:
             raise UnknownReferenceError(f"Unknown sensor type: {config.sensor_type}") from exc
         return factory(config, **kwargs)
+
+    def registered_types(self) -> tuple[str, ...]:
+        return tuple(sorted(self._factories))
+
+
+runtime_sensor_registry = SensorRegistry()
+
+
+def register_sensor_type(sensor_type: str, factory: Callable[..., Sensor]) -> None:
+    """Register an external sensor factory for resolved config construction."""
+    runtime_sensor_registry.register(sensor_type, factory)

@@ -158,6 +158,18 @@ class StaticEntity(StrictModel):
     position_ned_m: Vec3
     shape: SphereShape | BoxShape = Field(discriminator="kind")
     collision_enabled: bool = True
+    orientation_q_to_ned: tuple[Finite, Finite, Finite, Finite] = (1.0, 0.0, 0.0, 0.0)
+    semantic_class: str | None = None
+    source: str | None = None
+    provenance: dict | None = None
+    material: dict | None = None
+
+    @model_validator(mode="after")
+    def normalized_orientation(self):
+        norm = sum(x*x for x in self.orientation_q_to_ned) ** 0.5
+        if abs(norm - 1) > 1e-8:
+            raise ValueError("Entity orientation quaternion must be normalized")
+        return self
 
 
 class ScriptedEntity(StaticEntity):

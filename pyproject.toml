@@ -9,9 +9,14 @@ description = "BCOD-Sim ground-up rewrite (phase 0 scaffold)"
 requires-python = ">=3.12"
 dependencies = ["fastapi>=0.115,<1", "numpy>=2,<3", "onnx>=1.17,<2", "onnxruntime>=1.20,<2", "pyarrow>=18,<24", "pydantic>=2,<3", "PyYAML>=6,<7", "torch>=2.4", "uvicorn>=0.34,<1"]
 
+[project.scripts]
+bcod = "bcod_sim.cli:main"
+
 [project.optional-dependencies]
-test = ["httpx>=0.28,<1", "numpy>=2,<3", "pytest>=8,<10", "hypothesis>=6,<7"]
-validation = ["matplotlib>=3.9,<4"]
+test = ["httpx>=0.28,<1", "numpy>=2,<3", "pytest>=8,<10", "hypothesis>=6,<7",
+        "gymnasium>=1,<2", "pettingzoo>=1.24,<2"]
+validation = ["matplotlib>=3.9,<4", "gymnasium>=1,<2", "pettingzoo>=1.24,<2",
+              "psutil>=6,<9"]
 
 [tool.setuptools.packages.find]
 where = ["src"]

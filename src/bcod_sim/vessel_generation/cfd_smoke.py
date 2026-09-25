@@ -158,7 +158,7 @@ def run(output: Path, *, keep_cases: bool) -> int:
     (output/"openfoam_environment.txt").write_text(_environment_evidence(adapter,openfoam))
     try:
         source=generate(output/"input"/"smoke_hull_source.stl")
-        geometry=import_ascii_stl(source,output/"input"/"smoke_hull.stl",source_frame="body_FRD_m")
+        geometry=import_ascii_stl(source,output/"input"/"smoke_hull.stl",source_frame="FPU_m")
         vessel_seed=_seed(geometry); _write_json(output/"vessel"/"seed.json",vessel_seed.model_dump(mode="json"))
         case_roots=[]; parsed=[]; case_rows=[]; generated_case_files=[]; raw_outputs=[]
         for speed in SPEEDS:
@@ -166,7 +166,7 @@ def run(output: Path, *, keep_cases: bool) -> int:
             for path in sorted(x for x in root.rglob("*") if x.is_file()):
                 data=path.read_bytes(); generated_case_files.append({"case":case_id,"path":path.relative_to(root).as_posix(),
                     "bytes":len(data),"sha256":hashlib.sha256(data).hexdigest()})
-            mesh=adapter.mesh_case(root); solve=adapter.solve_case(root); result=adapter.parse_case(root)
+            mesh=adapter.mesh_case(root); solve=adapter.solve_case(root); result=adapter.parse_case(root,debug_last_sample=True)
             if abs(result.force_body_frd_n[0])<=0 or abs(result.force_body_frd_n[1])>.15*abs(result.force_body_frd_n[0]) or abs(result.moment_body_frd_nm[2])>.1*abs(result.force_body_frd_n[0])*2:
                 raise CFDExecutionError(f"force/moment sanity check failed for {case_id}")
             _write_json(output/"results"/f"{case_id}.json",result); case_roots.append(root); parsed.append(result)
