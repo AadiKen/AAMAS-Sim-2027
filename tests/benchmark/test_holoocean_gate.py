@@ -62,3 +62,57 @@ def test_four_vessel_linux_configuration_and_prop_mapping():
         assert all(action[1] > action[0] for action in fake.actions.values())
     finally:
         adapter.close()
+
+
+def test_close_calls_callable_close_once_and_clears_state():
+    class Closable:
+        def __init__(self):
+            self.calls = 0
+
+        def close(self):
+            self.calls += 1
+
+    adapter = HoloOceanAdapter(environment_factory=lambda **_: None)
+    env = Closable()
+    adapter.env = env
+    adapter.latest_readings = {"vessel_0": object()}
+    adapter.close()
+    adapter.close()
+    assert env.calls == 1
+    assert adapter.env is None
+    assert not hasattr(adapter, "latest_readings")
+
+
+def test_close_without_shutdown_method_is_safe():
+    adapter = HoloOceanAdapter(environment_factory=lambda **_: None)
+    adapter.env = object()
+    adapter.latest_readings = {}
+    adapter.close()
+    adapter.close()
+    assert adapter.env is None
+    assert not hasattr(adapter, "latest_readings")
+
+
+def test_close_uses_holoocean_context_manager_teardown():
+    class ContextEnvironment:
+        def __init__(self):
+            self.exits = []
+
+        def __exit__(self, exc_type, exc_value, traceback):
+            self.exits.append((exc_type, exc_value, traceback))
+
+    adapter = HoloOceanAdapter(environment_factory=lambda **_: None)
+    env = ContextEnvironment()
+    adapter.env = env
+    adapter.close()
+    adapter.close()
+    assert env.exits == [(None, None, None)]
+    assert adapter.env is None
+
+
+def test_close_before_environment_creation():
+    adapter = HoloOceanAdapter(environment_factory=lambda **_: None)
+    adapter.close()
+    adapter.close()
+    assert adapter.env is None
+    assert not hasattr(adapter, "latest_readings")

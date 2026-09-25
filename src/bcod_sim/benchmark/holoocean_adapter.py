@@ -112,8 +112,17 @@ class HoloOceanAdapter:
         return result
 
     def close(self):
-        if self.env is not None:
-            self.env.close()
+        try:
+            if self.env is not None:
+                close = getattr(self.env, "close", None)
+                if callable(close):
+                    close()
+                else:
+                    # HoloOcean 2.3 provides context-manager teardown, not close().
+                    exit_method = getattr(self.env, "__exit__", None)
+                    if callable(exit_method):
+                        exit_method(None, None, None)
+        finally:
             self.env = None
-        if hasattr(self, "latest_readings"):
-            del self.latest_readings
+            if hasattr(self, "latest_readings"):
+                del self.latest_readings
