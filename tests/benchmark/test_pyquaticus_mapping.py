@@ -37,15 +37,15 @@ def test_pyquaticus_sensor_range_and_frame(py_env):
     assert truth["vessel_0"].x_m == first.x_m
 
 
-@pytest.mark.parametrize("yaw,sign", [(0.5, 1), (-0.5, -1)])
+@pytest.mark.parametrize("yaw,sign", [(0.5, 1), (-0.5, -1), (1., 1), (-1., -1)])
 def test_pyquaticus_heron_yaw_rate_mapping(py_env, yaw, sign):
     py_env.reset(_scenario(), 123)
     rates = []
-    for _ in range(20):
+    for _ in range(150):
         readings, _ = py_env.step({f"vessel_{i}": (0.8, yaw) for i in range(4)})
         rates.append(readings["vessel_0"].yaw_rps)
-    steady = sum(rates[-5:]) / 5
-    assert steady * sign == pytest.approx(0.25, abs=0.06)
+    steady = sum(rates[-25:]) / 25
+    assert steady * sign == pytest.approx(abs(yaw)*BenchmarkConfig().max_yaw_rps, abs=.05)
     assert all(math.isfinite(rate) for rate in rates)
 
 

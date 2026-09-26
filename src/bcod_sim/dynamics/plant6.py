@@ -8,6 +8,7 @@ import torch
 
 from bcod_sim.core.errors import NonFiniteStateError, PhysicalValidationError
 from bcod_sim.dynamics.coriolis import coriolis_wrench
+from bcod_sim.vessel_generation.spec_a.fit import CoefficientSurface
 from bcod_sim.dynamics.crossflow import CrossflowModel, NoCrossflow
 from bcod_sim.dynamics.damping import Damping
 from bcod_sim.dynamics.diagnostics import EXTERNAL_TERMS, WrenchLedger, QuaternionNormalizationDiagnostic, make_ledger
@@ -72,7 +73,10 @@ class Plant6:
     def __init__(self, mass: MassProperties, damping: Damping, hydrostatics: HydrostaticsModel,
                  envelope: OperatingEnvelope, *, mode: Literal["full6", "planar3"] = "full6",
                  planar_equilibrium: PlanarEquilibrium | None = None,
-                 crossflow: CrossflowModel | None = None) -> None:
+                 crossflow: CrossflowModel | None = None,
+                 maneuvering_surface: CoefficientSurface | None = None,
+                 added_mass_coriolis_enabled: bool = True,
+                 surface_min_forward_speed_mps: float = 0.) -> None:
         if mode not in ("full6", "planar3"):
             raise PhysicalValidationError("Unknown dynamics mode")
         if mode == "planar3" and planar_equilibrium is None:
@@ -85,6 +89,10 @@ class Plant6:
         crossflow = crossflow or NoCrossflow()
         crossflow.validate(dtype=total.dtype, device=total.device)
         envelope.validate(dtype=total.dtype, device=total.device)
+        if maneuvering_surface is not None and added_mass_coriolis_enabled:
+            raise PhysicalValidationError("CFD/system-ID surface requires added-mass Coriolis disabled")
+        if not math.isfinite(surface_min_forward_speed_mps) or surface_min_forward_speed_mps < 0:
+            raise PhysicalValidationError("Invalid surface forward-speed threshold")
         self.mass = mass
         self.damping = damping
         self.hydrostatics = hydrostatics
@@ -97,6 +105,9 @@ class Plant6:
         self.total_mass = total
         self.active = torch.tensor((0, 1, 5), dtype=torch.long, device=total.device)
         self.active_mass = total.index_select(0, self.active).index_select(1, self.active)
+        self.maneuvering_surface = maneuvering_surface
+        self.added_mass_coriolis_enabled = added_mass_coriolis_enabled
+        self.surface_min_forward_speed_mps = surface_min_forward_speed_mps
 
     @property
     def mode(self) -> Literal["full6", "planar3"]:
@@ -116,18 +127,65 @@ class Plant6:
         nu = state.nu_body
         terms = {name: external[name] for name in EXTERNAL_TERMS}
         terms["rigid_coriolis"] = -coriolis_wrench(self.rigid_mass, nu)
-        terms["added_mass_coriolis"] = -coriolis_wrench(self.added_mass, nu)
         water_body = None if water_velocity_ned is None else rotate_world_to_body(water_velocity_ned, state.q_body_to_ned)
         nu_relative = nu.clone()
         if water_body is not None: nu_relative[:3] = nu_relative[:3] - water_body
+        surface_nu = nu_relative.clone()
+        if self.maneuvering_surface is not None:
+            reference = nu_relative.new_tensor(self.maneuvering_surface.moment_reference_frd_m)
+            surface_nu[:3] += torch.linalg.cross(nu_relative[3:], reference)
+        surface_active = (self.maneuvering_surface is not None and
+                          surface_nu[0].item() >= self.surface_min_forward_speed_mps and
+                          surface_nu[0].item() > 0 and
+                          torch.linalg.vector_norm(surface_nu[:2]).item() <=
+                          .45*(9.80665*self.maneuvering_surface.length_m)**.5)
+        surface_route = "not_configured"
+        if self.maneuvering_surface is not None:
+            fr = torch.linalg.vector_norm(surface_nu[:2]).item()/(9.80665*self.maneuvering_surface.length_m)**.5
+            surface_route = ("out_of_envelope" if fr > .45 else
+                             "low_speed_or_reverse_v5" if not surface_active else
+                             "extrapolated_fr" if fr >= .30 else "surface")
+        # The captive physical Y/N surface includes C_A(nu)nu. Retain the
+        # original V5 + C_A path only when the surface is outside its domain.
+        use_added_coriolis = (not surface_active and
+                             (self.added_mass_coriolis_enabled or self.maneuvering_surface is not None))
+        terms["added_mass_coriolis"] = (-coriolis_wrench(self.added_mass, nu) if use_added_coriolis
+                                         else torch.zeros_like(nu))
         damping = self.damping.evaluate(nu_relative)
         terms["linear_damping"], terms["nonlinear_damping"] = self.damping.components(nu_relative)
         hydrostatic = self.hydrostatics.evaluate(state, self.mass.mass_kg, self.mass.cg_frd_m)
         crossflow = self.crossflow.evaluate(state, water_body)
+        if surface_active:
+            # Keep the established surge resistance, remove V5 lateral/yaw
+            # loads, then add the physical captive Y/N and ΔX exactly once.
+            terms["linear_damping"] = terms["linear_damping"].clone()
+            terms["nonlinear_damping"] = terms["nonlinear_damping"].clone()
+            terms["linear_damping"][[1, 5]] = 0
+            terms["nonlinear_damping"][[1, 5]] = 0
+            straight_nu = torch.zeros_like(nu_relative)
+            straight_nu[0] = surface_nu[0]
+            straight_linear, straight_nonlinear = self.damping.components(straight_nu)
+            terms["linear_damping"][0] = straight_linear[0]
+            terms["nonlinear_damping"][0] = straight_nonlinear[0]
+            dx, y, n = self.maneuvering_surface.evaluate(
+                *[float(surface_nu[i]) for i in (0, 1, 5)])
+            terms["nonlinear_damping"][0] += dx
+            # Preserve vertical/roll/pitch crossflow outside the horizontal fit.
+            surface_tau = crossflow.tau_body.clone()
+            surface_tau[0] = 0
+            surface_tau[1], surface_tau[5] = y, n
+            # Captive moments and velocity coordinates share the declared CG
+            # reference. Plant6's spatial matrices use the body-frame origin.
+            physical_horizontal = nu.new_tensor([float(straight_linear[0]+straight_nonlinear[0])+dx, y, 0.])
+            surface_tau[3:] += torch.linalg.cross(reference, physical_horizontal)
+        else:
+            surface_tau = crossflow.tau_body
         terms["restoring"] = hydrostatic.tau_body
-        terms["crossflow"] = crossflow.tau_body
+        terms["crossflow"] = surface_tau
         return make_ledger(terms, {"tau_hydrostatic": hydrostatic.tau_body,
-                                   "tau_crossflow": crossflow.tau_body,
+                                   "tau_crossflow": surface_tau,
+                                   "maneuvering_surface_active": surface_active,
+                                   "maneuvering_surface_route": surface_route,
                                    "damping": damping.diagnostics,
                                    "hydrostatics": hydrostatic.diagnostics,
                                    "crossflow": crossflow.diagnostics})
@@ -147,7 +205,10 @@ class Plant6:
         equilibrium = self.planar_equilibrium
         assert equilibrium is not None
         position = torch.stack((position[0], position[1], position.new_tensor(equilibrium.heave_ned_m)))
-        q = _rpy_to_q(equilibrium.roll_rad, equilibrium.pitch_rad, _yaw(q))
+        projected_q = _rpy_to_q(equilibrium.roll_rad, equilibrium.pitch_rad, _yaw(q))
+        # q and -q represent the same rotation, but RK4 derivatives must stay
+        # on the input hemisphere when yaw wraps at +/-pi.
+        q = torch.where(torch.dot(projected_q, q) < 0, -projected_q, projected_q)
         nu = torch.stack((nu[0], nu[1], nu.new_zeros(()), nu.new_zeros(()), nu.new_zeros(()), nu[5]))
         return position, q, nu
 

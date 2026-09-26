@@ -12,9 +12,17 @@ import sys
 
 from pyquaticus.config import get_std_config
 from pyquaticus.envs.pyquaticus import PyQuaticusEnv
+from pyquaticus.utils.utils import detect_collision
 
 
 class NavigationEnv(PyQuaticusEnv):
+    def _move_agents(self, action_dict):
+        # Native obstacle response tests the previous position before moving.
+        # Record that event separately from post-step geometric overlap.
+        self.benchmark_contacts = [f"vessel_{i}" for i, player in enumerate(self.players.values())
+            if detect_collision(player.pos, self.agent_radius[i], self.obstacle_geoms)]
+        return super()._move_agents(action_dict)
+
     def _check_flag_pickups(self):
         pass
 
@@ -56,7 +64,15 @@ def readings(env, scenario, prior_heading, dt):
                         "surge_mps": float(speed[i]), "yaw_rps": delta / dt,
                         "nearby_agents": agents, "nearby_obstacles": detected_obstacles}
         truth[name] = {"x_m": x, "y_m": y, "heading_rad": heading}
-    return {"readings": sensor, "truth": truth}
+    return {"readings": sensor, "truth": truth, "diagnostics": {
+        "sim_time_s": env.current_time,
+        "saturated": {f"vessel_{i}": bool(abs(player.state.get("rudder", 0)) >= player.max_rudder or
+                      abs(player.state.get("thrust", 0)) >= player.max_thrust)
+                      for i, player in enumerate(env.players.values())},
+        "native_contacts": getattr(env, "benchmark_contacts", []),
+        "native_overlap": [f"vessel_{i}" for i, player in enumerate(env.players.values())
+                            if detect_collision(player.pos, env.agent_radius[i], env.obstacle_geoms)],
+        "native_agent_contacts": bool(env.active_collisions.any())}}
 
 
 def main():
@@ -81,7 +97,8 @@ def main():
                 config = get_std_config()
                 config.update({"env_bounds": [2 * half, 2 * half], "agent_radius": scenario["vessel_radius_m"],
                                "flag_keepout": 0.0, "catch_radius": 0.01, "tag_on_oob": False,
-                               "tau": dt, "max_time": scenario["max_steps"] * dt + 1,
+                               "tau": dt, "sim_speedup_factor": 1, "tag_on_collision": False,
+                               "max_time": scenario["max_steps"] * dt + 1,
                                "obstacles": {"circle": [(o["radius_m"], (o["x_m"] + half, o["y_m"] + half))
                                                         for o in scenario["obstacles"]] or
                                                        [(1.0, (1e6, 1e6))]}})
@@ -99,13 +116,32 @@ def main():
                 if env is None:
                     raise RuntimeError("Reset required")
                 dt = scenario["dt_s"]
-                # Heron consumes heading error (degrees), while the common action
-                # requests yaw rate. Its heading PID and rudder model attenuate a
-                # one-tick error by roughly 20x at benchmark cruising thrust.
-                native = {f"agent_{i}": [max(0.0, request["actions"][f"vessel_{i}"][0]) * scenario["max_surge_mps"],
-                                         max(-180.0, min(180.0, -20.0 * math.degrees(
-                                             request["actions"][f"vessel_{i}"][1] * scenario["max_yaw_rps"] * dt)))]
-                          for i in range(4)}
+                native = {}
+                for i, player in enumerate(env.players.values()):
+                    action = request["actions"][f"vessel_{i}"]
+                    target = action[1] * scenario["max_yaw_rps"]
+                    measured = result["readings"][f"vessel_{i}"]["yaw_rps"]
+                    # Native Heron yaw = rudder * turn_rate/100 * thrust/50
+                    # (degrees/s). Invert that steady gain, then reject residual
+                    # error with measured-rate feedback. Keep native heading PID.
+                    gain = (player.turn_rate / 100) * max(5., player.state["thrust"]) / 50
+                    desired_rudder = -math.degrees(target + .2 * (target - measured)) / gain
+                    # Invert the pinned native PID without advancing/mutating it.
+                    # Ignoring its derivative term creates an unstable outer loop.
+                    pid = player._pid_controllers["heading"]
+                    def output(error):
+                        derivative = 0. if pid._prev_error is None else (error-pid._prev_error)/pid._dt
+                        integral = max(-pid._integral_limit, min(pid._integral_limit,
+                                       pid._integral + pid._ki*error*pid._dt))
+                        return pid._kp*error + pid._kd*derivative + integral
+                    lo, hi = -180., 180.
+                    for _ in range(40):
+                        mid = (lo+hi)/2
+                        if output(mid) < desired_rudder: lo=mid
+                        else: hi=mid
+                    heading_error = (lo+hi)/2
+                    native[f"agent_{i}"] = [max(0., action[0]) * scenario["max_surge_mps"],
+                                            max(-180., min(180., heading_error))]
                 with contextlib.redirect_stdout(io.StringIO()):
                     env.step(native)
                 result = readings(env, scenario, heading, dt)

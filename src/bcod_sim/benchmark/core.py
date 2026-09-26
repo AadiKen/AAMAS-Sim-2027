@@ -20,7 +20,7 @@ class BenchmarkConfig:
     max_steps: int = 600
     dt_s: float = 0.2
     max_surge_mps: float = 2.0
-    max_yaw_rps: float = 0.5
+    max_yaw_rps: float = 0.25
     visibility_m: float = 30.0
     progress_weight: float = 1.0
     goal_bonus: float = 20.0
@@ -131,7 +131,7 @@ def observation(reading: VesselReading, goal: tuple[float, float], config: Bench
                      sorted(reading.nearby_obstacles, key=lambda p: math.dist(p[:2], (reading.x_m, reading.y_m)))[:10]):
         count = 3 if len(vector) == 8 else 10
         for item in list(detected) + [None] * (count - len(detected)):
-            if item is None or math.dist(item[:2], (reading.x_m, reading.y_m)) > config.visibility_m:
+            if item is None or math.dist(item[:2], (reading.x_m, reading.y_m)) > config.visibility_m + 1e-8:
                 vector.extend((0.0, 0.0, 0.0))
             else:
                 dx, dy = item[0] - reading.x_m, item[1] - reading.y_m
@@ -210,7 +210,11 @@ class Benchmark:
             goal = self.scenario.goals[i]
             before = math.dist((old_truth[name].x_m, old_truth[name].y_m), goal)
             after = math.dist((truth[name].x_m, truth[name].y_m), goal)
-            newly_reached = not self.reached[i] and after <= self.config.goal_radius_m
+            # Register entry anywhere on the observed transition segment, as for
+            # collision scoring; a vessel may cross and leave between samples.
+            newly_reached = not self.reached[i] and segment_distance(
+                (old_truth[name].x_m, old_truth[name].y_m),
+                (truth[name].x_m, truth[name].y_m), goal) <= self.config.goal_radius_m
             rewards[name] = (self.config.progress_weight * (before - after)
                              + self.config.goal_bonus * newly_reached
                              - self.config.collision_penalty * (name in collisions)

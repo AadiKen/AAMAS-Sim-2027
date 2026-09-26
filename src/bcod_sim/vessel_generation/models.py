@@ -10,7 +10,8 @@ class Strict(BaseModel):
 
 
 class ParameterLineage(Strict):
-    source_kind: Literal["manual", "geometry-derived", "CFD-derived", "calibration-adjusted", "imported"]
+    source_kind: Literal["manual", "geometry-derived", "CFD-derived", "calibration-adjusted", "imported",
+                         "strip", "bem", "analytical", "empirical", "calibrated", "cfd"]
     source_id: str = Field(min_length=1)
     original_source: str | None = None
     original_value: float | None = None
@@ -48,6 +49,8 @@ class CanonicalVessel(Strict):
     linear_damping_matrix: tuple[tuple[float, float, float, float, float, float], ...] | None = None
     coupled_damping_terms: tuple[dict[str, Any], ...] = ()
     hydrostatics: dict[str, Any] | None = None
+    crossflow: dict[str, Any] | None = None
+    surge_resistance: dict[str, Any] | None = None
     buoyancy_n: float = Field(gt=0)
     center_buoyancy_frd_m: tuple[float, float, float]
     equilibrium_heave_roll_pitch: tuple[float, float, float]
@@ -86,7 +89,8 @@ class CanonicalVessel(Strict):
     def simulator_definitions(self) -> list[dict[str, Any]]:
         payload = self.model_dump(include={"mass_kg", "cg_frd_m", "inertia_cg_kg_m2", "added_mass_kg",
             "linear_damping", "quadratic_damping", "buoyancy_n", "center_buoyancy_frd_m", "max_abs_nu",
-            "linear_damping_matrix", "coupled_damping_terms", "hydrostatics", "min_substep_s", "max_substep_s",
+            "linear_damping_matrix", "coupled_damping_terms", "hydrostatics", "crossflow", "surge_resistance",
+            "min_substep_s", "max_substep_s",
             "collision", "environment_loads"}, mode="json")
         if self.hydrostatics is not None:
             payload.pop("buoyancy_n",None);payload.pop("center_buoyancy_frd_m",None)

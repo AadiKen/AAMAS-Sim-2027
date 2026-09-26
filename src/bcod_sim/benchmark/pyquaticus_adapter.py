@@ -31,6 +31,7 @@ class PyquaticusAdapter:
             raise RuntimeError(result["error"])
         if payload["op"] == "close":
             return None
+        self.diagnostics = result.get("diagnostics", {})
         return ({name: VesselReading(**item) for name, item in result["readings"].items()},
                 {name: Truth(**item) for name, item in result["truth"].items()})
 

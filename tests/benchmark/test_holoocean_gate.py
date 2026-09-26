@@ -116,3 +116,19 @@ def test_close_before_environment_creation():
     adapter.close()
     assert adapter.env is None
     assert not hasattr(adapter, "latest_readings")
+
+
+def test_holoocean_yaw_command_uses_measured_rate_feedback():
+    from dataclasses import replace
+    adapter = HoloOceanAdapter(environment_factory=FakeOcean)
+    try:
+        adapter.reset(generate_scenario(8), 8)
+        for name, reading in adapter.latest_readings.items():
+            adapter.latest_readings[name] = replace(reading, yaw_rps=.125)
+        adapter.step({f'vessel_{i}': (.5,.5) for i in range(4)})
+        assert all(abs(a[1]-a[0])<1e-8 for a in adapter.env.actions.values())
+        for name, reading in adapter.latest_readings.items():
+            adapter.latest_readings[name] = replace(reading, yaw_rps=.5)
+        adapter.step({f'vessel_{i}': (.5,0.) for i in range(4)})
+        assert all(a[1]<a[0] for a in adapter.env.actions.values())
+    finally:adapter.close()

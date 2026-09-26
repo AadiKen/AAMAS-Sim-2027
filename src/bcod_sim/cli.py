@@ -12,6 +12,7 @@ from bcod_sim.vessel_generation.hydrostatics import derive_hydrostatics, load_as
 from bcod_sim.vessel_generation.identification import DOF, FluidModel, MotionType, Sweep
 from bcod_sim.vessel_generation.workflow import identify_package, read_observations
 from bcod_sim.vessel_generation.qualified_observations import qualify_case
+from bcod_sim.vessel_generation.simple_pipeline import generate_simple_vessel
 from bcod_sim.rl.training_control import TrainingRun
 
 
@@ -62,6 +63,24 @@ def _qualify(args) -> int:
     return 0
 
 
+def _generate(args) -> int:
+    cg = tuple(float(x) for x in args.cg)
+    inertia = None
+    if args.inertia:
+        import numpy as np
+        inertia = np.asarray([float(x) for x in args.inertia]).reshape(3, 3)
+    result = generate_simple_vessel(
+        geometry=args.geometry, output=args.output, mass_kg=args.mass,
+        cg_frd_m=cg, units=args.units, known_length_m=args.known_length,
+        source_frame=args.source_frame, draft_m=args.draft,
+        water_density_kg_m3=args.water_density, inertia_cg_kg_m2=inertia,
+        speed_range_mps=tuple(args.speed_range), classification=args.classification,
+        disable_bem=args.disable_bem, lut_samples=args.lut_samples,
+        confidence_policy=args.confidence_policy, bem_panel_target=args.bem_panel_target)
+    print(result)
+    return 0
+
+
 def main(argv=None) -> int:
     parser=argparse.ArgumentParser(prog="bcod");commands=parser.add_subparsers(dest="command",required=True)
     train=commands.add_parser('train',help='inspect or control an active training run')
@@ -83,6 +102,25 @@ def main(argv=None) -> int:
         print(identifier); return 0
     train.set_defaults(handler=train_handler)
     vessel=commands.add_parser("vessel");vessel_commands=vessel.add_subparsers(dest="vessel_command",required=True)
+    generate=vessel_commands.add_parser("generate",help="generate passive vessel dynamics from geometry without CFD")
+    generate.add_argument("--geometry",required=True,type=Path)
+    generate.add_argument("--mass",required=True,type=float)
+    generate.add_argument("--cg",required=True,nargs=3,type=float,metavar=("X","Y","Z"))
+    generate.add_argument("--output",required=True,type=Path)
+    scale=generate.add_mutually_exclusive_group(required=True)
+    scale.add_argument("--units",choices=("m","cm","mm","ft","in"))
+    scale.add_argument("--known-length",type=float)
+    generate.add_argument("--source-frame",choices=("FRD","FPU"),default="FRD")
+    generate.add_argument("--draft",type=float)
+    generate.add_argument("--water-density",type=float,default=1025.)
+    generate.add_argument("--inertia",nargs=9,type=float,metavar="I")
+    generate.add_argument("--speed-range",nargs=2,type=float,default=(0.,3.),metavar=("MIN","MAX"))
+    generate.add_argument("--classification")
+    generate.add_argument("--disable-bem",action="store_true")
+    generate.add_argument("--bem-panel-target",type=int,default=900)
+    generate.add_argument("--confidence-policy",choices=("allow_low","strict"),default="allow_low")
+    generate.add_argument("--lut-samples",type=int,default=9)
+    generate.set_defaults(handler=_generate)
     identify=vessel_commands.add_parser("identify",help="prepare or fit an offline 6-DOF CFD identification campaign")
     identify.add_argument("--geometry",required=True);identify.add_argument("--mass",required=True,type=float)
     identify.add_argument("--cg",required=True,help="body-FRD x,y,z in metres");identify.add_argument("--output",required=True)

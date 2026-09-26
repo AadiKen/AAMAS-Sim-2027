@@ -1,0 +1,176 @@
+{
+  "simulator": "bcod-reduced",
+  "config": {
+    "half_width_m": 500.0,
+    "goal_radius_m": 2.0,
+    "vessel_radius_m": 1.0,
+    "max_steps": 650,
+    "dt_s": 0.2,
+    "max_surge_mps": 2.0,
+    "max_yaw_rps": 0.5,
+    "visibility_m": 30.0,
+    "progress_weight": 1.0,
+    "goal_bonus": 20.0,
+    "collision_penalty": 50.0,
+    "step_penalty": 0.01
+  },
+  "tolerances": {
+    "surge_mps": 0.2,
+    "yaw_rps": 0.05,
+    "symmetry_rps": 0.03
+  },
+  "native_host_required": false,
+  "navigation": [
+    {
+      "scenario": "straight",
+      "fleet_success": true,
+      "per_agent_success": {
+        "vessel_0": true,
+        "vessel_1": true,
+        "vessel_2": true,
+        "vessel_3": true
+      },
+      "collision_count": 0,
+      "steps": 175,
+      "completion_time_s": 35.0,
+      "path_length_m": {
+        "vessel_0": 28.082043536869058,
+        "vessel_1": 28.082043536869058,
+        "vessel_2": 28.082043536869058,
+        "vessel_3": 28.082043536869058
+      },
+      "path_efficiency": {
+        "vessel_0": 1.0682983223999651,
+        "vessel_1": 1.0682983223999651,
+        "vessel_2": 1.0682983223999651,
+        "vessel_3": 1.0682983223999651
+      }
+    },
+    {
+      "scenario": "left",
+      "fleet_success": true,
+      "per_agent_success": {
+        "vessel_0": true,
+        "vessel_1": true,
+        "vessel_2": true,
+        "vessel_3": true
+      },
+      "collision_count": 0,
+      "steps": 193,
+      "completion_time_s": 38.6,
+      "path_length_m": {
+        "vessel_0": 28.99307901612123,
+        "vessel_1": 28.99307901859665,
+        "vessel_2": 28.993079017992976,
+        "vessel_3": 28.993079012804564
+      },
+      "path_efficiency": {
+        "vessel_0": 1.0347297016408257,
+        "vessel_1": 1.0347297015524806,
+        "vessel_2": 1.034729701574025,
+        "vessel_3": 1.0347297017591934
+      }
+    },
+    {
+      "scenario": "right",
+      "fleet_success": true,
+      "per_agent_success": {
+        "vessel_0": true,
+        "vessel_1": true,
+        "vessel_2": true,
+        "vessel_3": true
+      },
+      "collision_count": 0,
+      "steps": 193,
+      "completion_time_s": 38.6,
+      "path_length_m": {
+        "vessel_0": 28.993079012804582,
+        "vessel_1": 28.99307901799297,
+        "vessel_2": 28.99307901859668,
+        "vessel_3": 28.993079016121214
+      },
+      "path_efficiency": {
+        "vessel_0": 1.034729701759193,
+        "vessel_1": 1.0347297015740253,
+        "vessel_2": 1.0347297015524795,
+        "vessel_3": 1.0347297016408261
+      }
+    },
+    {
+      "scenario": "s_turn",
+      "fleet_success": true,
+      "per_agent_success": {
+        "vessel_0": true,
+        "vessel_1": true,
+        "vessel_2": true,
+        "vessel_3": true
+      },
+      "collision_count": 0,
+      "steps": 220,
+      "completion_time_s": 44.0,
+      "path_length_m": {
+        "vessel_0": 33.38524373944327,
+        "vessel_1": 33.385244325879526,
+        "vessel_2": 33.38524422855492,
+        "vessel_3": 33.385244816088054
+      },
+      "path_efficiency": {
+        "vessel_0": 0.8986005983402857,
+        "vessel_1": 0.8986005825557084,
+        "vessel_2": 0.8986005851753073,
+        "vessel_3": 0.8986005693612067
+      }
+    },
+    {
+      "scenario": "obstacle",
+      "fleet_success": true,
+      "per_agent_success": {
+        "vessel_0": true,
+        "vessel_1": true,
+        "vessel_2": true,
+        "vessel_3": true
+      },
+      "collision_count": 0,
+      "steps": 193,
+      "completion_time_s": 38.6,
+      "path_length_m": {
+        "vessel_0": 30.54837146159623,
+        "vessel_1": 30.548371446812535,
+        "vessel_2": 30.5483714537835,
+        "vessel_3": 30.54837138136895
+      },
+      "path_efficiency": {
+        "vessel_0": 0.9820490770748413,
+        "vessel_1": 0.982049077550098,
+        "vessel_2": 0.9820490773259999,
+        "vessel_3": 0.9820490796539356
+      }
+    },
+    {
+      "scenario": "crossing",
+      "fleet_success": true,
+      "per_agent_success": {
+        "vessel_0": true,
+        "vessel_1": true,
+        "vessel_2": true,
+        "vessel_3": true
+      },
+      "collision_count": 0,
+      "steps": 531,
+      "completion_time_s": 106.2,
+      "path_length_m": {
+        "vessel_0": 48.63512263770356,
+        "vessel_1": 48.63512252723632,
+        "vessel_2": 48.634954364054664,
+        "vessel_3": 48.123069315514144
+      },
+      "path_efficiency": {
+        "vessel_0": 1.0280636151051532,
+        "vessel_1": 1.0280636174402424,
+        "vessel_2": 1.0280671721356487,
+        "vessel_3": 1.0390027217960671
+      }
+    }
+  ],
+  "control_pass": null
+}

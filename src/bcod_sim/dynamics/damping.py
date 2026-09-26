@@ -28,6 +28,7 @@ class Damping:
     linear_matrix:torch.Tensor|None=None
     coupled_terms:tuple[CoupledDampingTerm,...]=()
     intended_dissipative:bool=True
+    surge_resistance_curve:tuple[torch.Tensor,torch.Tensor]|None=None
 
     def validate(self,*,dtype:torch.dtype,device:torch.device)->None:
         for name,value in (("linear",self.linear),("quadratic",self.quadratic)):
@@ -41,11 +42,29 @@ class Damping:
                 if torch.linalg.eigvalsh(symmetric)[0].item() < -1e-10*max(1.,torch.linalg.matrix_norm(matrix).item()):
                     raise PhysicalValidationError("Intended-dissipative linear damping is not positive semidefinite")
         for term in self.coupled_terms: term.validate()
+        if self.surge_resistance_curve is not None:
+            speeds,forces=self.surge_resistance_curve
+            if (speeds.ndim!=1 or forces.shape!=speeds.shape or len(speeds)<3 or
+                speeds.dtype!=dtype or forces.dtype!=dtype or speeds.device!=device or forces.device!=device or
+                not torch.isfinite(speeds).all().item() or not torch.isfinite(forces).all().item() or
+                not torch.all(speeds[1:]>speeds[:-1]).item() or
+                not torch.all(speeds*forces<=1e-8).item()):
+                raise PhysicalValidationError("Surge resistance curve must be finite, ordered, dissipative")
 
     def components(self,nu_relative:torch.Tensor)->tuple[torch.Tensor,torch.Tensor]:
         matrix=torch.diag(self.linear) if self.linear_matrix is None else self.linear_matrix
         linear=-(matrix@nu_relative)
         nonlinear=-self.quadratic*nu_relative.abs()*nu_relative
+        if self.surge_resistance_curve is not None:
+            speeds,forces=self.surge_resistance_curve
+            u=nu_relative[0]
+            index=torch.searchsorted(speeds,u).clamp(1,len(speeds)-1)
+            left,right=speeds[index-1],speeds[index]
+            interpolated=forces[index-1]+(forces[index]-forces[index-1])*(u-left)/(right-left)
+            # Outside the sampled envelope, use dissipative quadratic extension.
+            below=forces[0]*(u/speeds[0]).abs()**2 if speeds[0]<0 else interpolated
+            above=forces[-1]*(u/speeds[-1]).abs()**2 if speeds[-1]>0 else interpolated
+            nonlinear[0]+=torch.where(u<speeds[0],below,torch.where(u>speeds[-1],above,interpolated))
         for term in self.coupled_terms:
             nonlinear[term.output_axis]-=term.value(nu_relative)
         return linear,nonlinear

@@ -75,3 +75,113 @@ class StripTheoryCrossflow:
             strip_z=-.5*self.water_density_kg_m3*self.station_draft_m*cd*local_z.abs()*local_z*dx
             tau[2]=strip_z.sum(); tau[4]=(x*strip_z).sum()
         return WrenchResult(tau,self.model_name,{"relative_crossflow_velocity":torch.stack((relative[1],state.nu_body[5])),"station_local_sway_mps":local_y,"drag_coefficient":cd,"include_vertical":self.include_vertical})
+
+@dataclass(frozen=True)
+class SectionalCrossflow:
+    """Per-component strips; repeated X stations preserve multihull geometry."""
+    station_x_body_m: torch.Tensor
+    station_y_body_m: torch.Tensor
+    station_beam_m: torch.Tensor
+    station_draft_m: torch.Tensor
+    station_dx_m: torch.Tensor
+    water_density_kg_m3: float = 1025.
+    cd_scale: float = 1.
+    model_name: str = "sectional_stations"
+    station_cd: torch.Tensor | None = None
+    station_lift_base_kg_per_m: torch.Tensor | None = None
+    moment_reference_x_m: float = 0.
+    incidence_blend: bool = False
+    shear_blend: bool = False
+    translation_shear_v5: bool = False
+
+    @classmethod
+    def from_stations(cls, stations: list[dict], *, density: float = 1025.,
+                      cd_scale: float = 1., dtype: torch.dtype = torch.float64):
+        values = lambda key: torch.tensor([s[key] for s in stations], dtype=dtype)
+        cd = values("cd") if all("cd" in s for s in stations) else None
+        lift = values("lift_base_kg_per_m") if all("lift_base_kg_per_m" in s for s in stations) else None
+        methods = {s.get("lateral_force_method") for s in stations}
+        blended = methods in ({"incidence_blend_v3"}, {"shear_incidence_blend_v4"})
+        shear = methods == {"shear_incidence_blend_v4"}
+        translation_shear = methods == {"translation_shear_v5"}
+        return cls(values("x_m"), values("y_m"), values("beam_m"),
+                   values("draft_m"), values("dx_m"), density, cd_scale,
+                   station_cd=cd, station_lift_base_kg_per_m=lift,
+                   incidence_blend=blended, shear_blend=shear,
+                   translation_shear_v5=translation_shear)
+
+    def validate(self, *, dtype: torch.dtype, device: torch.device) -> None:
+        arrays = (self.station_x_body_m, self.station_y_body_m, self.station_beam_m,
+                  self.station_draft_m, self.station_dx_m)
+        if (len(arrays[0]) < 3 or any(x.ndim != 1 or x.shape != arrays[0].shape or
+            x.dtype != dtype or x.device != device or not torch.isfinite(x).all().item() for x in arrays)
+            or any((x <= 0).any().item() for x in arrays[2:])
+            or not math.isfinite(self.water_density_kg_m3) or self.water_density_kg_m3 <= 0
+            or not math.isfinite(self.cd_scale) or self.cd_scale <= 0
+            or not math.isfinite(self.moment_reference_x_m)):
+            raise PhysicalValidationError("Invalid sectional cross-flow stations")
+        for name, array in (("station_cd", self.station_cd),
+                            ("station_lift_base_kg_per_m", self.station_lift_base_kg_per_m)):
+            if array is not None and (array.shape != arrays[0].shape or array.dtype != dtype or
+                array.device != device or not torch.isfinite(array).all().item() or
+                (array < 0).any().item()):
+                raise PhysicalValidationError(f"Invalid {name}")
+
+    def evaluate(self, state: VesselState, water_velocity_body: torch.Tensor | None = None) -> WrenchResult:
+        water = state.nu_body.new_zeros(3) if water_velocity_body is None else water_velocity_body
+        if water.shape != (3,) or not torch.isfinite(water).all().item():
+            raise PhysicalValidationError("Invalid water velocity")
+        nu = state.nu_body
+        local = nu[1] - water[1] + self.station_x_body_m * nu[5]
+        ratio = self.station_beam_m / (2 * self.station_draft_m)
+        cd = (torch.clamp(1.5 / torch.sqrt(torch.clamp(ratio, min=.05)), min=.55, max=2.6)
+              if self.station_cd is None else self.station_cd) * self.cd_scale
+        drag = -.5 * self.water_density_kg_m3 * cd * self.station_draft_m * local.abs() * local * self.station_dx_m
+        local_u = nu[0] - water[0] - self.station_y_body_m * nu[5]
+        lift = (torch.zeros_like(drag) if self.station_lift_base_kg_per_m is None else
+                -self.station_lift_base_kg_per_m * local_u.abs() * local)
+        if self.translation_shear_v5:
+            projected = self.station_draft_m * self.station_dx_m
+            mean_local = torch.sum(projected * local) / projected.sum()
+            mean_u = torch.sum(projected * local_u.abs()) / projected.sum()
+            speed2 = mean_u.square() + mean_local.square()
+            translation_weight = torch.where(speed2 > 0,
+                mean_local.square() / torch.clamp(speed2, min=1e-30),
+                torch.zeros_like(speed2))
+            shear = local - mean_local
+            drag = -.5 * self.water_density_kg_m3 * cd * self.station_draft_m * local * (
+                translation_weight * local.abs() + (1-translation_weight) * shear.abs()) * self.station_dx_m
+            lift = (1-translation_weight) * lift
+            weight = torch.ones_like(local) * translation_weight
+        elif self.incidence_blend:
+            speed2 = local_u.square() + local.square()
+            incidence = torch.where(speed2 > 0, local.square() / torch.clamp(speed2, min=1e-30),
+                                    torch.zeros_like(speed2))
+            if self.shear_blend:
+                projected = self.station_draft_m * self.station_dx_m
+                mean_local = torch.sum(projected * local) / projected.sum()
+                shear = local - mean_local
+                shear2 = shear.square()
+                shear_weight = torch.where(shear2 + mean_local.square() > 0,
+                    shear2 / torch.clamp(shear2 + mean_local.square(), min=1e-30),
+                    torch.zeros_like(shear2))
+                weight = 1 - (1-incidence) * (1-shear_weight)
+            else:
+                weight = incidence
+            drag, lift = weight * drag, (1-weight) * lift
+        else:
+            weight = torch.zeros_like(local)
+        fy = drag + lift
+        tau = nu.new_zeros(6)
+        tau[1] = fy.sum()
+        tau[5] = ((self.station_x_body_m-self.moment_reference_x_m) * fy).sum()
+        return WrenchResult(tau, self.model_name, {"station_local_sway_mps": local,
+                             "station_local_surge_mps": local_u,
+                             "station_local_incidence_rad": torch.atan2(local, local_u.abs()),
+                             "station_crossflow_weight": weight,
+                             "drag_coefficient": cd, "component_offsets_y_m": self.station_y_body_m,
+                             "section_x_m": self.station_x_body_m,
+                             "section_drag_force_n": drag, "section_lift_force_n": lift,
+                             "section_force_n": fy,
+                             "section_yaw_moment_nm": (self.station_x_body_m-self.moment_reference_x_m)*fy,
+                             "moment_reference_x_m": self.moment_reference_x_m})

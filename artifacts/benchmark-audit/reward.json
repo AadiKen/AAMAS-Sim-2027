@@ -1,0 +1,261 @@
+[
+  {
+    "trajectory": "stationary",
+    "returns": {
+      "vessel_0": -5.9999999999999165,
+      "vessel_1": -5.9999999999999165,
+      "vessel_2": -5.9999999999999165,
+      "vessel_3": -5.9999999999999165
+    },
+    "discounted_returns_gamma_099": {
+      "vessel_0": -0.9975949907086894,
+      "vessel_1": -0.9975949907086894,
+      "vessel_2": -0.9975949907086894,
+      "vessel_3": -0.9975949907086894
+    },
+    "fleet_success": false,
+    "per_agent_success": {
+      "vessel_0": false,
+      "vessel_1": false,
+      "vessel_2": false,
+      "vessel_3": false
+    },
+    "collision_count": 0,
+    "steps": 600,
+    "completion_time_s": 120.0,
+    "path_length_m": {
+      "vessel_0": 0.0,
+      "vessel_1": 0.0,
+      "vessel_2": 0.0,
+      "vessel_3": 0.0
+    },
+    "path_efficiency": {
+      "vessel_0": 0.0,
+      "vessel_1": 0.0,
+      "vessel_2": 0.0,
+      "vessel_3": 0.0
+    }
+  },
+  {
+    "trajectory": "straight_success",
+    "returns": {
+      "vessel_0": 37.28999999999997,
+      "vessel_1": 37.28999999999997,
+      "vessel_2": 37.28999999999997,
+      "vessel_3": 37.28999999999997
+    },
+    "discounted_returns_gamma_099": {
+      "vessel_0": 19.481631047487177,
+      "vessel_1": 19.481631047487177,
+      "vessel_2": 19.481631047487177,
+      "vessel_3": 19.481631047487177
+    },
+    "fleet_success": true,
+    "per_agent_success": {
+      "vessel_0": true,
+      "vessel_1": true,
+      "vessel_2": true,
+      "vessel_3": true
+    },
+    "collision_count": 0,
+    "steps": 91,
+    "completion_time_s": 18.2,
+    "path_length_m": {
+      "vessel_0": 18.199999999999967,
+      "vessel_1": 18.199999999999967,
+      "vessel_2": 18.199999999999967,
+      "vessel_3": 18.199999999999967
+    },
+    "path_efficiency": {
+      "vessel_0": 1.0989010989011008,
+      "vessel_1": 1.0989010989011008,
+      "vessel_2": 1.0989010989011008,
+      "vessel_3": 1.0989010989011008
+    }
+  },
+  {
+    "trajectory": "progress_then_collision",
+    "returns": {
+      "vessel_0": -37.46,
+      "vessel_1": 12.539999999999996,
+      "vessel_2": 12.539999999999996,
+      "vessel_3": 12.539999999999996
+    },
+    "discounted_returns_gamma_099": {
+      "vessel_0": -16.804631363567598,
+      "vessel_1": 9.212394768947718,
+      "vessel_2": 9.212394768947718,
+      "vessel_3": 9.212394768947718
+    },
+    "fleet_success": false,
+    "per_agent_success": {
+      "vessel_0": false,
+      "vessel_1": false,
+      "vessel_2": false,
+      "vessel_3": false
+    },
+    "collision_count": 1,
+    "steps": 66,
+    "completion_time_s": 13.200000000000001,
+    "path_length_m": {
+      "vessel_0": 13.199999999999985,
+      "vessel_1": 13.199999999999985,
+      "vessel_2": 13.199999999999985,
+      "vessel_3": 13.199999999999985
+    },
+    "path_efficiency": {
+      "vessel_0": 0.0,
+      "vessel_1": 0.0,
+      "vessel_2": 0.0,
+      "vessel_3": 0.0
+    }
+  },
+  {
+    "trajectory": "partial_progress_timeout",
+    "returns": {
+      "vessel_0": 4.000000000000121,
+      "vessel_1": 4.000000000000121,
+      "vessel_2": 4.000000000000121,
+      "vessel_3": 4.000000000000121
+    },
+    "discounted_returns_gamma_099": {
+      "vessel_0": 6.902283666540579,
+      "vessel_1": 6.902283666540579,
+      "vessel_2": 6.902283666540579,
+      "vessel_3": 6.902283666540579
+    },
+    "fleet_success": false,
+    "per_agent_success": {
+      "vessel_0": false,
+      "vessel_1": false,
+      "vessel_2": false,
+      "vessel_3": false
+    },
+    "collision_count": 0,
+    "steps": 600,
+    "completion_time_s": 120.0,
+    "path_length_m": {
+      "vessel_0": 9.999999999999996,
+      "vessel_1": 9.999999999999996,
+      "vessel_2": 9.999999999999996,
+      "vessel_3": 9.999999999999996
+    },
+    "path_efficiency": {
+      "vessel_0": 0.0,
+      "vessel_1": 0.0,
+      "vessel_2": 0.0,
+      "vessel_3": 0.0
+    }
+  },
+  {
+    "trajectory": "safe_detour_success",
+    "returns": {
+      "vessel_0": 37.06687576256714,
+      "vessel_1": 37.06687576256714,
+      "vessel_2": 37.06687576256714,
+      "vessel_3": 37.06687576256714
+    },
+    "discounted_returns_gamma_099": {
+      "vessel_0": 16.335325688187538,
+      "vessel_1": 16.335325688187538,
+      "vessel_2": 16.335325688187538,
+      "vessel_3": 16.335325688187538
+    },
+    "fleet_success": true,
+    "per_agent_success": {
+      "vessel_0": true,
+      "vessel_1": true,
+      "vessel_2": true,
+      "vessel_3": true
+    },
+    "collision_count": 0,
+    "steps": 113,
+    "completion_time_s": 22.6,
+    "path_length_m": {
+      "vessel_0": 22.41024967590661,
+      "vessel_1": 22.410249675906634,
+      "vessel_2": 22.410249675906634,
+      "vessel_3": 22.41024967590661
+    },
+    "path_efficiency": {
+      "vessel_0": 0.892448780769369,
+      "vessel_1": 0.892448780769368,
+      "vessel_2": 0.892448780769368,
+      "vessel_3": 0.892448780769369
+    }
+  },
+  {
+    "trajectory": "reckless_collision",
+    "returns": {
+      "vessel_0": -37.12999999999999,
+      "vessel_1": 12.870000000000012,
+      "vessel_2": 12.870000000000012,
+      "vessel_3": 12.870000000000012
+    },
+    "discounted_returns_gamma_099": {
+      "vessel_0": -25.2405075692254,
+      "vessel_1": 11.008509228667274,
+      "vessel_2": 11.008509228667274,
+      "vessel_3": 11.008509228667274
+    },
+    "fleet_success": false,
+    "per_agent_success": {
+      "vessel_0": false,
+      "vessel_1": false,
+      "vessel_2": false,
+      "vessel_3": false
+    },
+    "collision_count": 1,
+    "steps": 33,
+    "completion_time_s": 6.6000000000000005,
+    "path_length_m": {
+      "vessel_0": 13.200000000000006,
+      "vessel_1": 13.200000000000006,
+      "vessel_2": 13.200000000000006,
+      "vessel_3": 13.200000000000006
+    },
+    "path_efficiency": {
+      "vessel_0": 0.0,
+      "vessel_1": 0.0,
+      "vessel_2": 0.0,
+      "vessel_3": 0.0
+    }
+  },
+  {
+    "trajectory": "long_progress_then_collision",
+    "returns": {
+      "vessel_0": 11.619999999999933,
+      "vessel_1": 61.61999999999993,
+      "vessel_2": 61.61999999999993,
+      "vessel_3": 61.61999999999993
+    },
+    "discounted_returns_gamma_099": {
+      "vessel_0": 20.710228136025904,
+      "vessel_1": 31.030604991896585,
+      "vessel_2": 31.030604991896585,
+      "vessel_3": 31.030604991896585
+    },
+    "fleet_success": false,
+    "per_agent_success": {
+      "vessel_0": false,
+      "vessel_1": false,
+      "vessel_2": false,
+      "vessel_3": false
+    },
+    "collision_count": 1,
+    "steps": 158,
+    "completion_time_s": 31.6,
+    "path_length_m": {
+      "vessel_0": 63.19999999999984,
+      "vessel_1": 63.19999999999984,
+      "vessel_2": 63.19999999999984,
+      "vessel_3": 63.19999999999984
+    },
+    "path_efficiency": {
+      "vessel_0": 0.0,
+      "vessel_1": 0.0,
+      "vessel_2": 0.0,
+      "vessel_3": 0.0
+    }
+  }
+]

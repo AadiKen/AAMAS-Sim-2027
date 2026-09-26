@@ -8,6 +8,7 @@ import math
 import platform
 
 from .core import BenchmarkConfig, NAMES, Scenario, Truth, VesselReading
+from .control import RatePI
 
 
 class HoloOceanUnavailable(RuntimeError):
@@ -57,6 +58,10 @@ class HoloOceanAdapter:
                                 tag=f"benchmark_obstacle_{index}")
         self.previous_positions = {}
         self.previous_headings = {}
+        # Native force limits are preserved. These feedback gains are provisional
+        # until the Linux control qualification measures the packaged hull.
+        self.controllers = {name: (RatePI(200., 50.), RatePI(200., 50.)) for name in NAMES}
+        self.diagnostics = {"sim_time_s": 0., "saturated": {}, "native_contacts": []}
         result = self._read(state, initial=True)
         self.latest_readings = result[0]
         return result
@@ -102,11 +107,21 @@ class HoloOceanAdapter:
             measured = self.latest_readings[name] if hasattr(self, "latest_readings") else None
             target_speed = max(0., min(1., speed)) * self.config.max_surge_mps
             # Native force control in newtons; right-minus-left gives positive yaw.
-            base = 200. * (target_speed - (measured.surge_mps if measured else 0.))
-            differential = 100. * max(-1., min(1., yaw))
-            self.env.act(name, [max(-500., min(500., base - differential)),
-                                max(-500., min(500., base + differential))])
+            speed_pi, yaw_pi = self.controllers[name]
+            base = speed_pi.request(target_speed - measured.surge_mps, self.config.dt_s)
+            differential = yaw_pi.request(yaw * self.config.max_yaw_rps - measured.yaw_rps,
+                                          self.config.dt_s)
+            requested = [base - differential, base + differential]
+            applied = [max(-500., min(500., force)) for force in requested]
+            saturated = requested != applied
+            self.diagnostics["saturated"][name] = saturated
+            speed_pi.commit(saturated)
+            yaw_pi.commit(saturated)
+            self.env.act(name, applied)
         state = self.env.tick(num_ticks=round(self.config.dt_s * 50))
+        self.diagnostics["sim_time_s"] += self.config.dt_s
+        self.diagnostics["native_contacts"] = [name for name in NAMES
+            if bool(state[name].get("CollisionSensor", [False])[0])]
         result = self._read(state)
         self.latest_readings = result[0]
         return result

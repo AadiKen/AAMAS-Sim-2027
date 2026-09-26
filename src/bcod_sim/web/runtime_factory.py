@@ -14,13 +14,14 @@ from bcod_sim.core.engine import EpisodeEngine, EpisodeVessel
 from bcod_sim.core.environment_loads import LinearEnvironmentLoads
 from bcod_sim.core.errors import ConfigSchemaError
 from bcod_sim.dynamics.damping import Damping, CoupledDampingTerm
-from bcod_sim.dynamics.crossflow import StripTheoryCrossflow
+from bcod_sim.dynamics.crossflow import StripTheoryCrossflow, SectionalCrossflow
 from bcod_sim.dynamics.matrices import MassProperties
 from bcod_sim.dynamics.mesh_buoyancy import MeshBuoyancy, TriangleMesh
 from bcod_sim.dynamics.environmental import KinematicWaveLoads,RelativeWindLoads,WindCoefficientPoint
 from bcod_sim.dynamics.operating_envelope import OperatingEnvelope
 from bcod_sim.dynamics.plant6 import PlanarEquilibrium, Plant6
-from bcod_sim.dynamics.restoring import Hydrostatics, LinearHydrostatics, reference_point_transform
+from bcod_sim.vessel_generation.spec_a.fit import surface_from_payload
+from bcod_sim.dynamics.restoring import Hydrostatics, LinearHydrostatics, RestoringLUT, reference_point_transform
 from bcod_sim.sensors.base import SensorConfig
 from bcod_sim.sensors.gps import GPS
 from bcod_sim.sensors.ground_truth import GroundTruthState
@@ -48,6 +49,9 @@ class VesselRuntime(Strict):
     center_buoyancy_frd_m: tuple[float, float, float] | None = None
     hydrostatics: dict | None = None
     crossflow: dict | None = None
+    maneuvering_surface: dict | None = None
+    added_mass_coriolis_enabled: bool = True
+    surge_resistance: dict | None = None
     wind_loads: dict | None = None
     wave_loads: dict | None = None
     max_abs_nu: tuple[float, float, float, float, float, float]
@@ -181,21 +185,44 @@ def build_engine(resolved: ResolvedExperiment) -> EpisodeEngine:
             hydro = MeshBuoyancy(mesh, item["water_density_kg_m3"], item["gravity_mps2"],
                 item.get("water_level_ned_m", 0.0), tuple(envelope["heave_m"]),
                 envelope["max_abs_roll_rad"], envelope["max_abs_pitch_rad"])
+        elif spec.hydrostatics.get("model") == "restoring_lut":
+            item=spec.hydrostatics
+            if item.get("out_of_domain")!="error" or item.get("interpolation")!="trilinear":
+                raise ConfigSchemaError("Unsupported restoring LUT interpolation policy")
+            axes=item["axes"]
+            hydro=RestoringLUT(tensor(axes["heave_m"]),tensor(axes["roll_rad"]),
+                               tensor(axes["pitch_rad"]),tensor(item["wrench_frd"]))
         else:
             raise ConfigSchemaError("Unsupported explicit hydrostatic model")
         crossflow = None
         if spec.crossflow is not None:
             item = spec.crossflow
-            if item.get("model") != "strip_theory": raise ConfigSchemaError("Unsupported crossflow model")
-            geometry = item["geometry"]
-            crossflow = StripTheoryCrossflow.constant_section(geometry["length_m"], geometry["beam_m"],
-                geometry["draft_m"], item["integration"]["strips"], water_density_kg_m3=item.get("water_density_kg_m3",1025),
-                include_vertical=item.get("include_vertical",False), dtype=dtype)
+            if item.get("model")=="strip_theory":
+                geometry = item["geometry"]
+                crossflow = StripTheoryCrossflow.constant_section(geometry["length_m"], geometry["beam_m"],
+                    geometry["draft_m"], item["integration"]["strips"], water_density_kg_m3=item.get("water_density_kg_m3",1025),
+                    include_vertical=item.get("include_vertical",False), dtype=dtype)
+            elif item.get("model")=="sectional_stations":
+                crossflow=SectionalCrossflow.from_stations(item["stations"],
+                    density=item.get("water_density_kg_m3",1025.),
+                    cd_scale=item.get("cd_scale",1.),dtype=dtype)
+            else: raise ConfigSchemaError("Unsupported crossflow model")
+        resistance_curve=None
+        if spec.surge_resistance is not None:
+            item=spec.surge_resistance
+            resistance_curve=(tensor(item["speed_mps"]),tensor(item["force_x_n"]))
         linear_matrix=tensor(spec.linear_damping_matrix) if spec.linear_damping_matrix is not None else None
         coupled=tuple(CoupledDampingTerm(**term) for term in spec.coupled_damping_terms)
-        plant = Plant6(properties, Damping(tensor(spec.linear_damping), tensor(spec.quadratic_damping),linear_matrix,coupled), hydro,
+        plant = Plant6(properties, Damping(tensor(spec.linear_damping), tensor(spec.quadratic_damping),linear_matrix,coupled,
+                                            surge_resistance_curve=resistance_curve), hydro,
             OperatingEnvelope(tensor(spec.max_abs_nu), spec.min_substep_s, spec.max_substep_s),
-            mode=resolved.config.simulation.dynamics_mode, planar_equilibrium=equilibrium, crossflow=crossflow)
+            mode=resolved.config.simulation.dynamics_mode, planar_equilibrium=equilibrium, crossflow=crossflow,
+            maneuvering_surface=(surface_from_payload(spec.maneuvering_surface)
+                                 if spec.maneuvering_surface is not None else None),
+            added_mass_coriolis_enabled=spec.added_mass_coriolis_enabled,
+            surface_min_forward_speed_mps=(spec.maneuvering_surface.get("min_forward_speed_mps",
+                                                       .2*spec.maneuvering_surface["coefficients"]["reference_speed_mps"])
+                                           if spec.maneuvering_surface is not None else 0.))
         collision = spec.collision
         if collision.get("kind") == "sphere" and set(collision) == {"kind", "radius_m"}:
             shape = Sphere(collision["radius_m"])

@@ -1,0 +1,26 @@
+{
+  "simulator": "holoocean",
+  "config": {
+    "half_width_m": 500.0,
+    "goal_radius_m": 2.0,
+    "vessel_radius_m": 1.0,
+    "max_steps": 650,
+    "dt_s": 0.2,
+    "max_surge_mps": 2.0,
+    "max_yaw_rps": 0.25,
+    "visibility_m": 30.0,
+    "progress_weight": 1.0,
+    "goal_bonus": 20.0,
+    "collision_penalty": 50.0,
+    "step_penalty": 0.01
+  },
+  "tolerances": {
+    "surge_mps": 0.2,
+    "yaw_rps": 0.05,
+    "symmetry_rps": 0.03
+  },
+  "native_host_required": true,
+  "qualification_pass": false,
+  "status": "NEEDS_NATIVE_HOST",
+  "error": "HoloOcean benchmark requires a Linux engine host"
+}

@@ -7,9 +7,10 @@ from pathlib import Path
 
 import torch
 
-from bcod_sim.actuators.autopilot import HeadingSpeedAutopilot, HighLevelCommand
+from bcod_sim.actuators.allocation import allocate_fixed_thrusters
 from bcod_sim.actuators.base import ActuatorConfig, Bounds
-from bcod_sim.actuators.thruster import FixedThruster
+from bcod_sim.actuators.thruster import FixedThruster, ThrustCommand
+from bcod_sim.core.lifecycle import DirectAction
 from bcod_sim.collision.shapes import Sphere
 from bcod_sim.config.registry import Registry
 from bcod_sim.config.resolver import resolve
@@ -22,12 +23,14 @@ from bcod_sim.dynamics.operating_envelope import OperatingEnvelope
 from bcod_sim.dynamics.plant6 import PlanarEquilibrium, Plant6
 from bcod_sim.dynamics.restoring import LinearHydrostatics
 from bcod_sim.frames.geodesy import geodetic_to_ned
+from bcod_sim.frames.tensor import rotate_body_to_world
 from bcod_sim.sensors.base import SensorConfig
 from bcod_sim.sensors.gps import GPS
 from bcod_sim.sensors.imu import IMU
 from bcod_sim.sensors.abstract import AbstractEntitySensor
 
 from .core import BenchmarkConfig, NAMES, Scenario, Truth, VesselReading
+from .control import RatePI, integrate_gyro, common_heading_rate
 
 
 OTTER_PARAMETER_SHA256 = "ee616689f78eaba6803e5571a505ebbe1fd3175fde85ae5372ef97eb37301718"
@@ -69,7 +72,7 @@ class BCODAdapter:
                          "bathymetry": {"kind": "flat", "bottom_ned_z_m": 100., "vertical_datum": "MSL"},
                          "static_entities": static},
                "vessels": [{"instance_id": name, "definition": "benchmark_vessel@1",
-                            "controller": {"mode": "high_level"},
+                            "controller": {"mode": "direct_actuator"},
                             "spawn": {"ned_m": [scenario.starts[i].y_m, scenario.starts[i].x_m, 0.],
                                       "rpy_rad": [0., 0., math.pi / 2 - scenario.starts[i].heading_rad]}}
                            for i, name in enumerate(NAMES)],
@@ -109,9 +112,9 @@ class BCODAdapter:
                        AbstractEntitySensor(SensorConfig("entities", "abstract_entities", 0, vessel_id,
                                    (0, 0, 0), (1, 0, 0, 0), 1 / cfg.dt_s, 0, 0,
                                    scenario.seed + i, "1", "benchmark"),
-                                   max_range_m=cfg.visibility_m, horizontal_fov_rad=2 * math.pi))
+                                   max_range_m=cfg.visibility_m + 1e-8, horizontal_fov_rad=2 * math.pi))
             vessels.append(EpisodeVessel(name, vessel_id, plant, Sphere(cfg.vessel_radius_m),
-                thrusters, sensors, ExplicitZeroLoads(), autopilot=HeadingSpeedAutopilot(100., 60.)))
+                thrusters, sensors, ExplicitZeroLoads()))
         return EpisodeEngine(resolved, tuple(vessels))
 
     def reset(self, scenario: Scenario, seed: int):
@@ -120,7 +123,16 @@ class BCODAdapter:
         self.scenario = scenario
         self.engine = self._build(scenario)
         frame = self.engine.reset(seed=seed)
-        self.estimated_heading = {n: scenario.starts[i].heading_rad for i, n in enumerate(NAMES)}
+        self.orientation = {n: frame.states[n].q_body_to_ned.clone() for n in NAMES}
+        self.previous_omega = {n: frame.states[n].nu_body[3:].clone() for n in NAMES}
+        # Pole placement around the nominal mass/damping model: wn=1 rad/s,
+        # zeta=1. Feedforward cancels nominal drag; feedback rejects coupling.
+        self.controllers = {}
+        for n in NAMES:
+            mass = self.engine.vessels[n].plant.mass.matrices()[1]
+            self.controllers[n] = (RatePI(2 * float(mass[0, 0]), float(mass[0, 0])),
+                                   RatePI(2 * float(mass[5, 5]), float(mass[5, 5])))
+        self.diagnostics = {"sim_time_s": 0., "saturated": {}, "native_contacts": []}
         return self._read(frame)
 
     def _read(self, frame):
@@ -142,10 +154,12 @@ class BCODAdapter:
             gps = self.engine.latest_packets[(i + 1, "gps")].values
             imu = self.engine.latest_packets[(i + 1, "imu")].values
             east, north = measured_positions[name]
-            yaw_rate = -float(imu["angular_rate_mount_radps"][2])
+            omega = imu["angular_rate_mount_radps"]
             if frame.master_step:
-                self.estimated_heading[name] += yaw_rate * self.config.dt_s
-            heading = self.estimated_heading[name]
+                self.orientation[name] = integrate_gyro(self.orientation[name], self.previous_omega[name],
+                                                       omega, self.config.dt_s)
+            self.previous_omega[name] = omega.clone()
+            heading, yaw_rate = common_heading_rate(self.orientation[name], omega)
             v = gps["velocity_ned_mps"]
             surge = float(v[1]) * math.cos(heading) + float(v[0]) * math.sin(heading)
             # Other vessels share their GPS positions as a measured broadcast.
@@ -154,23 +168,42 @@ class BCODAdapter:
             detections = self.engine.latest_packets[(i + 1, "entities")].values["detections"]
             obstacles = []
             for detection in detections:
-                forward, right = (float(detection.relative_mount_m[0]), float(detection.relative_mount_m[1]))
-                ox = east + forward * math.cos(heading) + right * math.sin(heading)
-                oy = north + forward * math.sin(heading) - right * math.cos(heading)
+                relative_ned = rotate_body_to_world(detection.relative_mount_m, self.orientation[name])
+                ox = east + float(relative_ned[1])
+                oy = north + float(relative_ned[0])
                 obstacles.append((ox, oy, 0.0))  # radius is not a policy observation field
             readings[name] = VesselReading(east, north, heading, surge, yaw_rate, agents, obstacles)
         return readings, truth
 
     def step(self, actions):
         commands = {}
+        params = _otter_parameters()
+        saturated = {}
         for name, (surge, yaw) in actions.items():
             state = self.engine.states[name]
-            q = state.q_body_to_ned
-            heading_ned = math.atan2(2 * (float(q[0]) * float(q[3]) + float(q[1]) * float(q[2])),
-                                     1 - 2 * (float(q[2]) ** 2 + float(q[3]) ** 2))
-            commands[name] = HighLevelCommand(max(0., surge) * self.config.max_surge_mps,
-                                               heading_ned - yaw * self.config.max_yaw_rps * self.config.dt_s)
+            _, actual_yaw = common_heading_rate(state.q_body_to_ned, state.nu_body[3:])
+            target_speed = max(0., surge) * self.config.max_surge_mps
+            target_yaw = yaw * self.config.max_yaw_rps
+            speed_pi, yaw_pi = self.controllers[name]
+            force = speed_pi.request(target_speed - float(state.nu_body[0]), self.config.dt_s,
+                                     params["linear_damping"][0] * target_speed)
+            moment_ccw = yaw_pi.request(target_yaw - actual_yaw, self.config.dt_s,
+                params["linear_damping"][5] * target_yaw + params["quadratic_damping"][5] * abs(target_yaw) * target_yaw)
+            thrusters = self.engine.vessels[name].actuators
+            allocated = allocate_fixed_thrusters(thrusters, surge_n=force, yaw_nm=-moment_ccw)
+            bounded = {}
+            for thruster in thrusters:
+                key = thruster.config.instance_id
+                request = allocated[key].thrust_n
+                limits = thruster.config.thrust_bounds_n
+                bounded[key] = ThrustCommand(max(limits.minimum, min(limits.maximum, request)))
+            saturated[name] = any(bounded[k].thrust_n != allocated[k].thrust_n for k in bounded)
+            speed_pi.commit(saturated[name])
+            yaw_pi.commit(saturated[name])
+            commands[name] = DirectAction(tuple(bounded.items()))
         frame = self.engine.step(commands)
+        self.diagnostics = {"sim_time_s": frame.sim_time_s, "saturated": saturated,
+                            "native_contacts": [str(event) for event in frame.contact_events]}
         return self._read(frame)
 
     def close(self):

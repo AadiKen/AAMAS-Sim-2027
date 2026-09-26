@@ -3,11 +3,13 @@
 from .models import CanonicalVessel, ParameterLineage
 from .generation import VesselFactory
 from .pipeline import calibrate_from_logs, identify_from_cfd
+from .simple_pipeline import generate_simple_vessel
+from .simple_calibration import apply_passive_scales
 from .identification import (IdentificationCase, MotionType, DOF, FluidModel,
     TurbulenceModel, TurbulenceSettings, Sweep, CaseCache, LocalDispatcher, CampaignRunner)
 from .fitting import Plant6ModelForm
 
-__all__ = ["CanonicalVessel", "ParameterLineage", "VesselFactory", "identify_from_cfd", "calibrate_from_logs",
+__all__ = ["CanonicalVessel", "ParameterLineage", "VesselFactory", "identify_from_cfd", "calibrate_from_logs", "generate_simple_vessel", "apply_passive_scales",
            "IdentificationCase", "MotionType", "DOF", "FluidModel", "TurbulenceModel", "TurbulenceSettings",
            "Sweep", "CaseCache", "LocalDispatcher", "CampaignRunner",
            "Plant6ModelForm"]

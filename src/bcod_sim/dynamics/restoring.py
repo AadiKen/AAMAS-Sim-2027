@@ -116,3 +116,41 @@ class LinearHydrostatics:
         delta=self.displacement(state); tau=-(self.stiffness_6x6@delta)
         return WrenchResult(tau,self.model_name,{"delta_eta":delta,"stiffness_eigenvalues":self.eigenvalues,
                                                  "submerged_volume_m3":None,"center_of_buoyancy_frd_m":None})
+
+@dataclass(frozen=True)
+class RestoringLUT:
+    """Export-time geometry loads with bounded trilinear runtime interpolation."""
+    heave_axis_m: torch.Tensor
+    roll_axis_rad: torch.Tensor
+    pitch_axis_rad: torch.Tensor
+    wrench_frd: torch.Tensor
+    model_name: str = "restoring_lut"
+
+    def validate(self, *, dtype: torch.dtype, device: torch.device) -> None:
+        axes = (self.heave_axis_m, self.roll_axis_rad, self.pitch_axis_rad)
+        shape = tuple(len(x) for x in axes) + (6,)
+        if (any(x.ndim != 1 or len(x) < 3 or x.dtype != dtype or x.device != device or
+                not torch.isfinite(x).all().item() or not torch.all(x[1:] > x[:-1]).item() for x in axes)
+            or self.wrench_frd.shape != shape or self.wrench_frd.dtype != dtype or
+            self.wrench_frd.device != device or not torch.isfinite(self.wrench_frd).all().item()):
+            raise PhysicalValidationError("Invalid restoring lookup table")
+
+    def evaluate(self, state: VesselState, mass_kg: float, cg_frd_m: torch.Tensor) -> WrenchResult:
+        rpy = quaternion_to_rpy(state.q_body_to_ned)
+        values = (state.position_ned[2], rpy[0], rpy[1])
+        axes = (self.heave_axis_m, self.roll_axis_rad, self.pitch_axis_rad)
+        indices = []
+        weights = []
+        for value, axis in zip(values, axes):
+            if (value < axis[0]).item() or (value > axis[-1]).item():
+                raise OperatingEnvelopeError("Restoring lookup outside generated motion envelope")
+            idx = torch.searchsorted(axis, value).clamp(1, len(axis)-1)
+            indices.append(idx - 1)
+            weights.append((value-axis[idx-1])/(axis[idx]-axis[idx-1]))
+        result = self.wrench_frd.new_zeros(6)
+        for a in (0,1):
+            for b in (0,1):
+                for c in (0,1):
+                    weight = (weights[0] if a else 1-weights[0]) * (weights[1] if b else 1-weights[1]) * (weights[2] if c else 1-weights[2])
+                    result = result + weight * self.wrench_frd[indices[0]+a, indices[1]+b, indices[2]+c]
+        return WrenchResult(result, self.model_name, {"lookup_coordinates": torch.stack(values)})

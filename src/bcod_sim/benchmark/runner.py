@@ -1,12 +1,15 @@
 """One shared actor-critic rollout, checkpoint, and evaluation pipeline."""
 
 import argparse
+from contextlib import ExitStack
 from dataclasses import asdict, fields
 from datetime import datetime, timezone
 import json
 from pathlib import Path
 import random
+import sys
 import time
+import uuid
 
 import numpy as np
 import torch
@@ -58,21 +61,66 @@ def _append(path, row):
         stream.write(json.dumps(row, allow_nan=False) + "\n")
 
 
+class _EtaBar:
+    """Optional stderr progress display; never changes benchmark accounting."""
+
+    def __init__(self, label, total, *, enabled):
+        self.label = label
+        self.total = total
+        self.enabled = enabled
+        self.started = time.perf_counter()
+        self.last_drawn = float("-inf")
+        self.count = 0
+        if enabled:
+            self.update(0)
+
+    def update(self, count, *, force=False):
+        if not self.enabled:
+            return
+        self.count = count
+        now = time.perf_counter()
+        if not force and count < self.total and now - self.last_drawn < 0.25:
+            return
+        elapsed = now - self.started
+        remaining = elapsed * (self.total - count) / count if count else None
+        eta = (f"{int(remaining // 3600):02d}:{int(remaining // 60) % 60:02d}:"
+               f"{int(remaining) % 60:02d}" if remaining is not None else "--:--:--")
+        filled = round(20 * count / self.total)
+        sys.stderr.write(f"\r{self.label} |{'#' * filled}{'-' * (20 - filled)}| "
+                         f"{count}/{self.total} ETA {eta}")
+        sys.stderr.flush()
+        self.last_drawn = now
+
+    def close(self):
+        if self.enabled:
+            if self.count < self.total:
+                self.update(self.count, force=True)
+            sys.stderr.write("\n")
+            sys.stderr.flush()
+
+
 def _action(model, observations, device, deterministic=False):
     tensor = torch.as_tensor(np.stack([observations[n] for n in NAMES]), dtype=torch.float32, device=device)
     mean, value = model(tensor)
     distribution = torch.distributions.Normal(mean, model.log_std.exp())
     raw = mean if deterministic else distribution.sample()
     action = torch.tanh(raw)
-    log_probability = distribution.log_prob(raw).sum(-1)
+    # Density of the squashed action. raw is a detached sample, so this
+    # Jacobian term is constant for score-function policy gradients.
+    correction = 2 * (np.log(2.) - raw - torch.nn.functional.softplus(-2 * raw))
+    log_probability = (distribution.log_prob(raw) - correction).sum(-1)
     return {name: tuple(float(x) for x in action[i].detach().cpu()) for i, name in enumerate(NAMES)}, log_probability, value
 
 
 def _update(model, optimizer, records, bootstrap, gamma=0.99):
     future = {i: value.detach() for i, value in bootstrap.items()}
     losses = []
-    for env_id, log_probability, value, reward, done in reversed(records):
-        future[env_id] = reward + gamma * future[env_id] * (not done)
+    for env_id, log_probability, value, reward, boundary_value in reversed(records):
+        # Collision/success bootstraps zero. Time limits bootstrap the FINAL
+        # observation, never the next episode reset observation.
+        if boundary_value is not None:
+            future[env_id] = boundary_value.detach()
+        future[env_id] = reward + gamma * future[env_id]
         advantage = future[env_id] - value
         losses.append(-(log_probability * advantage.detach()).mean() + 0.5 * advantage.square().mean())
     loss = torch.stack(losses).mean()
@@ -107,26 +155,41 @@ def train(args):
     model = SharedActorCritic().to(device)
     optimizer = torch.optim.Adam(model.parameters(), lr=3e-4)
     output = Path(args.checkpoint_dir)
+    if output.exists() and any(output.iterdir()):
+        if not args.overwrite:
+            raise ValueError("Run directory is not empty; choose a new directory or --overwrite (archives old run)")
+        output.rename(output.with_name(output.name + ".archive-" + uuid.uuid4().hex))
     output.mkdir(parents=True, exist_ok=True)
-    manifest = {"simulator": args.sim, "seed": args.seed, "benchmark": asdict(config),
-                "algorithm": "shared_actor_critic_v1", "architecture": "47-128-128-tanh-gaussian-2",
+    run_id = uuid.uuid4().hex
+    manifest = {"run_id": run_id, "simulator": args.sim, "seed": args.seed, "benchmark": asdict(config),
+                "algorithm": "shared_actor_critic_v2", "architecture": "47-128-128-tanh-gaussian-2",
                 "optimizer": {"type": "Adam", "learning_rate": 3e-4}, "gamma": 0.99,
                 "total_steps": args.total_steps, "num_envs": args.num_envs,
-                "checkpoint_interval": args.checkpoint_interval, "device": args.device,
+                "checkpoint_interval": args.checkpoint_interval, "update_interval": args.update_interval,
+                "timeout_semantics": "bootstrap_final_observation", "device": args.device,
+                "eta_bar": args.eta_bar,
                 "started_at": _stamp()}
     (output / "run-config.json").write_text(json.dumps(manifest, indent=2) + "\n")
-    envs = [Benchmark(make_adapter(args.sim, config, pyquaticus_python=args.pyquaticus_python), config)
-            for _ in range(args.num_envs)]
-    observations = [env.reset(generate_scenario(args.seed * 100000 + i)) for i, env in enumerate(envs)]
-    episode_index = [0] * len(envs)
-    episode_rewards = [0.] * len(envs)
+    envs, observations = [], []
+    cleanup = ExitStack()
+    episode_index = [0] * args.num_envs
+    episode_rewards = [0.] * args.num_envs
     episode_count = 0
     successes = 0
     collisions = 0
     completed = []
     checkpoint_index = 0
+    optimizer_updates = 0
+    loss = None
+    checkpoint = None
     environment_seconds = 0.
+    progress = _EtaBar(f"{args.sim} train", args.total_steps, enabled=args.eta_bar)
     try:
+        for i in range(args.num_envs):
+            env = Benchmark(make_adapter(args.sim, config, pyquaticus_python=args.pyquaticus_python), config)
+            cleanup.callback(env.close)
+            envs.append(env)
+            observations.append(env.reset(generate_scenario(args.seed * 100000 + i, config=config)))
         for joint_step in range(1, args.total_steps + 1):
             i = (joint_step - 1) % len(envs)
             actions, log_probability, value = _action(model, observations[i], device)
@@ -134,35 +197,51 @@ def train(args):
             obs, reward, done, truncated, info = envs[i].step(actions)
             environment_seconds += time.perf_counter() - tick_start
             rewards = torch.tensor([reward[n] for n in NAMES], dtype=torch.float32, device=device)
-            completed.append((i, log_probability, value, rewards, done or truncated))
+            boundary_value = None
+            if done:
+                boundary_value = torch.zeros_like(value)
+            elif truncated:
+                with torch.no_grad():
+                    boundary_value = model(torch.as_tensor(np.stack([obs[n] for n in NAMES]),
+                                           dtype=torch.float32, device=device))[1]
+            completed.append((i, log_probability, value, rewards, boundary_value))
             observations[i] = obs
             episode_rewards[i] += sum(reward.values())
             if done or truncated:
                 episode_count += 1
                 successes += int(info["fleet_success"])
                 collisions += int(info["collision_count"] > 0)
-                _append(output / "episodes.jsonl", {"simulator": args.sim, "seed": args.seed,
-                    "environment_steps": joint_step, "episode": episode_count,
+                _append(output / "episodes.jsonl", {"run_id": run_id, "simulator": args.sim, "seed": args.seed,
+                    "optimizer_updates": optimizer_updates, "environment_steps": joint_step, "episode": episode_count,
                     "cumulative_reward": episode_rewards[i], **info})
                 episode_rewards[i] = 0.
                 episode_index[i] += 1
                 observations[i] = envs[i].reset(generate_scenario(args.seed * 100000 + i +
-                                                        episode_index[i] * args.num_envs))
+                                                        episode_index[i] * args.num_envs, config=config))
             checkpoint_due = joint_step % args.checkpoint_interval == 0 or joint_step == args.total_steps
-            if checkpoint_due:
+            update_due = joint_step % args.update_interval == 0 or joint_step == args.total_steps
+            if update_due:
                 with torch.no_grad():
                     bootstrap = {j: model(torch.as_tensor(np.stack([observations[j][n] for n in NAMES]),
                                     dtype=torch.float32, device=device))[1]
                                  for j in range(len(envs))}
                 loss = _update(model, optimizer, completed, bootstrap)
                 completed = []
+                optimizer_updates += 1
+            if checkpoint_due:
                 checkpoint_index += 1
                 elapsed = time.perf_counter() - start
                 checkpoint = output / f"checkpoint-{joint_step:09d}.pt"
                 torch.save({"model": model.state_dict(), "manifest": manifest,
-                            "environment_steps": joint_step, "checkpoint_index": checkpoint_index}, checkpoint)
-                _append(output / "training.jsonl", {"simulator": args.sim, "seed": args.seed,
-                    "environment_steps": joint_step, "episodes": episode_count,
+                            "environment_steps": joint_step, "optimizer_updates": optimizer_updates,
+                            "optimizer": optimizer.state_dict(), "checkpoint_index": checkpoint_index,
+                            "rng_states": {"torch": torch.get_rng_state(), "numpy": np.random.get_state(),
+                                           "python": random.getstate()},
+                            "resumable": False}, checkpoint)
+            if update_due or checkpoint_due:
+                elapsed = time.perf_counter() - start
+                _append(output / "training.jsonl", {"run_id": run_id, "simulator": args.sim, "seed": args.seed,
+                    "optimizer_updates": optimizer_updates, "environment_steps": joint_step, "episodes": episode_count,
                     "fleet_success_rate": successes / episode_count if episode_count else None,
                     "collision_rate": collisions / episode_count if episode_count else None,
                     "loss": loss, "environment_steps_per_second": joint_step / max(environment_seconds, 1e-9),
@@ -171,14 +250,19 @@ def train(args):
                                     if psutil else None),
                     "ram_rss_bytes": psutil.Process().memory_info().rss if psutil else None,
                     "total_training_wall_clock_s": elapsed, "checkpoint_number": checkpoint_index,
-                    "checkpoint_wall_clock_timestamp": _stamp(), "checkpoint": str(checkpoint)})
+                    "checkpoint_wall_clock_timestamp": _stamp() if checkpoint_due else None,
+                    "checkpoint": str(checkpoint) if checkpoint_due else None})
+            progress.update(joint_step)
         return checkpoint
     finally:
-        for env in envs:
-            env.close()
+        progress.close()
+        cleanup.close()
 
 
 def evaluate(args):
+    torch.manual_seed(args.seed)
+    np.random.seed(args.seed)
+    random.seed(args.seed)
     checkpoint = torch.load(args.checkpoint, map_location=args.device, weights_only=False)
     config = BenchmarkConfig(**checkpoint["manifest"]["benchmark"])
     model = SharedActorCritic().to(args.device)
@@ -197,6 +281,7 @@ def evaluate(args):
     env = Benchmark(make_adapter(args.sim, config, pyquaticus_python=args.pyquaticus_python), config)
     rows = []
     started = time.perf_counter()
+    progress = _EtaBar(f"{args.sim} evaluate", len(scenarios), enabled=args.eta_bar)
     try:
         for scenario in scenarios:
             observations = env.reset(scenario)
@@ -208,10 +293,13 @@ def evaluate(args):
                 cumulative += sum(reward.values())
                 if done or truncated:
                     rows.append({"scenario_seed": scenario.seed, "cumulative_reward": cumulative, **info})
+                    progress.update(len(rows))
                     break
     finally:
+        progress.close()
         env.close()
     result = {"simulator": args.sim, "checkpoint": str(args.checkpoint), "mode": args.mode,
+              "source_run_id": checkpoint["manifest"].get("run_id"), "seed": args.seed,
               "deterministic": args.deterministic, "episodes": rows,
               "stress_factors_applied": (["unseen_geometry", "8_to_10_obstacles"]
                                          if args.mode == "stress" else []),
@@ -235,14 +323,18 @@ def main(argv=None):
         command.add_argument("--sim", choices=("bcod", "bcod-reduced", "pyquaticus", "holoocean"), required=True)
         command.add_argument("--device", default="cpu")
         command.add_argument("--pyquaticus-python")
+        command.add_argument("--eta-bar", action="store_true", help="show progress and estimated time remaining on stderr")
     training.add_argument("--seed", type=int, default=11)
     training.add_argument("--total-steps", type=int, required=True)
     training.add_argument("--num-envs", type=int, default=1)
     training.add_argument("--checkpoint-dir", required=True)
     training.add_argument("--checkpoint-interval", type=int, required=True)
+    training.add_argument("--update-interval", type=int, default=250)
+    training.add_argument("--overwrite", action="store_true", help="archive existing run directory before a fresh run")
     training.add_argument("--config")
     training.add_argument("--headless", action="store_true")
     evaluation.add_argument("--checkpoint", required=True)
+    evaluation.add_argument("--seed", type=int, default=0)
     evaluation.add_argument("--scenario-bank")
     evaluation.add_argument("--episodes", type=int, default=20)
     evaluation.add_argument("--mode", choices=("nominal", "stress"), default="nominal")
@@ -250,7 +342,7 @@ def main(argv=None):
     evaluation.add_argument("--output", required=True)
     args = parser.parse_args(argv)
     if args.command == "train":
-        if args.total_steps < 1 or args.num_envs < 1 or args.checkpoint_interval < 1:
+        if args.total_steps < 1 or args.num_envs < 1 or args.checkpoint_interval < 1 or args.update_interval < 1:
             parser.error("Training counts must be positive")
         train(args)
     else:
