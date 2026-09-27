@@ -1,0 +1,186 @@
+[
+  {
+    "environment_steps": 0,
+    "deterministic": true,
+    "controller": null,
+    "episodes": 3,
+    "fleet_success": 0.0,
+    "per_agent_success": {
+      "vessel_0": 0.0,
+      "vessel_1": 1.0,
+      "vessel_2": 1.0,
+      "vessel_3": 1.0
+    },
+    "collision_rate": 0.0,
+    "mean_return": 88.89166455404177,
+    "mean_discounted_return": 77.63697587432014,
+    "mean_episode_length": 600.0,
+    "mean_distance_to_goal_m": 28.080643982628956,
+    "median_episode_length": 600.0,
+    "path_efficiency": 0.0,
+    "collision_positive_fleet_fraction": null,
+    "collision_positive_discounted_fleet_fraction": null,
+    "collision_three_positive_agents_fraction": null,
+    "reached_then_left_episodes": 0,
+    "post_goal_collision_episodes": 0,
+    "actor_mean_surge": 0.049621908267339074,
+    "actor_mean_yaw": 0.0,
+    "actor_mean_abs_yaw": 0.0,
+    "sampled_surge": 0.049621908267339074,
+    "sampled_yaw": 0.0,
+    "surge_std": 0.0002815128112654174,
+    "yaw_std": 0.0,
+    "mean_abs_yaw": 0.0,
+    "near_limit_fraction": [
+      0.0,
+      0.0
+    ],
+    "negative_surge_fraction": 0.0,
+    "log_std": [
+      -0.699999988079071,
+      -0.699999988079071
+    ],
+    "raw_std": [
+      0.49658530950546265,
+      0.49658530950546265
+    ]
+  },
+  {
+    "environment_steps": 1000,
+    "deterministic": true,
+    "controller": null,
+    "episodes": 3,
+    "fleet_success": 0.0,
+    "per_agent_success": {
+      "vessel_0": 0.0,
+      "vessel_1": 1.0,
+      "vessel_2": 1.0,
+      "vessel_3": 1.0
+    },
+    "collision_rate": 0.0,
+    "mean_return": 89.11801792599891,
+    "mean_discounted_return": 77.80701509034797,
+    "mean_episode_length": 600.0,
+    "mean_distance_to_goal_m": 27.512673531116082,
+    "median_episode_length": 600.0,
+    "path_efficiency": 0.0,
+    "collision_positive_fleet_fraction": null,
+    "collision_positive_discounted_fleet_fraction": null,
+    "collision_three_positive_agents_fraction": null,
+    "reached_then_left_episodes": 0,
+    "post_goal_collision_episodes": 0,
+    "actor_mean_surge": 0.05198641210794449,
+    "actor_mean_yaw": 0.0,
+    "actor_mean_abs_yaw": 0.0,
+    "sampled_surge": 0.05198641210794449,
+    "sampled_yaw": 0.0,
+    "surge_std": 0.00026549436067752107,
+    "yaw_std": 0.0,
+    "mean_abs_yaw": 0.0,
+    "near_limit_fraction": [
+      0.0,
+      0.0
+    ],
+    "negative_surge_fraction": 0.0,
+    "log_std": [
+      -0.7002999782562256,
+      -0.699999988079071
+    ],
+    "raw_std": [
+      0.49643635749816895,
+      0.49658530950546265
+    ]
+  },
+  {
+    "environment_steps": 2500,
+    "deterministic": true,
+    "controller": null,
+    "episodes": 3,
+    "fleet_success": 0.0,
+    "per_agent_success": {
+      "vessel_0": 0.0,
+      "vessel_1": 1.0,
+      "vessel_2": 1.0,
+      "vessel_3": 1.0
+    },
+    "collision_rate": 0.0,
+    "mean_return": 89.12102010901424,
+    "mean_discounted_return": 77.80858428243783,
+    "mean_episode_length": 600.0,
+    "mean_distance_to_goal_m": 27.507432065290658,
+    "median_episode_length": 600.0,
+    "path_efficiency": 0.0,
+    "collision_positive_fleet_fraction": null,
+    "collision_positive_discounted_fleet_fraction": null,
+    "collision_three_positive_agents_fraction": null,
+    "reached_then_left_episodes": 0,
+    "post_goal_collision_episodes": 0,
+    "actor_mean_surge": 0.05200821980834007,
+    "actor_mean_yaw": 0.0,
+    "actor_mean_abs_yaw": 0.0,
+    "sampled_surge": 0.05200821980834007,
+    "sampled_yaw": 0.0,
+    "surge_std": 0.0002544357653708408,
+    "yaw_std": 0.0,
+    "mean_abs_yaw": 0.0,
+    "near_limit_fraction": [
+      0.0,
+      0.0
+    ],
+    "negative_surge_fraction": 0.0,
+    "log_std": [
+      -0.7009933590888977,
+      -0.699999988079071
+    ],
+    "raw_std": [
+      0.4960922598838806,
+      0.49658530950546265
+    ]
+  },
+  {
+    "environment_steps": 5000,
+    "deterministic": true,
+    "controller": null,
+    "episodes": 3,
+    "fleet_success": 0.0,
+    "per_agent_success": {
+      "vessel_0": 0.0,
+      "vessel_1": 1.0,
+      "vessel_2": 1.0,
+      "vessel_3": 1.0
+    },
+    "collision_rate": 0.0,
+    "mean_return": 89.32839925320674,
+    "mean_discounted_return": 77.96889544475077,
+    "mean_episode_length": 600.0,
+    "mean_distance_to_goal_m": 26.971955571288603,
+    "median_episode_length": 600.0,
+    "path_efficiency": 0.0,
+    "collision_positive_fleet_fraction": null,
+    "collision_positive_discounted_fleet_fraction": null,
+    "collision_three_positive_agents_fraction": null,
+    "reached_then_left_episodes": 0,
+    "post_goal_collision_episodes": 0,
+    "actor_mean_surge": 0.054237534056107206,
+    "actor_mean_yaw": 0.0,
+    "actor_mean_abs_yaw": 0.0,
+    "sampled_surge": 0.054237534056107206,
+    "sampled_yaw": 0.0,
+    "surge_std": 0.0003113060200653296,
+    "yaw_std": 0.0,
+    "mean_abs_yaw": 0.0,
+    "near_limit_fraction": [
+      0.0,
+      0.0
+    ],
+    "negative_surge_fraction": 0.0,
+    "log_std": [
+      -0.7015284299850464,
+      -0.699999988079071
+    ],
+    "raw_std": [
+      0.4958269000053406,
+      0.49658530950546265
+    ]
+  }
+]

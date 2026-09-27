@@ -22,6 +22,10 @@ def test_checkpoint_schedule_does_not_change_learning_and_runs_do_not_merge(tmp_
     a=tmp_path/'a';b=tmp_path/'b';a.mkdir();b.mkdir()
     first=train(a,2);second=train(b,3)
     assert first['optimizer_updates']==second['optimizer_updates']==3
+    assert first['manifest']['gamma_per_second'] == 0.99
+    assert first['manifest']['gamma'] == pytest.approx(0.99 ** 0.2)
+    initial=torch.load(a/'run/checkpoint-000000000.pt',weights_only=False)
+    assert initial['environment_steps'] == initial['optimizer_updates'] == 0
     for key in first['model']:
         assert torch.equal(first['model'][key],second['model'][key])
     rows=[json.loads(line) for line in (a/'run/training.jsonl').read_text().splitlines()]
@@ -50,3 +54,15 @@ def test_terminal_truncated_and_rollout_bootstrap(boundary,expected):
     records=[(0,logp,value,torch.tensor([1.]),None if boundary is None else torch.tensor([boundary]))]
     loss=runner._update(model,optimizer,records,{0:torch.tensor([20.])},gamma=.9)
     assert loss==pytest.approx(.5*expected**2)
+
+
+def test_independent_reference_targets_stop_at_episode_boundary():
+    from bcod_sim.benchmark.audit_learning import reference_targets
+    def record(reward,boundary=None):
+        return (0,torch.zeros(1),torch.zeros(1),torch.tensor([reward]),
+                None if boundary is None else torch.tensor([boundary]))
+    records=[record(1.),record(2.,3.),record(100.),record(4.,0.)]
+    reference=reference_targets(records,torch.tensor([999.]),.9)
+    production=[float(x[0]) for x in runner._return_targets(records,{0:torch.tensor([999.])},.9)]
+    assert reference==pytest.approx([1+.9*2+.9**2*3,2+.9*3,100+.9*4,4])
+    assert production==pytest.approx(reference)

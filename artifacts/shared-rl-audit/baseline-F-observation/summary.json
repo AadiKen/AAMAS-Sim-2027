@@ -1,0 +1,24 @@
+{
+  "environment_steps": 0,
+  "deterministic": true,
+  "controller": "observation",
+  "episodes": 20,
+  "fleet_success": 0.5,
+  "per_agent_success": {
+    "vessel_0": 0.85,
+    "vessel_1": 0.75,
+    "vessel_2": 0.9,
+    "vessel_3": 0.85
+  },
+  "collision_rate": 0.0,
+  "mean_return": 316.4064880204527,
+  "mean_discounted_return": 44.70366655390711,
+  "mean_episode_length": 561.05,
+  "median_episode_length": 600.0,
+  "path_efficiency": 0.6904379700248363,
+  "collision_positive_fleet_fraction": null,
+  "collision_positive_discounted_fleet_fraction": null,
+  "collision_three_positive_agents_fraction": null,
+  "reached_then_left_episodes": 19,
+  "post_goal_collision_episodes": 0
+}

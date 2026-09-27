@@ -54,7 +54,10 @@ def main():
     parser.add_argument("root", type=Path)
     parser.add_argument("vessel", type=Path, nargs="?")
     parser.add_argument("--quality", choices=("auto", "fast", "standard", "reference"), default="auto")
+    parser.add_argument("--cores", type=int, default=1)
     args = parser.parse_args()
+    if args.cores < 1:
+        parser.error("--cores must be positive")
     root = args.root
     if args.command in ("make", "fit", "empirical", "select") and args.vessel is None:
         parser.error("This command requires vessel.yaml after the output directory")
@@ -75,7 +78,7 @@ def main():
         print("Generated FAST/STANDARD sentinels; run select before the matrix" if args.quality == "auto" else f"Generated {len(states)} cases")
     elif args.command == "select":
         spec, config = vessel(args.vessel)
-        selection = run_sentinels(root)
+        selection = run_sentinels(root, core_count=args.cores)
         states = [CaseState(**row) for row in json.loads((root/"matrix.json").read_text())]
         materialize_matrix(root, spec, states, mesh_family=config.get("hull_family", "displacement_monohull"), selection=selection)
         print(json.dumps(selection, indent=2))
@@ -83,7 +86,7 @@ def main():
     elif args.command == "mesh":
         print(json.dumps(mesh_once(case_dirs(root)), indent=2))
     elif args.command == "run":
-        results = run_matrix(case_dirs(root))
+        results = run_matrix(case_dirs(root), core_count=args.cores)
         (root/"runtime.json").write_text(json.dumps(results, indent=2)+"\n")
         print(f"Ran {len(results)} cases")
     elif args.command == "extract":
@@ -121,7 +124,7 @@ def main():
                                mass_kg=float(config["mass_kg"]), cg_x_m=spec.cg_frd_m[0],
                                cases=cases)
         runtime_path = root/"runtime.json"
-        core_hours = (sum(row["core_hours_serial"] for row in json.loads(runtime_path.read_text()))
+        core_hours = (sum(row.get("core_hours", row["core_hours_serial"]) for row in json.loads(runtime_path.read_text()))
                       if runtime_path.exists() else None)
         write_fit_report(root/"fit_report.md", checks, measured_core_hours=core_hours)
         if (root/"mesh_selection.md").exists():

@@ -1,0 +1,209 @@
+{
+  "classification": "A",
+  "ladder_stop": "A",
+  "ladder_results": [
+    {
+      "task": "A: one active vessel, no obstacles, goal directly ahead",
+      "steps": 2500,
+      "seed": 11,
+      "update_mode": "global",
+      "initial": {
+        "fleet_success": 0.0,
+        "collision_rate": 0.0,
+        "mean_distance_to_goal_m": 37.403055882106585,
+        "actor_mean_surge": 0.04333373457426205,
+        "actor_mean_abs_yaw": 0.09387627016752959
+      },
+      "final": {
+        "fleet_success": 0.0,
+        "collision_rate": 0.0,
+        "mean_distance_to_goal_m": 35.678211559413775,
+        "actor_mean_surge": 0.05226382137586673,
+        "actor_mean_abs_yaw": 0.0755625039835771
+      },
+      "training_completed_episodes": 4,
+      "training_successes": 0
+    },
+    {
+      "task": "A: one active vessel, no obstacles, goal directly ahead",
+      "steps": 2500,
+      "seed": 11,
+      "update_mode": "separate",
+      "initial": {
+        "fleet_success": 0.0,
+        "collision_rate": 0.0,
+        "mean_distance_to_goal_m": 37.403055882106585,
+        "actor_mean_surge": 0.04333373457426205,
+        "actor_mean_abs_yaw": 0.09387627016752959
+      },
+      "final": {
+        "fleet_success": 0.0,
+        "collision_rate": 0.0,
+        "mean_distance_to_goal_m": 31.83513858307241,
+        "actor_mean_surge": 0.0472053650021553,
+        "actor_mean_abs_yaw": 0.03928850062812368
+      },
+      "training_completed_episodes": 4,
+      "training_successes": 0
+    },
+    {
+      "task": "A: one active vessel, no obstacles, goal directly ahead",
+      "steps": 2500,
+      "seed": 11,
+      "update_mode": "normalized",
+      "initial": {
+        "fleet_success": 0.0,
+        "collision_rate": 0.0,
+        "mean_distance_to_goal_m": 37.403055882106585,
+        "actor_mean_surge": 0.04333373457426205,
+        "actor_mean_abs_yaw": 0.09387627016752959
+      },
+      "final": {
+        "fleet_success": 0.0,
+        "collision_rate": 0.0,
+        "mean_distance_to_goal_m": 36.75606189123602,
+        "actor_mean_surge": 0.06463930073038986,
+        "actor_mean_abs_yaw": 0.09165610630065203
+      },
+      "training_completed_episodes": 4,
+      "training_successes": 0
+    },
+    {
+      "task": "A: one active vessel, no obstacles, goal directly ahead",
+      "steps": 5000,
+      "seed": 11,
+      "update_mode": "global",
+      "initial": {
+        "fleet_success": 0.0,
+        "collision_rate": 0.0,
+        "mean_distance_to_goal_m": 37.403055882106585,
+        "actor_mean_surge": 0.04333373457426205,
+        "actor_mean_abs_yaw": 0.09387627016752959
+      },
+      "final": {
+        "fleet_success": 0.0,
+        "collision_rate": 0.0,
+        "mean_distance_to_goal_m": 37.19658348186493,
+        "actor_mean_surge": 0.03298073322551014,
+        "actor_mean_abs_yaw": 0.08222304996103048
+      },
+      "training_completed_episodes": 8,
+      "training_successes": 0
+    },
+    {
+      "task": "A: one active vessel, no obstacles, goal directly ahead",
+      "steps": 5000,
+      "seed": 11,
+      "update_mode": "separate",
+      "initial": {
+        "fleet_success": 0.0,
+        "collision_rate": 0.0,
+        "mean_distance_to_goal_m": 37.403055882106585,
+        "actor_mean_surge": 0.04333373457426205,
+        "actor_mean_abs_yaw": 0.09387627016752959
+      },
+      "final": {
+        "fleet_success": 0.0,
+        "collision_rate": 0.0,
+        "mean_distance_to_goal_m": 36.739988702957326,
+        "actor_mean_surge": 0.030295055463599663,
+        "actor_mean_abs_yaw": 0.05684420487533013
+      },
+      "training_completed_episodes": 8,
+      "training_successes": 0
+    }
+  ],
+  "gradient_samples_from_10k": [
+    {
+      "environment_steps": 250,
+      "actor_norm": 6.750298487390583,
+      "critic_norm": 45.672220453919316,
+      "combined_norm": 46.286930084228516,
+      "actor_head_norm": 5.03138249382755,
+      "critic_head_norm": 33.424942881635936,
+      "shared_body_actor_norm": 4.4898868540800105,
+      "shared_body_critic_norm": 31.12434601000929,
+      "log_std_norm": 0.3043614746198365,
+      "global_clip_coefficient": 0.02160437031740765,
+      "effective_actor_norm_after_global_clipping": 0.14583594827462287
+    },
+    {
+      "environment_steps": 2500,
+      "actor_norm": 2.9412329775977897,
+      "critic_norm": 17.635398367526598,
+      "combined_norm": 17.8819580078125,
+      "actor_head_norm": 2.008917968055959,
+      "critic_head_norm": 13.715351630976441,
+      "shared_body_actor_norm": 1.9719824518347617,
+      "shared_body_critic_norm": 11.085865109229488,
+      "log_std_norm": 0.8522823685765405,
+      "global_clip_coefficient": 0.05592228455300155,
+      "effective_actor_norm_after_global_clipping": 0.16448046750989562
+    },
+    {
+      "environment_steps": 5000,
+      "actor_norm": 3.6268076603015453,
+      "critic_norm": 24.905524383275054,
+      "combined_norm": 25.18587875366211,
+      "actor_head_norm": 2.8254704952883287,
+      "critic_head_norm": 19.866140250244456,
+      "shared_body_actor_norm": 2.2046835540422562,
+      "shared_body_critic_norm": 15.020706253819272,
+      "log_std_norm": 0.5566154072721141,
+      "global_clip_coefficient": 0.03970478735628032,
+      "effective_actor_norm_after_global_clipping": 0.1440016269344014
+    },
+    {
+      "environment_steps": 7500,
+      "actor_norm": 2.9300115329837686,
+      "critic_norm": 19.54099239441398,
+      "combined_norm": 19.71344566345215,
+      "actor_head_norm": 2.1547828050190407,
+      "critic_head_norm": 14.057366006189866,
+      "shared_body_actor_norm": 1.9148614422694028,
+      "shared_body_critic_norm": 13.573534717477335,
+      "log_std_norm": 0.5245801211655947,
+      "global_clip_coefficient": 0.05072679664150031,
+      "effective_actor_norm_after_global_clipping": 0.1486300991909182
+    },
+    {
+      "environment_steps": 10000,
+      "actor_norm": 2.8487764210509363,
+      "critic_norm": 29.170841862793928,
+      "combined_norm": 29.328569412231445,
+      "actor_head_norm": 2.286648613493094,
+      "critic_head_norm": 23.576886143884632,
+      "shared_body_actor_norm": 1.6862453215918034,
+      "shared_body_critic_norm": 17.177556716321202,
+      "log_std_norm": 0.20818724974322617,
+      "global_clip_coefficient": 0.03409644540952297,
+      "effective_actor_norm_after_global_clipping": 0.09713314972429947
+    }
+  ],
+  "observation_alias": "same 47-value observation for another vessel at the same relative position regardless of approaching, receding, crossing-left or crossing-right velocity",
+  "geometric_controller_case_A": {
+    "environment_steps": 0,
+    "deterministic": true,
+    "controller": "observation",
+    "episodes": 1,
+    "fleet_success": 1.0,
+    "per_agent_success": {
+      "vessel_0": 1.0,
+      "vessel_1": 1.0,
+      "vessel_2": 1.0,
+      "vessel_3": 1.0
+    },
+    "collision_rate": 0.0,
+    "mean_return": 120.34294392358726,
+    "mean_discounted_return": 107.35509768754349,
+    "mean_episode_length": 190.0,
+    "mean_distance_to_goal_m": 1.8974432740444627,
+    "median_episode_length": 190.0,
+    "path_efficiency": 0.262449579746652,
+    "collision_positive_fleet_fraction": null,
+    "collision_positive_discounted_fleet_fraction": null,
+    "collision_three_positive_agents_fraction": null,
+    "reached_then_left_episodes": 0,
+    "post_goal_collision_episodes": 0
+  }
+}

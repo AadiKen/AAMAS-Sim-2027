@@ -7,7 +7,7 @@ fake; they do not stand in for native engine qualification.
 import math
 import platform
 
-from .core import BenchmarkConfig, NAMES, Scenario, Truth, VesselReading
+from .core import BenchmarkConfig, NAMES, Scenario, Truth, VesselReading, validate_actions
 from .control import RatePI
 
 
@@ -100,12 +100,13 @@ class HoloOceanAdapter:
         return readings, truth
 
     def step(self, actions):
+        validate_actions(actions)
         if self.env is None:
             raise RuntimeError("Reset required")
         for name in NAMES:
             speed, yaw = actions[name]
             measured = self.latest_readings[name] if hasattr(self, "latest_readings") else None
-            target_speed = max(0., min(1., speed)) * self.config.max_surge_mps
+            target_speed = speed * self.config.max_surge_mps
             # Native force control in newtons; right-minus-left gives positive yaw.
             speed_pi, yaw_pi = self.controllers[name]
             base = speed_pi.request(target_speed - measured.surge_mps, self.config.dt_s)

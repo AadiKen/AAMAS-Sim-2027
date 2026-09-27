@@ -1,0 +1,2119 @@
+{
+  "simulator": "bcod",
+  "checkpoint": "runs/benchmark-bcod-objective-fix-10k/checkpoint-000007500.pt",
+  "mode": "nominal",
+  "source_run_id": "d643992836184a6aa003e9f67a2f7cc2",
+  "seed": 11,
+  "deterministic": true,
+  "episodes": [
+    {
+      "scenario_seed": 700000,
+      "cumulative_reward": 322.34017433253695,
+      "physical_colliders": [],
+      "fleet_failure_due_to_collision": false,
+      "colliding_agents": [],
+      "reward_components": {
+        "vessel_0": {
+          "potential_shaping": 0.13581740932069408,
+          "goal": 0.0,
+          "collision": -0.0,
+          "step": -0.01
+        },
+        "vessel_1": {
+          "potential_shaping": 0.1621044342353457,
+          "goal": 0.0,
+          "collision": -0.0,
+          "step": -0.01
+        },
+        "vessel_2": {
+          "potential_shaping": 0.1346527256441732,
+          "goal": 0.0,
+          "collision": -0.0,
+          "step": -0.01
+        },
+        "vessel_3": {
+          "potential_shaping": 0.12976769487148943,
+          "goal": 0.0,
+          "collision": -0.0,
+          "step": -0.01
+        }
+      },
+      "fleet_success": false,
+      "per_agent_success": {
+        "vessel_0": false,
+        "vessel_1": false,
+        "vessel_2": false,
+        "vessel_3": false
+      },
+      "collision_count": 0,
+      "steps": 600,
+      "completion_time_s": 120.0,
+      "path_length_m": {
+        "vessel_0": 0.00042864503387961923,
+        "vessel_1": 9.415055971570746,
+        "vessel_2": 9.110524634331714,
+        "vessel_3": 11.272240446212978
+      },
+      "path_efficiency": {
+        "vessel_0": 0.0,
+        "vessel_1": 0.0,
+        "vessel_2": 0.0,
+        "vessel_3": 0.0
+      },
+      "per_agent_return": {
+        "vessel_0": 75.49047527725358,
+        "vessel_1": 83.70522445446984,
+        "vessel_2": 80.42582305146419,
+        "vessel_3": 82.71865154934835
+      },
+      "per_agent_discounted_return": {
+        "vessel_0": 43.89843330451156,
+        "vessel_1": 49.12897342292443,
+        "vessel_2": 48.59057702546347,
+        "vessel_3": 50.54920903201154
+      },
+      "fleet_return": 322.340174332536,
+      "discounted_fleet_return": 192.16719278491098,
+      "terminal_rewards": {
+        "vessel_0": 0.12581740932069407,
+        "vessel_1": 0.1521044342353457,
+        "vessel_2": 0.12465272564417319,
+        "vessel_3": 0.11976769487148943
+      },
+      "reward_decomposition": {
+        "vessel_0": {
+          "potential_shaping": 81.49047527725372,
+          "goal": 0.0,
+          "collision": 0.0,
+          "step": -5.9999999999999165
+        },
+        "vessel_1": {
+          "potential_shaping": 89.7052244544702,
+          "goal": 0.0,
+          "collision": 0.0,
+          "step": -5.9999999999999165
+        },
+        "vessel_2": {
+          "potential_shaping": 86.4258230514645,
+          "goal": 0.0,
+          "collision": 0.0,
+          "step": -5.9999999999999165
+        },
+        "vessel_3": {
+          "potential_shaping": 88.71865154934882,
+          "goal": 0.0,
+          "collision": 0.0,
+          "step": -5.9999999999999165
+        }
+      },
+      "positive_return_agents": 4,
+      "positive_discounted_return_agents": 4,
+      "preterminal_rewards_last_10": [
+        [
+          0.1258174174067841,
+          0.15115529554019758,
+          0.12465276612207334,
+          0.119767162685269
+        ],
+        [
+          0.1258174166121273,
+          0.15125499088941807,
+          0.124652762279174,
+          0.11976720979560242
+        ],
+        [
+          0.12581741584066264,
+          0.1513536413910026,
+          0.1246527583603745,
+          0.11976725832264436
+        ],
+        [
+          0.1258174150374225,
+          0.1514512404474624,
+          0.12465275440238145,
+          0.11976730825540984
+        ],
+        [
+          0.12581741422942172,
+          0.15154778395434731,
+          0.12465275042285896,
+          0.11976735956520713
+        ],
+        [
+          0.12581741342244412,
+          0.15164326258538607,
+          0.12465274641322367,
+          0.11976741222688304
+        ],
+        [
+          0.12581741262403567,
+          0.1517376673148101,
+          0.12465274236162373,
+          0.11976746621646385
+        ],
+        [
+          0.12581741180865946,
+          0.15183099269179023,
+          0.12465273823446467,
+          0.11976752151469384
+        ],
+        [
+          0.12581741098055033,
+          0.1519232316988075,
+          0.12465273404374046,
+          0.11976757807136608
+        ],
+        [
+          0.12581741015765657,
+          0.1520143808820984,
+          0.12465272984822719,
+          0.11976763585979257
+        ]
+      ],
+      "positive_reward_streak_before_terminal": {
+        "vessel_0": 599,
+        "vessel_1": 599,
+        "vessel_2": 599,
+        "vessel_3": 599
+      },
+      "reached_then_left": [],
+      "post_goal_collisions": []
+    },
+    {
+      "scenario_seed": 700001,
+      "cumulative_reward": 311.16693640723383,
+      "physical_colliders": [],
+      "fleet_failure_due_to_collision": false,
+      "colliding_agents": [],
+      "reward_components": {
+        "vessel_0": {
+          "potential_shaping": 0.14410826819506894,
+          "goal": 0.0,
+          "collision": -0.0,
+          "step": -0.01
+        },
+        "vessel_1": {
+          "potential_shaping": 0.13565888156470862,
+          "goal": 0.0,
+          "collision": -0.0,
+          "step": -0.01
+        },
+        "vessel_2": {
+          "potential_shaping": 0.12474205337552746,
+          "goal": 0.0,
+          "collision": -0.0,
+          "step": -0.01
+        },
+        "vessel_3": {
+          "potential_shaping": 0.13500354057306652,
+          "goal": 0.0,
+          "collision": -0.0,
+          "step": -0.01
+        }
+      },
+      "fleet_success": false,
+      "per_agent_success": {
+        "vessel_0": false,
+        "vessel_1": false,
+        "vessel_2": false,
+        "vessel_3": false
+      },
+      "collision_count": 0,
+      "steps": 600,
+      "completion_time_s": 120.0,
+      "path_length_m": {
+        "vessel_0": 0.015183658495095412,
+        "vessel_1": 8.321606628227372,
+        "vessel_2": 12.003390806070614,
+        "vessel_3": 12.813821926794851
+      },
+      "path_efficiency": {
+        "vessel_0": 0.0,
+        "vessel_1": 0.0,
+        "vessel_2": 0.0,
+        "vessel_3": 0.0
+      },
+      "per_agent_return": {
+        "vessel_0": 80.94291705178401,
+        "vessel_1": 72.37800873459422,
+        "vessel_2": 71.34495936404997,
+        "vessel_3": 86.5010512568064
+      },
+      "per_agent_discounted_return": {
+        "vessel_0": 47.07221560719677,
+        "vessel_1": 42.59703038838264,
+        "vessel_2": 43.14845225269799,
+        "vessel_3": 52.98403521001543
+      },
+      "fleet_return": 311.1669364072346,
+      "discounted_fleet_return": 185.80173345829283,
+      "terminal_rewards": {
+        "vessel_0": 0.13410826819506894,
+        "vessel_1": 0.1256588815647086,
+        "vessel_2": 0.11474205337552747,
+        "vessel_3": 0.1250035405730665
+      },
+      "reward_decomposition": {
+        "vessel_0": {
+          "potential_shaping": 86.94291705178435,
+          "goal": 0.0,
+          "collision": 0.0,
+          "step": -5.9999999999999165
+        },
+        "vessel_1": {
+          "potential_shaping": 78.37800873459416,
+          "goal": 0.0,
+          "collision": 0.0,
+          "step": -5.9999999999999165
+        },
+        "vessel_2": {
+          "potential_shaping": 77.3449593640497,
+          "goal": 0.0,
+          "collision": 0.0,
+          "step": -5.9999999999999165
+        },
+        "vessel_3": {
+          "potential_shaping": 92.50105125680699,
+          "goal": 0.0,
+          "collision": 0.0,
+          "step": -5.9999999999999165
+        }
+      },
+      "positive_return_agents": 4,
+      "positive_discounted_return_agents": 4,
+      "preterminal_rewards_last_10": [
+        [
+          0.13440637311130899,
+          0.12565906191733744,
+          0.11435241137526277,
+          0.12500342482451798
+        ],
+        [
+          0.13437463318300558,
+          0.12565904364772051,
+          0.11438846111164282,
+          0.12500343608990305
+        ],
+        [
+          0.13434333848147673,
+          0.12565902544982577,
+          0.11442514439094766,
+          0.12500344747886571
+        ],
+        [
+          0.13431248437500698,
+          0.1256590072837065,
+          0.114462466924669,
+          0.12500345895614884
+        ],
+        [
+          0.13428206321402114,
+          0.1256589891637725,
+          0.1145004330414048,
+          0.1250034705020988
+        ],
+        [
+          0.13425206424370173,
+          0.12565897109532442,
+          0.11453904926069726,
+          0.1250034821156214
+        ],
+        [
+          0.13422248272022386,
+          0.12565895307927177,
+          0.11457832105067013,
+          0.12500349377412134
+        ],
+        [
+          0.13419331560851844,
+          0.1256589351520938,
+          0.11461825099705238,
+          0.12500350546081562
+        ],
+        [
+          0.13416456231670337,
+          0.12565891728367773,
+          0.11465884571219732,
+          0.12500351717318892
+        ],
+        [
+          0.1341362163125177,
+          0.125658899425664,
+          0.1147001117301636,
+          0.1250035288917155
+        ]
+      ],
+      "positive_reward_streak_before_terminal": {
+        "vessel_0": 599,
+        "vessel_1": 599,
+        "vessel_2": 599,
+        "vessel_3": 599
+      },
+      "reached_then_left": [],
+      "post_goal_collisions": []
+    },
+    {
+      "scenario_seed": 700002,
+      "cumulative_reward": 310.1970988134642,
+      "physical_colliders": [],
+      "fleet_failure_due_to_collision": false,
+      "colliding_agents": [],
+      "reward_components": {
+        "vessel_0": {
+          "potential_shaping": 0.14919198188411542,
+          "goal": 0.0,
+          "collision": -0.0,
+          "step": -0.01
+        },
+        "vessel_1": {
+          "potential_shaping": 0.13769513693740976,
+          "goal": 0.0,
+          "collision": -0.0,
+          "step": -0.01
+        },
+        "vessel_2": {
+          "potential_shaping": 0.13032163826925114,
+          "goal": 0.0,
+          "collision": -0.0,
+          "step": -0.01
+        },
+        "vessel_3": {
+          "potential_shaping": 0.1364185892330596,
+          "goal": 0.0,
+          "collision": -0.0,
+          "step": -0.01
+        }
+      },
+      "fleet_success": false,
+      "per_agent_success": {
+        "vessel_0": false,
+        "vessel_1": false,
+        "vessel_2": false,
+        "vessel_3": false
+      },
+      "collision_count": 0,
+      "steps": 600,
+      "completion_time_s": 120.0,
+      "path_length_m": {
+        "vessel_0": 0.38649863021892106,
+        "vessel_1": 13.930411824221936,
+        "vessel_2": 15.016000582252142,
+        "vessel_3": 8.596823640502787
+      },
+      "path_efficiency": {
+        "vessel_0": 0.0,
+        "vessel_1": 0.0,
+        "vessel_2": 0.0,
+        "vessel_3": 0.0
+      },
+      "per_agent_return": {
+        "vessel_0": 83.05351667901363,
+        "vessel_1": 73.65146865125669,
+        "vessel_2": 72.74438163037603,
+        "vessel_3": 80.74773185281768
+      },
+      "per_agent_discounted_return": {
+        "vessel_0": 48.333065133566016,
+        "vessel_1": 44.125648142808075,
+        "vessel_2": 44.14034754833143,
+        "vessel_3": 48.491806431564754
+      },
+      "fleet_return": 310.197098813464,
+      "discounted_fleet_return": 185.09086725627026,
+      "terminal_rewards": {
+        "vessel_0": 0.1391919818841154,
+        "vessel_1": 0.12769513693740975,
+        "vessel_2": 0.12032163826925114,
+        "vessel_3": 0.1264185892330596
+      },
+      "reward_decomposition": {
+        "vessel_0": {
+          "potential_shaping": 89.05351667901404,
+          "goal": 0.0,
+          "collision": 0.0,
+          "step": -5.9999999999999165
+        },
+        "vessel_1": {
+          "potential_shaping": 79.65146865125668,
+          "goal": 0.0,
+          "collision": 0.0,
+          "step": -5.9999999999999165
+        },
+        "vessel_2": {
+          "potential_shaping": 78.74438163037598,
+          "goal": 0.0,
+          "collision": 0.0,
+          "step": -5.9999999999999165
+        },
+        "vessel_3": {
+          "potential_shaping": 86.747731852818,
+          "goal": 0.0,
+          "collision": 0.0,
+          "step": -5.9999999999999165
+        }
+      },
+      "positive_return_agents": 4,
+      "positive_discounted_return_agents": 4,
+      "preterminal_rewards_last_10": [
+        [
+          0.1392122349876297,
+          0.12669145510195334,
+          0.12032877106272168,
+          0.12641861128009224
+        ],
+        [
+          0.13922079905387874,
+          0.12679458092319407,
+          0.12032781931005389,
+          0.12641860941858396
+        ],
+        [
+          0.1392207455849126,
+          0.12689711698960138,
+          0.12032693055916412,
+          0.12641860748042233
+        ],
+        [
+          0.13921727086276348,
+          0.12699905256568456,
+          0.12032610062865047,
+          0.12641860547861028
+        ],
+        [
+          0.1392129270441751,
+          0.12710037721273237,
+          0.12032532559000743,
+          0.12641860340231914
+        ],
+        [
+          0.13920866771717555,
+          0.12720108396633178,
+          0.12032460176673056,
+          0.126418601248522
+        ],
+        [
+          0.139204763713783,
+          0.12730116530675217,
+          0.1203239257332649,
+          0.12641859901463248
+        ],
+        [
+          0.13920120629561494,
+          0.12740061915817136,
+          0.12032329425423939,
+          0.12641859669336042
+        ],
+        [
+          0.13919791856968344,
+          0.12749944131379265,
+          0.12032270433600957,
+          0.12641859428227575
+        ],
+        [
+          0.1391948507086107,
+          0.12759761744543652,
+          0.12032215320760088,
+          0.1264185917984173
+        ]
+      ],
+      "positive_reward_streak_before_terminal": {
+        "vessel_0": 599,
+        "vessel_1": 599,
+        "vessel_2": 599,
+        "vessel_3": 599
+      },
+      "reached_then_left": [],
+      "post_goal_collisions": []
+    },
+    {
+      "scenario_seed": 700003,
+      "cumulative_reward": 327.11541384859913,
+      "physical_colliders": [],
+      "fleet_failure_due_to_collision": false,
+      "colliding_agents": [],
+      "reward_components": {
+        "vessel_0": {
+          "potential_shaping": 0.14487718148885165,
+          "goal": 0.0,
+          "collision": -0.0,
+          "step": -0.01
+        },
+        "vessel_1": {
+          "potential_shaping": 0.15647626331767128,
+          "goal": 0.0,
+          "collision": -0.0,
+          "step": -0.01
+        },
+        "vessel_2": {
+          "potential_shaping": 0.13026744079230923,
+          "goal": 0.0,
+          "collision": -0.0,
+          "step": -0.01
+        },
+        "vessel_3": {
+          "potential_shaping": 0.1356858109002843,
+          "goal": 0.0,
+          "collision": -0.0,
+          "step": -0.01
+        }
+      },
+      "fleet_success": false,
+      "per_agent_success": {
+        "vessel_0": false,
+        "vessel_1": false,
+        "vessel_2": false,
+        "vessel_3": false
+      },
+      "collision_count": 0,
+      "steps": 600,
+      "completion_time_s": 120.0,
+      "path_length_m": {
+        "vessel_0": 0.5053779889948478,
+        "vessel_1": 7.412014135842478,
+        "vessel_2": 16.5515575771614,
+        "vessel_3": 5.336877990130335
+      },
+      "path_efficiency": {
+        "vessel_0": 0.0,
+        "vessel_1": 0.0,
+        "vessel_2": 0.0,
+        "vessel_3": 0.0
+      },
+      "per_agent_return": {
+        "vessel_0": 81.46527130807029,
+        "vessel_1": 83.75771928888823,
+        "vessel_2": 79.98954808400056,
+        "vessel_3": 81.90287516763952
+      },
+      "per_agent_discounted_return": {
+        "vessel_0": 47.55565934901012,
+        "vessel_1": 49.17153935771709,
+        "vessel_2": 48.7316943588535,
+        "vessel_3": 49.04966971045965
+      },
+      "fleet_return": 327.1154138485986,
+      "discounted_fleet_return": 194.50856277604035,
+      "terminal_rewards": {
+        "vessel_0": 0.13487718148885164,
+        "vessel_1": 0.14647626331767127,
+        "vessel_2": 0.12026744079230924,
+        "vessel_3": 0.1256858109002843
+      },
+      "reward_decomposition": {
+        "vessel_0": {
+          "potential_shaping": 87.46527130807064,
+          "goal": 0.0,
+          "collision": 0.0,
+          "step": -5.9999999999999165
+        },
+        "vessel_1": {
+          "potential_shaping": 89.75771928888862,
+          "goal": 0.0,
+          "collision": 0.0,
+          "step": -5.9999999999999165
+        },
+        "vessel_2": {
+          "potential_shaping": 85.98954808400087,
+          "goal": 0.0,
+          "collision": 0.0,
+          "step": -5.9999999999999165
+        },
+        "vessel_3": {
+          "potential_shaping": 87.9028751676399,
+          "goal": 0.0,
+          "collision": 0.0,
+          "step": -5.9999999999999165
+        }
+      },
+      "positive_return_agents": 4,
+      "positive_discounted_return_agents": 4,
+      "preterminal_rewards_last_10": [
+        [
+          0.13487722619968223,
+          0.14571852939697805,
+          0.12026924827650533,
+          0.12682249724458017
+        ],
+        [
+          0.13487722187703866,
+          0.1457951645749398,
+          0.1202690014546073,
+          0.12670581616563026
+        ],
+        [
+          0.13487721750809611,
+          0.14587160933577592,
+          0.12026877202401011,
+          0.12658984279439323
+        ],
+        [
+          0.13487721311067502,
+          0.14594786572678742,
+          0.12026855886376155,
+          0.12647455689653042
+        ],
+        [
+          0.13487720869419717,
+          0.14602393286334858,
+          0.12026836089962047,
+          0.12635994506736892
+        ],
+        [
+          0.13487720426110683,
+          0.14609980612416051,
+          0.12026817712609784,
+          0.12624598903578543
+        ],
+        [
+          0.13487719978055224,
+          0.14617548578769912,
+          0.12026800663170946,
+          0.12613268064537464
+        ],
+        [
+          0.13487719523859254,
+          0.14625097088104666,
+          0.12026784854950791,
+          0.1260200203126851
+        ],
+        [
+          0.13487719069624915,
+          0.14632626037577778,
+          0.12026770205489414,
+          0.1259079937274572
+        ],
+        [
+          0.1348771861220166,
+          0.1464013606688377,
+          0.120267566369767,
+          0.12579659206938287
+        ]
+      ],
+      "positive_reward_streak_before_terminal": {
+        "vessel_0": 599,
+        "vessel_1": 599,
+        "vessel_2": 599,
+        "vessel_3": 599
+      },
+      "reached_then_left": [],
+      "post_goal_collisions": []
+    },
+    {
+      "scenario_seed": 700004,
+      "cumulative_reward": 308.24124780674975,
+      "physical_colliders": [],
+      "fleet_failure_due_to_collision": false,
+      "colliding_agents": [],
+      "reward_components": {
+        "vessel_0": {
+          "potential_shaping": 0.1312066178778224,
+          "goal": 0.0,
+          "collision": -0.0,
+          "step": -0.01
+        },
+        "vessel_1": {
+          "potential_shaping": 0.14935931261815938,
+          "goal": 0.0,
+          "collision": -0.0,
+          "step": -0.01
+        },
+        "vessel_2": {
+          "potential_shaping": 0.12391477177085619,
+          "goal": 0.0,
+          "collision": -0.0,
+          "step": -0.01
+        },
+        "vessel_3": {
+          "potential_shaping": 0.12593881980107824,
+          "goal": 0.0,
+          "collision": -0.0,
+          "step": -0.01
+        }
+      },
+      "fleet_success": false,
+      "per_agent_success": {
+        "vessel_0": false,
+        "vessel_1": false,
+        "vessel_2": false,
+        "vessel_3": false
+      },
+      "collision_count": 0,
+      "steps": 600,
+      "completion_time_s": 120.0,
+      "path_length_m": {
+        "vessel_0": 0.017514865990577583,
+        "vessel_1": 3.9548502632297104,
+        "vessel_2": 21.345948512515093,
+        "vessel_3": 12.528747053134037
+      },
+      "path_efficiency": {
+        "vessel_0": 0.0,
+        "vessel_1": 0.0,
+        "vessel_2": 0.0,
+        "vessel_3": 0.0
+      },
+      "per_agent_return": {
+        "vessel_0": 73.29325964494294,
+        "vessel_1": 84.39886046615639,
+        "vessel_2": 69.1967061396601,
+        "vessel_3": 81.35242155599146
+      },
+      "per_agent_discounted_return": {
+        "vessel_0": 42.62437786975057,
+        "vessel_1": 49.574591931734616,
+        "vessel_2": 43.19849242596911,
+        "vessel_3": 50.27458053815931
+      },
+      "fleet_return": 308.24124780675083,
+      "discounted_fleet_return": 185.6720427656136,
+      "terminal_rewards": {
+        "vessel_0": 0.1212066178778224,
+        "vessel_1": 0.13935931261815937,
+        "vessel_2": 0.1139147717708562,
+        "vessel_3": 0.11593881980107824
+      },
+      "reward_decomposition": {
+        "vessel_0": {
+          "potential_shaping": 79.29325964494299,
+          "goal": 0.0,
+          "collision": 0.0,
+          "step": -5.9999999999999165
+        },
+        "vessel_1": {
+          "potential_shaping": 90.39886046615685,
+          "goal": 0.0,
+          "collision": 0.0,
+          "step": -5.9999999999999165
+        },
+        "vessel_2": {
+          "potential_shaping": 75.19670613965984,
+          "goal": 0.0,
+          "collision": 0.0,
+          "step": -5.9999999999999165
+        },
+        "vessel_3": {
+          "potential_shaping": 87.35242155599146,
+          "goal": 0.0,
+          "collision": 0.0,
+          "step": -5.9999999999999165
+        }
+      },
+      "positive_return_agents": 4,
+      "positive_discounted_return_agents": 4,
+      "preterminal_rewards_last_10": [
+        [
+          0.12156673095150496,
+          0.13935977389609433,
+          0.11333923625890009,
+          0.11593867318587826
+        ],
+        [
+          0.12152801930051794,
+          0.13935972637246663,
+          0.11339853861755046,
+          0.11593868767445571
+        ],
+        [
+          0.1214899317166578,
+          0.1393596791250553,
+          0.11345743583313152,
+          0.11593870221730442
+        ],
+        [
+          0.12145245736917844,
+          0.139359632197104,
+          0.11351593323166555,
+          0.11593871681255564
+        ],
+        [
+          0.12141558892164085,
+          0.13935958562921313,
+          0.11357403909796006,
+          0.1159387314503968
+        ],
+        [
+          0.12137931707439066,
+          0.13935953937289525,
+          0.1136317588438638,
+          0.11593874612097267
+        ],
+        [
+          0.12134363017124429,
+          0.13935949337578335,
+          0.11368909764082048,
+          0.11593876081236033
+        ],
+        [
+          0.12130852155839535,
+          0.13935944768200215,
+          0.11374606129704802,
+          0.11593877553607058
+        ],
+        [
+          0.121273987715403,
+          0.1393594023624496,
+          0.11380265769950683,
+          0.11593879028566591
+        ],
+        [
+          0.12124002289225701,
+          0.13935935732670202,
+          0.1138588922043391,
+          0.11593880503868605
+        ]
+      ],
+      "positive_reward_streak_before_terminal": {
+        "vessel_0": 599,
+        "vessel_1": 599,
+        "vessel_2": 599,
+        "vessel_3": 599
+      },
+      "reached_then_left": [],
+      "post_goal_collisions": []
+    },
+    {
+      "scenario_seed": 700005,
+      "cumulative_reward": 330.03801748430936,
+      "physical_colliders": [],
+      "fleet_failure_due_to_collision": false,
+      "colliding_agents": [],
+      "reward_components": {
+        "vessel_0": {
+          "potential_shaping": 0.14673424402609214,
+          "goal": 0.0,
+          "collision": -0.0,
+          "step": -0.01
+        },
+        "vessel_1": {
+          "potential_shaping": 0.1525099970086785,
+          "goal": 0.0,
+          "collision": -0.0,
+          "step": -0.01
+        },
+        "vessel_2": {
+          "potential_shaping": 0.13582047110229212,
+          "goal": 0.0,
+          "collision": -0.0,
+          "step": -0.01
+        },
+        "vessel_3": {
+          "potential_shaping": 0.11973943200568726,
+          "goal": 0.0,
+          "collision": -0.0,
+          "step": -0.01
+        }
+      },
+      "fleet_success": false,
+      "per_agent_success": {
+        "vessel_0": false,
+        "vessel_1": false,
+        "vessel_2": false,
+        "vessel_3": false
+      },
+      "collision_count": 0,
+      "steps": 600,
+      "completion_time_s": 120.0,
+      "path_length_m": {
+        "vessel_0": 0.0036741401707700277,
+        "vessel_1": 5.845410163275988,
+        "vessel_2": 13.520372837037309,
+        "vessel_3": 22.454114708381283
+      },
+      "path_efficiency": {
+        "vessel_0": 0.0,
+        "vessel_1": 0.0,
+        "vessel_2": 0.0,
+        "vessel_3": 0.0
+      },
+      "per_agent_return": {
+        "vessel_0": 82.04012713485528,
+        "vessel_1": 84.35780110633829,
+        "vessel_2": 79.5179092448882,
+        "vessel_3": 84.1221799982273
+      },
+      "per_agent_discounted_return": {
+        "vessel_0": 47.70726734897983,
+        "vessel_1": 49.741071184357565,
+        "vessel_2": 48.55995136811164,
+        "vessel_3": 51.74456017975642
+      },
+      "fleet_return": 330.0380174843091,
+      "discounted_fleet_return": 197.75285008120545,
+      "terminal_rewards": {
+        "vessel_0": 0.13673424402609213,
+        "vessel_1": 0.1425099970086785,
+        "vessel_2": 0.1258204711022921,
+        "vessel_3": 0.10973943200568727
+      },
+      "reward_decomposition": {
+        "vessel_0": {
+          "potential_shaping": 88.04012713485565,
+          "goal": 0.0,
+          "collision": 0.0,
+          "step": -5.9999999999999165
+        },
+        "vessel_1": {
+          "potential_shaping": 90.35780110633873,
+          "goal": 0.0,
+          "collision": 0.0,
+          "step": -5.9999999999999165
+        },
+        "vessel_2": {
+          "potential_shaping": 85.51790924488844,
+          "goal": 0.0,
+          "collision": 0.0,
+          "step": -5.9999999999999165
+        },
+        "vessel_3": {
+          "potential_shaping": 90.12217999822751,
+          "goal": 0.0,
+          "collision": 0.0,
+          "step": -5.9999999999999165
+        }
+      },
+      "positive_return_agents": 4,
+      "positive_discounted_return_agents": 4,
+      "preterminal_rewards_last_10": [
+        [
+          0.13673422951936742,
+          0.14196776839147218,
+          0.1258207438051835,
+          0.10959929670533143
+        ],
+        [
+          0.13673423175236166,
+          0.14202423380991092,
+          0.1258207154275135,
+          0.10961082457243322
+        ],
+        [
+          0.13673423382571115,
+          0.14208019563129937,
+          0.1258206873825196,
+          0.10962291624787725
+        ],
+        [
+          0.1367342356968828,
+          0.14213565714881837,
+          0.12582065962242495,
+          0.10963556752512262
+        ],
+        [
+          0.13673423739623103,
+          0.14219061989274961,
+          0.1258206321295796,
+          0.10964876847257245
+        ],
+        [
+          0.1367342389319981,
+          0.14224508280640236,
+          0.1258206048588073,
+          0.10966251874606826
+        ],
+        [
+          0.1367342402809777,
+          0.14229904949117667,
+          0.1258205777722219,
+          0.10967682077620623
+        ],
+        [
+          0.13673424148448077,
+          0.14235252350385053,
+          0.1258205508844179,
+          0.10969166811471155
+        ],
+        [
+          0.1367342425331992,
+          0.14240550423015974,
+          0.12582052416542466,
+          0.1097070561367184
+        ],
+        [
+          0.13673424337850348,
+          0.14245799445078489,
+          0.1258204975621504,
+          0.10972297979480118
+        ]
+      ],
+      "positive_reward_streak_before_terminal": {
+        "vessel_0": 599,
+        "vessel_1": 599,
+        "vessel_2": 599,
+        "vessel_3": 599
+      },
+      "reached_then_left": [],
+      "post_goal_collisions": []
+    },
+    {
+      "scenario_seed": 700006,
+      "cumulative_reward": 307.7830020024505,
+      "physical_colliders": [],
+      "fleet_failure_due_to_collision": false,
+      "colliding_agents": [],
+      "reward_components": {
+        "vessel_0": {
+          "potential_shaping": 0.13195608451630392,
+          "goal": 0.0,
+          "collision": -0.0,
+          "step": -0.01
+        },
+        "vessel_1": {
+          "potential_shaping": 0.1425301724571284,
+          "goal": 0.0,
+          "collision": -0.0,
+          "step": -0.01
+        },
+        "vessel_2": {
+          "potential_shaping": 0.1398766297493239,
+          "goal": 0.0,
+          "collision": -0.0,
+          "step": -0.01
+        },
+        "vessel_3": {
+          "potential_shaping": 0.1410419983669442,
+          "goal": 0.0,
+          "collision": -0.0,
+          "step": -0.01
+        }
+      },
+      "fleet_success": false,
+      "per_agent_success": {
+        "vessel_0": false,
+        "vessel_1": false,
+        "vessel_2": false,
+        "vessel_3": false
+      },
+      "collision_count": 0,
+      "steps": 600,
+      "completion_time_s": 120.0,
+      "path_length_m": {
+        "vessel_0": 1.940147040455062,
+        "vessel_1": 9.36650874994471,
+        "vessel_2": 16.96768179966292,
+        "vessel_3": 6.165989242276498
+      },
+      "path_efficiency": {
+        "vessel_0": 0.0,
+        "vessel_1": 0.0,
+        "vessel_2": 0.0,
+        "vessel_3": 0.0
+      },
+      "per_agent_return": {
+        "vessel_0": 71.93253934865723,
+        "vessel_1": 73.4461150269755,
+        "vessel_2": 77.23896260289709,
+        "vessel_3": 85.16538502392034
+      },
+      "per_agent_discounted_return": {
+        "vessel_0": 42.000327199367476,
+        "vessel_1": 42.79013123818016,
+        "vessel_2": 46.66040704017552,
+        "vessel_3": 51.1470202300446
+      },
+      "fleet_return": 307.78300200245013,
+      "discounted_fleet_return": 182.59788570776777,
+      "terminal_rewards": {
+        "vessel_0": 0.12195608451630392,
+        "vessel_1": 0.1325301724571284,
+        "vessel_2": 0.1298766297493239,
+        "vessel_3": 0.1310419983669442
+      },
+      "reward_decomposition": {
+        "vessel_0": {
+          "potential_shaping": 77.9325393486572,
+          "goal": 0.0,
+          "collision": 0.0,
+          "step": -5.9999999999999165
+        },
+        "vessel_1": {
+          "potential_shaping": 79.44611502697553,
+          "goal": 0.0,
+          "collision": 0.0,
+          "step": -5.9999999999999165
+        },
+        "vessel_2": {
+          "potential_shaping": 83.23896260289723,
+          "goal": 0.0,
+          "collision": 0.0,
+          "step": -5.9999999999999165
+        },
+        "vessel_3": {
+          "potential_shaping": 91.16538502392083,
+          "goal": 0.0,
+          "collision": 0.0,
+          "step": -5.9999999999999165
+        }
+      },
+      "positive_return_agents": 4,
+      "positive_discounted_return_agents": 4,
+      "preterminal_rewards_last_10": [
+        [
+          0.12155732464085191,
+          0.1325305056709476,
+          0.12990578835802125,
+          0.13104187953692814
+        ],
+        [
+          0.12159756605755036,
+          0.13253046089508813,
+          0.12990457543387435,
+          0.13104189025397317
+        ],
+        [
+          0.12163772954108311,
+          0.13253041914280117,
+          0.12990293738795855,
+          0.13104190123472903
+        ],
+        [
+          0.12167781340197849,
+          0.13253038021277574,
+          0.12990089039251074,
+          0.13104191249181496
+        ],
+        [
+          0.12171781757172596,
+          0.13253034392542928,
+          0.12989845049481175,
+          0.13104192401131853
+        ],
+        [
+          0.12175774249633321,
+          0.1325303100867552,
+          0.12989563772220492,
+          0.1310419357929271
+        ],
+        [
+          0.12179758778817075,
+          0.13253027858676147,
+          0.1298924717958181,
+          0.1310419478242062
+        ],
+        [
+          0.12183734466770148,
+          0.13253024923006307,
+          0.12988896874055,
+          0.13104196008976543
+        ],
+        [
+          0.1218770130654201,
+          0.13253022179643437,
+          0.12988514693539854,
+          0.13104197259702288
+        ],
+        [
+          0.12191659545729806,
+          0.13253019623582474,
+          0.12988102782110444,
+          0.131041985353624
+        ]
+      ],
+      "positive_reward_streak_before_terminal": {
+        "vessel_0": 599,
+        "vessel_1": 599,
+        "vessel_2": 599,
+        "vessel_3": 599
+      },
+      "reached_then_left": [],
+      "post_goal_collisions": []
+    },
+    {
+      "scenario_seed": 700007,
+      "cumulative_reward": 314.999225781885,
+      "physical_colliders": [],
+      "fleet_failure_due_to_collision": false,
+      "colliding_agents": [],
+      "reward_components": {
+        "vessel_0": {
+          "potential_shaping": 0.14714110505001088,
+          "goal": 0.0,
+          "collision": -0.0,
+          "step": -0.01
+        },
+        "vessel_1": {
+          "potential_shaping": 0.14777629255398494,
+          "goal": 0.0,
+          "collision": -0.0,
+          "step": -0.01
+        },
+        "vessel_2": {
+          "potential_shaping": 0.121765832235333,
+          "goal": 0.0,
+          "collision": -0.0,
+          "step": -0.01
+        },
+        "vessel_3": {
+          "potential_shaping": 0.12337580079113764,
+          "goal": 0.0,
+          "collision": -0.0,
+          "step": -0.01
+        }
+      },
+      "fleet_success": false,
+      "per_agent_success": {
+        "vessel_0": false,
+        "vessel_1": false,
+        "vessel_2": false,
+        "vessel_3": false
+      },
+      "collision_count": 0,
+      "steps": 600,
+      "completion_time_s": 120.0,
+      "path_length_m": {
+        "vessel_0": 0.00016835337285348885,
+        "vessel_1": 6.344199271839916,
+        "vessel_2": 19.092893267550917,
+        "vessel_3": 11.90193760443523
+      },
+      "path_efficiency": {
+        "vessel_0": 0.0,
+        "vessel_1": 0.0,
+        "vessel_2": 0.0,
+        "vessel_3": 0.0
+      },
+      "per_agent_return": {
+        "vessel_0": 82.28466274659385,
+        "vessel_1": 80.22588080219096,
+        "vessel_2": 71.37334549477856,
+        "vessel_3": 81.1153367383229
+      },
+      "per_agent_discounted_return": {
+        "vessel_0": 47.849319463687564,
+        "vessel_1": 46.80237640466573,
+        "vessel_2": 43.978733617813596,
+        "vessel_3": 49.00485654271109
+      },
+      "fleet_return": 314.99922578188625,
+      "discounted_fleet_return": 187.63528602887797,
+      "terminal_rewards": {
+        "vessel_0": 0.13714110505001087,
+        "vessel_1": 0.13777629255398494,
+        "vessel_2": 0.111765832235333,
+        "vessel_3": 0.11337580079113764
+      },
+      "reward_decomposition": {
+        "vessel_0": {
+          "potential_shaping": 88.28466274659424,
+          "goal": 0.0,
+          "collision": 0.0,
+          "step": -5.9999999999999165
+        },
+        "vessel_1": {
+          "potential_shaping": 86.22588080219124,
+          "goal": 0.0,
+          "collision": 0.0,
+          "step": -5.9999999999999165
+        },
+        "vessel_2": {
+          "potential_shaping": 77.37334549477828,
+          "goal": 0.0,
+          "collision": 0.0,
+          "step": -5.9999999999999165
+        },
+        "vessel_3": {
+          "potential_shaping": 87.11533673832288,
+          "goal": 0.0,
+          "collision": 0.0,
+          "step": -5.9999999999999165
+        }
+      },
+      "positive_return_agents": 4,
+      "positive_discounted_return_agents": 4,
+      "preterminal_rewards_last_10": [
+        [
+          0.137141105452377,
+          0.13777650980023792,
+          0.11176613755490707,
+          0.11337607281421726
+        ],
+        [
+          0.1371411054096734,
+          0.13777648759650218,
+          0.11176610620979745,
+          0.1133760278244418
+        ],
+        [
+          0.13714110537936164,
+          0.13777646553237388,
+          0.11176607512024873,
+          0.11337598738306355
+        ],
+        [
+          0.1371411053448719,
+          0.1377764435724964,
+          0.11176604424089988,
+          0.11337595126518864
+        ],
+        [
+          0.13714110528966272,
+          0.13777642171434024,
+          0.11176601352554429,
+          0.11337591923432712
+        ],
+        [
+          0.1371411052294087,
+          0.13777639998057167,
+          0.111765982978431,
+          0.11337589108800984
+        ],
+        [
+          0.13714110520016276,
+          0.13777637827164368,
+          0.11176595260665835,
+          0.11337586656872901
+        ],
+        [
+          0.13714110518484346,
+          0.13777635662211707,
+          0.11176592236088624,
+          0.11337584545802827
+        ],
+        [
+          0.13714110515878075,
+          0.13777633513142518,
+          0.1117658922149667,
+          0.11337582755458243
+        ],
+        [
+          0.13714110510956856,
+          0.13777631381140565,
+          0.1117658621693687,
+          0.1133758127139879
+        ]
+      ],
+      "positive_reward_streak_before_terminal": {
+        "vessel_0": 599,
+        "vessel_1": 599,
+        "vessel_2": 599,
+        "vessel_3": 599
+      },
+      "reached_then_left": [],
+      "post_goal_collisions": []
+    },
+    {
+      "scenario_seed": 700008,
+      "cumulative_reward": 306.50864354976414,
+      "physical_colliders": [],
+      "fleet_failure_due_to_collision": false,
+      "colliding_agents": [],
+      "reward_components": {
+        "vessel_0": {
+          "potential_shaping": 0.13143645890090738,
+          "goal": 0.0,
+          "collision": -0.0,
+          "step": -0.01
+        },
+        "vessel_1": {
+          "potential_shaping": 0.11269272349561277,
+          "goal": 0.0,
+          "collision": -0.0,
+          "step": -0.01
+        },
+        "vessel_2": {
+          "potential_shaping": 0.14089739397617507,
+          "goal": 0.0,
+          "collision": -0.0,
+          "step": -0.01
+        },
+        "vessel_3": {
+          "potential_shaping": 0.12839777748217784,
+          "goal": 0.0,
+          "collision": -0.0,
+          "step": -0.01
+        }
+      },
+      "fleet_success": false,
+      "per_agent_success": {
+        "vessel_0": false,
+        "vessel_1": false,
+        "vessel_2": false,
+        "vessel_3": false
+      },
+      "collision_count": 0,
+      "steps": 600,
+      "completion_time_s": 120.0,
+      "path_length_m": {
+        "vessel_0": 0.003328492152469118,
+        "vessel_1": 4.580883866211229,
+        "vessel_2": 10.333878329389732,
+        "vessel_3": 4.476788934400855
+      },
+      "path_efficiency": {
+        "vessel_0": 0.0,
+        "vessel_1": 0.0,
+        "vessel_2": 0.0,
+        "vessel_3": 0.0
+      },
+      "per_agent_return": {
+        "vessel_0": 72.86242811866109,
+        "vessel_1": 73.05516208987078,
+        "vessel_2": 81.73115532456667,
+        "vessel_3": 78.85989801666523
+      },
+      "per_agent_discounted_return": {
+        "vessel_0": 42.37040598841468,
+        "vessel_1": 42.97869302364684,
+        "vessel_2": 49.018362151326976,
+        "vessel_3": 47.16242978486122
+      },
+      "fleet_return": 306.50864354976375,
+      "discounted_fleet_return": 181.52989094824972,
+      "terminal_rewards": {
+        "vessel_0": 0.12143645890090739,
+        "vessel_1": 0.10269272349561277,
+        "vessel_2": 0.13089739397617506,
+        "vessel_3": 0.11839777748217785
+      },
+      "reward_decomposition": {
+        "vessel_0": {
+          "potential_shaping": 78.86242811866111,
+          "goal": 0.0,
+          "collision": 0.0,
+          "step": -5.9999999999999165
+        },
+        "vessel_1": {
+          "potential_shaping": 79.05516208987088,
+          "goal": 0.0,
+          "collision": 0.0,
+          "step": -5.9999999999999165
+        },
+        "vessel_2": {
+          "potential_shaping": 87.73115532456703,
+          "goal": 0.0,
+          "collision": 0.0,
+          "step": -5.9999999999999165
+        },
+        "vessel_3": {
+          "potential_shaping": 84.8598980166655,
+          "goal": 0.0,
+          "collision": 0.0,
+          "step": -5.9999999999999165
+        }
+      },
+      "positive_return_agents": 4,
+      "positive_discounted_return_agents": 4,
+      "preterminal_rewards_last_10": [
+        [
+          0.12143627410693171,
+          0.10233785802204466,
+          0.1308146553738021,
+          0.11992604451785895
+        ],
+        [
+          0.12143629324538609,
+          0.10235498555410573,
+          0.1308195413679607,
+          0.11976359094955115
+        ],
+        [
+          0.12143631224583885,
+          0.10237623323442847,
+          0.13082514478805307,
+          0.11960325448415234
+        ],
+        [
+          0.1214363311019946,
+          0.10240158801845724,
+          0.13083147698610786,
+          0.11944504073861652
+        ],
+        [
+          0.12143634980812636,
+          0.10243104023054685,
+          0.13083855374776987,
+          0.11928896096667586
+        ],
+        [
+          0.12143636836741735,
+          0.10246456660053639,
+          0.13084638817293182,
+          0.1191350215776248
+        ],
+        [
+          0.12143638677743752,
+          0.10250215498877481,
+          0.13085499199747175,
+          0.11898322963847875
+        ],
+        [
+          0.12143640503469101,
+          0.10254379206124555,
+          0.13086438038140158,
+          0.1188336013250131
+        ],
+        [
+          0.12143642314194893,
+          0.1025894500195841,
+          0.13087456810972298,
+          0.1186861465838598
+        ],
+        [
+          0.12143644109825914,
+          0.10263910226242047,
+          0.13088556859758227,
+          0.11854087127134051
+        ]
+      ],
+      "positive_reward_streak_before_terminal": {
+        "vessel_0": 599,
+        "vessel_1": 599,
+        "vessel_2": 599,
+        "vessel_3": 599
+      },
+      "reached_then_left": [],
+      "post_goal_collisions": []
+    },
+    {
+      "scenario_seed": 700009,
+      "cumulative_reward": 276.9564520390353,
+      "physical_colliders": [
+        "vessel_2"
+      ],
+      "fleet_failure_due_to_collision": true,
+      "colliding_agents": [
+        "vessel_2"
+      ],
+      "reward_components": {
+        "vessel_0": {
+          "potential_shaping": 73.6791824160093,
+          "goal": 0.0,
+          "collision": -50.0,
+          "step": -0.01
+        },
+        "vessel_1": {
+          "potential_shaping": 75.36287293348119,
+          "goal": 0.0,
+          "collision": -50.0,
+          "step": -0.01
+        },
+        "vessel_2": {
+          "potential_shaping": 64.7529256228706,
+          "goal": 0.0,
+          "collision": -50.0,
+          "step": -0.01
+        },
+        "vessel_3": {
+          "potential_shaping": 65.99432558049908,
+          "goal": 0.0,
+          "collision": -50.0,
+          "step": -0.01
+        }
+      },
+      "fleet_success": false,
+      "per_agent_success": {
+        "vessel_0": false,
+        "vessel_1": false,
+        "vessel_2": false,
+        "vessel_3": false
+      },
+      "collision_count": 1,
+      "steps": 354,
+      "completion_time_s": 70.8,
+      "path_length_m": {
+        "vessel_0": 0.002597596428268732,
+        "vessel_1": 0.34143902727492753,
+        "vessel_2": 20.202279357436623,
+        "vessel_3": 8.273551992474577
+      },
+      "path_efficiency": {
+        "vessel_0": 0.0,
+        "vessel_1": 0.0,
+        "vessel_2": 0.0,
+        "vessel_3": 0.0
+      },
+      "per_agent_return": {
+        "vessel_0": 72.3675651725442,
+        "vessel_1": 74.77005325575472,
+        "vessel_2": 65.0823532815517,
+        "vessel_3": 64.73648032918595
+      },
+      "per_agent_discounted_return": {
+        "vessel_0": 46.55164155151252,
+        "vessel_1": 47.94436002037996,
+        "vessel_2": 45.19078327337116,
+        "vessel_3": 43.50616405580229
+      },
+      "fleet_return": 276.9564520390366,
+      "discounted_fleet_return": 183.19294890106593,
+      "terminal_rewards": {
+        "vessel_0": 23.669182416009296,
+        "vessel_1": 25.352872933481184,
+        "vessel_2": 14.742925622870606,
+        "vessel_3": 15.98432558049908
+      },
+      "reward_decomposition": {
+        "vessel_0": {
+          "potential_shaping": 125.90756517254412,
+          "goal": 0.0,
+          "collision": -50.0,
+          "step": -3.5399999999999685
+        },
+        "vessel_1": {
+          "potential_shaping": 128.3100532557546,
+          "goal": 0.0,
+          "collision": -50.0,
+          "step": -3.5399999999999685
+        },
+        "vessel_2": {
+          "potential_shaping": 118.6223532815515,
+          "goal": 0.0,
+          "collision": -50.0,
+          "step": -3.5399999999999685
+        },
+        "vessel_3": {
+          "potential_shaping": 118.27648032918584,
+          "goal": 0.0,
+          "collision": -50.0,
+          "step": -3.5399999999999685
+        }
+      },
+      "positive_return_agents": 4,
+      "positive_discounted_return_agents": 4,
+      "preterminal_rewards_last_10": [
+        [
+          0.13795664899047266,
+          0.1369915013850027,
+          0.07497825984863994,
+          0.11925099398938756
+        ],
+        [
+          0.13795662005991516,
+          0.1369952332513884,
+          0.07480540870998255,
+          0.11923398367060202
+        ],
+        [
+          0.1379565905562481,
+          0.13700004759211537,
+          0.07464638389335733,
+          0.11921841894899445
+        ],
+        [
+          0.1379565605035873,
+          0.1370059391548233,
+          0.07450153427943974,
+          0.11920429427748559
+        ],
+        [
+          0.137956529937602,
+          0.13701288669353118,
+          0.07437120086983896,
+          0.11919160131046681
+        ],
+        [
+          0.13795649884352712,
+          0.1370208840116669,
+          0.0742557286838428,
+          0.11918033671573426
+        ],
+        [
+          0.1379564672572593,
+          0.13702993172625155,
+          0.07415548348902747,
+          0.11917049315416307
+        ],
+        [
+          0.13795643514966627,
+          0.13704000971313746,
+          0.07407079731358636,
+          0.11916206142298848
+        ],
+        [
+          0.13795640246109087,
+          0.13705110861984848,
+          0.07400200593067098,
+          0.11915503876830315
+        ],
+        [
+          0.13795636925718724,
+          0.13706322567096207,
+          0.07394943797185306,
+          0.11914941833741978
+        ]
+      ],
+      "positive_reward_streak_before_terminal": {
+        "vessel_0": 353,
+        "vessel_1": 353,
+        "vessel_2": 353,
+        "vessel_3": 353
+      },
+      "reached_then_left": [],
+      "post_goal_collisions": []
+    },
+    {
+      "scenario_seed": 700010,
+      "cumulative_reward": 311.4297815095286,
+      "physical_colliders": [],
+      "fleet_failure_due_to_collision": false,
+      "colliding_agents": [],
+      "reward_components": {
+        "vessel_0": {
+          "potential_shaping": 0.13940935441426916,
+          "goal": 0.0,
+          "collision": -0.0,
+          "step": -0.01
+        },
+        "vessel_1": {
+          "potential_shaping": 0.12770599389988035,
+          "goal": 0.0,
+          "collision": -0.0,
+          "step": -0.01
+        },
+        "vessel_2": {
+          "potential_shaping": 0.14065987890026577,
+          "goal": 0.0,
+          "collision": -0.0,
+          "step": -0.01
+        },
+        "vessel_3": {
+          "potential_shaping": 0.116341339607267,
+          "goal": 0.0,
+          "collision": -0.0,
+          "step": -0.01
+        }
+      },
+      "fleet_success": false,
+      "per_agent_success": {
+        "vessel_0": false,
+        "vessel_1": false,
+        "vessel_2": false,
+        "vessel_3": false
+      },
+      "collision_count": 0,
+      "steps": 600,
+      "completion_time_s": 120.0,
+      "path_length_m": {
+        "vessel_0": 0.6748257437256626,
+        "vessel_1": 11.59005604762405,
+        "vessel_2": 19.134097998305535,
+        "vessel_3": 14.190623924524669
+      },
+      "path_efficiency": {
+        "vessel_0": 0.0,
+        "vessel_1": 0.0,
+        "vessel_2": 0.0,
+        "vessel_3": 0.0
+      },
+      "per_agent_return": {
+        "vessel_0": 78.37161483711907,
+        "vessel_1": 70.2609873583019,
+        "vessel_2": 76.88188135246918,
+        "vessel_3": 85.91529796163968
+      },
+      "per_agent_discounted_return": {
+        "vessel_0": 45.807985153246136,
+        "vessel_1": 42.214449324547424,
+        "vessel_2": 46.72946643631398,
+        "vessel_3": 51.1729916348119
+      },
+      "fleet_return": 311.42978150952985,
+      "discounted_fleet_return": 185.92489254891942,
+      "terminal_rewards": {
+        "vessel_0": 0.12940935441426915,
+        "vessel_1": 0.11770599389988036,
+        "vessel_2": 0.13065987890026576,
+        "vessel_3": 0.10634133960726701
+      },
+      "reward_decomposition": {
+        "vessel_0": {
+          "potential_shaping": 84.37161483711932,
+          "goal": 0.0,
+          "collision": 0.0,
+          "step": -5.9999999999999165
+        },
+        "vessel_1": {
+          "potential_shaping": 76.26098735830175,
+          "goal": 0.0,
+          "collision": 0.0,
+          "step": -5.9999999999999165
+        },
+        "vessel_2": {
+          "potential_shaping": 82.88188135246929,
+          "goal": 0.0,
+          "collision": 0.0,
+          "step": -5.9999999999999165
+        },
+        "vessel_3": {
+          "potential_shaping": 91.91529796163968,
+          "goal": 0.0,
+          "collision": 0.0,
+          "step": -5.9999999999999165
+        }
+      },
+      "positive_return_agents": 4,
+      "positive_discounted_return_agents": 4,
+      "preterminal_rewards_last_10": [
+        [
+          0.12940940295555037,
+          0.11716708988887149,
+          0.1297298877723756,
+          0.10634012499747116
+        ],
+        [
+          0.12940939824833264,
+          0.1172238054802557,
+          0.1298240243826052,
+          0.10634028014863418
+        ],
+        [
+          0.1294093934744518,
+          0.11727989974399634,
+          0.12991789286120592,
+          0.10634042639018816
+        ],
+        [
+          0.1294093886629406,
+          0.11733537169424381,
+          0.13001150040712672,
+          0.10634056431203277
+        ],
+        [
+          0.12940938390568646,
+          0.1173902149754207,
+          0.13010485067478839,
+          0.10634069449519302
+        ],
+        [
+          0.12940937911364414,
+          0.11744443040251952,
+          0.1301979523189567,
+          0.10634081747423153
+        ],
+        [
+          0.1294093742643605,
+          0.1174980138192774,
+          0.13029080913347513,
+          0.10634093367874244
+        ],
+        [
+          0.12940936937687808,
+          0.11755096628725938,
+          0.1303834236912189,
+          0.10634104356007669
+        ],
+        [
+          0.12940936444818418,
+          0.11760328429936863,
+          0.13047580345543053,
+          0.1063411475958398
+        ],
+        [
+          0.1294093594664696,
+          0.11765495970930374,
+          0.13056795211384098,
+          0.10634124615574848
+        ]
+      ],
+      "positive_reward_streak_before_terminal": {
+        "vessel_0": 599,
+        "vessel_1": 599,
+        "vessel_2": 599,
+        "vessel_3": 599
+      },
+      "reached_then_left": [],
+      "post_goal_collisions": []
+    },
+    {
+      "scenario_seed": 700011,
+      "cumulative_reward": 320.1821573637255,
+      "physical_colliders": [],
+      "fleet_failure_due_to_collision": false,
+      "colliding_agents": [],
+      "reward_components": {
+        "vessel_0": {
+          "potential_shaping": 0.1525898338672107,
+          "goal": 0.0,
+          "collision": -0.0,
+          "step": -0.01
+        },
+        "vessel_1": {
+          "potential_shaping": 0.1345323668312517,
+          "goal": 0.0,
+          "collision": -0.0,
+          "step": -0.01
+        },
+        "vessel_2": {
+          "potential_shaping": 0.12853604202734914,
+          "goal": 0.0,
+          "collision": -0.0,
+          "step": -0.01
+        },
+        "vessel_3": {
+          "potential_shaping": 0.13407503137653976,
+          "goal": 0.0,
+          "collision": -0.0,
+          "step": -0.01
+        }
+      },
+      "fleet_success": false,
+      "per_agent_success": {
+        "vessel_0": false,
+        "vessel_1": false,
+        "vessel_2": false,
+        "vessel_3": false
+      },
+      "collision_count": 0,
+      "steps": 600,
+      "completion_time_s": 120.0,
+      "path_length_m": {
+        "vessel_0": 1.8690530886955956,
+        "vessel_1": 8.507722301238353,
+        "vessel_2": 13.557604008347534,
+        "vessel_3": 8.86975869872775
+      },
+      "path_efficiency": {
+        "vessel_0": 0.0,
+        "vessel_1": 0.0,
+        "vessel_2": 0.0,
+        "vessel_3": 0.0
+      },
+      "per_agent_return": {
+        "vessel_0": 87.4531563609996,
+        "vessel_1": 70.23920391517959,
+        "vessel_2": 78.17713902629431,
+        "vessel_3": 84.31265806125056
+      },
+      "per_agent_discounted_return": {
+        "vessel_0": 51.411640868006856,
+        "vessel_1": 40.9321797935102,
+        "vessel_2": 48.24436175986128,
+        "vessel_3": 50.68814888604056
+      },
+      "fleet_return": 320.18215736372406,
+      "discounted_fleet_return": 191.2763313074189,
+      "terminal_rewards": {
+        "vessel_0": 0.1425898338672107,
+        "vessel_1": 0.1245323668312517,
+        "vessel_2": 0.11853604202734914,
+        "vessel_3": 0.12407503137653976
+      },
+      "reward_decomposition": {
+        "vessel_0": {
+          "potential_shaping": 93.45315636100015,
+          "goal": 0.0,
+          "collision": 0.0,
+          "step": -5.9999999999999165
+        },
+        "vessel_1": {
+          "potential_shaping": 76.23920391517949,
+          "goal": 0.0,
+          "collision": 0.0,
+          "step": -5.9999999999999165
+        },
+        "vessel_2": {
+          "potential_shaping": 84.17713902629454,
+          "goal": 0.0,
+          "collision": 0.0,
+          "step": -5.9999999999999165
+        },
+        "vessel_3": {
+          "potential_shaping": 90.31265806125107,
+          "goal": 0.0,
+          "collision": 0.0,
+          "step": -5.9999999999999165
+        }
+      },
+      "positive_return_agents": 4,
+      "positive_discounted_return_agents": 4,
+      "preterminal_rewards_last_10": [
+        [
+          0.1425898112254964,
+          0.12453259724681744,
+          0.11768740069213891,
+          0.12407515603340415
+        ],
+        [
+          0.1425898142995743,
+          0.12453257365965499,
+          0.11776825311681251,
+          0.12407514126092224
+        ],
+        [
+          0.1425898171897353,
+          0.1245325502415875,
+          0.11784999920953056,
+          0.12407512707784975
+        ],
+        [
+          0.14258981987585684,
+          0.1245325268960238,
+          0.11793264112572445,
+          0.12407511341515033
+        ],
+        [
+          0.1425898223715103,
+          0.12453250365006398,
+          0.11801617631987484,
+          0.12407510019797542
+        ],
+        [
+          0.14258982472637682,
+          0.1245324805120498,
+          0.11810060197637086,
+          0.1240750874606016
+        ],
+        [
+          0.14258982692915878,
+          0.12453245754101318,
+          0.11818591685672232,
+          0.12407507521149853
+        ],
+        [
+          0.14258982895066707,
+          0.12453243471397514,
+          0.11827211973632303,
+          0.12407506349545884
+        ],
+        [
+          0.14258983077566767,
+          0.12453241200093658,
+          0.11835920962896808,
+          0.12407505231032247
+        ],
+        [
+          0.14258983239068868,
+          0.12453238938282653,
+          0.118447184429902,
+          0.12407504159887651
+        ]
+      ],
+      "positive_reward_streak_before_terminal": {
+        "vessel_0": 599,
+        "vessel_1": 599,
+        "vessel_2": 599,
+        "vessel_3": 599
+      },
+      "reached_then_left": [],
+      "post_goal_collisions": []
+    }
+  ],
+  "action_statistics": {
+    "actor_mean_surge": 0.02676096338427107,
+    "actor_mean_yaw": 0.1109112709146648,
+    "actor_mean_abs_yaw": 0.1121383292693022,
+    "sampled_surge": 0.02676096338427107,
+    "sampled_yaw": 0.1109112709146648,
+    "surge_std": 0.05325613602131324,
+    "yaw_std": 0.04688089907899323,
+    "mean_abs_yaw": 0.1121383292693022,
+    "near_limit_fraction": [
+      0.0,
+      0.0
+    ],
+    "negative_surge_fraction": 0.36701898188093185,
+    "log_std": [
+      -0.7016585469245911,
+      -0.699968159198761
+    ],
+    "raw_std": [
+      0.4957623779773712,
+      0.4966011047363281
+    ]
+  },
+  "stress_factors_applied": [],
+  "stress_factors_not_comparable": [],
+  "fleet_success_rate": 0.0,
+  "collision_rate": 0.08333333333333333,
+  "mean_reward": 312.24651257827355,
+  "environment_steps_per_second": 38.331081716140815
+}

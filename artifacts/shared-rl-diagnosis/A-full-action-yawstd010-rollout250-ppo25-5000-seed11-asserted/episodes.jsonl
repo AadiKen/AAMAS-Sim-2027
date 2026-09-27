@@ -1,0 +1,8 @@
+{"environment_steps": 600, "vessel_0_return": 49.16978378349232, "vessel_0_discounted_return": 29.66386184221407, "vessel_0_success": false, "vessel_0_collision": false, "episode_length": 600}
+{"environment_steps": 1200, "vessel_0_return": 48.5821461147473, "vessel_0_discounted_return": 29.702657878090633, "vessel_0_success": false, "vessel_0_collision": false, "episode_length": 600}
+{"environment_steps": 1800, "vessel_0_return": 48.78672139743696, "vessel_0_discounted_return": 29.68050482000241, "vessel_0_success": false, "vessel_0_collision": false, "episode_length": 600}
+{"environment_steps": 2400, "vessel_0_return": 49.853616849165306, "vessel_0_discounted_return": 30.252091714645502, "vessel_0_success": false, "vessel_0_collision": false, "episode_length": 600}
+{"environment_steps": 3000, "vessel_0_return": 49.23739208819973, "vessel_0_discounted_return": 30.01520597970963, "vessel_0_success": false, "vessel_0_collision": false, "episode_length": 600}
+{"environment_steps": 3600, "vessel_0_return": 49.34593684801086, "vessel_0_discounted_return": 30.030267310977084, "vessel_0_success": false, "vessel_0_collision": false, "episode_length": 600}
+{"environment_steps": 4200, "vessel_0_return": 49.22696455220458, "vessel_0_discounted_return": 29.973488498941418, "vessel_0_success": false, "vessel_0_collision": false, "episode_length": 600}
+{"environment_steps": 4800, "vessel_0_return": 49.2508122496192, "vessel_0_discounted_return": 29.959734756703586, "vessel_0_success": false, "vessel_0_collision": false, "episode_length": 600}

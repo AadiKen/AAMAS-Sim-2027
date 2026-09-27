@@ -1,0 +1,78 @@
+{
+  "gamma_per_step": 0.9979919516614258,
+  "gamma_per_second": 0.99,
+  "terminal_convention": "Phi=0 on true termination; Phi(final state) retained on timeout",
+  "trajectories": [
+    {
+      "trajectory": "aggressive_collision",
+      "steps": 158,
+      "fleet_success": false,
+      "fleet_failure_due_to_collision": true,
+      "undiscounted_fleet_return": 132.62659600763286,
+      "discounted_fleet_return": 136.7067618358755,
+      "components": {
+        "potential_shaping": 338.9465960076326,
+        "goal": 0.0,
+        "collision": -200.0,
+        "step": -6.320000000000005,
+        "total": 132.6265960076326
+      },
+      "discounted_components": {
+        "potential_shaping": 288.00000000000006,
+        "goal": 0.0,
+        "collision": -145.87306427221705,
+        "step": -5.4201738919073215,
+        "total": 136.70676183587568
+      }
+    },
+    {
+      "trajectory": "slow_safe_detour",
+      "steps": 544,
+      "fleet_success": true,
+      "fleet_failure_due_to_collision": false,
+      "undiscounted_fleet_return": 529.277910786893,
+      "discounted_fleet_return": 301.6122002039252,
+      "components": {
+        "potential_shaping": 471.0379107868928,
+        "goal": 80.0,
+        "collision": 0.0,
+        "step": -21.759999999999714,
+        "total": 529.277910786893
+      },
+      "discounted_components": {
+        "potential_shaping": 287.99999999999994,
+        "goal": 26.85790419297578,
+        "collision": 0.0,
+        "step": -13.245703989050682,
+        "total": 301.61220020392506
+      }
+    },
+    {
+      "trajectory": "partial_timeout",
+      "steps": 600,
+      "fleet_success": false,
+      "fleet_failure_due_to_collision": false,
+      "undiscounted_fleet_return": 316.3632246751354,
+      "discounted_fleet_return": 223.74786431767117,
+      "components": {
+        "potential_shaping": 340.3632246751389,
+        "goal": 0.0,
+        "collision": 0.0,
+        "step": -23.999999999999666,
+        "total": 316.36322467513924
+      },
+      "discounted_components": {
+        "potential_shaping": 237.70409425952886,
+        "goal": 0.0,
+        "collision": 0.0,
+        "step": -13.956229941857798,
+        "total": 223.74786431767106
+      }
+    }
+  ],
+  "margins": {
+    "success_minus_timeout": 77.86433588625405,
+    "timeout_minus_collision": 87.04110248179566
+  },
+  "passed": true
+}

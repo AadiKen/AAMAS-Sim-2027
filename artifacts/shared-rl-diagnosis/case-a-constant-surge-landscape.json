@@ -1,0 +1,649 @@
+{
+  "simulator": "bcod-reduced",
+  "seeds": [
+    700000,
+    700001,
+    700002
+  ],
+  "gamma": 0.9979919516614258,
+  "rows": [
+    {
+      "surge": 0.0,
+      "success_rate": 0.0,
+      "mean_episode_length": 600.0,
+      "mean_final_goal_distance_m": 40.0,
+      "mean_undiscounted_return": 42.19316012578125,
+      "mean_discounted_return": 24.535726862042896,
+      "mean_components": {
+        "potential_shaping": 48.193160125781276,
+        "goal": 0.0,
+        "collision": 0.0,
+        "step": -5.999999999999917
+      },
+      "episodes": [
+        {
+          "seed": 700000,
+          "success": false,
+          "episode_length": 600,
+          "final_goal_distance_m": 40.0,
+          "undiscounted_return": 42.19316012578125,
+          "discounted_return": 24.5357268620429,
+          "components": {
+            "potential_shaping": 48.193160125781276,
+            "goal": 0.0,
+            "collision": 0.0,
+            "step": -5.9999999999999165
+          }
+        },
+        {
+          "seed": 700001,
+          "success": false,
+          "episode_length": 600,
+          "final_goal_distance_m": 40.0,
+          "undiscounted_return": 42.19316012578125,
+          "discounted_return": 24.5357268620429,
+          "components": {
+            "potential_shaping": 48.193160125781276,
+            "goal": 0.0,
+            "collision": 0.0,
+            "step": -5.9999999999999165
+          }
+        },
+        {
+          "seed": 700002,
+          "success": false,
+          "episode_length": 600,
+          "final_goal_distance_m": 40.0,
+          "undiscounted_return": 42.19316012578125,
+          "discounted_return": 24.5357268620429,
+          "components": {
+            "potential_shaping": 48.193160125781276,
+            "goal": 0.0,
+            "collision": 0.0,
+            "step": -5.9999999999999165
+          }
+        }
+      ]
+    },
+    {
+      "surge": 0.05,
+      "success_rate": 0.0,
+      "mean_episode_length": 600.0,
+      "mean_final_goal_distance_m": 27.989744193111232,
+      "mean_undiscounted_return": 46.95122943662347,
+      "mean_discounted_return": 28.131361945269575,
+      "mean_components": {
+        "potential_shaping": 52.951229436623784,
+        "goal": 0.0,
+        "collision": 0.0,
+        "step": -5.999999999999917
+      },
+      "episodes": [
+        {
+          "seed": 700000,
+          "success": false,
+          "episode_length": 600,
+          "final_goal_distance_m": 27.98974419311123,
+          "undiscounted_return": 46.95122943662347,
+          "discounted_return": 28.131361945269575,
+          "components": {
+            "potential_shaping": 52.95122943662379,
+            "goal": 0.0,
+            "collision": 0.0,
+            "step": -5.9999999999999165
+          }
+        },
+        {
+          "seed": 700001,
+          "success": false,
+          "episode_length": 600,
+          "final_goal_distance_m": 27.98974419311123,
+          "undiscounted_return": 46.95122943662347,
+          "discounted_return": 28.131361945269575,
+          "components": {
+            "potential_shaping": 52.95122943662379,
+            "goal": 0.0,
+            "collision": 0.0,
+            "step": -5.9999999999999165
+          }
+        },
+        {
+          "seed": 700002,
+          "success": false,
+          "episode_length": 600,
+          "final_goal_distance_m": 27.98974419311123,
+          "undiscounted_return": 46.95122943662347,
+          "discounted_return": 28.131361945269575,
+          "components": {
+            "potential_shaping": 52.95122943662379,
+            "goal": 0.0,
+            "collision": 0.0,
+            "step": -5.9999999999999165
+          }
+        }
+      ]
+    },
+    {
+      "surge": 0.1,
+      "success_rate": 0.0,
+      "mean_episode_length": 600.0,
+      "mean_final_goal_distance_m": 15.97948838622221,
+      "mean_undiscounted_return": 51.70929874746781,
+      "mean_discounted_return": 31.726997028497397,
+      "mean_components": {
+        "potential_shaping": 57.70929874746805,
+        "goal": 0.0,
+        "collision": 0.0,
+        "step": -5.999999999999917
+      },
+      "episodes": [
+        {
+          "seed": 700000,
+          "success": false,
+          "episode_length": 600,
+          "final_goal_distance_m": 15.979488386222211,
+          "undiscounted_return": 51.70929874746781,
+          "discounted_return": 31.7269970284974,
+          "components": {
+            "potential_shaping": 57.70929874746805,
+            "goal": 0.0,
+            "collision": 0.0,
+            "step": -5.9999999999999165
+          }
+        },
+        {
+          "seed": 700001,
+          "success": false,
+          "episode_length": 600,
+          "final_goal_distance_m": 15.979488386222211,
+          "undiscounted_return": 51.70929874746781,
+          "discounted_return": 31.7269970284974,
+          "components": {
+            "potential_shaping": 57.70929874746805,
+            "goal": 0.0,
+            "collision": 0.0,
+            "step": -5.9999999999999165
+          }
+        },
+        {
+          "seed": 700002,
+          "success": false,
+          "episode_length": 600,
+          "final_goal_distance_m": 15.979488386222211,
+          "undiscounted_return": 51.70929874746781,
+          "discounted_return": 31.7269970284974,
+          "components": {
+            "potential_shaping": 57.70929874746805,
+            "goal": 0.0,
+            "collision": 0.0,
+            "step": -5.9999999999999165
+          }
+        }
+      ]
+    },
+    {
+      "surge": 0.2,
+      "success_rate": 1.0,
+      "mean_episode_length": 475.0,
+      "mean_final_goal_distance_m": 1.958976772444565,
+      "mean_undiscounted_return": 75.20383586819742,
+      "mean_discounted_return": 44.65021767981708,
+      "mean_components": {
+        "potential_shaping": 59.95383586819762,
+        "goal": 20.0,
+        "collision": 0.0,
+        "step": -4.749999999999943
+      },
+      "episodes": [
+        {
+          "seed": 700000,
+          "success": true,
+          "episode_length": 475,
+          "final_goal_distance_m": 1.958976772444565,
+          "undiscounted_return": 75.20383586819742,
+          "discounted_return": 44.65021767981709,
+          "components": {
+            "potential_shaping": 59.95383586819762,
+            "goal": 20.0,
+            "collision": 0.0,
+            "step": -4.749999999999943
+          }
+        },
+        {
+          "seed": 700001,
+          "success": true,
+          "episode_length": 475,
+          "final_goal_distance_m": 1.958976772444565,
+          "undiscounted_return": 75.20383586819742,
+          "discounted_return": 44.65021767981709,
+          "components": {
+            "potential_shaping": 59.95383586819762,
+            "goal": 20.0,
+            "collision": 0.0,
+            "step": -4.749999999999943
+          }
+        },
+        {
+          "seed": 700002,
+          "success": true,
+          "episode_length": 475,
+          "final_goal_distance_m": 1.958976772444565,
+          "undiscounted_return": 75.20383586819742,
+          "discounted_return": 44.65021767981709,
+          "components": {
+            "potential_shaping": 59.95383586819762,
+            "goal": 20.0,
+            "collision": 0.0,
+            "step": -4.749999999999943
+          }
+        }
+      ]
+    },
+    {
+      "surge": 0.3,
+      "success_rate": 1.0,
+      "mean_episode_length": 317.0,
+      "mean_final_goal_distance_m": 1.8984651588373218,
+      "mean_undiscounted_return": 70.11082522819127,
+      "mean_discounted_return": 48.25011019132459,
+      "mean_components": {
+        "potential_shaping": 53.28082522819148,
+        "goal": 20.0,
+        "collision": 0.0,
+        "step": -3.1699999999999764
+      },
+      "episodes": [
+        {
+          "seed": 700000,
+          "success": true,
+          "episode_length": 317,
+          "final_goal_distance_m": 1.8984651588373218,
+          "undiscounted_return": 70.11082522819127,
+          "discounted_return": 48.250110191324595,
+          "components": {
+            "potential_shaping": 53.28082522819148,
+            "goal": 20.0,
+            "collision": 0.0,
+            "step": -3.1699999999999764
+          }
+        },
+        {
+          "seed": 700001,
+          "success": true,
+          "episode_length": 317,
+          "final_goal_distance_m": 1.8984651588373218,
+          "undiscounted_return": 70.11082522819127,
+          "discounted_return": 48.250110191324595,
+          "components": {
+            "potential_shaping": 53.28082522819148,
+            "goal": 20.0,
+            "collision": 0.0,
+            "step": -3.1699999999999764
+          }
+        },
+        {
+          "seed": 700002,
+          "success": true,
+          "episode_length": 317,
+          "final_goal_distance_m": 1.8984651588373218,
+          "undiscounted_return": 70.11082522819127,
+          "discounted_return": 48.250110191324595,
+          "components": {
+            "potential_shaping": 53.28082522819148,
+            "goal": 20.0,
+            "collision": 0.0,
+            "step": -3.1699999999999764
+          }
+        }
+      ]
+    },
+    {
+      "surge": 0.4,
+      "success_rate": 1.0,
+      "mean_episode_length": 237.0,
+      "mean_final_goal_distance_m": 1.9979535918081694,
+      "mean_undiscounted_return": 67.57150022588199,
+      "mean_discounted_return": 50.55818012926877,
+      "mean_components": {
+        "potential_shaping": 49.94150022588215,
+        "goal": 20.0,
+        "collision": 0.0,
+        "step": -2.3699999999999934
+      },
+      "episodes": [
+        {
+          "seed": 700000,
+          "success": true,
+          "episode_length": 237,
+          "final_goal_distance_m": 1.9979535918081694,
+          "undiscounted_return": 67.57150022588199,
+          "discounted_return": 50.55818012926876,
+          "components": {
+            "potential_shaping": 49.94150022588215,
+            "goal": 20.0,
+            "collision": 0.0,
+            "step": -2.3699999999999934
+          }
+        },
+        {
+          "seed": 700001,
+          "success": true,
+          "episode_length": 237,
+          "final_goal_distance_m": 1.9979535918081694,
+          "undiscounted_return": 67.57150022588199,
+          "discounted_return": 50.55818012926876,
+          "components": {
+            "potential_shaping": 49.94150022588215,
+            "goal": 20.0,
+            "collision": 0.0,
+            "step": -2.3699999999999934
+          }
+        },
+        {
+          "seed": 700002,
+          "success": true,
+          "episode_length": 237,
+          "final_goal_distance_m": 1.9979535918081694,
+          "undiscounted_return": 67.57150022588199,
+          "discounted_return": 50.55818012926876,
+          "components": {
+            "potential_shaping": 49.94150022588215,
+            "goal": 20.0,
+            "collision": 0.0,
+            "step": -2.3699999999999934
+          }
+        }
+      ]
+    },
+    {
+      "surge": 0.5,
+      "success_rate": 1.0,
+      "mean_episode_length": 190.0,
+      "mean_final_goal_distance_m": 1.8974432740444591,
+      "mean_undiscounted_return": 66.04294392358813,
+      "mean_discounted_return": 52.097693752960105,
+      "mean_components": {
+        "potential_shaping": 47.942943923588274,
+        "goal": 20.0,
+        "collision": 0.0,
+        "step": -1.9000000000000015
+      },
+      "episodes": [
+        {
+          "seed": 700000,
+          "success": true,
+          "episode_length": 190,
+          "final_goal_distance_m": 1.8974432740444591,
+          "undiscounted_return": 66.04294392358813,
+          "discounted_return": 52.0976937529601,
+          "components": {
+            "potential_shaping": 47.942943923588274,
+            "goal": 20.0,
+            "collision": 0.0,
+            "step": -1.9000000000000015
+          }
+        },
+        {
+          "seed": 700001,
+          "success": true,
+          "episode_length": 190,
+          "final_goal_distance_m": 1.8974432740444591,
+          "undiscounted_return": 66.04294392358813,
+          "discounted_return": 52.0976937529601,
+          "components": {
+            "potential_shaping": 47.942943923588274,
+            "goal": 20.0,
+            "collision": 0.0,
+            "step": -1.9000000000000015
+          }
+        },
+        {
+          "seed": 700002,
+          "success": true,
+          "episode_length": 190,
+          "final_goal_distance_m": 1.8974432740444591,
+          "undiscounted_return": 66.04294392358813,
+          "discounted_return": 52.0976937529601,
+          "components": {
+            "potential_shaping": 47.942943923588274,
+            "goal": 20.0,
+            "collision": 0.0,
+            "step": -1.9000000000000015
+          }
+        }
+      ]
+    },
+    {
+      "surge": 0.6,
+      "success_rate": 1.0,
+      "mean_episode_length": 159.0,
+      "mean_final_goal_distance_m": 1.9569363426741866,
+      "mean_undiscounted_return": 65.09100245284206,
+      "mean_discounted_return": 53.19569193060405,
+      "mean_components": {
+        "potential_shaping": 46.68100245284213,
+        "goal": 20.0,
+        "collision": 0.0,
+        "step": -1.590000000000001
+      },
+      "episodes": [
+        {
+          "seed": 700000,
+          "success": true,
+          "episode_length": 159,
+          "final_goal_distance_m": 1.9569363426741866,
+          "undiscounted_return": 65.09100245284206,
+          "discounted_return": 53.19569193060404,
+          "components": {
+            "potential_shaping": 46.68100245284212,
+            "goal": 20.0,
+            "collision": 0.0,
+            "step": -1.5900000000000012
+          }
+        },
+        {
+          "seed": 700001,
+          "success": true,
+          "episode_length": 159,
+          "final_goal_distance_m": 1.9569363426741866,
+          "undiscounted_return": 65.09100245284206,
+          "discounted_return": 53.19569193060404,
+          "components": {
+            "potential_shaping": 46.68100245284212,
+            "goal": 20.0,
+            "collision": 0.0,
+            "step": -1.5900000000000012
+          }
+        },
+        {
+          "seed": 700002,
+          "success": true,
+          "episode_length": 159,
+          "final_goal_distance_m": 1.9569363426741866,
+          "undiscounted_return": 65.09100245284206,
+          "discounted_return": 53.19569193060404,
+          "components": {
+            "potential_shaping": 46.68100245284212,
+            "goal": 20.0,
+            "collision": 0.0,
+            "step": -1.5900000000000012
+          }
+        }
+      ]
+    },
+    {
+      "surge": 0.7,
+      "success_rate": 1.0,
+      "mean_episode_length": 137.0,
+      "mean_final_goal_distance_m": 1.7764545979279198,
+      "mean_undiscounted_return": 64.36209023312092,
+      "mean_discounted_return": 54.01748259202005,
+      "mean_components": {
+        "potential_shaping": 45.73209023312097,
+        "goal": 20.0,
+        "collision": 0.0,
+        "step": -1.370000000000001
+      },
+      "episodes": [
+        {
+          "seed": 700000,
+          "success": true,
+          "episode_length": 137,
+          "final_goal_distance_m": 1.7764545979279198,
+          "undiscounted_return": 64.36209023312092,
+          "discounted_return": 54.01748259202005,
+          "components": {
+            "potential_shaping": 45.73209023312097,
+            "goal": 20.0,
+            "collision": 0.0,
+            "step": -1.370000000000001
+          }
+        },
+        {
+          "seed": 700001,
+          "success": true,
+          "episode_length": 137,
+          "final_goal_distance_m": 1.7764545979279198,
+          "undiscounted_return": 64.36209023312092,
+          "discounted_return": 54.01748259202005,
+          "components": {
+            "potential_shaping": 45.73209023312097,
+            "goal": 20.0,
+            "collision": 0.0,
+            "step": -1.370000000000001
+          }
+        },
+        {
+          "seed": 700002,
+          "success": true,
+          "episode_length": 137,
+          "final_goal_distance_m": 1.7764545979279198,
+          "undiscounted_return": 64.36209023312092,
+          "discounted_return": 54.01748259202005,
+          "components": {
+            "potential_shaping": 45.73209023312097,
+            "goal": 20.0,
+            "collision": 0.0,
+            "step": -1.370000000000001
+          }
+        }
+      ]
+    },
+    {
+      "surge": 0.8,
+      "success_rate": 1.0,
+      "mean_episode_length": 120.0,
+      "mean_final_goal_distance_m": 1.970117989206699,
+      "mean_undiscounted_return": 63.86336398748571,
+      "mean_discounted_return": 54.677865655711685,
+      "mean_components": {
+        "potential_shaping": 45.063363987485786,
+        "goal": 20.0,
+        "collision": 0.0,
+        "step": -1.2000000000000008
+      },
+      "episodes": [
+        {
+          "seed": 700000,
+          "success": true,
+          "episode_length": 120,
+          "final_goal_distance_m": 1.970117989206699,
+          "undiscounted_return": 63.86336398748571,
+          "discounted_return": 54.677865655711685,
+          "components": {
+            "potential_shaping": 45.063363987485786,
+            "goal": 20.0,
+            "collision": 0.0,
+            "step": -1.2000000000000008
+          }
+        },
+        {
+          "seed": 700001,
+          "success": true,
+          "episode_length": 120,
+          "final_goal_distance_m": 1.970117989206699,
+          "undiscounted_return": 63.86336398748571,
+          "discounted_return": 54.677865655711685,
+          "components": {
+            "potential_shaping": 45.063363987485786,
+            "goal": 20.0,
+            "collision": 0.0,
+            "step": -1.2000000000000008
+          }
+        },
+        {
+          "seed": 700002,
+          "success": true,
+          "episode_length": 120,
+          "final_goal_distance_m": 1.970117989206699,
+          "undiscounted_return": 63.86336398748571,
+          "discounted_return": 54.677865655711685,
+          "components": {
+            "potential_shaping": 45.063363987485786,
+            "goal": 20.0,
+            "collision": 0.0,
+            "step": -1.2000000000000008
+          }
+        }
+      ]
+    },
+    {
+      "surge": 1.0,
+      "success_rate": 1.0,
+      "mean_episode_length": 97.0,
+      "mean_final_goal_distance_m": 1.872071667478508,
+      "mean_undiscounted_return": 63.1342855581943,
+      "mean_discounted_return": 55.60801269839476,
+      "mean_components": {
+        "potential_shaping": 44.10428555819436,
+        "goal": 20.0,
+        "collision": 0.0,
+        "step": -0.9700000000000006
+      },
+      "episodes": [
+        {
+          "seed": 700000,
+          "success": true,
+          "episode_length": 97,
+          "final_goal_distance_m": 1.872071667478508,
+          "undiscounted_return": 63.13428555819429,
+          "discounted_return": 55.60801269839476,
+          "components": {
+            "potential_shaping": 44.10428555819436,
+            "goal": 20.0,
+            "collision": 0.0,
+            "step": -0.9700000000000006
+          }
+        },
+        {
+          "seed": 700001,
+          "success": true,
+          "episode_length": 97,
+          "final_goal_distance_m": 1.872071667478508,
+          "undiscounted_return": 63.13428555819429,
+          "discounted_return": 55.60801269839476,
+          "components": {
+            "potential_shaping": 44.10428555819436,
+            "goal": 20.0,
+            "collision": 0.0,
+            "step": -0.9700000000000006
+          }
+        },
+        {
+          "seed": 700002,
+          "success": true,
+          "episode_length": 97,
+          "final_goal_distance_m": 1.872071667478508,
+          "undiscounted_return": 63.13428555819429,
+          "discounted_return": 55.60801269839476,
+          "components": {
+            "potential_shaping": 44.10428555819436,
+            "goal": 20.0,
+            "collision": 0.0,
+            "step": -0.9700000000000006
+          }
+        }
+      ]
+    }
+  ]
+}

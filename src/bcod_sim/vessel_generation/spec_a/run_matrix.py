@@ -16,7 +16,7 @@ from .extract_forces import case_force_history, qualify_force_tail
 
 
 def foam_command(command, case):
-    """Optional Foundation 11 container execution; serial solver uses one core."""
+    """Optional Foundation 11 container execution (serial or MPI)."""
     if os.environ.get("SPEC_A_DOCKER") != "1":
         return command
     command = ["/case" if x == str(case) else x for x in command]
@@ -82,7 +82,7 @@ def _halve_relaxation(case: Path) -> None:
     path.write_text(before+tail)
 
 
-def run_case(case: Path, *, minimum_iterations: int = 3000,
+def run_case(case: Path, *, minimum_iterations: int = 3000, core_count: int = 1,
              reference_y_n: tuple[float, float] | None = None) -> dict:
     """One initial solve and at most one under-relaxed continuation."""
     case = Path(case).resolve()
@@ -96,7 +96,19 @@ def run_case(case: Path, *, minimum_iterations: int = 3000,
         raise ValueError("Spec A requires at least 3000 iterations")
     if (case/"run_result.json").exists():
         raise FileExistsError("Case already executed; inspect its saved result before rerunning")
+    if isinstance(core_count, bool) or not isinstance(core_count, int) or core_count < 1:
+        raise ValueError("core_count must be a positive integer")
+    setup_seconds = 0.
+    if core_count > 1:
+        if any(case.glob("processor[0-9]*")):
+            raise FileExistsError("Existing decomposition; inspect before starting a new run")
+        (case/"system/decomposeParDict").write_text(
+            'FoamFile {version 2.0; format ascii; class dictionary; object decomposeParDict;}\n'
+            f'numberOfSubdomains {core_count}; method scotch;\n')
+        setup_seconds += _run(["decomposePar", "-case", str(case)], case, "log.decomposePar")
     elapsed = 0.
+    prior_path = case/"interrupted_runs.json"
+    segments = json.loads(prior_path.read_text()) if prior_path.exists() else []
     attempts = []
     solver_logs = []
     for attempt in range(2):
@@ -112,11 +124,21 @@ def run_case(case: Path, *, minimum_iterations: int = 3000,
         _edit_control(case, restart=bool(attempt), end_time=end_time)
         log = "log.simpleFoam" if attempt == 0 else "log.simpleFoam.retry"
         started = time.monotonic()
+        command = ["simpleFoam", "-case", str(case)]
+        if core_count > 1:
+            command = ["mpirun", "--allow-run-as-root", "-np", str(core_count), *command, "-parallel"]
         with (case/log).open("w") as stream:
-            process = subprocess.run(foam_command(["simpleFoam", "-case", str(case)], case), cwd=case,
+            process = subprocess.run(foam_command(command, case), cwd=case,
                                      stdout=stream, stderr=subprocess.STDOUT)
-        elapsed += time.monotonic()-started
+        duration = time.monotonic()-started
+        elapsed += duration
         solver_logs.append((case/log).read_text())
+        segments.append({"log": log, "wall_seconds": duration, "core_count": core_count,
+                         "core_hours": duration*core_count/3600,
+                         "iterations": len(re.findall(r"^Time =", solver_logs[-1], re.M))})
+        if core_count > 1 and process.returncode == 0:
+            setup_seconds += _run(["reconstructPar", "-case", str(case), "-latestTime"],
+                                  case, "log.reconstructPar" if not attempt else "log.reconstructPar.retry")
         try:
             history = case_force_history(case)
             qualified = qualify_force_tail(history, residual_log=solver_logs[-1],
@@ -129,32 +151,40 @@ def run_case(case: Path, *, minimum_iterations: int = 3000,
         if qualified["status"] != "failed":
             break
     qualified = attempts[-1]
-    output = {"case": str(case), "state": config["state"], "wall_seconds": elapsed,
-              "core_hours_serial": elapsed/3600, "core_hours": elapsed/3600,
-              "core_count": 1, "cell_count": cell_count(case),
-              "mesh_profile": config.get("mesh_profile"),
-              "iterations": sum(len(re.findall(r"^Time =", log, re.M)) for log in solver_logs), "attempts": attempts,
-              "qualification": qualified, "status": qualified["status"]}
+    output = {"case": str(case), "state": config["state"],
+              "wall_seconds": sum(s["wall_seconds"] for s in segments) + setup_seconds,
+              "core_hours_serial": sum(s["wall_seconds"] for s in segments if s["core_count"] == 1)/3600,
+              "core_hours": sum(s["core_hours"] for s in segments) + setup_seconds/3600,
+              "core_count": core_count, "cell_count": cell_count(case),
+              "mesh_profile": config.get("mesh_profile"), "execution_segments": segments,
+              "decomposition_reconstruction_seconds": setup_seconds,
+              "iterations": sum(s["iterations"] for s in segments),
+              "attempts": attempts, "qualification": qualified, "status": qualified["status"]}
     (case/"run_result.json").write_text(json.dumps(output, indent=2)+"\n")
     return output
 
 
-def run_or_reuse(case: Path, *, reference_y_n=None) -> dict:
+def run_or_reuse(case: Path, *, reference_y_n=None, core_count=1) -> dict:
     """Reuse only the selected, qualified sentinel, including Slurm execution."""
     saved = case/"run_result.json"
     if not saved.exists():
-        return run_case(case, reference_y_n=reference_y_n)
+        return run_case(case, reference_y_n=reference_y_n, core_count=core_count)
     result = json.loads(saved.read_text())
     config = json.loads((case/"case_config.json").read_text())
-    if (not result.get("sentinel_reused") or result["state"] != config["state"]
-            or result.get("mesh_profile") != config.get("mesh_profile")
-            or result["status"] not in ("converged", "oscillatory")
-            or config["state"]["beta_deg"] != 8 or config["state"]["r_prime"] != 0):
-        raise ValueError("Only the matching selected sentinel may be reused")
+    same_case = Path(result.get("case", "")).resolve() == case.resolve()
+    matching = (result.get("state") == config["state"] and
+                result.get("mesh_profile") == config.get("mesh_profile") and
+                result.get("cell_count") == cell_count(case) and
+                result.get("status") in ("converged", "oscillatory") and
+                result.get("qualification", {}).get("mean_foam") is not None)
+    sentinel = (result.get("sentinel_reused") and config["state"]["beta_deg"] == 8
+                and config["state"]["r_prime"] == 0)
+    if not matching or not (sentinel or same_case):
+        raise ValueError("Saved result does not match the selected checked case")
     return result
 
 
-def run_matrix(cases: list[Path]) -> list[dict]:
+def run_matrix(cases: list[Path], *, core_count=1) -> list[dict]:
     """Run the 8° drift first to normalize near-zero straight loads."""
     if not cases:
         raise ValueError("No cases")
@@ -167,7 +197,7 @@ def run_matrix(cases: list[Path]) -> list[dict]:
     ordered = sorted(cases, key=lambda p: (not anchor(p), str(p)))
     results, reference = [], None
     for case in ordered:
-        result = run_or_reuse(case, reference_y_n=reference)
+        result = run_or_reuse(case, reference_y_n=reference, core_count=core_count)
         results.append(result)
         if anchor(case) and result["status"] != "failed":
             mean = result["qualification"]["mean_foam"]

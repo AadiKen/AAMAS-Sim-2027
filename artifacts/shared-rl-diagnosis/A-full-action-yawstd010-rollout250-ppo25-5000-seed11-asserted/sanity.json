@@ -1,0 +1,9 @@
+{
+  "environment_steps": 5000,
+  "rollout_horizon": 250,
+  "collected_rollouts": 20,
+  "optimization_epochs_per_rollout": 25,
+  "actor_optimizer_passes": 500,
+  "critic_optimizer_passes": 500,
+  "sanity_assertions_passed": true
+}

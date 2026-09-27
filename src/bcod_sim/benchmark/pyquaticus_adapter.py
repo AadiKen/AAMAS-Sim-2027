@@ -6,7 +6,7 @@ import os
 from pathlib import Path
 import subprocess
 
-from .core import BenchmarkConfig, Scenario, Truth, VesselReading
+from .core import BenchmarkConfig, Scenario, Truth, VesselReading, validate_actions
 
 
 class PyquaticusAdapter:
@@ -39,6 +39,7 @@ class PyquaticusAdapter:
         return self._request({"op": "reset", "seed": seed, "scenario": {**asdict(scenario), **asdict(self.config)}})
 
     def step(self, actions):
+        validate_actions(actions)
         return self._request({"op": "step", "actions": actions})
 
     def close(self):

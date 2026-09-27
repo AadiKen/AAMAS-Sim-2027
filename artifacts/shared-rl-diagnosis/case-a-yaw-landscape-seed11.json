@@ -1,0 +1,342 @@
+[
+  {
+    "surge": 0.2,
+    "yaw": -1.0,
+    "success_rate": 0.0,
+    "mean_final_distance_m": 41.455366015514926,
+    "mean_episode_length": 600.0,
+    "mean_discounted_vessel_0_return": 24.1000188148144,
+    "cases": [
+      {
+        "seed": 700000,
+        "success": false,
+        "collision": false,
+        "final_distance_m": 41.455366015514926,
+        "episode_length": 600,
+        "discounted_vessel_0_return": 24.1000188148144
+      },
+      {
+        "seed": 700001,
+        "success": false,
+        "collision": false,
+        "final_distance_m": 41.455366015514926,
+        "episode_length": 600,
+        "discounted_vessel_0_return": 24.1000188148144
+      },
+      {
+        "seed": 700002,
+        "success": false,
+        "collision": false,
+        "final_distance_m": 41.455366015514926,
+        "episode_length": 600,
+        "discounted_vessel_0_return": 24.1000188148144
+      }
+    ]
+  },
+  {
+    "surge": 0.2,
+    "yaw": -0.5,
+    "success_rate": 0.0,
+    "mean_final_distance_m": 38.01415832912883,
+    "mean_episode_length": 600.0,
+    "mean_discounted_vessel_0_return": 25.130248918551704,
+    "cases": [
+      {
+        "seed": 700000,
+        "success": false,
+        "collision": false,
+        "final_distance_m": 38.01415832912883,
+        "episode_length": 600,
+        "discounted_vessel_0_return": 25.130248918551704
+      },
+      {
+        "seed": 700001,
+        "success": false,
+        "collision": false,
+        "final_distance_m": 38.01415832912883,
+        "episode_length": 600,
+        "discounted_vessel_0_return": 25.130248918551704
+      },
+      {
+        "seed": 700002,
+        "success": false,
+        "collision": false,
+        "final_distance_m": 38.01415832912883,
+        "episode_length": 600,
+        "discounted_vessel_0_return": 25.130248918551704
+      }
+    ]
+  },
+  {
+    "surge": 0.2,
+    "yaw": 0.0,
+    "success_rate": 1.0,
+    "mean_final_distance_m": 1.958976772444565,
+    "mean_episode_length": 475.0,
+    "mean_discounted_vessel_0_return": 44.65021767981708,
+    "cases": [
+      {
+        "seed": 700000,
+        "success": true,
+        "collision": false,
+        "final_distance_m": 1.958976772444565,
+        "episode_length": 475,
+        "discounted_vessel_0_return": 44.65021767981709
+      },
+      {
+        "seed": 700001,
+        "success": true,
+        "collision": false,
+        "final_distance_m": 1.958976772444565,
+        "episode_length": 475,
+        "discounted_vessel_0_return": 44.65021767981709
+      },
+      {
+        "seed": 700002,
+        "success": true,
+        "collision": false,
+        "final_distance_m": 1.958976772444565,
+        "episode_length": 475,
+        "discounted_vessel_0_return": 44.65021767981709
+      }
+    ]
+  },
+  {
+    "surge": 0.2,
+    "yaw": 0.5,
+    "success_rate": 0.0,
+    "mean_final_distance_m": 38.014158329128584,
+    "mean_episode_length": 600.0,
+    "mean_discounted_vessel_0_return": 25.130248918551757,
+    "cases": [
+      {
+        "seed": 700000,
+        "success": false,
+        "collision": false,
+        "final_distance_m": 38.014158329128584,
+        "episode_length": 600,
+        "discounted_vessel_0_return": 25.130248918551757
+      },
+      {
+        "seed": 700001,
+        "success": false,
+        "collision": false,
+        "final_distance_m": 38.014158329128584,
+        "episode_length": 600,
+        "discounted_vessel_0_return": 25.130248918551757
+      },
+      {
+        "seed": 700002,
+        "success": false,
+        "collision": false,
+        "final_distance_m": 38.014158329128584,
+        "episode_length": 600,
+        "discounted_vessel_0_return": 25.130248918551757
+      }
+    ]
+  },
+  {
+    "surge": 0.2,
+    "yaw": 1.0,
+    "success_rate": 0.0,
+    "mean_final_distance_m": 41.45536601551484,
+    "mean_episode_length": 600.0,
+    "mean_discounted_vessel_0_return": 24.10001881481442,
+    "cases": [
+      {
+        "seed": 700000,
+        "success": false,
+        "collision": false,
+        "final_distance_m": 41.45536601551484,
+        "episode_length": 600,
+        "discounted_vessel_0_return": 24.10001881481442
+      },
+      {
+        "seed": 700001,
+        "success": false,
+        "collision": false,
+        "final_distance_m": 41.45536601551484,
+        "episode_length": 600,
+        "discounted_vessel_0_return": 24.10001881481442
+      },
+      {
+        "seed": 700002,
+        "success": false,
+        "collision": false,
+        "final_distance_m": 41.45536601551484,
+        "episode_length": 600,
+        "discounted_vessel_0_return": 24.10001881481442
+      }
+    ]
+  },
+  {
+    "surge": 0.5,
+    "yaw": -1.0,
+    "success_rate": 0.0,
+    "mean_final_distance_m": 43.87435932742886,
+    "mean_episode_length": 600.0,
+    "mean_discounted_vessel_0_return": 23.375819650511676,
+    "cases": [
+      {
+        "seed": 700000,
+        "success": false,
+        "collision": false,
+        "final_distance_m": 43.87435932742886,
+        "episode_length": 600,
+        "discounted_vessel_0_return": 23.37581965051168
+      },
+      {
+        "seed": 700001,
+        "success": false,
+        "collision": false,
+        "final_distance_m": 43.87435932742886,
+        "episode_length": 600,
+        "discounted_vessel_0_return": 23.37581965051168
+      },
+      {
+        "seed": 700002,
+        "success": false,
+        "collision": false,
+        "final_distance_m": 43.87435932742886,
+        "episode_length": 600,
+        "discounted_vessel_0_return": 23.37581965051168
+      }
+    ]
+  },
+  {
+    "surge": 0.5,
+    "yaw": -0.5,
+    "success_rate": 0.0,
+    "mean_final_distance_m": 37.20308543867177,
+    "mean_episode_length": 600.0,
+    "mean_discounted_vessel_0_return": 25.37306823787957,
+    "cases": [
+      {
+        "seed": 700000,
+        "success": false,
+        "collision": false,
+        "final_distance_m": 37.20308543867177,
+        "episode_length": 600,
+        "discounted_vessel_0_return": 25.37306823787957
+      },
+      {
+        "seed": 700001,
+        "success": false,
+        "collision": false,
+        "final_distance_m": 37.20308543867177,
+        "episode_length": 600,
+        "discounted_vessel_0_return": 25.37306823787957
+      },
+      {
+        "seed": 700002,
+        "success": false,
+        "collision": false,
+        "final_distance_m": 37.20308543867177,
+        "episode_length": 600,
+        "discounted_vessel_0_return": 25.37306823787957
+      }
+    ]
+  },
+  {
+    "surge": 0.5,
+    "yaw": 0.0,
+    "success_rate": 1.0,
+    "mean_final_distance_m": 1.8974432740444591,
+    "mean_episode_length": 190.0,
+    "mean_discounted_vessel_0_return": 52.097693752960105,
+    "cases": [
+      {
+        "seed": 700000,
+        "success": true,
+        "collision": false,
+        "final_distance_m": 1.8974432740444591,
+        "episode_length": 190,
+        "discounted_vessel_0_return": 52.0976937529601
+      },
+      {
+        "seed": 700001,
+        "success": true,
+        "collision": false,
+        "final_distance_m": 1.8974432740444591,
+        "episode_length": 190,
+        "discounted_vessel_0_return": 52.0976937529601
+      },
+      {
+        "seed": 700002,
+        "success": true,
+        "collision": false,
+        "final_distance_m": 1.8974432740444591,
+        "episode_length": 190,
+        "discounted_vessel_0_return": 52.0976937529601
+      }
+    ]
+  },
+  {
+    "surge": 0.5,
+    "yaw": 0.5,
+    "success_rate": 0.0,
+    "mean_final_distance_m": 37.20308543867121,
+    "mean_episode_length": 600.0,
+    "mean_discounted_vessel_0_return": 25.37306823787971,
+    "cases": [
+      {
+        "seed": 700000,
+        "success": false,
+        "collision": false,
+        "final_distance_m": 37.20308543867121,
+        "episode_length": 600,
+        "discounted_vessel_0_return": 25.373068237879714
+      },
+      {
+        "seed": 700001,
+        "success": false,
+        "collision": false,
+        "final_distance_m": 37.20308543867121,
+        "episode_length": 600,
+        "discounted_vessel_0_return": 25.373068237879714
+      },
+      {
+        "seed": 700002,
+        "success": false,
+        "collision": false,
+        "final_distance_m": 37.20308543867121,
+        "episode_length": 600,
+        "discounted_vessel_0_return": 25.373068237879714
+      }
+    ]
+  },
+  {
+    "surge": 0.5,
+    "yaw": 1.0,
+    "success_rate": 0.0,
+    "mean_final_distance_m": 43.874359327428714,
+    "mean_episode_length": 600.0,
+    "mean_discounted_vessel_0_return": 23.37581965051173,
+    "cases": [
+      {
+        "seed": 700000,
+        "success": false,
+        "collision": false,
+        "final_distance_m": 43.87435932742871,
+        "episode_length": 600,
+        "discounted_vessel_0_return": 23.37581965051173
+      },
+      {
+        "seed": 700001,
+        "success": false,
+        "collision": false,
+        "final_distance_m": 43.87435932742871,
+        "episode_length": 600,
+        "discounted_vessel_0_return": 23.37581965051173
+      },
+      {
+        "seed": 700002,
+        "success": false,
+        "collision": false,
+        "final_distance_m": 43.87435932742871,
+        "episode_length": 600,
+        "discounted_vessel_0_return": 23.37581965051173
+      }
+    ]
+  }
+]

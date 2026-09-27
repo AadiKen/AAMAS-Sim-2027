@@ -29,7 +29,7 @@ from bcod_sim.sensors.gps import GPS
 from bcod_sim.sensors.imu import IMU
 from bcod_sim.sensors.abstract import AbstractEntitySensor
 
-from .core import BenchmarkConfig, NAMES, Scenario, Truth, VesselReading
+from .core import BenchmarkConfig, NAMES, Scenario, Truth, VesselReading, validate_actions
 from .control import RatePI, integrate_gyro, common_heading_rate
 
 
@@ -176,13 +176,14 @@ class BCODAdapter:
         return readings, truth
 
     def step(self, actions):
+        validate_actions(actions)
         commands = {}
         params = _otter_parameters()
         saturated = {}
         for name, (surge, yaw) in actions.items():
             state = self.engine.states[name]
             _, actual_yaw = common_heading_rate(state.q_body_to_ned, state.nu_body[3:])
-            target_speed = max(0., surge) * self.config.max_surge_mps
+            target_speed = surge * self.config.max_surge_mps
             target_yaw = yaw * self.config.max_yaw_rps
             speed_pi, yaw_pi = self.controllers[name]
             force = speed_pi.request(target_speed - float(state.nu_body[0]), self.config.dt_s,

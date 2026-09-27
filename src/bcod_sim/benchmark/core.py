@@ -10,6 +10,12 @@ from typing import Mapping, Protocol
 import numpy as np
 
 NAMES = ("vessel_0", "vessel_1", "vessel_2", "vessel_3")
+DISCOUNT_PER_SECOND = 0.99
+
+
+def discount_per_step(dt_s: float) -> float:
+    """Discount equivalent to DISCOUNT_PER_SECOND per simulated second."""
+    return DISCOUNT_PER_SECOND ** dt_s
 
 
 @dataclass(frozen=True)
@@ -26,6 +32,10 @@ class BenchmarkConfig:
     goal_bonus: float = 20.0
     collision_penalty: float = 50.0
     step_penalty: float = 0.01
+
+    @property
+    def gamma(self) -> float:
+        return discount_per_step(self.dt_s)
 
 
 @dataclass(frozen=True)
@@ -121,6 +131,15 @@ class SimulatorAdapter(Protocol):
     def close(self) -> None: ...
 
 
+def validate_actions(actions: Mapping[str, tuple[float, float]]) -> None:
+    if set(actions) != set(NAMES):
+        raise ValueError("Exactly four actions required")
+    for action in actions.values():
+        if (len(action) != 2 or not all(math.isfinite(x) for x in action)
+                or not 0 <= action[0] <= 1 or not -1 <= action[1] <= 1):
+            raise ValueError("Actions require surge in [0, 1] and yaw in [-1, 1]")
+
+
 def observation(reading: VesselReading, goal: tuple[float, float], config: BenchmarkConfig) -> np.ndarray:
     scale = config.half_width_m
     vector = [reading.x_m / scale, reading.y_m / scale,
@@ -144,11 +163,12 @@ def observation(reading: VesselReading, goal: tuple[float, float], config: Bench
 
 
 class Benchmark:
-    def __init__(self, adapter: SimulatorAdapter, config: BenchmarkConfig = BenchmarkConfig()):
+    def __init__(self, adapter: SimulatorAdapter, config: BenchmarkConfig = BenchmarkConfig(), *, diagnostic_allow_sparse=False):
+        self.diagnostic_allow_sparse = diagnostic_allow_sparse
         self.adapter, self.config = adapter, config
 
     def reset(self, scenario: Scenario):
-        if len(scenario.starts) != 4 or len(scenario.goals) != 4 or not 6 <= len(scenario.obstacles) <= 10:
+        if len(scenario.starts) != 4 or len(scenario.goals) != 4 or not (0 if self.diagnostic_allow_sparse else 6) <= len(scenario.obstacles) <= 10:
             raise ValueError("Scenario must contain four vessels and 6–10 obstacles")
         self.scenario = scenario
         readings, self.truth = self.adapter.reset(scenario, scenario.seed)
@@ -172,11 +192,7 @@ class Benchmark:
     def step(self, actions: Mapping[str, tuple[float, float]]):
         if self.steps >= self.config.max_steps or self.collided or all(self.reached):
             raise RuntimeError("Episode has ended")
-        if set(actions) != set(NAMES):
-            raise ValueError("Exactly four actions required")
-        for action in actions.values():
-            if len(action) != 2 or any(not math.isfinite(x) or abs(x) > 1 for x in action):
-                raise ValueError("Actions must be finite normalized (surge, yaw) pairs")
+        validate_actions(actions)
         readings, truth = self.adapter.step(actions)
         self._validate(readings, truth)
         old_truth = self.truth
@@ -205,26 +221,40 @@ class Benchmark:
                                      (p.x_m - q.x_m, p.y_m - q.y_m), (0., 0.))
                         <= 2 * self.config.vessel_radius_m):
                     collisions.update((name, other))
+        newly_reached = []
+        for i, name in enumerate(NAMES):
+            old, new = old_truth[name], truth[name]
+            reached = not self.reached[i] and segment_distance(
+                (old.x_m, old.y_m), (new.x_m, new.y_m), self.scenario.goals[i]
+            ) <= self.config.goal_radius_m
+            newly_reached.append(reached)
+            self.reached[i] |= reached
+        fleet_failure_due_to_collision = bool(collisions)
+        self.collided |= fleet_failure_due_to_collision
+        self.collision_count += len(collisions)
+        terminated = self.collided or all(self.reached)
+        truncated = self.steps >= self.config.max_steps and not terminated
         rewards = {}
+        reward_components = {}
         for i, name in enumerate(NAMES):
             goal = self.scenario.goals[i]
             before = math.dist((old_truth[name].x_m, old_truth[name].y_m), goal)
             after = math.dist((truth[name].x_m, truth[name].y_m), goal)
-            # Register entry anywhere on the observed transition segment, as for
-            # collision scoring; a vessel may cross and leave between samples.
-            newly_reached = not self.reached[i] and segment_distance(
-                (old_truth[name].x_m, old_truth[name].y_m),
-                (truth[name].x_m, truth[name].y_m), goal) <= self.config.goal_radius_m
-            rewards[name] = (self.config.progress_weight * (before - after)
-                             + self.config.goal_bonus * newly_reached
-                             - self.config.collision_penalty * (name in collisions)
-                             - self.config.step_penalty)
-            self.reached[i] |= newly_reached
-        self.collided |= bool(collisions)
-        self.collision_count += len(collisions)
-        terminated = self.collided or all(self.reached)
-        truncated = self.steps >= self.config.max_steps and not terminated
-        info = {"fleet_success": all(self.reached) and not self.collided,
+            # True termination enters an absorbing state with Phi=0. A timeout
+            # retains the final state's potential for value bootstrapping.
+            potential_before = -before
+            potential_after = 0.0 if terminated else -after
+            reward_components[name] = {
+                'potential_shaping': self.config.progress_weight * (
+                    self.config.gamma * potential_after - potential_before),
+                'goal': self.config.goal_bonus * newly_reached[i],
+                'collision': -self.config.collision_penalty * fleet_failure_due_to_collision,
+                'step': -self.config.step_penalty}
+            rewards[name] = sum(reward_components[name].values())
+        info = {"physical_colliders": sorted(collisions),
+                "fleet_failure_due_to_collision": fleet_failure_due_to_collision,
+                "colliding_agents": sorted(collisions), "reward_components": reward_components,
+                "fleet_success": all(self.reached) and not self.collided,
                 "per_agent_success": dict(zip(NAMES, self.reached)),
                 "collision_count": self.collision_count, "steps": self.steps,
                 "completion_time_s": self.steps * self.config.dt_s,

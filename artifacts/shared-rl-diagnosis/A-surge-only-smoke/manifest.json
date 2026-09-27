@@ -1,0 +1,38 @@
+{
+  "mode": "train",
+  "sim": "bcod-reduced",
+  "pyquaticus_python": ".venv-pyquaticus/bin/python",
+  "kind": "A",
+  "output": "artifacts/shared-rl-diagnosis/A-surge-only-smoke",
+  "seed": 11,
+  "steps": 1,
+  "checkpoint": null,
+  "count": 100,
+  "eval_count": 1,
+  "update_mode": "global",
+  "surge_only": true,
+  "actor_only": false,
+  "stochastic": false,
+  "controller": null,
+  "benchmark": {
+    "half_width_m": 50.0,
+    "goal_radius_m": 2.0,
+    "vessel_radius_m": 1.0,
+    "max_steps": 600,
+    "dt_s": 0.2,
+    "max_surge_mps": 2.0,
+    "max_yaw_rps": 0.25,
+    "visibility_m": 30.0,
+    "progress_weight": 1.0,
+    "goal_bonus": 20.0,
+    "collision_penalty": 50.0,
+    "step_penalty": 0.01
+  },
+  "gamma": 0.9979919516614258,
+  "update_interval": 250,
+  "initial_deterministic_surge": 0.05,
+  "initial_deterministic_yaw": 0.0,
+  "learning_agents": [
+    "vessel_0"
+  ]
+}

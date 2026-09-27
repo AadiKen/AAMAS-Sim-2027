@@ -1,0 +1,13 @@
+[
+  {
+    "environment_steps": 1,
+    "surge": 0.011630386114120483,
+    "reward": 0.0713529884815216,
+    "critic_prediction": -0.05474952608346939,
+    "boundary_value": null,
+    "episode_step": 1,
+    "return_target": 0.01668383926153183,
+    "advantage": 0.07143336534500122,
+    "update_boundary_bootstrap": -0.05477914586663246
+  }
+]

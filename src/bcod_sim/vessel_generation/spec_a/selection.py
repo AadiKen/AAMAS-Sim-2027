@@ -16,7 +16,7 @@ def prepare_sentinels(root, spec, *, mesh_family):
                    mesh_family=mesh_family, mesh_profile=profile)
 
 
-def run_sentinels(root):
+def run_sentinels(root, *, core_count=1):
     results = {}
     for profile in ("fast", "standard"):
         case = root/"sentinels"/profile
@@ -24,7 +24,7 @@ def run_sentinels(root):
             mesh = mesh_once([case])
             (case/"mesh_runtime.json").write_text(json.dumps(mesh, indent=2)+"\n")
         saved = case/"run_result.json"
-        results[profile] = json.loads(saved.read_text()) if saved.exists() else run_case(case)
+        results[profile] = json.loads(saved.read_text()) if saved.exists() else run_case(case, core_count=core_count)
         result = results[profile]
         if (result.get("mesh_profile") != profile or result["state"]["beta_deg"] != 8
                 or result["state"]["r_prime"] != 0):
@@ -34,6 +34,13 @@ def run_sentinels(root):
     scale = .5*config["density_kg_m3"]*config["length_m"]**2*config["speed_mps"]**2
     selection = select_profile(results["fast"], results["standard"],
                                force_floor=1e-4*scale, moment_floor=1e-4*scale*config["length_m"])
+    existing_path = root/"mesh_selection.json"
+    if existing_path.exists():
+        existing = json.loads(existing_path.read_text())
+        if existing.get("selection_basis") == "user_selected_after_provisional_fast_standard_comparison":
+            selection["automatic_profile_indicated"] = selection["mesh_profile_selected"]
+            selection["mesh_profile_selected"] = "fast"
+            selection["selection_basis"] = existing["selection_basis"]
     selection["sentinels"] = results
     lines = ["# Spec A +8 degree mesh selection", "",
              "| Profile | Cells | Solver seconds | Cores | Core-hours | Iterations | Status |",
@@ -43,7 +50,7 @@ def run_sentinels(root):
     lines += ["", f"Y difference: {selection['sentinel_Y_difference']:.3%}",
               f"N difference: {selection['sentinel_N_difference']:.3%}",
               f"Selected: **{selection['mesh_profile_selected']}** (threshold 10%).",
-              "", "No experimental loads were used. Remaining matrix has not been run."]
+              "", "No experimental loads were used. Selection does not launch the remaining matrix."]
     (root/"mesh_selection.md").write_text("\n".join(lines)+"\n")
     (root/"mesh_selection.json").write_text(json.dumps(selection, indent=2)+"\n")
     return selection
@@ -54,6 +61,11 @@ def materialize_matrix(root, spec, states, *, mesh_family, selection):
     source = root/"sentinels"/profile
     for index, state in enumerate(states):
         case = root/f"{index:02d}_{state.family}_{state.beta_deg:g}_{state.r_prime:+g}"
+        if case.exists():
+            recorded = json.loads((case/"case_config.json").read_text())
+            if recorded.get("mesh_profile") != profile or recorded.get("state") != state.__dict__:
+                raise FileExistsError("Existing production case conflicts with selected profile")
+            continue
         if state.beta_deg == 8 and state.r_prime == 0:
             shutil.copytree(source, case)
             result = json.loads((case/"run_result.json").read_text())

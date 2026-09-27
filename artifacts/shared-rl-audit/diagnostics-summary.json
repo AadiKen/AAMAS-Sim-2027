@@ -1,0 +1,170 @@
+{
+  "ladder-E": {
+    "updates": 20,
+    "episodes": 8,
+    "median_critic_actor_body_grad_ratio": 7.11605686720182,
+    "fraction_critic_body_larger": 1.0,
+    "collision_update_median_grad_ratio": 2.0512774949842063,
+    "mean_clip_scale": 0.3436634576144414,
+    "mean_bootstrap_fraction": 0.9934000000000001,
+    "updates_with_boundary_fraction": 0.4,
+    "mean_complete_episodes_per_update": 0.0,
+    "mean_episode_length": 597.875,
+    "median_episode_length": 600.0,
+    "return_target_variance_range": [
+      1.7468567964332493,
+      73.15504022164168
+    ],
+    "advantage_variance_range": [
+      1.6942847768751221,
+      73.17652692906358
+    ]
+  },
+  "ladder-B": {
+    "updates": 20,
+    "episodes": 8,
+    "median_critic_actor_body_grad_ratio": 6.568225469098128,
+    "fraction_critic_body_larger": 1.0,
+    "collision_update_median_grad_ratio": 5.386134438395031,
+    "mean_clip_scale": 0.10681894004036507,
+    "mean_bootstrap_fraction": 0.8946000000000002,
+    "updates_with_boundary_fraction": 0.4,
+    "mean_complete_episodes_per_update": 0.0,
+    "mean_episode_length": 572.125,
+    "median_episode_length": 582.0,
+    "return_target_variance_range": [
+      0.8946111653886,
+      256.93542326334864
+    ],
+    "advantage_variance_range": [
+      0.8941297757961628,
+      254.92115246191042
+    ]
+  },
+  "ladder-C": {
+    "updates": 20,
+    "episodes": 8,
+    "median_critic_actor_body_grad_ratio": 4.907492150663034,
+    "fraction_critic_body_larger": 1.0,
+    "collision_update_median_grad_ratio": 3.189524128799532,
+    "mean_clip_scale": 0.26087980906943553,
+    "mean_bootstrap_fraction": 0.9652,
+    "updates_with_boundary_fraction": 0.4,
+    "mean_complete_episodes_per_update": 0.0,
+    "mean_episode_length": 553.0,
+    "median_episode_length": 600.0,
+    "return_target_variance_range": [
+      0.620990480106375,
+      220.3086593865046
+    ],
+    "advantage_variance_range": [
+      0.5915316042560903,
+      220.24046493283913
+    ]
+  },
+  "ladder-D": {
+    "updates": 20,
+    "episodes": 10,
+    "median_critic_actor_body_grad_ratio": 3.517647416743408,
+    "fraction_critic_body_larger": 0.95,
+    "collision_update_median_grad_ratio": 1.745630636538949,
+    "mean_clip_scale": 0.16584004565502714,
+    "mean_bootstrap_fraction": 0.9593999999999999,
+    "updates_with_boundary_fraction": 0.5,
+    "mean_complete_episodes_per_update": 0.0,
+    "mean_episode_length": 440.4,
+    "median_episode_length": 600.0,
+    "return_target_variance_range": [
+      1.0252780151759566,
+      251.13155381426714
+    ],
+    "advantage_variance_range": [
+      1.0400826263268215,
+      246.5450965767459
+    ]
+  },
+  "bcod-frozen-gradient-probe": {
+    "updates": 6,
+    "episodes": 6,
+    "median_critic_actor_body_grad_ratio": 4.78714037942566,
+    "fraction_critic_body_larger": 1.0,
+    "collision_update_median_grad_ratio": 4.769305734095078,
+    "mean_clip_scale": 0.13653980410396346,
+    "mean_bootstrap_fraction": 0.586,
+    "updates_with_boundary_fraction": 0.8333333333333334,
+    "mean_complete_episodes_per_update": 0.3333333333333333,
+    "mean_episode_length": 231.0,
+    "median_episode_length": 166.0,
+    "return_target_variance_range": [
+      5.033635630898289,
+      180.3212104722661
+    ],
+    "advantage_variance_range": [
+      4.554942347851693,
+      178.8370818631165
+    ]
+  },
+  "ladder-A-v2": {
+    "updates": 20,
+    "episodes": 8,
+    "median_critic_actor_body_grad_ratio": 4.368061882782145,
+    "fraction_critic_body_larger": 1.0,
+    "collision_update_median_grad_ratio": null,
+    "mean_clip_scale": 0.332409096851273,
+    "mean_bootstrap_fraction": 1.0,
+    "updates_with_boundary_fraction": 0.4,
+    "mean_complete_episodes_per_update": 0.0,
+    "mean_episode_length": 600.0,
+    "median_episode_length": 600.0,
+    "return_target_variance_range": [
+      0.7962727046617601,
+      9.562080036485895
+    ],
+    "advantage_variance_range": [
+      0.8018419036914146,
+      9.56680493435124
+    ]
+  },
+  "fleet-original": {
+    "updates": 20,
+    "episodes": 14,
+    "median_critic_actor_body_grad_ratio": 5.94442591766237,
+    "fraction_critic_body_larger": 1.0,
+    "collision_update_median_grad_ratio": 4.2817032668536275,
+    "mean_clip_scale": 0.2388768323324859,
+    "mean_bootstrap_fraction": 0.7666,
+    "updates_with_boundary_fraction": 0.65,
+    "mean_complete_episodes_per_update": 0.1,
+    "mean_episode_length": 353.57142857142856,
+    "median_episode_length": 281.5,
+    "return_target_variance_range": [
+      1.0403036612879077,
+      174.23757798082897
+    ],
+    "advantage_variance_range": [
+      1.1187916584686377,
+      173.82892103155973
+    ]
+  },
+  "fleet-penalty": {
+    "updates": 20,
+    "episodes": 13,
+    "median_critic_actor_body_grad_ratio": 4.856087922239304,
+    "fraction_critic_body_larger": 1.0,
+    "collision_update_median_grad_ratio": 3.8492639323321907,
+    "mean_clip_scale": 0.17171828148444898,
+    "mean_bootstrap_fraction": 0.7986000000000001,
+    "updates_with_boundary_fraction": 0.6,
+    "mean_complete_episodes_per_update": 0.1,
+    "mean_episode_length": 377.53846153846155,
+    "median_episode_length": 302.0,
+    "return_target_variance_range": [
+      1.2777024271461102,
+      310.41818739791415
+    ],
+    "advantage_variance_range": [
+      1.298734709241117,
+      311.59473517449806
+    ]
+  }
+}

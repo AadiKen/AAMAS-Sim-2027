@@ -188,7 +188,10 @@ the other nine states. The other sentinel remains validation evidence under
 Explicit `make ... --quality fast|standard|reference` bypasses automatic selection.
 REFERENCE is for benchmark/debug use. `SPEC_A_DOCKER=1` uses the installed
 OpenFOAM Foundation 11 container; otherwise commands use local OpenFOAM.
-The runner is serial: core count is one and core-hours are solver wall-hours.
+The runner defaults to one core. Pass `--cores 6` to `select` or `run` for MPI execution.
+The checked mesh is decomposed with Scotch; completed fields are reconstructed
+for the existing retry and extraction path. Core-hours sum execution segments
+using each segment's core count, plus serial decomposition/reconstruction time.
 Mesh wall time is stored separately in each sentinel's `mesh_runtime.json`.
 
 | Profile | Background budget | Target final cells |
@@ -212,3 +215,15 @@ Failed/unqualified runs never silently select a profile. Profile metadata is
 retained in CSV/YAML; mixed-profile fitting is rejected. Per-case results retain
 cell count, solver wall seconds, core count, core-hours and total iterations
 (including any retry).
+
+### Interrupted STANDARD sentinel and MPI continuation
+
+The KCS STANDARD serial attempt was deliberately stopped at iteration 236 to
+switch to six MPI ranks. Since the first field checkpoint is at iteration 500,
+the MPI run restarts from zero. The interrupted log and force history are
+archived under `sentinels/standard/serial_attempt_0/` and excluded from
+qualification. Its approximate elapsed wall time and one-core cost are saved
+in `interrupted_runs.json` and included in final accounting. The FAST result is
+reused without another solve. MPI force output is integrated globally by
+OpenFOAM; reconstruction supplies the final field checkpoint for the existing
+postprocessing path. No other KCS matrix state is executed during selection.

@@ -1,0 +1,172 @@
+{
+  "task": "one-step surge reward r=surge; optimal surge=1",
+  "seed": 11,
+  "steps": 5000,
+  "update_interval": 250,
+  "rows": [
+    {
+      "environment_steps": 0,
+      "deterministic_surge": 0.050000011920928955
+    },
+    {
+      "environment_steps": 250,
+      "deterministic_surge": 0.05176818370819092,
+      "mean_sampled_reward": 0.07328089475631713,
+      "actor_loss": -0.027186760678887367,
+      "critic_loss": 0.006147782318294048,
+      "clip_scale": 1.0
+    },
+    {
+      "environment_steps": 500,
+      "deterministic_surge": 0.05357298254966736,
+      "mean_sampled_reward": 0.07082292652130127,
+      "actor_loss": -0.021444441750645638,
+      "critic_loss": 0.00438628438860178,
+      "clip_scale": 1.0
+    },
+    {
+      "environment_steps": 750,
+      "deterministic_surge": 0.05548170208930969,
+      "mean_sampled_reward": 0.09107450819015503,
+      "actor_loss": 0.014138194732367992,
+      "critic_loss": 0.006077012047171593,
+      "clip_scale": 1.0
+    },
+    {
+      "environment_steps": 1000,
+      "deterministic_surge": 0.05752262473106384,
+      "mean_sampled_reward": 0.08651340579986572,
+      "actor_loss": 0.058900102972984314,
+      "critic_loss": 0.006252915598452091,
+      "clip_scale": 1.0
+    },
+    {
+      "environment_steps": 1250,
+      "deterministic_surge": 0.05964869260787964,
+      "mean_sampled_reward": 0.08282155382633209,
+      "actor_loss": 0.028985146433115005,
+      "critic_loss": 0.0039169504307210445,
+      "clip_scale": 1.0
+    },
+    {
+      "environment_steps": 1500,
+      "deterministic_surge": 0.061827242374420166,
+      "mean_sampled_reward": 0.08075741744041443,
+      "actor_loss": 0.01626257225871086,
+      "critic_loss": 0.0025048975367099047,
+      "clip_scale": 1.0
+    },
+    {
+      "environment_steps": 1750,
+      "deterministic_surge": 0.06410527229309082,
+      "mean_sampled_reward": 0.08860614216327667,
+      "actor_loss": 0.04253869503736496,
+      "critic_loss": 0.003327030222862959,
+      "clip_scale": 1.0
+    },
+    {
+      "environment_steps": 2000,
+      "deterministic_surge": 0.06648409366607666,
+      "mean_sampled_reward": 0.08357166850566863,
+      "actor_loss": 0.04670582339167595,
+      "critic_loss": 0.0028741341084241867,
+      "clip_scale": 1.0
+    },
+    {
+      "environment_steps": 2250,
+      "deterministic_surge": 0.06897109746932983,
+      "mean_sampled_reward": 0.09044764888286591,
+      "actor_loss": 0.05041524022817612,
+      "critic_loss": 0.0031819376163184643,
+      "clip_scale": 1.0
+    },
+    {
+      "environment_steps": 2500,
+      "deterministic_surge": 0.07159346342086792,
+      "mean_sampled_reward": 0.09055992996692658,
+      "actor_loss": 0.07663100957870483,
+      "critic_loss": 0.004007467534393072,
+      "clip_scale": 1.0
+    },
+    {
+      "environment_steps": 2750,
+      "deterministic_surge": 0.07436323165893555,
+      "mean_sampled_reward": 0.10595464849472046,
+      "actor_loss": 0.06919408589601517,
+      "critic_loss": 0.004277825355529785,
+      "clip_scale": 1.0
+    },
+    {
+      "environment_steps": 3000,
+      "deterministic_surge": 0.07723397016525269,
+      "mean_sampled_reward": 0.0954195487499237,
+      "actor_loss": 0.06041732430458069,
+      "critic_loss": 0.0031443461775779724,
+      "clip_scale": 1.0
+    },
+    {
+      "environment_steps": 3250,
+      "deterministic_surge": 0.08027848601341248,
+      "mean_sampled_reward": 0.10797968852519989,
+      "actor_loss": 0.07770100980997086,
+      "critic_loss": 0.004768284969031811,
+      "clip_scale": 1.0
+    },
+    {
+      "environment_steps": 3500,
+      "deterministic_surge": 0.08348008990287781,
+      "mean_sampled_reward": 0.10462403631210328,
+      "actor_loss": 0.08194858580827713,
+      "critic_loss": 0.004348072223365307,
+      "clip_scale": 1.0
+    },
+    {
+      "environment_steps": 3750,
+      "deterministic_surge": 0.08685740828514099,
+      "mean_sampled_reward": 0.12118627548217774,
+      "actor_loss": 0.08718501776456833,
+      "critic_loss": 0.00501303281635046,
+      "clip_scale": 1.0
+    },
+    {
+      "environment_steps": 4000,
+      "deterministic_surge": 0.09040495753288269,
+      "mean_sampled_reward": 0.11498601806163788,
+      "actor_loss": 0.08489685505628586,
+      "critic_loss": 0.004793767351657152,
+      "clip_scale": 1.0
+    },
+    {
+      "environment_steps": 4250,
+      "deterministic_surge": 0.09414321184158325,
+      "mean_sampled_reward": 0.12352168822288513,
+      "actor_loss": 0.07642808556556702,
+      "critic_loss": 0.005083456169813871,
+      "clip_scale": 1.0
+    },
+    {
+      "environment_steps": 4500,
+      "deterministic_surge": 0.0980798602104187,
+      "mean_sampled_reward": 0.12153523349761963,
+      "actor_loss": 0.0898691862821579,
+      "critic_loss": 0.00538331875577569,
+      "clip_scale": 1.0
+    },
+    {
+      "environment_steps": 4750,
+      "deterministic_surge": 0.1022731363773346,
+      "mean_sampled_reward": 0.13449798369407653,
+      "actor_loss": 0.10170064866542816,
+      "critic_loss": 0.007053710054606199,
+      "clip_scale": 1.0
+    },
+    {
+      "environment_steps": 5000,
+      "deterministic_surge": 0.1067044734954834,
+      "mean_sampled_reward": 0.128003662109375,
+      "actor_loss": 0.10596472024917603,
+      "critic_loss": 0.006538650952279568,
+      "clip_scale": 1.0
+    }
+  ]
+}

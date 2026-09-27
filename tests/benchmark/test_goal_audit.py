@@ -24,10 +24,10 @@ def test_goal_entry_latches_and_other_vessels_continue_then_collision():
     adapter.pose[NAMES[0]]=Truth(8.,-30.,0.) # exact 2m boundary
     _,r,done,_,info=env.step(zero)
     assert not done and info['per_agent_success'][NAMES[0]]
-    assert r[NAMES[0]]==pytest.approx(8+20-.01)
+    assert r[NAMES[0]]==pytest.approx(10-env.config.gamma*2+20-.01)
     adapter.pose[NAMES[0]]=Truth(5.,-30.,0.)
     _,r,done,_,info=env.step(zero)
-    assert info['per_agent_success'][NAMES[0]] and r[NAMES[0]]==pytest.approx(-3-.01)
+    assert info['per_agent_success'][NAMES[0]] and r[NAMES[0]]==pytest.approx(2-env.config.gamma*5-.01)
     adapter.pose[NAMES[1]]=Truth(5.,-30.,0.)
     _,r,done,_,info=env.step(zero)
     assert done and not info['fleet_success'] and info['collision_count']==2

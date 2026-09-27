@@ -85,7 +85,8 @@ def test_real_collision_and_timeout_metrics(kind):
         env.reset(replace(scenario, starts=starts))
         _, reward, done, truncated, info = env.step({n: (0., 0.) for n in NAMES})
         assert done and not truncated and info["collision_count"] >= 2
-        assert reward[NAMES[0]] < -0.8 * config.collision_penalty
+        assert info["fleet_failure_due_to_collision"]
+        assert all(info["reward_components"][n]["collision"] == -config.collision_penalty for n in NAMES)
         json.dumps(info)
         env.reset(scenario)
         env.step({n: (0., 0.) for n in NAMES})

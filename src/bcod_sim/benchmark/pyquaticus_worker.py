@@ -140,7 +140,7 @@ def main():
                         if output(mid) < desired_rudder: lo=mid
                         else: hi=mid
                     heading_error = (lo+hi)/2
-                    native[f"agent_{i}"] = [max(0., action[0]) * scenario["max_surge_mps"],
+                    native[f"agent_{i}"] = [action[0] * scenario["max_surge_mps"],
                                             max(-180., min(180., heading_error))]
                 with contextlib.redirect_stdout(io.StringIO()):
                     env.step(native)

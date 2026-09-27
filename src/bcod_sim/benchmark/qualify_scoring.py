@@ -47,9 +47,10 @@ def reward_audit():
         env.reset(scenario);returns=dict.fromkeys(NAMES,0.);discounted=dict.fromkeys(NAMES,0.)
         for step in range(600):
             _,reward,done,truncated,info=env.step({n:(0.,0.) for n in NAMES})
-            for n in NAMES:returns[n]+=reward[n];discounted[n]+=.99**step*reward[n]
+            for n in NAMES:returns[n]+=reward[n];discounted[n]+=env.config.gamma**step*reward[n]
             if done or truncated:break
-        rows.append({'trajectory':name,'returns':returns,'discounted_returns_gamma_099':discounted,**info})
+        rows.append({'trajectory':name,'terminated':done,'truncated':truncated,
+                     'returns':returns,'discounted_returns':discounted,**info})
     return rows
 
 

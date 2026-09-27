@@ -1,0 +1,290 @@
+[
+  {
+    "environment_steps": 0,
+    "scenario_rows": [
+      {
+        "seed": 700000,
+        "success": false,
+        "collision": false,
+        "final_distance_m": 28.107264929025316,
+        "episode_length": 600,
+        "rollout_mean_surge": 0.049543192436297734,
+        "rollout_mean_signed_yaw": -0.0019470541866030543,
+        "rollout_mean_abs_yaw": 0.0019470541928118716
+      },
+      {
+        "seed": 700001,
+        "success": false,
+        "collision": false,
+        "final_distance_m": 28.107264929025316,
+        "episode_length": 600,
+        "rollout_mean_surge": 0.049543192436297734,
+        "rollout_mean_signed_yaw": -0.0019470541866030543,
+        "rollout_mean_abs_yaw": 0.0019470541928118716
+      },
+      {
+        "seed": 700002,
+        "success": false,
+        "collision": false,
+        "final_distance_m": 28.107264929025316,
+        "episode_length": 600,
+        "rollout_mean_surge": 0.049543192436297734,
+        "rollout_mean_signed_yaw": -0.0019470541866030543,
+        "rollout_mean_abs_yaw": 0.0019470541928118716
+      }
+    ],
+    "success_count": 0,
+    "collision_count": 0,
+    "mean_final_distance_m": 28.107264929025316,
+    "mean_episode_length": 600.0,
+    "deterministic_surge": 0.049543192436297734,
+    "deterministic_signed_yaw": -0.0019470541866030543,
+    "deterministic_abs_yaw": 0.0019470541928118716,
+    "raw_std": [
+      0.49658530950546265,
+      0.09999999403953552
+    ],
+    "action_statistics_basis": "deterministic evaluation rollout average",
+    "completed_rollouts": 0
+  },
+  {
+    "environment_steps": 1000,
+    "scenario_rows": [
+      {
+        "seed": 700000,
+        "success": false,
+        "collision": false,
+        "final_distance_m": 27.145065239263726,
+        "episode_length": 600,
+        "rollout_mean_surge": 0.060343685795863466,
+        "rollout_mean_signed_yaw": 0.023876508955533306,
+        "rollout_mean_abs_yaw": 0.023876508955533306
+      },
+      {
+        "seed": 700001,
+        "success": false,
+        "collision": false,
+        "final_distance_m": 27.145065239263726,
+        "episode_length": 600,
+        "rollout_mean_surge": 0.060343685795863466,
+        "rollout_mean_signed_yaw": 0.023876508955533306,
+        "rollout_mean_abs_yaw": 0.023876508955533306
+      },
+      {
+        "seed": 700002,
+        "success": false,
+        "collision": false,
+        "final_distance_m": 27.145065239263726,
+        "episode_length": 600,
+        "rollout_mean_surge": 0.060343685795863466,
+        "rollout_mean_signed_yaw": 0.023876508955533306,
+        "rollout_mean_abs_yaw": 0.023876508955533306
+      }
+    ],
+    "success_count": 0,
+    "collision_count": 0,
+    "mean_final_distance_m": 27.145065239263726,
+    "mean_episode_length": 600.0,
+    "deterministic_surge": 0.060343685795863466,
+    "deterministic_signed_yaw": 0.023876508955533306,
+    "deterministic_abs_yaw": 0.023876508955533306,
+    "raw_std": [
+      0.4964742660522461,
+      0.10123457759618759
+    ],
+    "action_statistics_basis": "deterministic evaluation rollout average",
+    "completed_rollouts": 4
+  },
+  {
+    "environment_steps": 2500,
+    "scenario_rows": [
+      {
+        "seed": 700000,
+        "success": false,
+        "collision": false,
+        "final_distance_m": 20.748561990841555,
+        "episode_length": 600,
+        "rollout_mean_surge": 0.0807159365216891,
+        "rollout_mean_signed_yaw": -0.006479466270538978,
+        "rollout_mean_abs_yaw": 0.006479466270538978
+      },
+      {
+        "seed": 700001,
+        "success": false,
+        "collision": false,
+        "final_distance_m": 20.748561990841555,
+        "episode_length": 600,
+        "rollout_mean_surge": 0.0807159365216891,
+        "rollout_mean_signed_yaw": -0.006479466270538978,
+        "rollout_mean_abs_yaw": 0.006479466270538978
+      },
+      {
+        "seed": 700002,
+        "success": false,
+        "collision": false,
+        "final_distance_m": 20.748561990841555,
+        "episode_length": 600,
+        "rollout_mean_surge": 0.0807159365216891,
+        "rollout_mean_signed_yaw": -0.006479466270538978,
+        "rollout_mean_abs_yaw": 0.006479466270538978
+      }
+    ],
+    "success_count": 0,
+    "collision_count": 0,
+    "mean_final_distance_m": 20.748561990841555,
+    "mean_episode_length": 600.0,
+    "deterministic_surge": 0.0807159365216891,
+    "deterministic_signed_yaw": -0.006479466270538979,
+    "deterministic_abs_yaw": 0.006479466270538979,
+    "raw_std": [
+      0.4977692663669586,
+      0.1010642945766449
+    ],
+    "action_statistics_basis": "deterministic evaluation rollout average",
+    "completed_rollouts": 10
+  },
+  {
+    "environment_steps": 5000,
+    "scenario_rows": [
+      {
+        "seed": 700000,
+        "success": true,
+        "collision": false,
+        "final_distance_m": 1.9647798509725232,
+        "episode_length": 593,
+        "rollout_mean_surge": 0.1664561630803055,
+        "rollout_mean_signed_yaw": -0.01573813504902222,
+        "rollout_mean_abs_yaw": 0.03141140610026353
+      },
+      {
+        "seed": 700001,
+        "success": true,
+        "collision": false,
+        "final_distance_m": 1.9647798509725232,
+        "episode_length": 593,
+        "rollout_mean_surge": 0.1664561630803055,
+        "rollout_mean_signed_yaw": -0.01573813504902222,
+        "rollout_mean_abs_yaw": 0.03141140610026353
+      },
+      {
+        "seed": 700002,
+        "success": true,
+        "collision": false,
+        "final_distance_m": 1.9647798509725232,
+        "episode_length": 593,
+        "rollout_mean_surge": 0.1664561630803055,
+        "rollout_mean_signed_yaw": -0.01573813504902222,
+        "rollout_mean_abs_yaw": 0.03141140610026353
+      }
+    ],
+    "success_count": 3,
+    "collision_count": 0,
+    "mean_final_distance_m": 1.9647798509725234,
+    "mean_episode_length": 593.0,
+    "deterministic_surge": 0.1664561630803055,
+    "deterministic_signed_yaw": -0.01573813504902222,
+    "deterministic_abs_yaw": 0.03141140610026353,
+    "raw_std": [
+      0.5079911947250366,
+      0.1032458245754242
+    ],
+    "action_statistics_basis": "deterministic evaluation rollout average",
+    "completed_rollouts": 20
+  },
+  {
+    "environment_steps": 7500,
+    "scenario_rows": [
+      {
+        "seed": 700000,
+        "success": false,
+        "collision": false,
+        "final_distance_m": 11.128610408103004,
+        "episode_length": 600,
+        "rollout_mean_surge": 0.18892231265703838,
+        "rollout_mean_signed_yaw": -0.03426260285739166,
+        "rollout_mean_abs_yaw": 0.03546891504937472
+      },
+      {
+        "seed": 700001,
+        "success": false,
+        "collision": false,
+        "final_distance_m": 11.128610408103004,
+        "episode_length": 600,
+        "rollout_mean_surge": 0.18892231265703838,
+        "rollout_mean_signed_yaw": -0.03426260285739166,
+        "rollout_mean_abs_yaw": 0.03546891504937472
+      },
+      {
+        "seed": 700002,
+        "success": false,
+        "collision": false,
+        "final_distance_m": 11.128610408103004,
+        "episode_length": 600,
+        "rollout_mean_surge": 0.18892231265703838,
+        "rollout_mean_signed_yaw": -0.03426260285739166,
+        "rollout_mean_abs_yaw": 0.03546891504937472
+      }
+    ],
+    "success_count": 0,
+    "collision_count": 0,
+    "mean_final_distance_m": 11.128610408103006,
+    "mean_episode_length": 600.0,
+    "deterministic_surge": 0.18892231265703838,
+    "deterministic_signed_yaw": -0.03426260285739166,
+    "deterministic_abs_yaw": 0.03546891504937472,
+    "raw_std": [
+      0.5149440169334412,
+      0.1045379713177681
+    ],
+    "action_statistics_basis": "deterministic evaluation rollout average",
+    "completed_rollouts": 30
+  },
+  {
+    "environment_steps": 10000,
+    "scenario_rows": [
+      {
+        "seed": 700000,
+        "success": false,
+        "collision": false,
+        "final_distance_m": 14.48820517763226,
+        "episode_length": 600,
+        "rollout_mean_surge": 0.1841974773009618,
+        "rollout_mean_signed_yaw": -0.04441297881499243,
+        "rollout_mean_abs_yaw": 0.04441297881499243
+      },
+      {
+        "seed": 700001,
+        "success": false,
+        "collision": false,
+        "final_distance_m": 14.48820517763226,
+        "episode_length": 600,
+        "rollout_mean_surge": 0.1841974773009618,
+        "rollout_mean_signed_yaw": -0.04441297881499243,
+        "rollout_mean_abs_yaw": 0.04441297881499243
+      },
+      {
+        "seed": 700002,
+        "success": false,
+        "collision": false,
+        "final_distance_m": 14.48820517763226,
+        "episode_length": 600,
+        "rollout_mean_surge": 0.1841974773009618,
+        "rollout_mean_signed_yaw": -0.04441297881499243,
+        "rollout_mean_abs_yaw": 0.04441297881499243
+      }
+    ],
+    "success_count": 0,
+    "collision_count": 0,
+    "mean_final_distance_m": 14.48820517763226,
+    "mean_episode_length": 600.0,
+    "deterministic_surge": 0.1841974773009618,
+    "deterministic_signed_yaw": -0.04441297881499243,
+    "deterministic_abs_yaw": 0.04441297881499243,
+    "raw_std": [
+      0.51682448387146,
+      0.10454340279102325
+    ],
+    "action_statistics_basis": "deterministic evaluation rollout average",
+    "completed_rollouts": 40
+  }
+]

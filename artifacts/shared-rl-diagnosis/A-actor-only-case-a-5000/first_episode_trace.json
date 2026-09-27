@@ -1,0 +1,4802 @@
+[
+  {
+    "environment_steps": 1,
+    "surge": 0.011630386114120483,
+    "reward": 0.0713529884815216,
+    "critic_prediction": -0.05474952608346939,
+    "boundary_value": null,
+    "episode_step": 1
+  },
+  {
+    "environment_steps": 2,
+    "surge": 0.17680424451828003,
+    "reward": 0.0880485251545906,
+    "critic_prediction": -0.05477914586663246,
+    "boundary_value": null,
+    "episode_step": 2
+  },
+  {
+    "environment_steps": 3,
+    "surge": 0.031934767961502075,
+    "reward": 0.10564788430929184,
+    "critic_prediction": -0.05522460117936134,
+    "boundary_value": null,
+    "episode_step": 3
+  },
+  {
+    "environment_steps": 4,
+    "surge": 0.037512898445129395,
+    "reward": 0.09947055578231812,
+    "critic_prediction": -0.05521397292613983,
+    "boundary_value": null,
+    "episode_step": 4
+  },
+  {
+    "environment_steps": 5,
+    "surge": 0.04653647541999817,
+    "reward": 0.09303249418735504,
+    "critic_prediction": -0.05509965866804123,
+    "boundary_value": null,
+    "episode_step": 5
+  },
+  {
+    "environment_steps": 6,
+    "surge": 0.029208213090896606,
+    "reward": 0.08909957110881805,
+    "critic_prediction": -0.05504881963133812,
+    "boundary_value": null,
+    "episode_step": 6
+  },
+  {
+    "environment_steps": 7,
+    "surge": 0.04522252082824707,
+    "reward": 0.08681027591228485,
+    "critic_prediction": -0.05499105900526047,
+    "boundary_value": null,
+    "episode_step": 7
+  },
+  {
+    "environment_steps": 8,
+    "surge": 0.012518823146820068,
+    "reward": 0.08467362076044083,
+    "critic_prediction": -0.05499425530433655,
+    "boundary_value": null,
+    "episode_step": 8
+  },
+  {
+    "environment_steps": 9,
+    "surge": 0.06296750903129578,
+    "reward": 0.08428955078125,
+    "critic_prediction": -0.05492803081870079,
+    "boundary_value": null,
+    "episode_step": 9
+  },
+  {
+    "environment_steps": 10,
+    "surge": 0.015956729650497437,
+    "reward": 0.08584114909172058,
+    "critic_prediction": -0.054999418556690216,
+    "boundary_value": null,
+    "episode_step": 10
+  },
+  {
+    "environment_steps": 11,
+    "surge": 0.06097635626792908,
+    "reward": 0.08572403341531754,
+    "critic_prediction": -0.05495702102780342,
+    "boundary_value": null,
+    "episode_step": 11
+  },
+  {
+    "environment_steps": 12,
+    "surge": 0.031140118837356567,
+    "reward": 0.08768759667873383,
+    "critic_prediction": -0.055015116930007935,
+    "boundary_value": null,
+    "episode_step": 12
+  },
+  {
+    "environment_steps": 13,
+    "surge": 0.08726879954338074,
+    "reward": 0.09076231718063354,
+    "critic_prediction": -0.055001869797706604,
+    "boundary_value": null,
+    "episode_step": 13
+  },
+  {
+    "environment_steps": 14,
+    "surge": 0.055349647998809814,
+    "reward": 0.09602664411067963,
+    "critic_prediction": -0.05511650815606117,
+    "boundary_value": null,
+    "episode_step": 14
+  },
+  {
+    "environment_steps": 15,
+    "surge": 0.007098883390426636,
+    "reward": 0.09138946980237961,
+    "critic_prediction": -0.05513598769903183,
+    "boundary_value": null,
+    "episode_step": 15
+  },
+  {
+    "environment_steps": 16,
+    "surge": 0.020083755254745483,
+    "reward": 0.08270404487848282,
+    "critic_prediction": -0.05499731004238129,
+    "boundary_value": null,
+    "episode_step": 16
+  },
+  {
+    "environment_steps": 17,
+    "surge": 0.04972076416015625,
+    "reward": 0.08136028051376343,
+    "critic_prediction": -0.054915983229875565,
+    "boundary_value": null,
+    "episode_step": 17
+  },
+  {
+    "environment_steps": 18,
+    "surge": 0.03500351309776306,
+    "reward": 0.08400566130876541,
+    "critic_prediction": -0.054962754249572754,
+    "boundary_value": null,
+    "episode_step": 18
+  },
+  {
+    "environment_steps": 19,
+    "surge": 0.1493799388408661,
+    "reward": 0.09458229690790176,
+    "critic_prediction": -0.054980773478746414,
+    "boundary_value": null,
+    "episode_step": 19
+  },
+  {
+    "environment_steps": 20,
+    "surge": 0.053612977266311646,
+    "reward": 0.10605181753635406,
+    "critic_prediction": -0.055272649973630905,
+    "boundary_value": null,
+    "episode_step": 20
+  },
+  {
+    "environment_steps": 21,
+    "surge": 0.13058704137802124,
+    "reward": 0.10844093561172485,
+    "critic_prediction": -0.0552663691341877,
+    "boundary_value": null,
+    "episode_step": 21
+  },
+  {
+    "environment_steps": 22,
+    "surge": 0.012915432453155518,
+    "reward": 0.10615011304616928,
+    "critic_prediction": -0.05537918210029602,
+    "boundary_value": null,
+    "episode_step": 22
+  },
+  {
+    "environment_steps": 23,
+    "surge": 0.10277679562568665,
+    "reward": 0.09883677959442139,
+    "critic_prediction": -0.05518534779548645,
+    "boundary_value": null,
+    "episode_step": 23
+  },
+  {
+    "environment_steps": 24,
+    "surge": 0.04588022828102112,
+    "reward": 0.0988834872841835,
+    "critic_prediction": -0.05522310361266136,
+    "boundary_value": null,
+    "episode_step": 24
+  },
+  {
+    "environment_steps": 25,
+    "surge": 0.06662511825561523,
+    "reward": 0.09572186321020126,
+    "critic_prediction": -0.055166907608509064,
+    "boundary_value": null,
+    "episode_step": 25
+  },
+  {
+    "environment_steps": 26,
+    "surge": 0.02865460515022278,
+    "reward": 0.09221896529197693,
+    "critic_prediction": -0.055155664682388306,
+    "boundary_value": null,
+    "episode_step": 26
+  },
+  {
+    "environment_steps": 27,
+    "surge": 0.051875680685043335,
+    "reward": 0.08804773539304733,
+    "critic_prediction": -0.05506810173392296,
+    "boundary_value": null,
+    "episode_step": 27
+  },
+  {
+    "environment_steps": 28,
+    "surge": 0.07366889715194702,
+    "reward": 0.0901465117931366,
+    "critic_prediction": -0.05505639314651489,
+    "boundary_value": null,
+    "episode_step": 28
+  },
+  {
+    "environment_steps": 29,
+    "surge": 0.03845500946044922,
+    "reward": 0.09174706041812897,
+    "critic_prediction": -0.05512673035264015,
+    "boundary_value": null,
+    "episode_step": 29
+  },
+  {
+    "environment_steps": 30,
+    "surge": 0.05336731672286987,
+    "reward": 0.08981847763061523,
+    "critic_prediction": -0.05509522557258606,
+    "boundary_value": null,
+    "episode_step": 30
+  },
+  {
+    "environment_steps": 31,
+    "surge": 0.14940789341926575,
+    "reward": 0.09827882051467896,
+    "critic_prediction": -0.055088941007852554,
+    "boundary_value": null,
+    "episode_step": 31
+  },
+  {
+    "environment_steps": 32,
+    "surge": 0.016723424196243286,
+    "reward": 0.10379350930452347,
+    "critic_prediction": -0.055340856313705444,
+    "boundary_value": null,
+    "episode_step": 32
+  },
+  {
+    "environment_steps": 33,
+    "surge": 0.02556532621383667,
+    "reward": 0.09203457087278366,
+    "critic_prediction": -0.05521036684513092,
+    "boundary_value": null,
+    "episode_step": 33
+  },
+  {
+    "environment_steps": 34,
+    "surge": 0.011087000370025635,
+    "reward": 0.08211955428123474,
+    "critic_prediction": -0.05505784973502159,
+    "boundary_value": null,
+    "episode_step": 34
+  },
+  {
+    "environment_steps": 35,
+    "surge": 0.029704630374908447,
+    "reward": 0.07723474502563477,
+    "critic_prediction": -0.054941389709711075,
+    "boundary_value": null,
+    "episode_step": 35
+  },
+  {
+    "environment_steps": 36,
+    "surge": 0.04079246520996094,
+    "reward": 0.07853708416223526,
+    "critic_prediction": -0.05492863431572914,
+    "boundary_value": null,
+    "episode_step": 36
+  },
+  {
+    "environment_steps": 37,
+    "surge": 0.017951011657714844,
+    "reward": 0.07957194000482559,
+    "critic_prediction": -0.05497375875711441,
+    "boundary_value": null,
+    "episode_step": 37
+  },
+  {
+    "environment_steps": 38,
+    "surge": 0.013687431812286377,
+    "reward": 0.07711029052734375,
+    "critic_prediction": -0.054952964186668396,
+    "boundary_value": null,
+    "episode_step": 38
+  },
+  {
+    "environment_steps": 39,
+    "surge": 0.2597254514694214,
+    "reward": 0.09648086130619049,
+    "critic_prediction": -0.0549134761095047,
+    "boundary_value": null,
+    "episode_step": 39
+  },
+  {
+    "environment_steps": 40,
+    "surge": 0.005512148141860962,
+    "reward": 0.11609607934951782,
+    "critic_prediction": -0.05551699548959732,
+    "boundary_value": null,
+    "episode_step": 40
+  },
+  {
+    "environment_steps": 41,
+    "surge": 0.01933392882347107,
+    "reward": 0.09934189915657043,
+    "critic_prediction": -0.055375222116708755,
+    "boundary_value": null,
+    "episode_step": 41
+  },
+  {
+    "environment_steps": 42,
+    "surge": 0.014405548572540283,
+    "reward": 0.08452429622411728,
+    "critic_prediction": -0.05512925237417221,
+    "boundary_value": null,
+    "episode_step": 42
+  },
+  {
+    "environment_steps": 43,
+    "surge": 0.05952572822570801,
+    "reward": 0.08057649433612823,
+    "critic_prediction": -0.05497727170586586,
+    "boundary_value": null,
+    "episode_step": 43
+  },
+  {
+    "environment_steps": 44,
+    "surge": 0.062316179275512695,
+    "reward": 0.08566735684871674,
+    "critic_prediction": -0.05502580106258392,
+    "boundary_value": null,
+    "episode_step": 44
+  },
+  {
+    "environment_steps": 45,
+    "surge": 0.03453826904296875,
+    "reward": 0.08785142004489899,
+    "critic_prediction": -0.05510654300451279,
+    "boundary_value": null,
+    "episode_step": 45
+  },
+  {
+    "environment_steps": 46,
+    "surge": 0.051574528217315674,
+    "reward": 0.0868147760629654,
+    "critic_prediction": -0.055084917694330215,
+    "boundary_value": null,
+    "episode_step": 46
+  },
+  {
+    "environment_steps": 47,
+    "surge": 0.0234622061252594,
+    "reward": 0.08509171009063721,
+    "critic_prediction": -0.0550919845700264,
+    "boundary_value": null,
+    "episode_step": 47
+  },
+  {
+    "environment_steps": 48,
+    "surge": 0.03632974624633789,
+    "reward": 0.0820416584610939,
+    "critic_prediction": -0.055035434663295746,
+    "boundary_value": null,
+    "episode_step": 48
+  },
+  {
+    "environment_steps": 49,
+    "surge": 0.21873977780342102,
+    "reward": 0.09774349629878998,
+    "critic_prediction": -0.055019259452819824,
+    "boundary_value": null,
+    "episode_step": 49
+  },
+  {
+    "environment_steps": 50,
+    "surge": 0.02426961064338684,
+    "reward": 0.1129310205578804,
+    "critic_prediction": -0.055488184094429016,
+    "boundary_value": null,
+    "episode_step": 50
+  },
+  {
+    "environment_steps": 51,
+    "surge": 0.04449072480201721,
+    "reward": 0.10090381652116776,
+    "critic_prediction": -0.05538045987486839,
+    "boundary_value": null,
+    "episode_step": 51
+  },
+  {
+    "environment_steps": 52,
+    "surge": 0.032360076904296875,
+    "reward": 0.09044183790683746,
+    "critic_prediction": -0.055216528475284576,
+    "boundary_value": null,
+    "episode_step": 52
+  },
+  {
+    "environment_steps": 53,
+    "surge": 0.03468337655067444,
+    "reward": 0.08409927785396576,
+    "critic_prediction": -0.05509902164340019,
+    "boundary_value": null,
+    "episode_step": 53
+  },
+  {
+    "environment_steps": 54,
+    "surge": 0.20698976516723633,
+    "reward": 0.09687507152557373,
+    "critic_prediction": -0.055046629160642624,
+    "boundary_value": null,
+    "episode_step": 54
+  },
+  {
+    "environment_steps": 55,
+    "surge": 0.05411654710769653,
+    "reward": 0.11303301900625229,
+    "critic_prediction": -0.05547074228525162,
+    "boundary_value": null,
+    "episode_step": 55
+  },
+  {
+    "environment_steps": 56,
+    "surge": 0.02709418535232544,
+    "reward": 0.10272293537855148,
+    "critic_prediction": -0.05544067919254303,
+    "boundary_value": null,
+    "episode_step": 56
+  },
+  {
+    "environment_steps": 57,
+    "surge": 0.040091484785079956,
+    "reward": 0.09024084359407425,
+    "critic_prediction": -0.055231060832738876,
+    "boundary_value": null,
+    "episode_step": 57
+  },
+  {
+    "environment_steps": 58,
+    "surge": 0.11905264854431152,
+    "reward": 0.09170781075954437,
+    "critic_prediction": -0.05511752516031265,
+    "boundary_value": null,
+    "episode_step": 58
+  },
+  {
+    "environment_steps": 59,
+    "surge": 0.06292328238487244,
+    "reward": 0.09891433268785477,
+    "critic_prediction": -0.05527983605861664,
+    "boundary_value": null,
+    "episode_step": 59
+  },
+  {
+    "environment_steps": 60,
+    "surge": 0.03241455554962158,
+    "reward": 0.09474362432956696,
+    "critic_prediction": -0.05529412999749184,
+    "boundary_value": null,
+    "episode_step": 60
+  },
+  {
+    "environment_steps": 61,
+    "surge": 0.0360584557056427,
+    "reward": 0.08718939870595932,
+    "critic_prediction": -0.05518142133951187,
+    "boundary_value": null,
+    "episode_step": 61
+  },
+  {
+    "environment_steps": 62,
+    "surge": 0.09221023321151733,
+    "reward": 0.08792567998170853,
+    "critic_prediction": -0.05510180443525314,
+    "boundary_value": null,
+    "episode_step": 62
+  },
+  {
+    "environment_steps": 63,
+    "surge": 0.09427133202552795,
+    "reward": 0.09633704274892807,
+    "critic_prediction": -0.05521070957183838,
+    "boundary_value": null,
+    "episode_step": 63
+  },
+  {
+    "environment_steps": 64,
+    "surge": 0.03791874647140503,
+    "reward": 0.09747014939785004,
+    "critic_prediction": -0.0553237684071064,
+    "boundary_value": null,
+    "episode_step": 64
+  },
+  {
+    "environment_steps": 65,
+    "surge": 0.1398904025554657,
+    "reward": 0.09937233477830887,
+    "critic_prediction": -0.05524168536067009,
+    "boundary_value": null,
+    "episode_step": 65
+  },
+  {
+    "environment_steps": 66,
+    "surge": 0.09844145178794861,
+    "reward": 0.10832137614488602,
+    "critic_prediction": -0.05540943518280983,
+    "boundary_value": null,
+    "episode_step": 66
+  },
+  {
+    "environment_steps": 67,
+    "surge": 0.09256568551063538,
+    "reward": 0.10927557945251465,
+    "critic_prediction": -0.05546855181455612,
+    "boundary_value": null,
+    "episode_step": 67
+  },
+  {
+    "environment_steps": 68,
+    "surge": 0.16608762741088867,
+    "reward": 0.11403217911720276,
+    "critic_prediction": -0.05545380339026451,
+    "boundary_value": null,
+    "episode_step": 68
+  },
+  {
+    "environment_steps": 69,
+    "surge": 0.0570540726184845,
+    "reward": 0.1158883348107338,
+    "critic_prediction": -0.05562153086066246,
+    "boundary_value": null,
+    "episode_step": 69
+  },
+  {
+    "environment_steps": 70,
+    "surge": 0.28229230642318726,
+    "reward": 0.12399478256702423,
+    "critic_prediction": -0.05548718199133873,
+    "boundary_value": null,
+    "episode_step": 70
+  },
+  {
+    "environment_steps": 71,
+    "surge": 0.13733068108558655,
+    "reward": 0.14183680713176727,
+    "critic_prediction": -0.055907052010297775,
+    "boundary_value": null,
+    "episode_step": 71
+  },
+  {
+    "environment_steps": 72,
+    "surge": 0.050610244274139404,
+    "reward": 0.12925313413143158,
+    "critic_prediction": -0.055926285684108734,
+    "boundary_value": null,
+    "episode_step": 72
+  },
+  {
+    "environment_steps": 73,
+    "surge": 0.06987422704696655,
+    "reward": 0.10851942002773285,
+    "critic_prediction": -0.055601246654987335,
+    "boundary_value": null,
+    "episode_step": 73
+  },
+  {
+    "environment_steps": 74,
+    "surge": 0.06184893846511841,
+    "reward": 0.09734900295734406,
+    "critic_prediction": -0.05539626628160477,
+    "boundary_value": null,
+    "episode_step": 74
+  },
+  {
+    "environment_steps": 75,
+    "surge": 0.022764265537261963,
+    "reward": 0.0886576697230339,
+    "critic_prediction": -0.055294737219810486,
+    "boundary_value": null,
+    "episode_step": 75
+  },
+  {
+    "environment_steps": 76,
+    "surge": 0.021826714277267456,
+    "reward": 0.07979471236467361,
+    "critic_prediction": -0.05515572428703308,
+    "boundary_value": null,
+    "episode_step": 76
+  },
+  {
+    "environment_steps": 77,
+    "surge": 0.1231924295425415,
+    "reward": 0.0838058590888977,
+    "critic_prediction": -0.05506151169538498,
+    "boundary_value": null,
+    "episode_step": 77
+  },
+  {
+    "environment_steps": 78,
+    "surge": 0.018377721309661865,
+    "reward": 0.09045276790857315,
+    "critic_prediction": -0.05527890473604202,
+    "boundary_value": null,
+    "episode_step": 78
+  },
+  {
+    "environment_steps": 79,
+    "surge": 0.19577357172966003,
+    "reward": 0.09845514595508575,
+    "critic_prediction": -0.055211763828992844,
+    "boundary_value": null,
+    "episode_step": 79
+  },
+  {
+    "environment_steps": 80,
+    "surge": 0.1950787901878357,
+    "reward": 0.12283116579055786,
+    "critic_prediction": -0.055549170821905136,
+    "boundary_value": null,
+    "episode_step": 80
+  },
+  {
+    "environment_steps": 81,
+    "surge": 0.10565546154975891,
+    "reward": 0.13108345866203308,
+    "critic_prediction": -0.05585354566574097,
+    "boundary_value": null,
+    "episode_step": 81
+  },
+  {
+    "environment_steps": 82,
+    "surge": 0.0996985137462616,
+    "reward": 0.12179913371801376,
+    "critic_prediction": -0.05578099936246872,
+    "boundary_value": null,
+    "episode_step": 82
+  },
+  {
+    "environment_steps": 83,
+    "surge": 0.029327809810638428,
+    "reward": 0.10664557665586472,
+    "critic_prediction": -0.05563836544752121,
+    "boundary_value": null,
+    "episode_step": 83
+  },
+  {
+    "environment_steps": 84,
+    "surge": 0.2949710488319397,
+    "reward": 0.11304819583892822,
+    "critic_prediction": -0.055371858179569244,
+    "boundary_value": null,
+    "episode_step": 84
+  },
+  {
+    "environment_steps": 85,
+    "surge": 0.053564488887786865,
+    "reward": 0.1288110911846161,
+    "critic_prediction": -0.055867649614810944,
+    "boundary_value": null,
+    "episode_step": 85
+  },
+  {
+    "environment_steps": 86,
+    "surge": 0.029483169317245483,
+    "reward": 0.10968180000782013,
+    "critic_prediction": -0.055726923048496246,
+    "boundary_value": null,
+    "episode_step": 86
+  },
+  {
+    "environment_steps": 87,
+    "surge": 0.05580267310142517,
+    "reward": 0.09226609766483307,
+    "critic_prediction": -0.05540653318166733,
+    "boundary_value": null,
+    "episode_step": 87
+  },
+  {
+    "environment_steps": 88,
+    "surge": 0.02479878067970276,
+    "reward": 0.08359880745410919,
+    "critic_prediction": -0.05527052283287048,
+    "boundary_value": null,
+    "episode_step": 88
+  },
+  {
+    "environment_steps": 89,
+    "surge": 0.07576104998588562,
+    "reward": 0.08149544149637222,
+    "critic_prediction": -0.05515913665294647,
+    "boundary_value": null,
+    "episode_step": 89
+  },
+  {
+    "environment_steps": 90,
+    "surge": 0.10792827606201172,
+    "reward": 0.09005345404148102,
+    "critic_prediction": -0.055224765092134476,
+    "boundary_value": null,
+    "episode_step": 90
+  },
+  {
+    "environment_steps": 91,
+    "surge": 0.02877861261367798,
+    "reward": 0.09323909133672714,
+    "critic_prediction": -0.0553889237344265,
+    "boundary_value": null,
+    "episode_step": 91
+  },
+  {
+    "environment_steps": 92,
+    "surge": 0.10874444246292114,
+    "reward": 0.09212548285722733,
+    "critic_prediction": -0.05530130863189697,
+    "boundary_value": null,
+    "episode_step": 92
+  },
+  {
+    "environment_steps": 93,
+    "surge": 0.012614965438842773,
+    "reward": 0.09121089428663254,
+    "critic_prediction": -0.055393535643815994,
+    "boundary_value": null,
+    "episode_step": 93
+  },
+  {
+    "environment_steps": 94,
+    "surge": 0.012593209743499756,
+    "reward": 0.08003419637680054,
+    "critic_prediction": -0.05525458976626396,
+    "boundary_value": null,
+    "episode_step": 94
+  },
+  {
+    "environment_steps": 95,
+    "surge": 0.029880017042160034,
+    "reward": 0.07357969880104065,
+    "critic_prediction": -0.05511212721467018,
+    "boundary_value": null,
+    "episode_step": 95
+  },
+  {
+    "environment_steps": 96,
+    "surge": 0.08441156148910522,
+    "reward": 0.07784370332956314,
+    "critic_prediction": -0.05508222058415413,
+    "boundary_value": null,
+    "episode_step": 96
+  },
+  {
+    "environment_steps": 97,
+    "surge": 0.10232183337211609,
+    "reward": 0.08982803672552109,
+    "critic_prediction": -0.05523088201880455,
+    "boundary_value": null,
+    "episode_step": 97
+  },
+  {
+    "environment_steps": 98,
+    "surge": 0.09776511788368225,
+    "reward": 0.09931109845638275,
+    "critic_prediction": -0.05540364980697632,
+    "boundary_value": null,
+    "episode_step": 98
+  },
+  {
+    "environment_steps": 99,
+    "surge": 0.02782154083251953,
+    "reward": 0.0972316786646843,
+    "critic_prediction": -0.05549445003271103,
+    "boundary_value": null,
+    "episode_step": 99
+  },
+  {
+    "environment_steps": 100,
+    "surge": 0.2107662558555603,
+    "reward": 0.10235830396413803,
+    "critic_prediction": -0.05535033345222473,
+    "boundary_value": null,
+    "episode_step": 100
+  },
+  {
+    "environment_steps": 101,
+    "surge": 0.01301458477973938,
+    "reward": 0.10949622094631195,
+    "critic_prediction": -0.055682167410850525,
+    "boundary_value": null,
+    "episode_step": 101
+  },
+  {
+    "environment_steps": 102,
+    "surge": 0.048783570528030396,
+    "reward": 0.09467148780822754,
+    "critic_prediction": -0.05549214407801628,
+    "boundary_value": null,
+    "episode_step": 102
+  },
+  {
+    "environment_steps": 103,
+    "surge": 0.018276125192642212,
+    "reward": 0.08375422656536102,
+    "critic_prediction": -0.05533228814601898,
+    "boundary_value": null,
+    "episode_step": 103
+  },
+  {
+    "environment_steps": 104,
+    "surge": 0.11771565675735474,
+    "reward": 0.08413249254226685,
+    "critic_prediction": -0.055189236998558044,
+    "boundary_value": null,
+    "episode_step": 104
+  },
+  {
+    "environment_steps": 105,
+    "surge": 0.03547981381416321,
+    "reward": 0.09020591527223587,
+    "critic_prediction": -0.05536095052957535,
+    "boundary_value": null,
+    "episode_step": 105
+  },
+  {
+    "environment_steps": 106,
+    "surge": 0.03204071521759033,
+    "reward": 0.08495675772428513,
+    "critic_prediction": -0.055326949805021286,
+    "boundary_value": null,
+    "episode_step": 106
+  },
+  {
+    "environment_steps": 107,
+    "surge": 0.017812460660934448,
+    "reward": 0.07830490171909332,
+    "critic_prediction": -0.05523975193500519,
+    "boundary_value": null,
+    "episode_step": 107
+  },
+  {
+    "environment_steps": 108,
+    "surge": 0.03648942708969116,
+    "reward": 0.07461576163768768,
+    "critic_prediction": -0.05514931306242943,
+    "boundary_value": null,
+    "episode_step": 108
+  },
+  {
+    "environment_steps": 109,
+    "surge": 0.1078062355518341,
+    "reward": 0.08159755915403366,
+    "critic_prediction": -0.05514497682452202,
+    "boundary_value": null,
+    "episode_step": 109
+  },
+  {
+    "environment_steps": 110,
+    "surge": 0.16267767548561096,
+    "reward": 0.10021606832742691,
+    "critic_prediction": -0.05534640699625015,
+    "boundary_value": null,
+    "episode_step": 110
+  },
+  {
+    "environment_steps": 111,
+    "surge": 0.07455259561538696,
+    "reward": 0.11073360592126846,
+    "critic_prediction": -0.05565176159143448,
+    "boundary_value": null,
+    "episode_step": 111
+  },
+  {
+    "environment_steps": 112,
+    "surge": 0.060178011655807495,
+    "reward": 0.10367631912231445,
+    "critic_prediction": -0.05562408268451691,
+    "boundary_value": null,
+    "episode_step": 112
+  },
+  {
+    "environment_steps": 113,
+    "surge": 0.0581364631652832,
+    "reward": 0.09481007605791092,
+    "critic_prediction": -0.05549043044447899,
+    "boundary_value": null,
+    "episode_step": 113
+  },
+  {
+    "environment_steps": 114,
+    "surge": 0.08008921146392822,
+    "reward": 0.09147495776414871,
+    "critic_prediction": -0.055394530296325684,
+    "boundary_value": null,
+    "episode_step": 114
+  },
+  {
+    "environment_steps": 115,
+    "surge": 0.0586395263671875,
+    "reward": 0.09120064228773117,
+    "critic_prediction": -0.05540643632411957,
+    "boundary_value": null,
+    "episode_step": 115
+  },
+  {
+    "environment_steps": 116,
+    "surge": 0.04196751117706299,
+    "reward": 0.08765549212694168,
+    "critic_prediction": -0.05538356304168701,
+    "boundary_value": null,
+    "episode_step": 116
+  },
+  {
+    "environment_steps": 117,
+    "surge": 0.07333037257194519,
+    "reward": 0.0859881266951561,
+    "critic_prediction": -0.05531681329011917,
+    "boundary_value": null,
+    "episode_step": 117
+  },
+  {
+    "environment_steps": 118,
+    "surge": 0.00965467095375061,
+    "reward": 0.08331628143787384,
+    "critic_prediction": -0.05535028129816055,
+    "boundary_value": null,
+    "episode_step": 118
+  },
+  {
+    "environment_steps": 119,
+    "surge": 0.09218412637710571,
+    "reward": 0.08184458315372467,
+    "critic_prediction": -0.05523298680782318,
+    "boundary_value": null,
+    "episode_step": 119
+  },
+  {
+    "environment_steps": 120,
+    "surge": 0.06447461247444153,
+    "reward": 0.08805619180202484,
+    "critic_prediction": -0.05533713102340698,
+    "boundary_value": null,
+    "episode_step": 120
+  },
+  {
+    "environment_steps": 121,
+    "surge": 0.030075550079345703,
+    "reward": 0.08670298010110855,
+    "critic_prediction": -0.05538645386695862,
+    "boundary_value": null,
+    "episode_step": 121
+  },
+  {
+    "environment_steps": 122,
+    "surge": 0.0948256254196167,
+    "reward": 0.08637385070323944,
+    "critic_prediction": -0.05530686303973198,
+    "boundary_value": null,
+    "episode_step": 122
+  },
+  {
+    "environment_steps": 123,
+    "surge": 0.05026465654373169,
+    "reward": 0.08975086361169815,
+    "critic_prediction": -0.05539946258068085,
+    "boundary_value": null,
+    "episode_step": 123
+  },
+  {
+    "environment_steps": 124,
+    "surge": 0.07414951920509338,
+    "reward": 0.08938105404376984,
+    "critic_prediction": -0.05538538470864296,
+    "boundary_value": null,
+    "episode_step": 124
+  },
+  {
+    "environment_steps": 125,
+    "surge": 0.014401525259017944,
+    "reward": 0.08580537885427475,
+    "critic_prediction": -0.055407509207725525,
+    "boundary_value": null,
+    "episode_step": 125
+  },
+  {
+    "environment_steps": 126,
+    "surge": 0.024926751852035522,
+    "reward": 0.07753753662109375,
+    "critic_prediction": -0.055281586945056915,
+    "boundary_value": null,
+    "episode_step": 126
+  },
+  {
+    "environment_steps": 127,
+    "surge": 0.10059916973114014,
+    "reward": 0.08007586002349854,
+    "critic_prediction": -0.055198702961206436,
+    "boundary_value": null,
+    "episode_step": 127
+  },
+  {
+    "environment_steps": 128,
+    "surge": 0.04763448238372803,
+    "reward": 0.08728251606225967,
+    "critic_prediction": -0.05536036565899849,
+    "boundary_value": null,
+    "episode_step": 128
+  },
+  {
+    "environment_steps": 129,
+    "surge": 0.09641405940055847,
+    "reward": 0.09036185592412949,
+    "critic_prediction": -0.05537617206573486,
+    "boundary_value": null,
+    "episode_step": 129
+  },
+  {
+    "environment_steps": 130,
+    "surge": 0.00656011700630188,
+    "reward": 0.08871334046125412,
+    "critic_prediction": -0.0554685965180397,
+    "boundary_value": null,
+    "episode_step": 130
+  },
+  {
+    "environment_steps": 131,
+    "surge": 0.01406964659690857,
+    "reward": 0.07757802307605743,
+    "critic_prediction": -0.05531785637140274,
+    "boundary_value": null,
+    "episode_step": 131
+  },
+  {
+    "environment_steps": 132,
+    "surge": 0.028464317321777344,
+    "reward": 0.0719030424952507,
+    "critic_prediction": -0.05518851429224014,
+    "boundary_value": null,
+    "episode_step": 132
+  },
+  {
+    "environment_steps": 133,
+    "surge": 0.020507484674453735,
+    "reward": 0.07083046436309814,
+    "critic_prediction": -0.05516438186168671,
+    "boundary_value": null,
+    "episode_step": 133
+  },
+  {
+    "environment_steps": 134,
+    "surge": 0.17030033469200134,
+    "reward": 0.08345198631286621,
+    "critic_prediction": -0.05515369772911072,
+    "boundary_value": null,
+    "episode_step": 134
+  },
+  {
+    "environment_steps": 135,
+    "surge": 0.049153149127960205,
+    "reward": 0.09885775297880173,
+    "critic_prediction": -0.05553175136446953,
+    "boundary_value": null,
+    "episode_step": 135
+  },
+  {
+    "environment_steps": 136,
+    "surge": 0.1244727373123169,
+    "reward": 0.1007428839802742,
+    "critic_prediction": -0.05553606152534485,
+    "boundary_value": null,
+    "episode_step": 136
+  },
+  {
+    "environment_steps": 137,
+    "surge": 0.06580883264541626,
+    "reward": 0.10242322832345963,
+    "critic_prediction": -0.05563035234808922,
+    "boundary_value": null,
+    "episode_step": 137
+  },
+  {
+    "environment_steps": 138,
+    "surge": 0.05594322085380554,
+    "reward": 0.09593675285577774,
+    "critic_prediction": -0.055572137236595154,
+    "boundary_value": null,
+    "episode_step": 138
+  },
+  {
+    "environment_steps": 139,
+    "surge": 0.07866522669792175,
+    "reward": 0.09172499179840088,
+    "critic_prediction": -0.055472247302532196,
+    "boundary_value": null,
+    "episode_step": 139
+  },
+  {
+    "environment_steps": 140,
+    "surge": 0.14122116565704346,
+    "reward": 0.09796718508005142,
+    "critic_prediction": -0.05546887218952179,
+    "boundary_value": null,
+    "episode_step": 140
+  },
+  {
+    "environment_steps": 141,
+    "surge": 0.2071545124053955,
+    "reward": 0.11606728285551071,
+    "critic_prediction": -0.055651504546403885,
+    "boundary_value": null,
+    "episode_step": 141
+  },
+  {
+    "environment_steps": 142,
+    "surge": 0.018397271633148193,
+    "reward": 0.11858849972486496,
+    "critic_prediction": -0.055969152599573135,
+    "boundary_value": null,
+    "episode_step": 142
+  },
+  {
+    "environment_steps": 143,
+    "surge": 0.029899537563323975,
+    "reward": 0.09676501899957657,
+    "critic_prediction": -0.055698562413454056,
+    "boundary_value": null,
+    "episode_step": 143
+  },
+  {
+    "environment_steps": 144,
+    "surge": 0.03018099069595337,
+    "reward": 0.08174783736467361,
+    "critic_prediction": -0.05542720854282379,
+    "boundary_value": null,
+    "episode_step": 144
+  },
+  {
+    "environment_steps": 145,
+    "surge": 0.056012481451034546,
+    "reward": 0.07733200490474701,
+    "critic_prediction": -0.05529044568538666,
+    "boundary_value": null,
+    "episode_step": 145
+  },
+  {
+    "environment_steps": 146,
+    "surge": 0.049384862184524536,
+    "reward": 0.07909441739320755,
+    "critic_prediction": -0.05530653893947601,
+    "boundary_value": null,
+    "episode_step": 146
+  },
+  {
+    "environment_steps": 147,
+    "surge": 0.02075311541557312,
+    "reward": 0.07782779633998871,
+    "critic_prediction": -0.055332109332084656,
+    "boundary_value": null,
+    "episode_step": 147
+  },
+  {
+    "environment_steps": 148,
+    "surge": 0.019303053617477417,
+    "reward": 0.07320744544267654,
+    "critic_prediction": -0.05527238920331001,
+    "boundary_value": null,
+    "episode_step": 148
+  },
+  {
+    "environment_steps": 149,
+    "surge": 0.32272350788116455,
+    "reward": 0.09686443954706192,
+    "critic_prediction": -0.05521479994058609,
+    "boundary_value": null,
+    "episode_step": 149
+  },
+  {
+    "environment_steps": 150,
+    "surge": 0.04610699415206909,
+    "reward": 0.12444378435611725,
+    "critic_prediction": -0.05596291646361351,
+    "boundary_value": null,
+    "episode_step": 150
+  },
+  {
+    "environment_steps": 151,
+    "surge": 0.15192663669586182,
+    "reward": 0.11828681826591492,
+    "critic_prediction": -0.05588390305638313,
+    "boundary_value": null,
+    "episode_step": 151
+  },
+  {
+    "environment_steps": 152,
+    "surge": 0.028187841176986694,
+    "reward": 0.10942233353853226,
+    "critic_prediction": -0.05588601529598236,
+    "boundary_value": null,
+    "episode_step": 152
+  },
+  {
+    "environment_steps": 153,
+    "surge": 0.06419873237609863,
+    "reward": 0.09367462992668152,
+    "critic_prediction": -0.055622536689043045,
+    "boundary_value": null,
+    "episode_step": 153
+  },
+  {
+    "environment_steps": 154,
+    "surge": 0.05943894386291504,
+    "reward": 0.08734270185232162,
+    "critic_prediction": -0.05549110099673271,
+    "boundary_value": null,
+    "episode_step": 154
+  },
+  {
+    "environment_steps": 155,
+    "surge": 0.026840299367904663,
+    "reward": 0.08223631978034973,
+    "critic_prediction": -0.05544445663690567,
+    "boundary_value": null,
+    "episode_step": 155
+  },
+  {
+    "environment_steps": 156,
+    "surge": 0.06812041997909546,
+    "reward": 0.07957633584737778,
+    "critic_prediction": -0.05534882843494415,
+    "boundary_value": null,
+    "episode_step": 156
+  },
+  {
+    "environment_steps": 157,
+    "surge": 0.04785868525505066,
+    "reward": 0.08139906078577042,
+    "critic_prediction": -0.05538604408502579,
+    "boundary_value": null,
+    "episode_step": 157
+  },
+  {
+    "environment_steps": 158,
+    "surge": 0.07604086399078369,
+    "reward": 0.0834408700466156,
+    "critic_prediction": -0.055390484631061554,
+    "boundary_value": null,
+    "episode_step": 158
+  },
+  {
+    "environment_steps": 159,
+    "surge": 0.0038590431213378906,
+    "reward": 0.0813114196062088,
+    "critic_prediction": -0.055453766137361526,
+    "boundary_value": null,
+    "episode_step": 159
+  },
+  {
+    "environment_steps": 160,
+    "surge": 0.05142754316329956,
+    "reward": 0.07552830129861832,
+    "critic_prediction": -0.05532265082001686,
+    "boundary_value": null,
+    "episode_step": 160
+  },
+  {
+    "environment_steps": 161,
+    "surge": 0.054492294788360596,
+    "reward": 0.07734747231006622,
+    "critic_prediction": -0.05532040074467659,
+    "boundary_value": null,
+    "episode_step": 161
+  },
+  {
+    "environment_steps": 162,
+    "surge": 0.0623532235622406,
+    "reward": 0.0808381661772728,
+    "critic_prediction": -0.055365484207868576,
+    "boundary_value": null,
+    "episode_step": 162
+  },
+  {
+    "environment_steps": 163,
+    "surge": 0.016685545444488525,
+    "reward": 0.0798141285777092,
+    "critic_prediction": -0.055418841540813446,
+    "boundary_value": null,
+    "episode_step": 163
+  },
+  {
+    "environment_steps": 164,
+    "surge": 0.07688042521476746,
+    "reward": 0.07864516228437424,
+    "critic_prediction": -0.05533513426780701,
+    "boundary_value": null,
+    "episode_step": 164
+  },
+  {
+    "environment_steps": 165,
+    "surge": 0.09018149971961975,
+    "reward": 0.08594775199890137,
+    "critic_prediction": -0.05540863424539566,
+    "boundary_value": null,
+    "episode_step": 165
+  },
+  {
+    "environment_steps": 166,
+    "surge": 0.01945316791534424,
+    "reward": 0.0867103636264801,
+    "critic_prediction": -0.05552873760461807,
+    "boundary_value": null,
+    "episode_step": 166
+  },
+  {
+    "environment_steps": 167,
+    "surge": 0.009878218173980713,
+    "reward": 0.07705488801002502,
+    "critic_prediction": -0.05542365461587906,
+    "boundary_value": null,
+    "episode_step": 167
+  },
+  {
+    "environment_steps": 168,
+    "surge": 0.06316697597503662,
+    "reward": 0.07358111441135406,
+    "critic_prediction": -0.05528432875871658,
+    "boundary_value": null,
+    "episode_step": 168
+  },
+  {
+    "environment_steps": 169,
+    "surge": 0.056217849254608154,
+    "reward": 0.07828466594219208,
+    "critic_prediction": -0.05533989146351814,
+    "boundary_value": null,
+    "episode_step": 169
+  },
+  {
+    "environment_steps": 170,
+    "surge": 0.05485484004020691,
+    "reward": 0.08140397071838379,
+    "critic_prediction": -0.055401768535375595,
+    "boundary_value": null,
+    "episode_step": 170
+  },
+  {
+    "environment_steps": 171,
+    "surge": 0.03720498085021973,
+    "reward": 0.08101828396320343,
+    "critic_prediction": -0.05543022230267525,
+    "boundary_value": null,
+    "episode_step": 171
+  },
+  {
+    "environment_steps": 172,
+    "surge": 0.04638203978538513,
+    "reward": 0.07901698350906372,
+    "critic_prediction": -0.05539531260728836,
+    "boundary_value": null,
+    "episode_step": 172
+  },
+  {
+    "environment_steps": 173,
+    "surge": 0.024298936128616333,
+    "reward": 0.07672571390867233,
+    "critic_prediction": -0.055385198444128036,
+    "boundary_value": null,
+    "episode_step": 173
+  },
+  {
+    "environment_steps": 174,
+    "surge": 0.06248068809509277,
+    "reward": 0.07635116577148438,
+    "critic_prediction": -0.05533140152692795,
+    "boundary_value": null,
+    "episode_step": 174
+  },
+  {
+    "environment_steps": 175,
+    "surge": 0.09024783968925476,
+    "reward": 0.08323942124843597,
+    "critic_prediction": -0.05538708716630936,
+    "boundary_value": null,
+    "episode_step": 175
+  },
+  {
+    "environment_steps": 176,
+    "surge": 0.024944692850112915,
+    "reward": 0.0856318548321724,
+    "critic_prediction": -0.05551931634545326,
+    "boundary_value": null,
+    "episode_step": 176
+  },
+  {
+    "environment_steps": 177,
+    "surge": 0.03422406315803528,
+    "reward": 0.07953263074159622,
+    "critic_prediction": -0.055444326251745224,
+    "boundary_value": null,
+    "episode_step": 177
+  },
+  {
+    "environment_steps": 178,
+    "surge": 0.10535323619842529,
+    "reward": 0.08201383799314499,
+    "critic_prediction": -0.05537372827529907,
+    "boundary_value": null,
+    "episode_step": 178
+  },
+  {
+    "environment_steps": 179,
+    "surge": 0.030011773109436035,
+    "reward": 0.08629988133907318,
+    "critic_prediction": -0.05552398040890694,
+    "boundary_value": null,
+    "episode_step": 179
+  },
+  {
+    "environment_steps": 180,
+    "surge": 0.013365626335144043,
+    "reward": 0.07895203679800034,
+    "critic_prediction": -0.05547075718641281,
+    "boundary_value": null,
+    "episode_step": 180
+  },
+  {
+    "environment_steps": 181,
+    "surge": 0.2207675278186798,
+    "reward": 0.08928686380386353,
+    "critic_prediction": -0.05534203723073006,
+    "boundary_value": null,
+    "episode_step": 181
+  },
+  {
+    "environment_steps": 182,
+    "surge": 0.04004305601119995,
+    "reward": 0.10546674579381943,
+    "critic_prediction": -0.05578941851854324,
+    "boundary_value": null,
+    "episode_step": 182
+  },
+  {
+    "environment_steps": 183,
+    "surge": 0.10065287351608276,
+    "reward": 0.1002817302942276,
+    "critic_prediction": -0.05572682246565819,
+    "boundary_value": null,
+    "episode_step": 183
+  },
+  {
+    "environment_steps": 184,
+    "surge": 0.08086082339286804,
+    "reward": 0.09840226918458939,
+    "critic_prediction": -0.055705513805150986,
+    "boundary_value": null,
+    "episode_step": 184
+  },
+  {
+    "environment_steps": 185,
+    "surge": 0.05475926399230957,
+    "reward": 0.09360581636428833,
+    "critic_prediction": -0.05567313730716705,
+    "boundary_value": null,
+    "episode_step": 185
+  },
+  {
+    "environment_steps": 186,
+    "surge": 0.03596356511116028,
+    "reward": 0.08574676513671875,
+    "critic_prediction": -0.05558110028505325,
+    "boundary_value": null,
+    "episode_step": 186
+  },
+  {
+    "environment_steps": 187,
+    "surge": 0.016965776681900024,
+    "reward": 0.07709261775016785,
+    "critic_prediction": -0.055466700345277786,
+    "boundary_value": null,
+    "episode_step": 187
+  },
+  {
+    "environment_steps": 188,
+    "surge": 0.009382277727127075,
+    "reward": 0.06943733245134354,
+    "critic_prediction": -0.05534844100475311,
+    "boundary_value": null,
+    "episode_step": 188
+  },
+  {
+    "environment_steps": 189,
+    "surge": 0.051618605852127075,
+    "reward": 0.06835755705833435,
+    "critic_prediction": -0.055260226130485535,
+    "boundary_value": null,
+    "episode_step": 189
+  },
+  {
+    "environment_steps": 190,
+    "surge": 0.039177119731903076,
+    "reward": 0.07262259721755981,
+    "critic_prediction": -0.055324941873550415,
+    "boundary_value": null,
+    "episode_step": 190
+  },
+  {
+    "environment_steps": 191,
+    "surge": 0.018530428409576416,
+    "reward": 0.07267659157514572,
+    "critic_prediction": -0.05536707118153572,
+    "boundary_value": null,
+    "episode_step": 191
+  },
+  {
+    "environment_steps": 192,
+    "surge": 0.0871627926826477,
+    "reward": 0.07567498087882996,
+    "critic_prediction": -0.05532921105623245,
+    "boundary_value": null,
+    "episode_step": 192
+  },
+  {
+    "environment_steps": 193,
+    "surge": 0.05475682020187378,
+    "reward": 0.08272095024585724,
+    "critic_prediction": -0.055466413497924805,
+    "boundary_value": null,
+    "episode_step": 193
+  },
+  {
+    "environment_steps": 194,
+    "surge": 0.02968159317970276,
+    "reward": 0.08142982423305511,
+    "critic_prediction": -0.055508509278297424,
+    "boundary_value": null,
+    "episode_step": 194
+  },
+  {
+    "environment_steps": 195,
+    "surge": 0.02218213677406311,
+    "reward": 0.07566188275814056,
+    "critic_prediction": -0.055440694093704224,
+    "boundary_value": null,
+    "episode_step": 195
+  },
+  {
+    "environment_steps": 196,
+    "surge": 0.0859602689743042,
+    "reward": 0.07658297568559647,
+    "critic_prediction": -0.055360615253448486,
+    "boundary_value": null,
+    "episode_step": 196
+  },
+  {
+    "environment_steps": 197,
+    "surge": 0.03373023867607117,
+    "reward": 0.08086241781711578,
+    "critic_prediction": -0.05547831207513809,
+    "boundary_value": null,
+    "episode_step": 197
+  },
+  {
+    "environment_steps": 198,
+    "surge": 0.0425584614276886,
+    "reward": 0.07867804914712906,
+    "critic_prediction": -0.05546090751886368,
+    "boundary_value": null,
+    "episode_step": 198
+  },
+  {
+    "environment_steps": 199,
+    "surge": 0.04077720642089844,
+    "reward": 0.07708016782999039,
+    "critic_prediction": -0.05543530359864235,
+    "boundary_value": null,
+    "episode_step": 199
+  },
+  {
+    "environment_steps": 200,
+    "surge": 0.042497217655181885,
+    "reward": 0.0763302892446518,
+    "critic_prediction": -0.055420149117708206,
+    "boundary_value": null,
+    "episode_step": 200
+  },
+  {
+    "environment_steps": 201,
+    "surge": 0.01398417353630066,
+    "reward": 0.07372629642486572,
+    "critic_prediction": -0.055418338626623154,
+    "boundary_value": null,
+    "episode_step": 201
+  },
+  {
+    "environment_steps": 202,
+    "surge": 0.109660804271698,
+    "reward": 0.0772470161318779,
+    "critic_prediction": -0.05534778907895088,
+    "boundary_value": null,
+    "episode_step": 202
+  },
+  {
+    "environment_steps": 203,
+    "surge": 0.032504916191101074,
+    "reward": 0.08417994529008865,
+    "critic_prediction": -0.05553591996431351,
+    "boundary_value": null,
+    "episode_step": 203
+  },
+  {
+    "environment_steps": 204,
+    "surge": 0.02842995524406433,
+    "reward": 0.07952135056257248,
+    "critic_prediction": -0.05551263689994812,
+    "boundary_value": null,
+    "episode_step": 204
+  },
+  {
+    "environment_steps": 205,
+    "surge": 0.12901213765144348,
+    "reward": 0.08324681222438812,
+    "critic_prediction": -0.05542990192770958,
+    "boundary_value": null,
+    "episode_step": 205
+  },
+  {
+    "environment_steps": 206,
+    "surge": 0.01337897777557373,
+    "reward": 0.08792641013860703,
+    "critic_prediction": -0.05563472956418991,
+    "boundary_value": null,
+    "episode_step": 206
+  },
+  {
+    "environment_steps": 207,
+    "surge": 0.06673678755760193,
+    "reward": 0.08232207596302032,
+    "critic_prediction": -0.05552765727043152,
+    "boundary_value": null,
+    "episode_step": 207
+  },
+  {
+    "environment_steps": 208,
+    "surge": 0.056077420711517334,
+    "reward": 0.08234870433807373,
+    "critic_prediction": -0.05551864206790924,
+    "boundary_value": null,
+    "episode_step": 208
+  },
+  {
+    "environment_steps": 209,
+    "surge": 0.13475969433784485,
+    "reward": 0.0892639309167862,
+    "critic_prediction": -0.05552210286259651,
+    "boundary_value": null,
+    "episode_step": 209
+  },
+  {
+    "environment_steps": 210,
+    "surge": 0.048679858446121216,
+    "reward": 0.09537726640701294,
+    "critic_prediction": -0.05572464317083359,
+    "boundary_value": null,
+    "episode_step": 210
+  },
+  {
+    "environment_steps": 211,
+    "surge": 0.17759469151496887,
+    "reward": 0.1002432256937027,
+    "critic_prediction": -0.05567062646150589,
+    "boundary_value": null,
+    "episode_step": 211
+  },
+  {
+    "environment_steps": 212,
+    "surge": 0.0329340398311615,
+    "reward": 0.10420326143503189,
+    "critic_prediction": -0.05590292811393738,
+    "boundary_value": null,
+    "episode_step": 212
+  },
+  {
+    "environment_steps": 213,
+    "surge": 0.30456727743148804,
+    "reward": 0.11401980370283127,
+    "critic_prediction": -0.05574605241417885,
+    "boundary_value": null,
+    "episode_step": 213
+  },
+  {
+    "environment_steps": 214,
+    "surge": 0.043394893407821655,
+    "reward": 0.12758669257164001,
+    "critic_prediction": -0.05624891817569733,
+    "boundary_value": null,
+    "episode_step": 214
+  },
+  {
+    "environment_steps": 215,
+    "surge": 0.019974052906036377,
+    "reward": 0.10418671369552612,
+    "critic_prediction": -0.0560450404882431,
+    "boundary_value": null,
+    "episode_step": 215
+  },
+  {
+    "environment_steps": 216,
+    "surge": 0.060146450996398926,
+    "reward": 0.08536233752965927,
+    "critic_prediction": -0.05567400902509689,
+    "boundary_value": null,
+    "episode_step": 216
+  },
+  {
+    "environment_steps": 217,
+    "surge": 0.020799338817596436,
+    "reward": 0.07724906504154205,
+    "critic_prediction": -0.05554885417222977,
+    "boundary_value": null,
+    "episode_step": 217
+  },
+  {
+    "environment_steps": 218,
+    "surge": 0.06700137257575989,
+    "reward": 0.07439618557691574,
+    "critic_prediction": -0.05543557554483414,
+    "boundary_value": null,
+    "episode_step": 218
+  },
+  {
+    "environment_steps": 219,
+    "surge": 0.08221030235290527,
+    "reward": 0.08022566884756088,
+    "critic_prediction": -0.05548304691910744,
+    "boundary_value": null,
+    "episode_step": 219
+  },
+  {
+    "environment_steps": 220,
+    "surge": 0.019049108028411865,
+    "reward": 0.08107419312000275,
+    "critic_prediction": -0.05558991804718971,
+    "boundary_value": null,
+    "episode_step": 220
+  },
+  {
+    "environment_steps": 221,
+    "surge": 0.10627639293670654,
+    "reward": 0.08120028674602509,
+    "critic_prediction": -0.055499814450740814,
+    "boundary_value": null,
+    "episode_step": 221
+  },
+  {
+    "environment_steps": 222,
+    "surge": 0.015070945024490356,
+    "reward": 0.08286143094301224,
+    "critic_prediction": -0.05562405660748482,
+    "boundary_value": null,
+    "episode_step": 222
+  },
+  {
+    "environment_steps": 223,
+    "surge": 0.03157040476799011,
+    "reward": 0.07530783861875534,
+    "critic_prediction": -0.05552136152982712,
+    "boundary_value": null,
+    "episode_step": 223
+  },
+  {
+    "environment_steps": 224,
+    "surge": 0.22087356448173523,
+    "reward": 0.08809376507997513,
+    "critic_prediction": -0.055442385375499725,
+    "boundary_value": null,
+    "episode_step": 224
+  },
+  {
+    "environment_steps": 225,
+    "surge": 0.01285591721534729,
+    "reward": 0.10164760053157806,
+    "critic_prediction": -0.05589781329035759,
+    "boundary_value": null,
+    "episode_step": 225
+  },
+  {
+    "environment_steps": 226,
+    "surge": 0.0389343798160553,
+    "reward": 0.08796631544828415,
+    "critic_prediction": -0.055755943059921265,
+    "boundary_value": null,
+    "episode_step": 226
+  },
+  {
+    "environment_steps": 227,
+    "surge": 0.01730307936668396,
+    "reward": 0.07642371207475662,
+    "critic_prediction": -0.05558105930685997,
+    "boundary_value": null,
+    "episode_step": 227
+  },
+  {
+    "environment_steps": 228,
+    "surge": 0.047470152378082275,
+    "reward": 0.07103334367275238,
+    "critic_prediction": -0.055439241230487823,
+    "boundary_value": null,
+    "episode_step": 228
+  },
+  {
+    "environment_steps": 229,
+    "surge": 0.27579283714294434,
+    "reward": 0.09280812740325928,
+    "critic_prediction": -0.055440232157707214,
+    "boundary_value": null,
+    "episode_step": 229
+  },
+  {
+    "environment_steps": 230,
+    "surge": 0.011946290731430054,
+    "reward": 0.11178495734930038,
+    "critic_prediction": -0.05606134980916977,
+    "boundary_value": null,
+    "episode_step": 230
+  },
+  {
+    "environment_steps": 231,
+    "surge": 0.06368580460548401,
+    "reward": 0.09635504335165024,
+    "critic_prediction": -0.05589066073298454,
+    "boundary_value": null,
+    "episode_step": 231
+  },
+  {
+    "environment_steps": 232,
+    "surge": 0.04639992117881775,
+    "reward": 0.08580156415700912,
+    "critic_prediction": -0.0557161420583725,
+    "boundary_value": null,
+    "episode_step": 232
+  },
+  {
+    "environment_steps": 233,
+    "surge": 0.04014047980308533,
+    "reward": 0.07875382900238037,
+    "critic_prediction": -0.055599600076675415,
+    "boundary_value": null,
+    "episode_step": 233
+  },
+  {
+    "environment_steps": 234,
+    "surge": 0.16044938564300537,
+    "reward": 0.08542216569185257,
+    "critic_prediction": -0.05552580952644348,
+    "boundary_value": null,
+    "episode_step": 234
+  },
+  {
+    "environment_steps": 235,
+    "surge": 0.08197009563446045,
+    "reward": 0.09804687649011612,
+    "critic_prediction": -0.05580143257975578,
+    "boundary_value": null,
+    "episode_step": 235
+  },
+  {
+    "environment_steps": 236,
+    "surge": 0.035690754652023315,
+    "reward": 0.09297765046358109,
+    "critic_prediction": -0.05584388226270676,
+    "boundary_value": null,
+    "episode_step": 236
+  },
+  {
+    "environment_steps": 237,
+    "surge": 0.015112310647964478,
+    "reward": 0.07983909547328949,
+    "critic_prediction": -0.05568370595574379,
+    "boundary_value": null,
+    "episode_step": 237
+  },
+  {
+    "environment_steps": 238,
+    "surge": 0.0480484664440155,
+    "reward": 0.07195258885622025,
+    "critic_prediction": -0.05549968034029007,
+    "boundary_value": null,
+    "episode_step": 238
+  },
+  {
+    "environment_steps": 239,
+    "surge": 0.06679868698120117,
+    "reward": 0.07403606921434402,
+    "critic_prediction": -0.05547735467553139,
+    "boundary_value": null,
+    "episode_step": 239
+  },
+  {
+    "environment_steps": 240,
+    "surge": 0.04137274622917175,
+    "reward": 0.07681307196617126,
+    "critic_prediction": -0.055551882833242416,
+    "boundary_value": null,
+    "episode_step": 240
+  },
+  {
+    "environment_steps": 241,
+    "surge": 0.052691638469696045,
+    "reward": 0.07652947306632996,
+    "critic_prediction": -0.055548641830682755,
+    "boundary_value": null,
+    "episode_step": 241
+  },
+  {
+    "environment_steps": 242,
+    "surge": 0.007891237735748291,
+    "reward": 0.07311198860406876,
+    "critic_prediction": -0.05555585026741028,
+    "boundary_value": null,
+    "episode_step": 242
+  },
+  {
+    "environment_steps": 243,
+    "surge": 0.08880141377449036,
+    "reward": 0.07287261635065079,
+    "critic_prediction": -0.05545143038034439,
+    "boundary_value": null,
+    "episode_step": 243
+  },
+  {
+    "environment_steps": 244,
+    "surge": 0.011087208986282349,
+    "reward": 0.07553433626890182,
+    "critic_prediction": -0.05557181313633919,
+    "boundary_value": null,
+    "episode_step": 244
+  },
+  {
+    "environment_steps": 245,
+    "surge": 0.1659637689590454,
+    "reward": 0.0825357511639595,
+    "critic_prediction": -0.055500827729701996,
+    "boundary_value": null,
+    "episode_step": 245
+  },
+  {
+    "environment_steps": 246,
+    "surge": 0.05456063151359558,
+    "reward": 0.09457393735647202,
+    "critic_prediction": -0.05580448359251022,
+    "boundary_value": null,
+    "episode_step": 246
+  },
+  {
+    "environment_steps": 247,
+    "surge": 0.0361943244934082,
+    "reward": 0.08790713548660278,
+    "critic_prediction": -0.05579354241490364,
+    "boundary_value": null,
+    "episode_step": 247
+  },
+  {
+    "environment_steps": 248,
+    "surge": 0.03380897641181946,
+    "reward": 0.07845213264226913,
+    "critic_prediction": -0.055652230978012085,
+    "boundary_value": null,
+    "episode_step": 248
+  },
+  {
+    "environment_steps": 249,
+    "surge": 0.04896515607833862,
+    "reward": 0.07402092963457108,
+    "critic_prediction": -0.055546052753925323,
+    "boundary_value": null,
+    "episode_step": 249
+  },
+  {
+    "environment_steps": 250,
+    "surge": 0.018078535795211792,
+    "reward": 0.07149451971054077,
+    "critic_prediction": -0.055534638464450836,
+    "boundary_value": null,
+    "episode_step": 250
+  },
+  {
+    "environment_steps": 251,
+    "surge": 0.03311920166015625,
+    "reward": 0.0682990774512291,
+    "critic_prediction": -0.055470407009124756,
+    "boundary_value": null,
+    "episode_step": 251
+  },
+  {
+    "environment_steps": 252,
+    "surge": 0.005775958299636841,
+    "reward": 0.06569182872772217,
+    "critic_prediction": -0.055456794798374176,
+    "boundary_value": null,
+    "episode_step": 252
+  },
+  {
+    "environment_steps": 253,
+    "surge": 0.023884892463684082,
+    "reward": 0.0629601702094078,
+    "critic_prediction": -0.05539366230368614,
+    "boundary_value": null,
+    "episode_step": 253
+  },
+  {
+    "environment_steps": 254,
+    "surge": 0.00818529725074768,
+    "reward": 0.06210935860872269,
+    "critic_prediction": -0.055390290915966034,
+    "boundary_value": null,
+    "episode_step": 254
+  },
+  {
+    "environment_steps": 255,
+    "surge": 0.060179173946380615,
+    "reward": 0.06488818675279617,
+    "critic_prediction": -0.05536497011780739,
+    "boundary_value": null,
+    "episode_step": 255
+  },
+  {
+    "environment_steps": 256,
+    "surge": 0.1453840434551239,
+    "reward": 0.08046238124370575,
+    "critic_prediction": -0.05547698587179184,
+    "boundary_value": null,
+    "episode_step": 256
+  },
+  {
+    "environment_steps": 257,
+    "surge": 0.08166378736495972,
+    "reward": 0.09517985582351685,
+    "critic_prediction": -0.0557960569858551,
+    "boundary_value": null,
+    "episode_step": 257
+  },
+  {
+    "environment_steps": 258,
+    "surge": 0.005682051181793213,
+    "reward": 0.08902205526828766,
+    "critic_prediction": -0.05586414039134979,
+    "boundary_value": null,
+    "episode_step": 258
+  },
+  {
+    "environment_steps": 259,
+    "surge": 0.02590838074684143,
+    "reward": 0.07505836337804794,
+    "critic_prediction": -0.05564345046877861,
+    "boundary_value": null,
+    "episode_step": 259
+  },
+  {
+    "environment_steps": 260,
+    "surge": 0.03284516930580139,
+    "reward": 0.06904933601617813,
+    "critic_prediction": -0.05550793930888176,
+    "boundary_value": null,
+    "episode_step": 260
+  },
+  {
+    "environment_steps": 261,
+    "surge": 0.08300110697746277,
+    "reward": 0.07251817733049393,
+    "critic_prediction": -0.055475831031799316,
+    "boundary_value": null,
+    "episode_step": 261
+  },
+  {
+    "environment_steps": 262,
+    "surge": 0.29942962527275085,
+    "reward": 0.10087311267852783,
+    "critic_prediction": -0.05560709536075592,
+    "boundary_value": null,
+    "episode_step": 262
+  },
+  {
+    "environment_steps": 263,
+    "surge": 0.041800111532211304,
+    "reward": 0.12218125909566879,
+    "critic_prediction": -0.0562770813703537,
+    "boundary_value": null,
+    "episode_step": 263
+  },
+  {
+    "environment_steps": 264,
+    "surge": 0.04302626848220825,
+    "reward": 0.1034359335899353,
+    "critic_prediction": -0.056130386888980865,
+    "boundary_value": null,
+    "episode_step": 264
+  },
+  {
+    "environment_steps": 265,
+    "surge": 0.07811844348907471,
+    "reward": 0.08901745080947876,
+    "critic_prediction": -0.05583690479397774,
+    "boundary_value": null,
+    "episode_step": 265
+  },
+  {
+    "environment_steps": 266,
+    "surge": 0.044031769037246704,
+    "reward": 0.08316781371831894,
+    "critic_prediction": -0.055751703679561615,
+    "boundary_value": null,
+    "episode_step": 266
+  },
+  {
+    "environment_steps": 267,
+    "surge": 0.03301975131034851,
+    "reward": 0.07664063572883606,
+    "critic_prediction": -0.055665016174316406,
+    "boundary_value": null,
+    "episode_step": 267
+  },
+  {
+    "environment_steps": 268,
+    "surge": 0.09743967652320862,
+    "reward": 0.07732169330120087,
+    "critic_prediction": -0.0555792897939682,
+    "boundary_value": null,
+    "episode_step": 268
+  },
+  {
+    "environment_steps": 269,
+    "surge": 0.06308090686798096,
+    "reward": 0.08318673074245453,
+    "critic_prediction": -0.05569693446159363,
+    "boundary_value": null,
+    "episode_step": 269
+  },
+  {
+    "environment_steps": 270,
+    "surge": 0.21985718607902527,
+    "reward": 0.0973096415400505,
+    "critic_prediction": -0.05572648346424103,
+    "boundary_value": null,
+    "episode_step": 270
+  },
+  {
+    "environment_steps": 271,
+    "surge": 0.08971711993217468,
+    "reward": 0.11244907975196838,
+    "critic_prediction": -0.05612009018659592,
+    "boundary_value": null,
+    "episode_step": 271
+  },
+  {
+    "environment_steps": 272,
+    "surge": 0.015044182538986206,
+    "reward": 0.09955082088708878,
+    "critic_prediction": -0.05610714852809906,
+    "boundary_value": null,
+    "episode_step": 272
+  },
+  {
+    "environment_steps": 273,
+    "surge": 0.01526641845703125,
+    "reward": 0.07889598608016968,
+    "critic_prediction": -0.05579890310764313,
+    "boundary_value": null,
+    "episode_step": 273
+  },
+  {
+    "environment_steps": 274,
+    "surge": 0.15517494082450867,
+    "reward": 0.07885172218084335,
+    "critic_prediction": -0.055565617978572845,
+    "boundary_value": null,
+    "episode_step": 274
+  },
+  {
+    "environment_steps": 275,
+    "surge": 0.4956898093223572,
+    "reward": 0.12850870192050934,
+    "critic_prediction": -0.055815428495407104,
+    "boundary_value": null,
+    "episode_step": 275
+  },
+  {
+    "environment_steps": 276,
+    "surge": 0.023507356643676758,
+    "reward": 0.1607157438993454,
+    "critic_prediction": -0.056949932128190994,
+    "boundary_value": null,
+    "episode_step": 276
+  },
+  {
+    "environment_steps": 277,
+    "surge": 0.08640748262405396,
+    "reward": 0.12713146209716797,
+    "critic_prediction": -0.05659426748752594,
+    "boundary_value": null,
+    "episode_step": 277
+  },
+  {
+    "environment_steps": 278,
+    "surge": 0.01161491870880127,
+    "reward": 0.0970563217997551,
+    "critic_prediction": -0.05616725981235504,
+    "boundary_value": null,
+    "episode_step": 278
+  },
+  {
+    "environment_steps": 279,
+    "surge": 0.06827104091644287,
+    "reward": 0.07847491651773453,
+    "critic_prediction": -0.05576387047767639,
+    "boundary_value": null,
+    "episode_step": 279
+  },
+  {
+    "environment_steps": 280,
+    "surge": 0.10611024498939514,
+    "reward": 0.08001130074262619,
+    "critic_prediction": -0.05567476898431778,
+    "boundary_value": null,
+    "episode_step": 280
+  },
+  {
+    "environment_steps": 281,
+    "surge": 0.2109670341014862,
+    "reward": 0.09797018766403198,
+    "critic_prediction": -0.05579577386379242,
+    "boundary_value": null,
+    "episode_step": 281
+  },
+  {
+    "environment_steps": 282,
+    "surge": 0.33003950119018555,
+    "reward": 0.13286764919757843,
+    "critic_prediction": -0.05617694556713104,
+    "boundary_value": null,
+    "episode_step": 282
+  },
+  {
+    "environment_steps": 283,
+    "surge": 0.06194821000099182,
+    "reward": 0.1443423330783844,
+    "critic_prediction": -0.05676412954926491,
+    "boundary_value": null,
+    "episode_step": 283
+  },
+  {
+    "environment_steps": 284,
+    "surge": 0.11428266763687134,
+    "reward": 0.12059573829174042,
+    "critic_prediction": -0.05645987018942833,
+    "boundary_value": null,
+    "episode_step": 284
+  },
+  {
+    "environment_steps": 285,
+    "surge": 0.0453622043132782,
+    "reward": 0.10095934569835663,
+    "critic_prediction": -0.056200310587882996,
+    "boundary_value": null,
+    "episode_step": 285
+  },
+  {
+    "environment_steps": 286,
+    "surge": 0.021353483200073242,
+    "reward": 0.0813981294631958,
+    "critic_prediction": -0.05591411516070366,
+    "boundary_value": null,
+    "episode_step": 286
+  },
+  {
+    "environment_steps": 287,
+    "surge": 0.1734047830104828,
+    "reward": 0.08141892403364182,
+    "critic_prediction": -0.055673811584711075,
+    "boundary_value": null,
+    "episode_step": 287
+  },
+  {
+    "environment_steps": 288,
+    "surge": 0.05493393540382385,
+    "reward": 0.09155363589525223,
+    "critic_prediction": -0.05593864619731903,
+    "boundary_value": null,
+    "episode_step": 288
+  },
+  {
+    "environment_steps": 289,
+    "surge": 0.02124980092048645,
+    "reward": 0.08250917494297028,
+    "critic_prediction": -0.055908285081386566,
+    "boundary_value": null,
+    "episode_step": 289
+  },
+  {
+    "environment_steps": 290,
+    "surge": 0.01665627956390381,
+    "reward": 0.06976364552974701,
+    "critic_prediction": -0.055718205869197845,
+    "boundary_value": null,
+    "episode_step": 290
+  },
+  {
+    "environment_steps": 291,
+    "surge": 0.10630157589912415,
+    "reward": 0.06978785246610641,
+    "critic_prediction": -0.055571168661117554,
+    "boundary_value": null,
+    "episode_step": 291
+  },
+  {
+    "environment_steps": 292,
+    "surge": 0.045302361249923706,
+    "reward": 0.07684797793626785,
+    "critic_prediction": -0.0557311475276947,
+    "boundary_value": null,
+    "episode_step": 292
+  },
+  {
+    "environment_steps": 293,
+    "surge": 0.04697465896606445,
+    "reward": 0.07522949576377869,
+    "critic_prediction": -0.05574004352092743,
+    "boundary_value": null,
+    "episode_step": 293
+  },
+  {
+    "environment_steps": 294,
+    "surge": 0.020269423723220825,
+    "reward": 0.07052859663963318,
+    "critic_prediction": -0.05570485070347786,
+    "boundary_value": null,
+    "episode_step": 294
+  },
+  {
+    "environment_steps": 295,
+    "surge": 0.03372660279273987,
+    "reward": 0.06572706252336502,
+    "critic_prediction": -0.05561300367116928,
+    "boundary_value": null,
+    "episode_step": 295
+  },
+  {
+    "environment_steps": 296,
+    "surge": 0.09771355986595154,
+    "reward": 0.07033506780862808,
+    "critic_prediction": -0.05558224022388458,
+    "boundary_value": null,
+    "episode_step": 296
+  },
+  {
+    "environment_steps": 297,
+    "surge": 0.020680159330368042,
+    "reward": 0.07495806366205215,
+    "critic_prediction": -0.05574657768011093,
+    "boundary_value": null,
+    "episode_step": 297
+  },
+  {
+    "environment_steps": 298,
+    "surge": 0.009409815073013306,
+    "reward": 0.06780008971691132,
+    "critic_prediction": -0.05568960681557655,
+    "boundary_value": null,
+    "episode_step": 298
+  },
+  {
+    "environment_steps": 299,
+    "surge": 0.1430428922176361,
+    "reward": 0.07233945280313492,
+    "critic_prediction": -0.05556958168745041,
+    "boundary_value": null,
+    "episode_step": 299
+  },
+  {
+    "environment_steps": 300,
+    "surge": 0.0514909029006958,
+    "reward": 0.08395783603191376,
+    "critic_prediction": -0.05583801120519638,
+    "boundary_value": null,
+    "episode_step": 300
+  },
+  {
+    "environment_steps": 301,
+    "surge": 0.04487684369087219,
+    "reward": 0.0806533545255661,
+    "critic_prediction": -0.055853672325611115,
+    "boundary_value": null,
+    "episode_step": 301
+  },
+  {
+    "environment_steps": 302,
+    "surge": 0.01950475573539734,
+    "reward": 0.07302815467119217,
+    "critic_prediction": -0.05577348545193672,
+    "boundary_value": null,
+    "episode_step": 302
+  },
+  {
+    "environment_steps": 303,
+    "surge": 0.0957610011100769,
+    "reward": 0.07214690744876862,
+    "critic_prediction": -0.055650077760219574,
+    "boundary_value": null,
+    "episode_step": 303
+  },
+  {
+    "environment_steps": 304,
+    "surge": 0.05371713638305664,
+    "reward": 0.07775559276342392,
+    "critic_prediction": -0.05576672405004501,
+    "boundary_value": null,
+    "episode_step": 304
+  },
+  {
+    "environment_steps": 305,
+    "surge": 0.23928603529930115,
+    "reward": 0.09369390457868576,
+    "critic_prediction": -0.05578594654798508,
+    "boundary_value": null,
+    "episode_step": 305
+  },
+  {
+    "environment_steps": 306,
+    "surge": 0.02635514736175537,
+    "reward": 0.10608981549739838,
+    "critic_prediction": -0.05624476447701454,
+    "boundary_value": null,
+    "episode_step": 306
+  },
+  {
+    "environment_steps": 307,
+    "surge": 0.06830558180809021,
+    "reward": 0.09192680567502975,
+    "critic_prediction": -0.05607472360134125,
+    "boundary_value": null,
+    "episode_step": 307
+  },
+  {
+    "environment_steps": 308,
+    "surge": 0.012248367071151733,
+    "reward": 0.07898035645484924,
+    "critic_prediction": -0.05591932311654091,
+    "boundary_value": null,
+    "episode_step": 308
+  },
+  {
+    "environment_steps": 309,
+    "surge": 0.056982219219207764,
+    "reward": 0.07006097584962845,
+    "critic_prediction": -0.05571216344833374,
+    "boundary_value": null,
+    "episode_step": 309
+  },
+  {
+    "environment_steps": 310,
+    "surge": 0.03888946771621704,
+    "reward": 0.0692964494228363,
+    "critic_prediction": -0.05569090694189072,
+    "boundary_value": null,
+    "episode_step": 310
+  },
+  {
+    "environment_steps": 311,
+    "surge": 0.3844228684902191,
+    "reward": 0.09896685928106308,
+    "critic_prediction": -0.05567936599254608,
+    "boundary_value": null,
+    "episode_step": 311
+  },
+  {
+    "environment_steps": 312,
+    "surge": 0.011310726404190063,
+    "reward": 0.1262488216161728,
+    "critic_prediction": -0.05655955523252487,
+    "boundary_value": null,
+    "episode_step": 312
+  },
+  {
+    "environment_steps": 313,
+    "surge": 0.09392452239990234,
+    "reward": 0.10587161779403687,
+    "critic_prediction": -0.056326817721128464,
+    "boundary_value": null,
+    "episode_step": 313
+  },
+  {
+    "environment_steps": 314,
+    "surge": 0.0681990385055542,
+    "reward": 0.09282662719488144,
+    "critic_prediction": -0.056109778583049774,
+    "boundary_value": null,
+    "episode_step": 314
+  },
+  {
+    "environment_steps": 315,
+    "surge": 0.014646083116531372,
+    "reward": 0.07983296364545822,
+    "critic_prediction": -0.055963579565286636,
+    "boundary_value": null,
+    "episode_step": 315
+  },
+  {
+    "environment_steps": 316,
+    "surge": 0.030780255794525146,
+    "reward": 0.06803202629089355,
+    "critic_prediction": -0.055751241743564606,
+    "boundary_value": null,
+    "episode_step": 316
+  },
+  {
+    "environment_steps": 317,
+    "surge": 0.06191849708557129,
+    "reward": 0.06637967377901077,
+    "critic_prediction": -0.05565245822072029,
+    "boundary_value": null,
+    "episode_step": 317
+  },
+  {
+    "environment_steps": 318,
+    "surge": 0.05801454186439514,
+    "reward": 0.0705023854970932,
+    "critic_prediction": -0.05570545047521591,
+    "boundary_value": null,
+    "episode_step": 318
+  },
+  {
+    "environment_steps": 319,
+    "surge": 0.005461186170578003,
+    "reward": 0.0686485543847084,
+    "critic_prediction": -0.05575931444764137,
+    "boundary_value": null,
+    "episode_step": 319
+  },
+  {
+    "environment_steps": 320,
+    "surge": 0.046866655349731445,
+    "reward": 0.06429994106292725,
+    "critic_prediction": -0.055652230978012085,
+    "boundary_value": null,
+    "episode_step": 320
+  },
+  {
+    "environment_steps": 321,
+    "surge": 0.11868080496788025,
+    "reward": 0.07256241142749786,
+    "critic_prediction": -0.05565975233912468,
+    "boundary_value": null,
+    "episode_step": 321
+  },
+  {
+    "environment_steps": 322,
+    "surge": 0.17641165852546692,
+    "reward": 0.092598095536232,
+    "critic_prediction": -0.055882878601551056,
+    "boundary_value": null,
+    "episode_step": 322
+  },
+  {
+    "environment_steps": 323,
+    "surge": 0.13470503687858582,
+    "reward": 0.10831832140684128,
+    "critic_prediction": -0.05620984733104706,
+    "boundary_value": null,
+    "episode_step": 323
+  },
+  {
+    "environment_steps": 324,
+    "surge": 0.055408626794815063,
+    "reward": 0.10421888530254364,
+    "critic_prediction": -0.05631276220083237,
+    "boundary_value": null,
+    "episode_step": 324
+  },
+  {
+    "environment_steps": 325,
+    "surge": 0.05739504098892212,
+    "reward": 0.08957832306623459,
+    "critic_prediction": -0.056113820523023605,
+    "boundary_value": null,
+    "episode_step": 325
+  },
+  {
+    "environment_steps": 326,
+    "surge": 0.044330894947052,
+    "reward": 0.07882329821586609,
+    "critic_prediction": -0.05593985319137573,
+    "boundary_value": null,
+    "episode_step": 326
+  },
+  {
+    "environment_steps": 327,
+    "surge": 0.05260917544364929,
+    "reward": 0.07299294322729111,
+    "critic_prediction": -0.05582042783498764,
+    "boundary_value": null,
+    "episode_step": 327
+  },
+  {
+    "environment_steps": 328,
+    "surge": 0.013205528259277344,
+    "reward": 0.06809251755475998,
+    "critic_prediction": -0.055783674120903015,
+    "boundary_value": null,
+    "episode_step": 328
+  },
+  {
+    "environment_steps": 329,
+    "surge": 0.015066713094711304,
+    "reward": 0.061309389770030975,
+    "critic_prediction": -0.05567976087331772,
+    "boundary_value": null,
+    "episode_step": 329
+  },
+  {
+    "environment_steps": 330,
+    "surge": 0.05456671118736267,
+    "reward": 0.06099503114819527,
+    "critic_prediction": -0.05560627207159996,
+    "boundary_value": null,
+    "episode_step": 330
+  },
+  {
+    "environment_steps": 331,
+    "surge": 0.06601595878601074,
+    "reward": 0.06751561164855957,
+    "critic_prediction": -0.05567602068185806,
+    "boundary_value": null,
+    "episode_step": 331
+  },
+  {
+    "environment_steps": 332,
+    "surge": 0.09890079498291016,
+    "reward": 0.07650105655193329,
+    "critic_prediction": -0.05577996373176575,
+    "boundary_value": null,
+    "episode_step": 332
+  },
+  {
+    "environment_steps": 333,
+    "surge": 0.014708399772644043,
+    "reward": 0.07802137732505798,
+    "critic_prediction": -0.05593004822731018,
+    "boundary_value": null,
+    "episode_step": 333
+  },
+  {
+    "environment_steps": 334,
+    "surge": 0.34280967712402344,
+    "reward": 0.09711326658725739,
+    "critic_prediction": -0.0558122880756855,
+    "boundary_value": null,
+    "episode_step": 334
+  },
+  {
+    "environment_steps": 335,
+    "surge": 0.004581034183502197,
+    "reward": 0.11752765625715256,
+    "critic_prediction": -0.05652524530887604,
+    "boundary_value": null,
+    "episode_step": 335
+  },
+  {
+    "environment_steps": 336,
+    "surge": 0.04060235619544983,
+    "reward": 0.09398073703050613,
+    "critic_prediction": -0.056277912110090256,
+    "boundary_value": null,
+    "episode_step": 336
+  },
+  {
+    "environment_steps": 337,
+    "surge": 0.07338041067123413,
+    "reward": 0.07983483374118805,
+    "critic_prediction": -0.05596930533647537,
+    "boundary_value": null,
+    "episode_step": 337
+  },
+  {
+    "environment_steps": 338,
+    "surge": 0.3732573986053467,
+    "reward": 0.10449270159006119,
+    "critic_prediction": -0.055896662175655365,
+    "boundary_value": null,
+    "episode_step": 338
+  },
+  {
+    "environment_steps": 339,
+    "surge": 0.02842041850090027,
+    "reward": 0.127889484167099,
+    "critic_prediction": -0.0566813126206398,
+    "boundary_value": null,
+    "episode_step": 339
+  },
+  {
+    "environment_steps": 340,
+    "surge": 0.12241780757904053,
+    "reward": 0.10966221243143082,
+    "critic_prediction": -0.056448161602020264,
+    "boundary_value": null,
+    "episode_step": 340
+  },
+  {
+    "environment_steps": 341,
+    "surge": 0.08392345905303955,
+    "reward": 0.09902479499578476,
+    "critic_prediction": -0.05628545582294464,
+    "boundary_value": null,
+    "episode_step": 341
+  },
+  {
+    "environment_steps": 342,
+    "surge": 0.08516544103622437,
+    "reward": 0.0907420665025711,
+    "critic_prediction": -0.056147500872612,
+    "boundary_value": null,
+    "episode_step": 342
+  },
+  {
+    "environment_steps": 343,
+    "surge": 0.27193161845207214,
+    "reward": 0.10316723585128784,
+    "critic_prediction": -0.05606897547841072,
+    "boundary_value": null,
+    "episode_step": 343
+  },
+  {
+    "environment_steps": 344,
+    "surge": 0.036593884229660034,
+    "reward": 0.11370862275362015,
+    "critic_prediction": -0.05652046948671341,
+    "boundary_value": null,
+    "episode_step": 344
+  },
+  {
+    "environment_steps": 345,
+    "surge": 0.05388146638870239,
+    "reward": 0.09400980174541473,
+    "critic_prediction": -0.056302543729543686,
+    "boundary_value": null,
+    "episode_step": 345
+  },
+  {
+    "environment_steps": 346,
+    "surge": 0.014791995286941528,
+    "reward": 0.07608817517757416,
+    "critic_prediction": -0.05604415014386177,
+    "boundary_value": null,
+    "episode_step": 346
+  },
+  {
+    "environment_steps": 347,
+    "surge": 0.027569055557250977,
+    "reward": 0.06366933882236481,
+    "critic_prediction": -0.055809155106544495,
+    "boundary_value": null,
+    "episode_step": 347
+  },
+  {
+    "environment_steps": 348,
+    "surge": 0.04676935076713562,
+    "reward": 0.06101444736123085,
+    "critic_prediction": -0.055709097534418106,
+    "boundary_value": null,
+    "episode_step": 348
+  },
+  {
+    "environment_steps": 349,
+    "surge": 0.024264782667160034,
+    "reward": 0.061514075845479965,
+    "critic_prediction": -0.05573296174407005,
+    "boundary_value": null,
+    "episode_step": 349
+  },
+  {
+    "environment_steps": 350,
+    "surge": 0.05263793468475342,
+    "reward": 0.06232834979891777,
+    "critic_prediction": -0.05571505054831505,
+    "boundary_value": null,
+    "episode_step": 350
+  },
+  {
+    "environment_steps": 351,
+    "surge": 0.03744709491729736,
+    "reward": 0.0646892562508583,
+    "critic_prediction": -0.05576556548476219,
+    "boundary_value": null,
+    "episode_step": 351
+  },
+  {
+    "environment_steps": 352,
+    "surge": 0.03603857755661011,
+    "reward": 0.06448784470558167,
+    "critic_prediction": -0.05577537417411804,
+    "boundary_value": null,
+    "episode_step": 352
+  },
+  {
+    "environment_steps": 353,
+    "surge": 0.1075926423072815,
+    "reward": 0.07011735439300537,
+    "critic_prediction": -0.055766381323337555,
+    "boundary_value": null,
+    "episode_step": 353
+  },
+  {
+    "environment_steps": 354,
+    "surge": 0.01922193169593811,
+    "reward": 0.07449381053447723,
+    "critic_prediction": -0.05594419687986374,
+    "boundary_value": null,
+    "episode_step": 354
+  },
+  {
+    "environment_steps": 355,
+    "surge": 0.02260485291481018,
+    "reward": 0.06701584905385971,
+    "critic_prediction": -0.055866073817014694,
+    "boundary_value": null,
+    "episode_step": 355
+  },
+  {
+    "environment_steps": 356,
+    "surge": 0.0913192629814148,
+    "reward": 0.0672440305352211,
+    "critic_prediction": -0.05576298385858536,
+    "boundary_value": null,
+    "episode_step": 356
+  },
+  {
+    "environment_steps": 357,
+    "surge": 0.016305208206176758,
+    "reward": 0.06996665149927139,
+    "critic_prediction": -0.0558847114443779,
+    "boundary_value": null,
+    "episode_step": 357
+  },
+  {
+    "environment_steps": 358,
+    "surge": 0.05821773409843445,
+    "reward": 0.06716348975896835,
+    "critic_prediction": -0.05581621825695038,
+    "boundary_value": null,
+    "episode_step": 358
+  },
+  {
+    "environment_steps": 359,
+    "surge": 0.05838721990585327,
+    "reward": 0.06930889934301376,
+    "critic_prediction": -0.05583256483078003,
+    "boundary_value": null,
+    "episode_step": 359
+  },
+  {
+    "environment_steps": 360,
+    "surge": 0.29962944984436035,
+    "reward": 0.09286891669034958,
+    "critic_prediction": -0.05587126314640045,
+    "boundary_value": null,
+    "episode_step": 360
+  },
+  {
+    "environment_steps": 361,
+    "surge": 0.0892648696899414,
+    "reward": 0.11793441325426102,
+    "critic_prediction": -0.05651884526014328,
+    "boundary_value": null,
+    "episode_step": 361
+  },
+  {
+    "environment_steps": 362,
+    "surge": 0.04725360870361328,
+    "reward": 0.10431856662034988,
+    "critic_prediction": -0.05650026351213455,
+    "boundary_value": null,
+    "episode_step": 362
+  },
+  {
+    "environment_steps": 363,
+    "surge": 0.031401365995407104,
+    "reward": 0.08351031690835953,
+    "critic_prediction": -0.05620293691754341,
+    "boundary_value": null,
+    "episode_step": 363
+  },
+  {
+    "environment_steps": 364,
+    "surge": 0.015376359224319458,
+    "reward": 0.06794193387031555,
+    "critic_prediction": -0.05594852194190025,
+    "boundary_value": null,
+    "episode_step": 364
+  },
+  {
+    "environment_steps": 365,
+    "surge": 0.08028119802474976,
+    "reward": 0.06438809633255005,
+    "critic_prediction": -0.05577518045902252,
+    "boundary_value": null,
+    "episode_step": 365
+  },
+  {
+    "environment_steps": 366,
+    "surge": 0.04387497901916504,
+    "reward": 0.06864865124225616,
+    "critic_prediction": -0.05585923045873642,
+    "boundary_value": null,
+    "episode_step": 366
+  },
+  {
+    "environment_steps": 367,
+    "surge": 0.05817824602127075,
+    "reward": 0.06950947642326355,
+    "critic_prediction": -0.05587413161993027,
+    "boundary_value": null,
+    "episode_step": 367
+  },
+  {
+    "environment_steps": 368,
+    "surge": 0.08922412991523743,
+    "reward": 0.07364466786384583,
+    "critic_prediction": -0.05589599907398224,
+    "boundary_value": null,
+    "episode_step": 368
+  },
+  {
+    "environment_steps": 369,
+    "surge": 0.008605897426605225,
+    "reward": 0.07287632673978806,
+    "critic_prediction": -0.05599521845579147,
+    "boundary_value": null,
+    "episode_step": 369
+  },
+  {
+    "environment_steps": 370,
+    "surge": 0.10191500186920166,
+    "reward": 0.07076574116945267,
+    "critic_prediction": -0.05586377903819084,
+    "boundary_value": null,
+    "episode_step": 370
+  },
+  {
+    "environment_steps": 371,
+    "surge": 0.2616368532180786,
+    "reward": 0.09401299804449081,
+    "critic_prediction": -0.05597144365310669,
+    "boundary_value": null,
+    "episode_step": 371
+  },
+  {
+    "environment_steps": 372,
+    "surge": 0.08368641138076782,
+    "reward": 0.11344868689775467,
+    "critic_prediction": -0.05651285871863365,
+    "boundary_value": null,
+    "episode_step": 372
+  },
+  {
+    "environment_steps": 373,
+    "surge": 0.1434146761894226,
+    "reward": 0.10838095098733902,
+    "critic_prediction": -0.05646485462784767,
+    "boundary_value": null,
+    "episode_step": 373
+  },
+  {
+    "environment_steps": 374,
+    "surge": 0.02718985080718994,
+    "reward": 0.09739581495523453,
+    "critic_prediction": -0.056438617408275604,
+    "boundary_value": null,
+    "episode_step": 374
+  },
+  {
+    "environment_steps": 375,
+    "surge": 0.14153939485549927,
+    "reward": 0.0875793993473053,
+    "critic_prediction": -0.05615125969052315,
+    "boundary_value": null,
+    "episode_step": 375
+  },
+  {
+    "environment_steps": 376,
+    "surge": 0.02603939175605774,
+    "reward": 0.08494958281517029,
+    "critic_prediction": -0.05621348321437836,
+    "boundary_value": null,
+    "episode_step": 376
+  },
+  {
+    "environment_steps": 377,
+    "surge": 0.05019897222518921,
+    "reward": 0.07399073988199234,
+    "critic_prediction": -0.056045107543468475,
+    "boundary_value": null,
+    "episode_step": 377
+  },
+  {
+    "environment_steps": 378,
+    "surge": 0.05924755334854126,
+    "reward": 0.06987328827381134,
+    "critic_prediction": -0.05594202131032944,
+    "boundary_value": null,
+    "episode_step": 378
+  },
+  {
+    "environment_steps": 379,
+    "surge": 0.011320531368255615,
+    "reward": 0.0657411739230156,
+    "critic_prediction": -0.055931463837623596,
+    "boundary_value": null,
+    "episode_step": 379
+  },
+  {
+    "environment_steps": 380,
+    "surge": 0.04907605051994324,
+    "reward": 0.06140728294849396,
+    "critic_prediction": -0.05582095682621002,
+    "boundary_value": null,
+    "episode_step": 380
+  },
+  {
+    "environment_steps": 381,
+    "surge": 0.0074198246002197266,
+    "reward": 0.05956998094916344,
+    "critic_prediction": -0.05582856759428978,
+    "boundary_value": null,
+    "episode_step": 381
+  },
+  {
+    "environment_steps": 382,
+    "surge": 0.10468214750289917,
+    "reward": 0.06303312629461288,
+    "critic_prediction": -0.05575837939977646,
+    "boundary_value": null,
+    "episode_step": 382
+  },
+  {
+    "environment_steps": 383,
+    "surge": 0.02642342448234558,
+    "reward": 0.06985564529895782,
+    "critic_prediction": -0.055946528911590576,
+    "boundary_value": null,
+    "episode_step": 383
+  },
+  {
+    "environment_steps": 384,
+    "surge": 0.21169450879096985,
+    "reward": 0.08183924853801727,
+    "critic_prediction": -0.055920228362083435,
+    "boundary_value": null,
+    "episode_step": 384
+  },
+  {
+    "environment_steps": 385,
+    "surge": 0.012656688690185547,
+    "reward": 0.09237071126699448,
+    "critic_prediction": -0.05632423236966133,
+    "boundary_value": null,
+    "episode_step": 385
+  },
+  {
+    "environment_steps": 386,
+    "surge": 0.04123872518539429,
+    "reward": 0.07802141457796097,
+    "critic_prediction": -0.05615832656621933,
+    "boundary_value": null,
+    "episode_step": 386
+  },
+  {
+    "environment_steps": 387,
+    "surge": 0.12292879819869995,
+    "reward": 0.0760028064250946,
+    "critic_prediction": -0.055984824895858765,
+    "boundary_value": null,
+    "episode_step": 387
+  },
+  {
+    "environment_steps": 388,
+    "surge": 0.08735650777816772,
+    "reward": 0.08338616788387299,
+    "critic_prediction": -0.05611521378159523,
+    "boundary_value": null,
+    "episode_step": 388
+  },
+  {
+    "environment_steps": 389,
+    "surge": 0.04034709930419922,
+    "reward": 0.08082465827465057,
+    "critic_prediction": -0.05616983398795128,
+    "boundary_value": null,
+    "episode_step": 389
+  },
+  {
+    "environment_steps": 390,
+    "surge": 0.024959713220596313,
+    "reward": 0.07083973288536072,
+    "critic_prediction": -0.05605341121554375,
+    "boundary_value": null,
+    "episode_step": 390
+  },
+  {
+    "environment_steps": 391,
+    "surge": 0.0628407895565033,
+    "reward": 0.06574186682701111,
+    "critic_prediction": -0.05590992048382759,
+    "boundary_value": null,
+    "episode_step": 391
+  },
+  {
+    "environment_steps": 392,
+    "surge": 0.04592183232307434,
+    "reward": 0.06666770577430725,
+    "critic_prediction": -0.055923618376255035,
+    "boundary_value": null,
+    "episode_step": 392
+  },
+  {
+    "environment_steps": 393,
+    "surge": 0.06596782803535461,
+    "reward": 0.068123459815979,
+    "critic_prediction": -0.05592640861868858,
+    "boundary_value": null,
+    "episode_step": 393
+  },
+  {
+    "environment_steps": 394,
+    "surge": 0.15241456031799316,
+    "reward": 0.07887140661478043,
+    "critic_prediction": -0.05597282946109772,
+    "boundary_value": null,
+    "episode_step": 394
+  },
+  {
+    "environment_steps": 395,
+    "surge": 0.09174665808677673,
+    "reward": 0.09073317795991898,
+    "critic_prediction": -0.056235894560813904,
+    "boundary_value": null,
+    "episode_step": 395
+  },
+  {
+    "environment_steps": 396,
+    "surge": 0.04732859134674072,
+    "reward": 0.08654772490262985,
+    "critic_prediction": -0.056283820420503616,
+    "boundary_value": null,
+    "episode_step": 396
+  },
+  {
+    "environment_steps": 397,
+    "surge": 0.03414037823677063,
+    "reward": 0.07509509474039078,
+    "critic_prediction": -0.05613981559872627,
+    "boundary_value": null,
+    "episode_step": 397
+  },
+  {
+    "environment_steps": 398,
+    "surge": 0.023976415395736694,
+    "reward": 0.06524690985679626,
+    "critic_prediction": -0.05598519742488861,
+    "boundary_value": null,
+    "episode_step": 398
+  },
+  {
+    "environment_steps": 399,
+    "surge": 0.03900134563446045,
+    "reward": 0.06041288748383522,
+    "critic_prediction": -0.055872201919555664,
+    "boundary_value": null,
+    "episode_step": 399
+  },
+  {
+    "environment_steps": 400,
+    "surge": 0.030040204524993896,
+    "reward": 0.05957825854420662,
+    "critic_prediction": -0.05585533007979393,
+    "boundary_value": null,
+    "episode_step": 400
+  },
+  {
+    "environment_steps": 401,
+    "surge": 0.04577922821044922,
+    "reward": 0.06023057922720909,
+    "critic_prediction": -0.0558447390794754,
+    "boundary_value": null,
+    "episode_step": 401
+  },
+  {
+    "environment_steps": 402,
+    "surge": 0.05479899048805237,
+    "reward": 0.06341337412595749,
+    "critic_prediction": -0.05587854981422424,
+    "boundary_value": null,
+    "episode_step": 402
+  },
+  {
+    "environment_steps": 403,
+    "surge": 0.04667767882347107,
+    "reward": 0.06591791659593582,
+    "critic_prediction": -0.05593341961503029,
+    "boundary_value": null,
+    "episode_step": 403
+  },
+  {
+    "environment_steps": 404,
+    "surge": 0.02136245369911194,
+    "reward": 0.06399507075548172,
+    "critic_prediction": -0.05594886466860771,
+    "boundary_value": null,
+    "episode_step": 404
+  },
+  {
+    "environment_steps": 405,
+    "surge": 0.02631095051765442,
+    "reward": 0.05975286290049553,
+    "critic_prediction": -0.05588354915380478,
+    "boundary_value": null,
+    "episode_step": 405
+  },
+  {
+    "environment_steps": 406,
+    "surge": 0.013684332370758057,
+    "reward": 0.056503426283597946,
+    "critic_prediction": -0.05584121495485306,
+    "boundary_value": null,
+    "episode_step": 406
+  },
+  {
+    "environment_steps": 407,
+    "surge": 0.020029693841934204,
+    "reward": 0.05410889908671379,
+    "critic_prediction": -0.05579265207052231,
+    "boundary_value": null,
+    "episode_step": 407
+  },
+  {
+    "environment_steps": 408,
+    "surge": 0.019526422023773193,
+    "reward": 0.053646475076675415,
+    "critic_prediction": -0.055778831243515015,
+    "boundary_value": null,
+    "episode_step": 408
+  },
+  {
+    "environment_steps": 409,
+    "surge": 0.03159695863723755,
+    "reward": 0.054794277995824814,
+    "critic_prediction": -0.05577888339757919,
+    "boundary_value": null,
+    "episode_step": 409
+  },
+  {
+    "environment_steps": 410,
+    "surge": 0.045389384031295776,
+    "reward": 0.05830778554081917,
+    "critic_prediction": -0.05581292510032654,
+    "boundary_value": null,
+    "episode_step": 410
+  },
+  {
+    "environment_steps": 411,
+    "surge": 0.07315349578857422,
+    "reward": 0.06467884033918381,
+    "critic_prediction": -0.055877041071653366,
+    "boundary_value": null,
+    "episode_step": 411
+  },
+  {
+    "environment_steps": 412,
+    "surge": 0.04223856329917908,
+    "reward": 0.06903592497110367,
+    "critic_prediction": -0.05599306523799896,
+    "boundary_value": null,
+    "episode_step": 412
+  },
+  {
+    "environment_steps": 413,
+    "surge": 0.013300657272338867,
+    "reward": 0.06498191505670547,
+    "critic_prediction": -0.055993225425481796,
+    "boundary_value": null,
+    "episode_step": 413
+  },
+  {
+    "environment_steps": 414,
+    "surge": 0.07050371170043945,
+    "reward": 0.06305922567844391,
+    "critic_prediction": -0.05589006096124649,
+    "boundary_value": null,
+    "episode_step": 414
+  },
+  {
+    "environment_steps": 415,
+    "surge": 0.029724210500717163,
+    "reward": 0.06526346504688263,
+    "critic_prediction": -0.055957842618227005,
+    "boundary_value": null,
+    "episode_step": 415
+  },
+  {
+    "environment_steps": 416,
+    "surge": 0.10961174964904785,
+    "reward": 0.06971248984336853,
+    "critic_prediction": -0.05593626946210861,
+    "boundary_value": null,
+    "episode_step": 416
+  },
+  {
+    "environment_steps": 417,
+    "surge": 0.04272276163101196,
+    "reward": 0.07550240308046341,
+    "critic_prediction": -0.056103337556123734,
+    "boundary_value": null,
+    "episode_step": 417
+  },
+  {
+    "environment_steps": 418,
+    "surge": 0.1424003541469574,
+    "reward": 0.08021052181720734,
+    "critic_prediction": -0.056077584624290466,
+    "boundary_value": null,
+    "episode_step": 418
+  },
+  {
+    "environment_steps": 419,
+    "surge": 0.15449249744415283,
+    "reward": 0.09473790973424911,
+    "critic_prediction": -0.056268103420734406,
+    "boundary_value": null,
+    "episode_step": 419
+  },
+  {
+    "environment_steps": 420,
+    "surge": 0.048868775367736816,
+    "reward": 0.0963982343673706,
+    "critic_prediction": -0.05647047609090805,
+    "boundary_value": null,
+    "episode_step": 420
+  },
+  {
+    "environment_steps": 421,
+    "surge": 0.09577199816703796,
+    "reward": 0.08706066012382507,
+    "critic_prediction": -0.056310780346393585,
+    "boundary_value": null,
+    "episode_step": 421
+  },
+  {
+    "environment_steps": 422,
+    "surge": 0.02175956964492798,
+    "reward": 0.07865620404481888,
+    "critic_prediction": -0.05625418573617935,
+    "boundary_value": null,
+    "episode_step": 422
+  },
+  {
+    "environment_steps": 423,
+    "surge": 0.16305318474769592,
+    "reward": 0.07851658016443253,
+    "critic_prediction": -0.05606707185506821,
+    "boundary_value": null,
+    "episode_step": 423
+  },
+  {
+    "environment_steps": 424,
+    "surge": 0.08418497443199158,
+    "reward": 0.0887041762471199,
+    "critic_prediction": -0.056287430226802826,
+    "boundary_value": null,
+    "episode_step": 424
+  },
+  {
+    "environment_steps": 425,
+    "surge": 0.013629138469696045,
+    "reward": 0.08094438165426254,
+    "critic_prediction": -0.056315191090106964,
+    "boundary_value": null,
+    "episode_step": 425
+  },
+  {
+    "environment_steps": 426,
+    "surge": 0.20883265137672424,
+    "reward": 0.0826408714056015,
+    "critic_prediction": -0.05608941614627838,
+    "boundary_value": null,
+    "episode_step": 426
+  },
+  {
+    "environment_steps": 427,
+    "surge": 0.027947336435317993,
+    "reward": 0.09124521166086197,
+    "critic_prediction": -0.0564114972949028,
+    "boundary_value": null,
+    "episode_step": 427
+  },
+  {
+    "environment_steps": 428,
+    "surge": 0.01057162880897522,
+    "reward": 0.07526110112667084,
+    "critic_prediction": -0.05627046152949333,
+    "boundary_value": null,
+    "episode_step": 428
+  },
+  {
+    "environment_steps": 429,
+    "surge": 0.02055191993713379,
+    "reward": 0.060814011842012405,
+    "critic_prediction": -0.05601416528224945,
+    "boundary_value": null,
+    "episode_step": 429
+  },
+  {
+    "environment_steps": 430,
+    "surge": 0.04881510138511658,
+    "reward": 0.05707713961601257,
+    "critic_prediction": -0.05588220804929733,
+    "boundary_value": null,
+    "episode_step": 430
+  },
+  {
+    "environment_steps": 431,
+    "surge": 0.07056114077568054,
+    "reward": 0.062087614089250565,
+    "critic_prediction": -0.05590973049402237,
+    "boundary_value": null,
+    "episode_step": 431
+  },
+  {
+    "environment_steps": 432,
+    "surge": 0.12594005465507507,
+    "reward": 0.07369300723075867,
+    "critic_prediction": -0.0560164600610733,
+    "boundary_value": null,
+    "episode_step": 432
+  },
+  {
+    "environment_steps": 433,
+    "surge": 0.010107666254043579,
+    "reward": 0.07708890736103058,
+    "critic_prediction": -0.05623713880777359,
+    "boundary_value": null,
+    "episode_step": 433
+  },
+  {
+    "environment_steps": 434,
+    "surge": 0.10474920272827148,
+    "reward": 0.07277421653270721,
+    "critic_prediction": -0.05609260872006416,
+    "boundary_value": null,
+    "episode_step": 434
+  },
+  {
+    "environment_steps": 435,
+    "surge": 0.11440131068229675,
+    "reward": 0.08049790561199188,
+    "critic_prediction": -0.056163445115089417,
+    "boundary_value": null,
+    "episode_step": 435
+  },
+  {
+    "environment_steps": 436,
+    "surge": 0.3118341565132141,
+    "reward": 0.10555494576692581,
+    "critic_prediction": -0.05629488080739975,
+    "boundary_value": null,
+    "episode_step": 436
+  },
+  {
+    "environment_steps": 437,
+    "surge": 0.041322290897369385,
+    "reward": 0.12031903862953186,
+    "critic_prediction": -0.05688869208097458,
+    "boundary_value": null,
+    "episode_step": 437
+  },
+  {
+    "environment_steps": 438,
+    "surge": 0.05441257357597351,
+    "reward": 0.09706143289804459,
+    "critic_prediction": -0.05664622411131859,
+    "boundary_value": null,
+    "episode_step": 438
+  },
+  {
+    "environment_steps": 439,
+    "surge": 0.03736218810081482,
+    "reward": 0.07727396488189697,
+    "critic_prediction": -0.05632486939430237,
+    "boundary_value": null,
+    "episode_step": 439
+  },
+  {
+    "environment_steps": 440,
+    "surge": 0.15831327438354492,
+    "reward": 0.07622920721769333,
+    "critic_prediction": -0.05610566586256027,
+    "boundary_value": null,
+    "episode_step": 440
+  },
+  {
+    "environment_steps": 441,
+    "surge": 0.057135581970214844,
+    "reward": 0.08357107639312744,
+    "critic_prediction": -0.05631384253501892,
+    "boundary_value": null,
+    "episode_step": 441
+  },
+  {
+    "environment_steps": 442,
+    "surge": 0.08866149187088013,
+    "reward": 0.0803723856806755,
+    "critic_prediction": -0.05627310276031494,
+    "boundary_value": null,
+    "episode_step": 442
+  },
+  {
+    "environment_steps": 443,
+    "surge": 0.05087292194366455,
+    "reward": 0.07674066722393036,
+    "critic_prediction": -0.056258734315633774,
+    "boundary_value": null,
+    "episode_step": 443
+  },
+  {
+    "environment_steps": 444,
+    "surge": 0.030982255935668945,
+    "reward": 0.06876932829618454,
+    "critic_prediction": -0.056170422583818436,
+    "boundary_value": null,
+    "episode_step": 444
+  },
+  {
+    "environment_steps": 445,
+    "surge": 0.03978106379508972,
+    "reward": 0.06215326115489006,
+    "critic_prediction": -0.05604834854602814,
+    "boundary_value": null,
+    "episode_step": 445
+  },
+  {
+    "environment_steps": 446,
+    "surge": 0.057087451219558716,
+    "reward": 0.06136301904916763,
+    "critic_prediction": -0.0559956431388855,
+    "boundary_value": null,
+    "episode_step": 446
+  },
+  {
+    "environment_steps": 447,
+    "surge": 0.266376793384552,
+    "reward": 0.08250156790018082,
+    "critic_prediction": -0.05602787062525749,
+    "boundary_value": null,
+    "episode_step": 447
+  },
+  {
+    "environment_steps": 448,
+    "surge": 0.05065754055976868,
+    "reward": 0.10230959206819534,
+    "critic_prediction": -0.05660725384950638,
+    "boundary_value": null,
+    "episode_step": 448
+  },
+  {
+    "environment_steps": 449,
+    "surge": 0.03734809160232544,
+    "reward": 0.08727648854255676,
+    "critic_prediction": -0.0565163679420948,
+    "boundary_value": null,
+    "episode_step": 449
+  },
+  {
+    "environment_steps": 450,
+    "surge": 0.016290992498397827,
+    "reward": 0.06922851502895355,
+    "critic_prediction": -0.056252360343933105,
+    "boundary_value": null,
+    "episode_step": 450
+  },
+  {
+    "environment_steps": 451,
+    "surge": 0.02251097559928894,
+    "reward": 0.05733146518468857,
+    "critic_prediction": -0.05602877214550972,
+    "boundary_value": null,
+    "episode_step": 451
+  },
+  {
+    "environment_steps": 452,
+    "surge": 0.054704874753952026,
+    "reward": 0.05553311109542847,
+    "critic_prediction": -0.05592688173055649,
+    "boundary_value": null,
+    "episode_step": 452
+  },
+  {
+    "environment_steps": 453,
+    "surge": 0.2880741059780121,
+    "reward": 0.08067373931407928,
+    "critic_prediction": -0.05597887188196182,
+    "boundary_value": null,
+    "episode_step": 453
+  },
+  {
+    "environment_steps": 454,
+    "surge": 0.053698450326919556,
+    "reward": 0.10460115969181061,
+    "critic_prediction": -0.056647177785634995,
+    "boundary_value": null,
+    "episode_step": 454
+  },
+  {
+    "environment_steps": 455,
+    "surge": 0.13160133361816406,
+    "reward": 0.09778930991888046,
+    "critic_prediction": -0.05657420679926872,
+    "boundary_value": null,
+    "episode_step": 455
+  },
+  {
+    "environment_steps": 456,
+    "surge": 0.0638195276260376,
+    "reward": 0.09102961421012878,
+    "critic_prediction": -0.05653794854879379,
+    "boundary_value": null,
+    "episode_step": 456
+  },
+  {
+    "environment_steps": 457,
+    "surge": 0.19164860248565674,
+    "reward": 0.09132193773984909,
+    "critic_prediction": -0.056379154324531555,
+    "boundary_value": null,
+    "episode_step": 457
+  },
+  {
+    "environment_steps": 458,
+    "surge": 0.05169612169265747,
+    "reward": 0.09456732869148254,
+    "critic_prediction": -0.056583892554044724,
+    "boundary_value": null,
+    "episode_step": 458
+  },
+  {
+    "environment_steps": 459,
+    "surge": 0.05823659896850586,
+    "reward": 0.08165144175291061,
+    "critic_prediction": -0.0564335435628891,
+    "boundary_value": null,
+    "episode_step": 459
+  },
+  {
+    "environment_steps": 460,
+    "surge": 0.02317914366722107,
+    "reward": 0.06914740800857544,
+    "critic_prediction": -0.05626623332500458,
+    "boundary_value": null,
+    "episode_step": 460
+  },
+  {
+    "environment_steps": 461,
+    "surge": 0.022505372762680054,
+    "reward": 0.05855690315365791,
+    "critic_prediction": -0.0560886450111866,
+    "boundary_value": null,
+    "episode_step": 461
+  },
+  {
+    "environment_steps": 462,
+    "surge": 0.035897791385650635,
+    "reward": 0.05423624441027641,
+    "critic_prediction": -0.05598025023937225,
+    "boundary_value": null,
+    "episode_step": 462
+  },
+  {
+    "environment_steps": 463,
+    "surge": 0.017604947090148926,
+    "reward": 0.0529322624206543,
+    "critic_prediction": -0.05596967041492462,
+    "boundary_value": null,
+    "episode_step": 463
+  },
+  {
+    "environment_steps": 464,
+    "surge": 0.014022648334503174,
+    "reward": 0.05040320008993149,
+    "critic_prediction": -0.055938057601451874,
+    "boundary_value": null,
+    "episode_step": 464
+  },
+  {
+    "environment_steps": 465,
+    "surge": 0.009676963090896606,
+    "reward": 0.04804384708404541,
+    "critic_prediction": -0.05590350180864334,
+    "boundary_value": null,
+    "episode_step": 465
+  },
+  {
+    "environment_steps": 466,
+    "surge": 0.02036145329475403,
+    "reward": 0.047328874468803406,
+    "critic_prediction": -0.05587358772754669,
+    "boundary_value": null,
+    "episode_step": 466
+  },
+  {
+    "environment_steps": 467,
+    "surge": 0.01491093635559082,
+    "reward": 0.04801958054304123,
+    "critic_prediction": -0.055885858833789825,
+    "boundary_value": null,
+    "episode_step": 467
+  },
+  {
+    "environment_steps": 468,
+    "surge": 0.2971082925796509,
+    "reward": 0.07311269640922546,
+    "critic_prediction": -0.05588985234498978,
+    "boundary_value": null,
+    "episode_step": 468
+  },
+  {
+    "environment_steps": 469,
+    "surge": 0.07319203019142151,
+    "reward": 0.10304069519042969,
+    "critic_prediction": -0.05662069842219353,
+    "boundary_value": null,
+    "episode_step": 469
+  },
+  {
+    "environment_steps": 470,
+    "surge": 0.09671881794929504,
+    "reward": 0.09699572622776031,
+    "critic_prediction": -0.05664241313934326,
+    "boundary_value": null,
+    "episode_step": 470
+  },
+  {
+    "environment_steps": 471,
+    "surge": 0.10072147846221924,
+    "reward": 0.0898992046713829,
+    "critic_prediction": -0.05652374029159546,
+    "boundary_value": null,
+    "episode_step": 471
+  },
+  {
+    "environment_steps": 472,
+    "surge": 0.14146658778190613,
+    "reward": 0.09016203135251999,
+    "critic_prediction": -0.05645999684929848,
+    "boundary_value": null,
+    "episode_step": 472
+  },
+  {
+    "environment_steps": 473,
+    "surge": 0.06429997086524963,
+    "reward": 0.08927075564861298,
+    "critic_prediction": -0.05654292553663254,
+    "boundary_value": null,
+    "episode_step": 473
+  },
+  {
+    "environment_steps": 474,
+    "surge": 0.04091811180114746,
+    "reward": 0.07770141214132309,
+    "critic_prediction": -0.056425292044878006,
+    "boundary_value": null,
+    "episode_step": 474
+  },
+  {
+    "environment_steps": 475,
+    "surge": 0.011328309774398804,
+    "reward": 0.06412628293037415,
+    "critic_prediction": -0.056244492530822754,
+    "boundary_value": null,
+    "episode_step": 475
+  },
+  {
+    "environment_steps": 476,
+    "surge": 0.01017850637435913,
+    "reward": 0.05301707983016968,
+    "critic_prediction": -0.056055568158626556,
+    "boundary_value": null,
+    "episode_step": 476
+  },
+  {
+    "environment_steps": 477,
+    "surge": 0.027367860078811646,
+    "reward": 0.0488329753279686,
+    "critic_prediction": -0.055942218750715256,
+    "boundary_value": null,
+    "episode_step": 477
+  },
+  {
+    "environment_steps": 478,
+    "surge": 0.035524070262908936,
+    "reward": 0.050492722541093826,
+    "critic_prediction": -0.055939532816410065,
+    "boundary_value": null,
+    "episode_step": 478
+  },
+  {
+    "environment_steps": 479,
+    "surge": 0.032732099294662476,
+    "reward": 0.05312763899564743,
+    "critic_prediction": -0.05598382651805878,
+    "boundary_value": null,
+    "episode_step": 479
+  },
+  {
+    "environment_steps": 480,
+    "surge": 0.025348931550979614,
+    "reward": 0.05377347022294998,
+    "critic_prediction": -0.056011296808719635,
+    "boundary_value": null,
+    "episode_step": 480
+  },
+  {
+    "environment_steps": 481,
+    "surge": 0.025592833757400513,
+    "reward": 0.0529908612370491,
+    "critic_prediction": -0.056004151701927185,
+    "boundary_value": null,
+    "episode_step": 481
+  },
+  {
+    "environment_steps": 482,
+    "surge": 0.008973777294158936,
+    "reward": 0.05091351643204689,
+    "critic_prediction": -0.05599406734108925,
+    "boundary_value": null,
+    "episode_step": 482
+  },
+  {
+    "environment_steps": 483,
+    "surge": 0.04888641834259033,
+    "reward": 0.051272422075271606,
+    "critic_prediction": -0.05594639852643013,
+    "boundary_value": null,
+    "episode_step": 483
+  },
+  {
+    "environment_steps": 484,
+    "surge": 0.04837712645530701,
+    "reward": 0.05638895556330681,
+    "critic_prediction": -0.05601383000612259,
+    "boundary_value": null,
+    "episode_step": 484
+  },
+  {
+    "environment_steps": 485,
+    "surge": 0.3838456869125366,
+    "reward": 0.08974627405405045,
+    "critic_prediction": -0.05608139559626579,
+    "boundary_value": null,
+    "episode_step": 485
+  },
+  {
+    "environment_steps": 486,
+    "surge": 0.08950993418693542,
+    "reward": 0.12452103942632675,
+    "critic_prediction": -0.05698709562420845,
+    "boundary_value": null,
+    "episode_step": 486
+  },
+  {
+    "environment_steps": 487,
+    "surge": 0.09777182340621948,
+    "reward": 0.11114870756864548,
+    "critic_prediction": -0.056954674422740936,
+    "boundary_value": null,
+    "episode_step": 487
+  },
+  {
+    "environment_steps": 488,
+    "surge": 0.04287251830101013,
+    "reward": 0.09084106981754303,
+    "critic_prediction": -0.05670647323131561,
+    "boundary_value": null,
+    "episode_step": 488
+  },
+  {
+    "environment_steps": 489,
+    "surge": 0.13388675451278687,
+    "reward": 0.08075518161058426,
+    "critic_prediction": -0.05640457943081856,
+    "boundary_value": null,
+    "episode_step": 489
+  },
+  {
+    "environment_steps": 490,
+    "surge": 0.05860036611557007,
+    "reward": 0.08058248460292816,
+    "critic_prediction": -0.056454021483659744,
+    "boundary_value": null,
+    "episode_step": 490
+  },
+  {
+    "environment_steps": 491,
+    "surge": 0.11196690797805786,
+    "reward": 0.078448586165905,
+    "critic_prediction": -0.05637359619140625,
+    "boundary_value": null,
+    "episode_step": 491
+  },
+  {
+    "environment_steps": 492,
+    "surge": 0.01644068956375122,
+    "reward": 0.07427103817462921,
+    "critic_prediction": -0.056422848254442215,
+    "boundary_value": null,
+    "episode_step": 492
+  },
+  {
+    "environment_steps": 493,
+    "surge": 0.014523446559906006,
+    "reward": 0.060743048787117004,
+    "critic_prediction": -0.05624198168516159,
+    "boundary_value": null,
+    "episode_step": 493
+  },
+  {
+    "environment_steps": 494,
+    "surge": 0.055327773094177246,
+    "reward": 0.05504145100712776,
+    "critic_prediction": -0.05607225373387337,
+    "boundary_value": null,
+    "episode_step": 494
+  },
+  {
+    "environment_steps": 495,
+    "surge": 0.019771665334701538,
+    "reward": 0.05489923804998398,
+    "critic_prediction": -0.05609102547168732,
+    "boundary_value": null,
+    "episode_step": 495
+  },
+  {
+    "environment_steps": 496,
+    "surge": 0.03714004158973694,
+    "reward": 0.05335460603237152,
+    "critic_prediction": -0.05605398118495941,
+    "boundary_value": null,
+    "episode_step": 496
+  },
+  {
+    "environment_steps": 497,
+    "surge": 0.14704957604408264,
+    "reward": 0.06392421573400497,
+    "critic_prediction": -0.05605894327163696,
+    "boundary_value": null,
+    "episode_step": 497
+  },
+  {
+    "environment_steps": 498,
+    "surge": 0.012296676635742188,
+    "reward": 0.0723191499710083,
+    "critic_prediction": -0.05636056512594223,
+    "boundary_value": null,
+    "episode_step": 498
+  },
+  {
+    "environment_steps": 499,
+    "surge": 0.09590163826942444,
+    "reward": 0.06870519369840622,
+    "critic_prediction": -0.05625729635357857,
+    "boundary_value": null,
+    "episode_step": 499
+  },
+  {
+    "environment_steps": 500,
+    "surge": 0.03981676697731018,
+    "reward": 0.06890599429607391,
+    "critic_prediction": -0.05630860477685928,
+    "boundary_value": null,
+    "episode_step": 500
+  },
+  {
+    "environment_steps": 501,
+    "surge": 0.055380284786224365,
+    "reward": 0.06492754817008972,
+    "critic_prediction": -0.056246064603328705,
+    "boundary_value": null,
+    "episode_step": 501
+  },
+  {
+    "environment_steps": 502,
+    "surge": 0.06573840975761414,
+    "reward": 0.0645790547132492,
+    "critic_prediction": -0.05621621757745743,
+    "boundary_value": null,
+    "episode_step": 502
+  },
+  {
+    "environment_steps": 503,
+    "surge": 0.0376814603805542,
+    "reward": 0.06376626342535019,
+    "critic_prediction": -0.056239258497953415,
+    "boundary_value": null,
+    "episode_step": 503
+  },
+  {
+    "environment_steps": 504,
+    "surge": 0.04185572266578674,
+    "reward": 0.06042046099901199,
+    "critic_prediction": -0.05619160830974579,
+    "boundary_value": null,
+    "episode_step": 504
+  },
+  {
+    "environment_steps": 505,
+    "surge": 0.0320000946521759,
+    "reward": 0.057726018130779266,
+    "critic_prediction": -0.05615713819861412,
+    "boundary_value": null,
+    "episode_step": 505
+  },
+  {
+    "environment_steps": 506,
+    "surge": 0.014837175607681274,
+    "reward": 0.05378489941358566,
+    "critic_prediction": -0.05611807852983475,
+    "boundary_value": null,
+    "episode_step": 506
+  },
+  {
+    "environment_steps": 507,
+    "surge": 0.06296244263648987,
+    "reward": 0.05375941842794418,
+    "critic_prediction": -0.05604967474937439,
+    "boundary_value": null,
+    "episode_step": 507
+  },
+  {
+    "environment_steps": 508,
+    "surge": 0.06697097420692444,
+    "reward": 0.060244325548410416,
+    "critic_prediction": -0.05612863972783089,
+    "boundary_value": null,
+    "episode_step": 508
+  },
+  {
+    "environment_steps": 509,
+    "surge": 0.05173933506011963,
+    "reward": 0.06405749171972275,
+    "critic_prediction": -0.05622205138206482,
+    "boundary_value": null,
+    "episode_step": 509
+  },
+  {
+    "environment_steps": 510,
+    "surge": 0.07354915142059326,
+    "reward": 0.06580907851457596,
+    "critic_prediction": -0.05623633787035942,
+    "boundary_value": null,
+    "episode_step": 510
+  },
+  {
+    "environment_steps": 511,
+    "surge": 0.048711419105529785,
+    "reward": 0.06664043664932251,
+    "critic_prediction": -0.056283533573150635,
+    "boundary_value": null,
+    "episode_step": 511
+  },
+  {
+    "environment_steps": 512,
+    "surge": 0.12467789649963379,
+    "reward": 0.07087858766317368,
+    "critic_prediction": -0.05625799670815468,
+    "boundary_value": null,
+    "episode_step": 512
+  },
+  {
+    "environment_steps": 513,
+    "surge": 0.01596507430076599,
+    "reward": 0.07265769690275192,
+    "critic_prediction": -0.056422121822834015,
+    "boundary_value": null,
+    "episode_step": 513
+  },
+  {
+    "environment_steps": 514,
+    "surge": 0.0015978813171386719,
+    "reward": 0.059664011001586914,
+    "critic_prediction": -0.05628465861082077,
+    "boundary_value": null,
+    "episode_step": 514
+  },
+  {
+    "environment_steps": 515,
+    "surge": 0.05192917585372925,
+    "reward": 0.05270068347454071,
+    "critic_prediction": -0.05608930438756943,
+    "boundary_value": null,
+    "episode_step": 515
+  },
+  {
+    "environment_steps": 516,
+    "surge": 0.10300561785697937,
+    "reward": 0.0603247731924057,
+    "critic_prediction": -0.05610385537147522,
+    "boundary_value": null,
+    "episode_step": 516
+  },
+  {
+    "environment_steps": 517,
+    "surge": 0.09325951337814331,
+    "reward": 0.07196219265460968,
+    "critic_prediction": -0.05629580840468407,
+    "boundary_value": null,
+    "episode_step": 517
+  },
+  {
+    "environment_steps": 518,
+    "surge": 0.04816579818725586,
+    "reward": 0.07380261272192001,
+    "critic_prediction": -0.05641857162117958,
+    "boundary_value": null,
+    "episode_step": 518
+  },
+  {
+    "environment_steps": 519,
+    "surge": 0.08468341827392578,
+    "reward": 0.07111933827400208,
+    "critic_prediction": -0.05635278671979904,
+    "boundary_value": null,
+    "episode_step": 519
+  },
+  {
+    "environment_steps": 520,
+    "surge": 0.033851683139801025,
+    "reward": 0.06845618784427643,
+    "critic_prediction": -0.056368134915828705,
+    "boundary_value": null,
+    "episode_step": 520
+  },
+  {
+    "environment_steps": 521,
+    "surge": 0.11609077453613281,
+    "reward": 0.06861074268817902,
+    "critic_prediction": -0.05627124756574631,
+    "boundary_value": null,
+    "episode_step": 521
+  },
+  {
+    "environment_steps": 522,
+    "surge": 0.2021377980709076,
+    "reward": 0.08600378036499023,
+    "critic_prediction": -0.05639839544892311,
+    "boundary_value": null,
+    "episode_step": 522
+  },
+  {
+    "environment_steps": 523,
+    "surge": 0.1121906042098999,
+    "reward": 0.10024240612983704,
+    "critic_prediction": -0.056754425168037415,
+    "boundary_value": null,
+    "episode_step": 523
+  },
+  {
+    "environment_steps": 524,
+    "surge": 0.007540225982666016,
+    "reward": 0.08781109005212784,
+    "critic_prediction": -0.05677622929215431,
+    "boundary_value": null,
+    "episode_step": 524
+  },
+  {
+    "environment_steps": 525,
+    "surge": 0.022710293531417847,
+    "reward": 0.06567132472991943,
+    "critic_prediction": -0.05643228441476822,
+    "boundary_value": null,
+    "episode_step": 525
+  },
+  {
+    "environment_steps": 526,
+    "surge": 0.020036935806274414,
+    "reward": 0.05345897376537323,
+    "critic_prediction": -0.05619673430919647,
+    "boundary_value": null,
+    "episode_step": 526
+  },
+  {
+    "environment_steps": 527,
+    "surge": 0.04055747389793396,
+    "reward": 0.05021532624959946,
+    "critic_prediction": -0.05608924478292465,
+    "boundary_value": null,
+    "episode_step": 527
+  },
+  {
+    "environment_steps": 528,
+    "surge": 0.006748080253601074,
+    "reward": 0.04931202158331871,
+    "critic_prediction": -0.056105662137269974,
+    "boundary_value": null,
+    "episode_step": 528
+  },
+  {
+    "environment_steps": 529,
+    "surge": 0.08639559149742126,
+    "reward": 0.052481554448604584,
+    "critic_prediction": -0.056054286658763885,
+    "boundary_value": null,
+    "episode_step": 529
+  },
+  {
+    "environment_steps": 530,
+    "surge": 0.04396358132362366,
+    "reward": 0.06012902036309242,
+    "critic_prediction": -0.056212056428194046,
+    "boundary_value": null,
+    "episode_step": 530
+  },
+  {
+    "environment_steps": 531,
+    "surge": 0.07613480091094971,
+    "reward": 0.06321438401937485,
+    "critic_prediction": -0.05624765902757645,
+    "boundary_value": null,
+    "episode_step": 531
+  },
+  {
+    "environment_steps": 532,
+    "surge": 0.144822895526886,
+    "reward": 0.07370046526193619,
+    "critic_prediction": -0.05631633102893829,
+    "boundary_value": null,
+    "episode_step": 532
+  },
+  {
+    "environment_steps": 533,
+    "surge": 0.023230552673339844,
+    "reward": 0.07771897315979004,
+    "critic_prediction": -0.05654873326420784,
+    "boundary_value": null,
+    "episode_step": 533
+  },
+  {
+    "environment_steps": 534,
+    "surge": 0.022612303495407104,
+    "reward": 0.0649317279458046,
+    "critic_prediction": -0.056406933814287186,
+    "boundary_value": null,
+    "episode_step": 534
+  },
+  {
+    "environment_steps": 535,
+    "surge": 0.057297199964523315,
+    "reward": 0.057883962988853455,
+    "critic_prediction": -0.05622904747724533,
+    "boundary_value": null,
+    "episode_step": 535
+  },
+  {
+    "environment_steps": 536,
+    "surge": 0.011925697326660156,
+    "reward": 0.055106889456510544,
+    "critic_prediction": -0.056220728904008865,
+    "boundary_value": null,
+    "episode_step": 536
+  },
+  {
+    "environment_steps": 537,
+    "surge": 0.035035550594329834,
+    "reward": 0.05128470063209534,
+    "critic_prediction": -0.056138455867767334,
+    "boundary_value": null,
+    "episode_step": 537
+  },
+  {
+    "environment_steps": 538,
+    "surge": 0.5076985359191895,
+    "reward": 0.09346998482942581,
+    "critic_prediction": -0.056127890944480896,
+    "boundary_value": null,
+    "episode_step": 538
+  },
+  {
+    "environment_steps": 539,
+    "surge": 0.03322678804397583,
+    "reward": 0.13577325642108917,
+    "critic_prediction": -0.05736980214715004,
+    "boundary_value": null,
+    "episode_step": 539
+  },
+  {
+    "environment_steps": 540,
+    "surge": 0.028184592723846436,
+    "reward": 0.10472600907087326,
+    "critic_prediction": -0.05716019123792648,
+    "boundary_value": null,
+    "episode_step": 540
+  },
+  {
+    "environment_steps": 541,
+    "surge": 0.14320680499076843,
+    "reward": 0.0837053433060646,
+    "critic_prediction": -0.05663830786943436,
+    "boundary_value": null,
+    "episode_step": 541
+  },
+  {
+    "environment_steps": 542,
+    "surge": 0.027088254690170288,
+    "reward": 0.07727569341659546,
+    "critic_prediction": -0.05661381036043167,
+    "boundary_value": null,
+    "episode_step": 542
+  },
+  {
+    "environment_steps": 543,
+    "surge": 0.09742552042007446,
+    "reward": 0.06946451961994171,
+    "critic_prediction": -0.0564194954931736,
+    "boundary_value": null,
+    "episode_step": 543
+  },
+  {
+    "environment_steps": 544,
+    "surge": 0.024935126304626465,
+    "reward": 0.0661948025226593,
+    "critic_prediction": -0.05643173307180405,
+    "boundary_value": null,
+    "episode_step": 544
+  },
+  {
+    "environment_steps": 545,
+    "surge": 0.11470592021942139,
+    "reward": 0.0650985911488533,
+    "critic_prediction": -0.05630902573466301,
+    "boundary_value": null,
+    "episode_step": 545
+  },
+  {
+    "environment_steps": 546,
+    "surge": 0.031268149614334106,
+    "reward": 0.06748625636100769,
+    "critic_prediction": -0.056431110948324203,
+    "boundary_value": null,
+    "episode_step": 546
+  },
+  {
+    "environment_steps": 547,
+    "surge": 0.008624672889709473,
+    "reward": 0.058062564581632614,
+    "critic_prediction": -0.05635084956884384,
+    "boundary_value": null,
+    "episode_step": 547
+  },
+  {
+    "environment_steps": 548,
+    "surge": 0.07054221630096436,
+    "reward": 0.05366005748510361,
+    "critic_prediction": -0.056188926100730896,
+    "boundary_value": null,
+    "episode_step": 548
+  },
+  {
+    "environment_steps": 549,
+    "surge": 0.11597135663032532,
+    "reward": 0.06328144669532776,
+    "critic_prediction": -0.0562448725104332,
+    "boundary_value": null,
+    "episode_step": 549
+  },
+  {
+    "environment_steps": 550,
+    "surge": 0.15175876021385193,
+    "reward": 0.07932987064123154,
+    "critic_prediction": -0.05644993484020233,
+    "boundary_value": null,
+    "episode_step": 550
+  },
+  {
+    "environment_steps": 551,
+    "surge": 0.007265686988830566,
+    "reward": 0.0803053230047226,
+    "critic_prediction": -0.056691668927669525,
+    "boundary_value": null,
+    "episode_step": 551
+  },
+  {
+    "environment_steps": 552,
+    "surge": 0.060117900371551514,
+    "reward": 0.0664682388305664,
+    "critic_prediction": -0.05646354705095291,
+    "boundary_value": null,
+    "episode_step": 552
+  },
+  {
+    "environment_steps": 553,
+    "surge": 0.022447407245635986,
+    "reward": 0.05887109413743019,
+    "critic_prediction": -0.05635610967874527,
+    "boundary_value": null,
+    "episode_step": 553
+  },
+  {
+    "environment_steps": 554,
+    "surge": 0.16459640860557556,
+    "reward": 0.06439398974180222,
+    "critic_prediction": -0.056241124868392944,
+    "boundary_value": null,
+    "episode_step": 554
+  },
+  {
+    "environment_steps": 555,
+    "surge": 0.10803863406181335,
+    "reward": 0.08063740283250809,
+    "critic_prediction": -0.05653582513332367,
+    "boundary_value": null,
+    "episode_step": 555
+  },
+  {
+    "environment_steps": 556,
+    "surge": 0.02029445767402649,
+    "reward": 0.07721403241157532,
+    "critic_prediction": -0.05666080862283707,
+    "boundary_value": null,
+    "episode_step": 556
+  },
+  {
+    "environment_steps": 557,
+    "surge": 0.01395156979560852,
+    "reward": 0.061182230710983276,
+    "critic_prediction": -0.05645256116986275,
+    "boundary_value": null,
+    "episode_step": 557
+  },
+  {
+    "environment_steps": 558,
+    "surge": 0.11491990089416504,
+    "reward": 0.058524686843156815,
+    "critic_prediction": -0.05624396353960037,
+    "boundary_value": null,
+    "episode_step": 558
+  },
+  {
+    "environment_steps": 559,
+    "surge": 0.019431471824645996,
+    "reward": 0.062483955174684525,
+    "critic_prediction": -0.05639529600739479,
+    "boundary_value": null,
+    "episode_step": 559
+  },
+  {
+    "environment_steps": 560,
+    "surge": 0.017451584339141846,
+    "reward": 0.054863136261701584,
+    "critic_prediction": -0.05632074549794197,
+    "boundary_value": null,
+    "episode_step": 560
+  },
+  {
+    "environment_steps": 561,
+    "surge": 0.022969096899032593,
+    "reward": 0.04878228157758713,
+    "critic_prediction": -0.056207314133644104,
+    "boundary_value": null,
+    "episode_step": 561
+  },
+  {
+    "environment_steps": 562,
+    "surge": 0.14033207297325134,
+    "reward": 0.05692008137702942,
+    "critic_prediction": -0.056156497448682785,
+    "boundary_value": null,
+    "episode_step": 562
+  },
+  {
+    "environment_steps": 563,
+    "surge": 0.05282285809516907,
+    "reward": 0.06935757398605347,
+    "critic_prediction": -0.056447453796863556,
+    "boundary_value": null,
+    "episode_step": 563
+  },
+  {
+    "environment_steps": 564,
+    "surge": 0.02478349208831787,
+    "reward": 0.0645158663392067,
+    "critic_prediction": -0.05647030472755432,
+    "boundary_value": null,
+    "episode_step": 564
+  },
+  {
+    "environment_steps": 565,
+    "surge": 0.0727020800113678,
+    "reward": 0.059740252792835236,
+    "critic_prediction": -0.05633678287267685,
+    "boundary_value": null,
+    "episode_step": 565
+  },
+  {
+    "environment_steps": 566,
+    "surge": 0.014951735734939575,
+    "reward": 0.05755508691072464,
+    "critic_prediction": -0.05635771155357361,
+    "boundary_value": null,
+    "episode_step": 566
+  },
+  {
+    "environment_steps": 567,
+    "surge": 0.16544872522354126,
+    "reward": 0.06370655447244644,
+    "critic_prediction": -0.05626124143600464,
+    "boundary_value": null,
+    "episode_step": 567
+  },
+  {
+    "environment_steps": 568,
+    "surge": 0.014033913612365723,
+    "reward": 0.07198022305965424,
+    "critic_prediction": -0.05656304210424423,
+    "boundary_value": null,
+    "episode_step": 568
+  },
+  {
+    "environment_steps": 569,
+    "surge": 0.0556512176990509,
+    "reward": 0.06352819502353668,
+    "critic_prediction": -0.056446440517902374,
+    "boundary_value": null,
+    "episode_step": 569
+  },
+  {
+    "environment_steps": 570,
+    "surge": 0.055480122566223145,
+    "reward": 0.060419898480176926,
+    "critic_prediction": -0.05637364834547043,
+    "boundary_value": null,
+    "episode_step": 570
+  },
+  {
+    "environment_steps": 571,
+    "surge": 0.006797999143600464,
+    "reward": 0.05553172156214714,
+    "critic_prediction": -0.056358203291893005,
+    "boundary_value": null,
+    "episode_step": 571
+  },
+  {
+    "environment_steps": 572,
+    "surge": 0.04865381121635437,
+    "reward": 0.05072881653904915,
+    "critic_prediction": -0.05623326450586319,
+    "boundary_value": null,
+    "episode_step": 572
+  },
+  {
+    "environment_steps": 573,
+    "surge": 0.17764654755592346,
+    "reward": 0.06427498161792755,
+    "critic_prediction": -0.05624242499470711,
+    "boundary_value": null,
+    "episode_step": 573
+  },
+  {
+    "environment_steps": 574,
+    "surge": 0.040527522563934326,
+    "reward": 0.07732822746038437,
+    "critic_prediction": -0.05661964416503906,
+    "boundary_value": null,
+    "episode_step": 574
+  },
+  {
+    "environment_steps": 575,
+    "surge": 0.07557350397109985,
+    "reward": 0.07190459966659546,
+    "critic_prediction": -0.05656708776950836,
+    "boundary_value": null,
+    "episode_step": 575
+  },
+  {
+    "environment_steps": 576,
+    "surge": 0.08540856838226318,
+    "reward": 0.07028903067111969,
+    "critic_prediction": -0.0565144382417202,
+    "boundary_value": null,
+    "episode_step": 576
+  },
+  {
+    "environment_steps": 577,
+    "surge": 0.033533066511154175,
+    "reward": 0.06675161421298981,
+    "critic_prediction": -0.05652635544538498,
+    "boundary_value": null,
+    "episode_step": 577
+  },
+  {
+    "environment_steps": 578,
+    "surge": 0.05423220992088318,
+    "reward": 0.06040343642234802,
+    "critic_prediction": -0.056412264704704285,
+    "boundary_value": null,
+    "episode_step": 578
+  },
+  {
+    "environment_steps": 579,
+    "surge": 0.03952580690383911,
+    "reward": 0.05742796137928963,
+    "critic_prediction": -0.0563683807849884,
+    "boundary_value": null,
+    "episode_step": 579
+  },
+  {
+    "environment_steps": 580,
+    "surge": 0.028135567903518677,
+    "reward": 0.05378957837820053,
+    "critic_prediction": -0.056326575577259064,
+    "boundary_value": null,
+    "episode_step": 580
+  },
+  {
+    "environment_steps": 581,
+    "surge": 0.05203083157539368,
+    "reward": 0.05249187350273132,
+    "critic_prediction": -0.05627080798149109,
+    "boundary_value": null,
+    "episode_step": 581
+  },
+  {
+    "environment_steps": 582,
+    "surge": 0.007424265146255493,
+    "reward": 0.05095568671822548,
+    "critic_prediction": -0.05629822611808777,
+    "boundary_value": null,
+    "episode_step": 582
+  },
+  {
+    "environment_steps": 583,
+    "surge": 0.04453584551811218,
+    "reward": 0.04836646094918251,
+    "critic_prediction": -0.056219372898340225,
+    "boundary_value": null,
+    "episode_step": 583
+  },
+  {
+    "environment_steps": 584,
+    "surge": 0.036346107721328735,
+    "reward": 0.050211504101753235,
+    "critic_prediction": -0.05624242126941681,
+    "boundary_value": null,
+    "episode_step": 584
+  },
+  {
+    "environment_steps": 585,
+    "surge": 0.0122356116771698,
+    "reward": 0.04901835322380066,
+    "critic_prediction": -0.056263700127601624,
+    "boundary_value": null,
+    "episode_step": 585
+  },
+  {
+    "environment_steps": 586,
+    "surge": 0.03109198808670044,
+    "reward": 0.04675660654902458,
+    "critic_prediction": -0.05620980262756348,
+    "boundary_value": null,
+    "episode_step": 586
+  },
+  {
+    "environment_steps": 587,
+    "surge": 0.01987457275390625,
+    "reward": 0.04649947211146355,
+    "critic_prediction": -0.056210897862911224,
+    "boundary_value": null,
+    "episode_step": 587
+  },
+  {
+    "environment_steps": 588,
+    "surge": 0.09265625476837158,
+    "reward": 0.05196303129196167,
+    "critic_prediction": -0.05619867891073227,
+    "boundary_value": null,
+    "episode_step": 588
+  },
+  {
+    "environment_steps": 589,
+    "surge": 0.04456356167793274,
+    "reward": 0.059876445680856705,
+    "critic_prediction": -0.056376077234745026,
+    "boundary_value": null,
+    "episode_step": 589
+  },
+  {
+    "environment_steps": 590,
+    "surge": 0.2890160083770752,
+    "reward": 0.08087968081235886,
+    "critic_prediction": -0.056401364505290985,
+    "boundary_value": null,
+    "episode_step": 590
+  },
+  {
+    "environment_steps": 591,
+    "surge": 0.020584166049957275,
+    "reward": 0.09823679178953171,
+    "critic_prediction": -0.05700972303748131,
+    "boundary_value": null,
+    "episode_step": 591
+  },
+  {
+    "environment_steps": 592,
+    "surge": 0.03404131531715393,
+    "reward": 0.07796018570661545,
+    "critic_prediction": -0.056812986731529236,
+    "boundary_value": null,
+    "episode_step": 592
+  },
+  {
+    "environment_steps": 593,
+    "surge": 0.012444645166397095,
+    "reward": 0.05946601554751396,
+    "critic_prediction": -0.05652163550257683,
+    "boundary_value": null,
+    "episode_step": 593
+  },
+  {
+    "environment_steps": 594,
+    "surge": 0.08764076232910156,
+    "reward": 0.05427176505327225,
+    "critic_prediction": -0.05630364269018173,
+    "boundary_value": null,
+    "episode_step": 594
+  },
+  {
+    "environment_steps": 595,
+    "surge": 0.06288999319076538,
+    "reward": 0.06004095450043678,
+    "critic_prediction": -0.056388579308986664,
+    "boundary_value": null,
+    "episode_step": 595
+  },
+  {
+    "environment_steps": 596,
+    "surge": 0.014017969369888306,
+    "reward": 0.05796519294381142,
+    "critic_prediction": -0.056444235146045685,
+    "boundary_value": null,
+    "episode_step": 596
+  },
+  {
+    "environment_steps": 597,
+    "surge": 0.06438258290290833,
+    "reward": 0.05426604673266411,
+    "critic_prediction": -0.05633360892534256,
+    "boundary_value": null,
+    "episode_step": 597
+  },
+  {
+    "environment_steps": 598,
+    "surge": 0.1690218448638916,
+    "reward": 0.06694182753562927,
+    "critic_prediction": -0.05636361986398697,
+    "boundary_value": null,
+    "episode_step": 598
+  },
+  {
+    "environment_steps": 599,
+    "surge": 0.10623839497566223,
+    "reward": 0.08301591873168945,
+    "critic_prediction": -0.05669280141592026,
+    "boundary_value": null,
+    "episode_step": 599
+  },
+  {
+    "environment_steps": 600,
+    "surge": 0.0877523422241211,
+    "reward": 0.08352547138929367,
+    "critic_prediction": -0.056788377463817596,
+    "boundary_value": -0.056732144206762314,
+    "episode_step": 600
+  }
+]

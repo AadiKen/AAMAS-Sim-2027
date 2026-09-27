@@ -5,6 +5,7 @@ from contextlib import ExitStack
 from dataclasses import asdict, fields
 from datetime import datetime, timezone
 import json
+import math
 from pathlib import Path
 import random
 import sys
@@ -19,7 +20,7 @@ except ImportError:
     psutil = None
 
 from .bcod_adapter import BCODAdapter
-from .core import Benchmark, BenchmarkConfig, NAMES, Scenario, generate_scenario
+from .core import Benchmark, BenchmarkConfig, DISCOUNT_PER_SECOND, NAMES, Scenario, generate_scenario
 from .holoocean_adapter import HoloOceanAdapter
 from .pyquaticus_adapter import PyquaticusAdapter
 
@@ -99,34 +100,99 @@ class _EtaBar:
             sys.stderr.flush()
 
 
-def _action(model, observations, device, deterministic=False):
-    tensor = torch.as_tensor(np.stack([observations[n] for n in NAMES]), dtype=torch.float32, device=device)
+def _action(model, observations, device, deterministic=False, diagnostics=None, agent_names=NAMES):
+    tensor = torch.as_tensor(np.stack([observations[n] for n in agent_names]), dtype=torch.float32, device=device)
     mean, value = model(tensor)
     distribution = torch.distributions.Normal(mean, model.log_std.exp())
     raw = mean if deterministic else distribution.sample()
-    action = torch.tanh(raw)
-    # Density of the squashed action. raw is a detached sample, so this
-    # Jacobian term is constant for score-function policy gradients.
-    correction = 2 * (np.log(2.) - raw - torch.nn.functional.softplus(-2 * raw))
-    log_probability = (distribution.log_prob(raw) - correction).sum(-1)
-    return {name: tuple(float(x) for x in action[i].detach().cpu()) for i, name in enumerate(NAMES)}, log_probability, value
+    squashed = torch.tanh(raw)
+    action = torch.stack(((squashed[..., 0] + 1) / 2, squashed[..., 1]), dim=-1)
+    # Exact density of ((tanh(z_surge)+1)/2, tanh(z_yaw)). raw is a
+    # detached sample, so its Jacobian is constant for score gradients.
+    correction = 2 * (math.log(2.) - raw - torch.nn.functional.softplus(-2 * raw))
+    log_probability = (distribution.log_prob(raw) - correction).sum(-1) - math.log(0.5)
+    if diagnostics is not None:
+        mean_squashed = torch.tanh(mean)
+        mean_action = torch.stack(((mean_squashed[..., 0] + 1) / 2, mean_squashed[..., 1]), dim=-1)
+        diagnostics.update(actor_mean=mean_action.detach().cpu().tolist(),
+                           sampled=action.detach().cpu().tolist(),
+                           log_std=model.log_std.detach().cpu().tolist(),
+                           raw_std=model.log_std.exp().detach().cpu().tolist())
+    return {name: tuple(float(x) for x in action[i].detach().cpu()) for i, name in enumerate(agent_names)}, log_probability, value
 
 
-def _update(model, optimizer, records, bootstrap, gamma=0.99):
+def _return_targets(records, bootstrap, gamma=None):
+    """Detached, per-environment n-step targets in chronological record order."""
+    if gamma is None:
+        gamma = BenchmarkConfig().gamma
     future = {i: value.detach() for i, value in bootstrap.items()}
-    losses = []
-    for env_id, log_probability, value, reward, boundary_value in reversed(records):
-        # Collision/success bootstraps zero. Time limits bootstrap the FINAL
-        # observation, never the next episode reset observation.
+    targets = []
+    for env_id, _, _, reward, boundary_value in reversed(records):
         if boundary_value is not None:
             future[env_id] = boundary_value.detach()
-        future[env_id] = reward + gamma * future[env_id]
-        advantage = future[env_id] - value
-        losses.append(-(log_probability * advantage.detach()).mean() + 0.5 * advantage.square().mean())
-    loss = torch.stack(losses).mean()
+        future[env_id] = reward.detach() + gamma * future[env_id]
+        targets.append(future[env_id])
+    return list(reversed(targets))
+
+
+def _update(model, optimizer, records, bootstrap, gamma=None, diagnostics=None):
+    targets = torch.stack(_return_targets(records, bootstrap, gamma))
+    values = torch.stack([r[2] for r in records])
+    logp = torch.stack([r[1] for r in records])
+    advantage = targets - values
+    actor_loss = -(logp * advantage.detach()).mean()
+    critic_loss = .5 * advantage.square().mean()
+    loss = actor_loss + critic_loss
     optimizer.zero_grad()
+    if diagnostics is not None:
+        def norm(grads):
+            return sum(float(g.detach().square().sum()) for g in grads if g is not None)**.5
+        body = list(model.body.parameters())
+        actor_body = torch.autograd.grad(actor_loss, body, retain_graph=True, allow_unused=True)
+        critic_body = torch.autograd.grad(critic_loss, body, retain_graph=True, allow_unused=True)
+        # Each contribution includes that agent's full rollout, before clipping.
+        actor_parameters = body + list(model.actor.parameters()) + [model.log_std]
+        contributions = []
+        for agent in range(logp.shape[-1]):
+            agent_loss = -(logp[:, agent] * advantage[:, agent].detach()).mean() / logp.shape[-1]
+            gradients = torch.autograd.grad(agent_loss, actor_parameters, retain_graph=True, allow_unused=True)
+            contributions.append(torch.cat([(torch.zeros_like(p) if g is None else g).detach().reshape(-1)
+                                            for p, g in zip(actor_parameters, gradients)]))
+        lengths = [float(g.norm()) for g in contributions]
+        diagnostics['per_agent_actor_grad_norm'] = lengths
+        diagnostics['actor_contribution_cosines'] = [
+            [float(torch.dot(a,b)/(a.norm()*b.norm()).clamp_min(1e-12)) for b in contributions]
+            for a in contributions]
+        diagnostics['actor_cancellation_ratio'] = float(torch.stack(contributions).sum(0).norm()) / max(sum(lengths),1e-12)
+        variance = targets.var(unbiased=False)
+        uses_bootstrap = dict.fromkeys(bootstrap, True)
+        bootstrap_records = 0
+        for env_id, _, _, _, boundary in reversed(records):
+            if boundary is not None:
+                uses_bootstrap[env_id] = bool(torch.any(boundary != 0))
+            bootstrap_records += uses_bootstrap[env_id]
+        diagnostics.update(actor_loss=float(actor_loss.detach()), critic_loss=float(critic_loss.detach()),
+            total_loss=float(loss.detach()), entropy=float(-logp.detach().mean()),
+            entropy_estimator='Monte Carlo squashed Gaussian differential entropy',
+            mean_advantage=float(advantage.detach().mean()), std_advantage=float(advantage.detach().std(unbiased=False)),
+            min_advantage=float(advantage.detach().min()), max_advantage=float(advantage.detach().max()),
+            mean_return_target=float(targets.mean()), std_return_target=float(targets.std(unbiased=False)),
+            mean_predicted_value=float(values.detach().mean()),
+            explained_variance=float(1-(targets-values.detach()).var(unbiased=False)/variance) if variance>1e-12 else None,
+            actor_body_grad_norm=norm(actor_body), critic_body_grad_norm=norm(critic_body),
+            rollout_records=len(records), episode_boundaries=sum(r[4] is not None for r in records),
+            bootstrap_fraction=bootstrap_records/len(records))
     loss.backward()
-    torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
+    if diagnostics is not None:
+        diagnostics['gradient_norms_before_clip'] = {
+            'shared_body': norm(p.grad for p in model.body.parameters()),
+            'actor_head': norm(p.grad for p in model.actor.parameters()),
+            'critic_head': norm(p.grad for p in model.critic.parameters()),
+            'log_std': norm([model.log_std.grad])}
+    total_norm = torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
+    if diagnostics is not None:
+        diagnostics['total_grad_norm_before_clip'] = float(total_norm)
+        diagnostics['clip_scale'] = min(1., 1./(float(total_norm)+1e-6))
     optimizer.step()
     return float(loss.detach())
 
@@ -163,21 +229,28 @@ def train(args):
     run_id = uuid.uuid4().hex
     manifest = {"run_id": run_id, "simulator": args.sim, "seed": args.seed, "benchmark": asdict(config),
                 "algorithm": "shared_actor_critic_v2", "architecture": "47-128-128-tanh-gaussian-2",
-                "optimizer": {"type": "Adam", "learning_rate": 3e-4}, "gamma": 0.99,
+                "optimizer": {"type": "Adam", "learning_rate": 3e-4}, "gamma": config.gamma,
+                "gamma_per_second": DISCOUNT_PER_SECOND,
                 "total_steps": args.total_steps, "num_envs": args.num_envs,
                 "checkpoint_interval": args.checkpoint_interval, "update_interval": args.update_interval,
                 "timeout_semantics": "bootstrap_final_observation", "device": args.device,
                 "eta_bar": args.eta_bar,
                 "started_at": _stamp()}
     (output / "run-config.json").write_text(json.dumps(manifest, indent=2) + "\n")
+    torch.save({"model": model.state_dict(), "manifest": manifest,
+                "environment_steps": 0, "optimizer_updates": 0},
+               output / "checkpoint-000000000.pt")
     envs, observations = [], []
     cleanup = ExitStack()
+    from .rl_diagnostics import EpisodeDiagnostics
+    episode_diagnostics = [EpisodeDiagnostics(config.gamma) for _ in range(args.num_envs)]
     episode_index = [0] * args.num_envs
     episode_rewards = [0.] * args.num_envs
     episode_count = 0
     successes = 0
     collisions = 0
     completed = []
+    action_diagnostics = []
     checkpoint_index = 0
     optimizer_updates = 0
     loss = None
@@ -192,7 +265,9 @@ def train(args):
             observations.append(env.reset(generate_scenario(args.seed * 100000 + i, config=config)))
         for joint_step in range(1, args.total_steps + 1):
             i = (joint_step - 1) % len(envs)
-            actions, log_probability, value = _action(model, observations[i], device)
+            action_row = {}
+            actions, log_probability, value = _action(model, observations[i], device, diagnostics=action_row)
+            action_diagnostics.append(action_row)
             tick_start = time.perf_counter()
             obs, reward, done, truncated, info = envs[i].step(actions)
             environment_seconds += time.perf_counter() - tick_start
@@ -207,13 +282,15 @@ def train(args):
             completed.append((i, log_probability, value, rewards, boundary_value))
             observations[i] = obs
             episode_rewards[i] += sum(reward.values())
+            episode_diagnostics[i].add(reward, info, envs[i])
             if done or truncated:
                 episode_count += 1
                 successes += int(info["fleet_success"])
                 collisions += int(info["collision_count"] > 0)
                 _append(output / "episodes.jsonl", {"run_id": run_id, "simulator": args.sim, "seed": args.seed,
                     "optimizer_updates": optimizer_updates, "environment_steps": joint_step, "episode": episode_count,
-                    "cumulative_reward": episode_rewards[i], **info})
+                    "cumulative_reward": episode_rewards[i], **episode_diagnostics[i].result(info)})
+                episode_diagnostics[i] = EpisodeDiagnostics(config.gamma)
                 episode_rewards[i] = 0.
                 episode_index[i] += 1
                 observations[i] = envs[i].reset(generate_scenario(args.seed * 100000 + i +
@@ -225,7 +302,13 @@ def train(args):
                     bootstrap = {j: model(torch.as_tensor(np.stack([observations[j][n] for n in NAMES]),
                                     dtype=torch.float32, device=device))[1]
                                  for j in range(len(envs))}
-                loss = _update(model, optimizer, completed, bootstrap)
+                update_diagnostics = {}
+                loss = _update(model, optimizer, completed, bootstrap, config.gamma, diagnostics=update_diagnostics)
+                from .rl_diagnostics import action_summary
+                _append(output / "updates.jsonl", {"run_id": run_id, "environment_steps": joint_step,
+                    "optimizer_updates": optimizer_updates + 1, **update_diagnostics,
+                    **action_summary(action_diagnostics)})
+                action_diagnostics = []
                 completed = []
                 optimizer_updates += 1
             if checkpoint_due:
@@ -279,6 +362,8 @@ def evaluate(args):
         scenarios = [generate_scenario(900000 + i, args.mode, stress=args.mode == "stress", config=config)
                      for i in range(args.episodes)]
     env = Benchmark(make_adapter(args.sim, config, pyquaticus_python=args.pyquaticus_python), config)
+    from .rl_diagnostics import EpisodeDiagnostics, action_summary
+    action_rows = []
     rows = []
     started = time.perf_counter()
     progress = _EtaBar(f"{args.sim} evaluate", len(scenarios), enabled=args.eta_bar)
@@ -286,13 +371,17 @@ def evaluate(args):
         for scenario in scenarios:
             observations = env.reset(scenario)
             cumulative = 0.
+            episode = EpisodeDiagnostics(config.gamma)
             while True:
                 with torch.no_grad():
-                    actions, _, _ = _action(model, observations, args.device, args.deterministic)
+                    action_row = {}
+                    actions, _, _ = _action(model, observations, args.device, args.deterministic, diagnostics=action_row)
+                    action_rows.append(action_row)
                 observations, reward, done, truncated, info = env.step(actions)
                 cumulative += sum(reward.values())
+                episode.add(reward, info, env)
                 if done or truncated:
-                    rows.append({"scenario_seed": scenario.seed, "cumulative_reward": cumulative, **info})
+                    rows.append({"scenario_seed": scenario.seed, "cumulative_reward": cumulative, **episode.result(info)})
                     progress.update(len(rows))
                     break
     finally:
@@ -301,6 +390,7 @@ def evaluate(args):
     result = {"simulator": args.sim, "checkpoint": str(args.checkpoint), "mode": args.mode,
               "source_run_id": checkpoint["manifest"].get("run_id"), "seed": args.seed,
               "deterministic": args.deterministic, "episodes": rows,
+              "action_statistics": action_summary(action_rows),
               "stress_factors_applied": (["unseen_geometry", "8_to_10_obstacles"]
                                          if args.mode == "stress" else []),
               "stress_factors_not_comparable": (["current", "waves", "sensor_noise_dropout",

@@ -47,8 +47,10 @@ def test_observation_action_reward_and_timeout():
     assert all(v.shape == (47,) and abs(v).max() <= 1 for v in obs.values())
     with pytest.raises(ValueError):
         env.step({name: (2, 0) for name in NAMES})
+    with pytest.raises(ValueError, match="surge in"):
+        env.step({name: (-0.1, 0) for name in NAMES})
     _, reward, done, truncated, info = env.step({name: (0, 0) for name in NAMES})
-    assert all(value == -config.step_penalty for value in reward.values())
+    assert all(value > -config.step_penalty for value in reward.values())
     assert not done and not truncated and info["steps"] == 1
     _, _, done, truncated, _ = env.step({name: (0, 0) for name in NAMES})
     assert not done and truncated
@@ -74,7 +76,7 @@ def test_progress_goal_and_collision():
     env.adapter.positions[NAMES[1]] = env.adapter.positions[name]
     _, rewards, done, _, info = env.step({n: (0, 0) for n in NAMES})
     assert done and info["collision_count"] >= 2
-    assert rewards[name] <= -env.config.collision_penalty
+    assert all(info['reward_components'][n]['collision'] == -env.config.collision_penalty for n in NAMES)
 
 
 def test_swept_collision_catches_pass_through():

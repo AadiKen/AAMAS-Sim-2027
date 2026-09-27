@@ -1,0 +1,35 @@
+{
+  "run_id": "d643992836184a6aa003e9f67a2f7cc2",
+  "simulator": "bcod",
+  "seed": 11,
+  "benchmark": {
+    "half_width_m": 50.0,
+    "goal_radius_m": 2.0,
+    "vessel_radius_m": 1.0,
+    "max_steps": 600,
+    "dt_s": 0.2,
+    "max_surge_mps": 2.0,
+    "max_yaw_rps": 0.25,
+    "visibility_m": 30.0,
+    "progress_weight": 1.0,
+    "goal_bonus": 20.0,
+    "collision_penalty": 50.0,
+    "step_penalty": 0.01
+  },
+  "algorithm": "shared_actor_critic_v2",
+  "architecture": "47-128-128-tanh-gaussian-2",
+  "optimizer": {
+    "type": "Adam",
+    "learning_rate": 0.0003
+  },
+  "gamma": 0.9979919516614258,
+  "gamma_per_second": 0.99,
+  "total_steps": 10000,
+  "num_envs": 1,
+  "checkpoint_interval": 2500,
+  "update_interval": 250,
+  "timeout_semantics": "bootstrap_final_observation",
+  "device": "cpu",
+  "eta_bar": false,
+  "started_at": "2026-09-27T04:05:32.617097+00:00"
+}
