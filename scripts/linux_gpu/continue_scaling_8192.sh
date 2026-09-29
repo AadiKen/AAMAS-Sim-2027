@@ -4,6 +4,9 @@ root="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)";cd "$root"
 source_csv="${SOURCE_CSV:-paper_results/linux_gpu/scaling-h100-high-20260929/scaling.csv}"
 out="${OUTPUT_DIR:-paper_results/linux_gpu/scaling-8192-continuation}"
 mkdir -p "$out";exec >> "$out/continuation.log" 2>&1
+if [[ -f "$(dirname "$source_csv")/oom.log" ]] && grep -q "count=8192" "$(dirname "$source_csv")/oom.log"; then
+  echo "8192 was stopped for OOM; preserving partial rows without retry";exit 0
+fi
 completed="$(python3 - "$source_csv" <<'PY'
 import csv,sys
 with open(sys.argv[1],newline='') as stream:
