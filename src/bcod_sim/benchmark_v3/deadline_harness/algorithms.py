@@ -160,11 +160,11 @@ def train_td3(env, *, steps=400_000, seed=11, warmup=0, batch=256,
                 with torch.no_grad():
                     for p,tp in zip(actor.parameters(),at.parameters()): tp.mul_(.995).add_(p,alpha=.005)
                     for p,tp in zip(critic.parameters(),ct.parameters()): tp.mul_(.995).add_(p,alpha=.005)
-        if (t+1)%25_000==0 or t+1==steps:
+        if (t+1)%5_000==0 or t+1==steps:
             payload={"actor":actor.state_dict(),"critic":critic.state_dict(),"steps":t+1,"seed":seed,
                 "replay_size":len(replay.rows)}
             torch.save(payload,output); torch.save(payload,output+f".step-{t+1}.pt")
-            if validate is not None:
+            if validate is not None and ((t+1)%25_000==0 or t+1==steps):
                 result=validate(actor,t+1)
                 with open(output+".validation.jsonl","a") as stream:
                     stream.write(json.dumps({"step":t+1,"validation":result})+"\n")
@@ -308,10 +308,10 @@ def train_mappo(env, *, steps=400_000, seed=11, output="marl-mappo.pt",
             "reward_components":{key:float(np.mean([row.get(key,0.) for row in component_rows]))
                                  for key in sorted({k for row in component_rows for k in row})}}
         with open(output+".metrics.jsonl","a") as stream: stream.write(__import__("json").dumps(logs)+"\n")
-        if step//25_000>(step-horizon)//25_000 or step>=total_steps:
+        if step//5_000>(step-horizon)//5_000 or step>=total_steps:
             payload={"model":model.state_dict(),"steps":step,"seed":seed}
             torch.save(payload,output); torch.save(payload,output+f".step-{step}.pt")
-            if validate is not None:
+            if validate is not None and (step//25_000>(step-horizon)//25_000 or step>=total_steps):
                 result=validate(model,step)
                 score=(result.get("success_rate",0.),-result.get("collision_rate",1.),
                        -result.get("completion_time_s",float("inf"))) if isinstance(result,dict) else result
