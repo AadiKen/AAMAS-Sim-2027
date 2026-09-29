@@ -18,8 +18,13 @@ PY
 
 if ! command -v git >/dev/null; then echo "git is required" >&2; exit 2; fi
 if ! command -v cc >/dev/null; then echo "C compiler unavailable; binary wheels may be required" >&2; fi
-"$python_bin" -m venv "$install_root/venv"
-"$install_root/venv/bin/python" -m pip install --upgrade pip
+if [[ ! -x "$install_root/venv/bin/python" ]] || ! "$install_root/venv/bin/python" -m pip --version >/dev/null 2>&1; then
+  if ! "$python_bin" -m venv "$install_root/venv"; then
+    rm -rf "$install_root/venv"
+    "$python_bin" -m venv --without-pip --system-site-packages "$install_root/venv"
+  fi
+fi
+"$install_root/venv/bin/python" -m pip install --upgrade "pip<27"
 if [[ ! -d "$install_root/source/.git" ]]; then
   git clone https://github.com/byu-holoocean/HoloOcean.git "$install_root/source"
 fi

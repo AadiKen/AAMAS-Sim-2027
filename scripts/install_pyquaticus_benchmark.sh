@@ -17,12 +17,16 @@ if [[ "$(git -C "${source_root}" rev-parse HEAD)" != "${commit}" ]]; then
     exit 1
 fi
 
-uv python install 3.10
-if [[ ! -x "${venv_root}/bin/python" ]]; then
-    uv venv "${venv_root}" --python 3.10
+uv_bin="${UV_BIN:-$repo_root/.venv-linux/bin/uv}"
+if [[ ! -x "$uv_bin" ]]; then
+    "$repo_root/.venv-linux/bin/python" -m pip install "uv>=0.8,<1"
 fi
-uv pip install --python "${venv_root}/bin/python" -r "${repo_root}/configs/pyquaticus-requirements.lock"
+"$uv_bin" python install 3.10
+if [[ ! -x "${venv_root}/bin/python" ]]; then
+    "$uv_bin" venv "${venv_root}" --python 3.10
+fi
+"$uv_bin" pip install --python "${venv_root}/bin/python" -r "${repo_root}/configs/pyquaticus-requirements.lock"
 # pymoos is a bridge to physical MOOS hardware, unused by this benchmark, and
 # has no matching macOS ARM wheel. The local simulator is installed without it.
-uv pip install --python "${venv_root}/bin/python" --no-deps "${source_root}"
+"$uv_bin" pip install --python "${venv_root}/bin/python" --no-deps "${source_root}"
 "${venv_root}/bin/python" -c 'from pyquaticus.envs.pyquaticus import PyQuaticusEnv; print("Pyquaticus import OK")'
