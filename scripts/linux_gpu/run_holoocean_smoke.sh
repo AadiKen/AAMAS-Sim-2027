@@ -10,10 +10,10 @@ printf '%s\n' "$0 $*" > "$out/commands.txt"
 [[ "$(uname -s)" == Linux ]] || { echo 'REQUIRES_LINUX_VERIFICATION';exit 2; }
 [[ -n "${DISPLAY:-}${WAYLAND_DISPLAY:-}" || -x "$(command -v xvfb-run || true)" ]] || { echo 'X display or xvfb-run required';exit 2; }
 py="${HOLOOCEAN_PYTHON:-$root/.benchmark-deps/holoocean-linux/venv/bin/python}"
-[[ -x "$py" ]] || bash scripts/setup_holoocean_linux.sh
+[[ -x "$py" ]] || timeout "${HOLOOCEAN_SETUP_TIMEOUT_S:-1200}" bash scripts/setup_holoocean_linux.sh
 runner=("$py")
 if [[ -z "${DISPLAY:-}${WAYLAND_DISPLAY:-}" ]]; then runner=(xvfb-run -a "$py"); fi
-"${runner[@]}" - <<'PY'
+timeout "${HOLOOCEAN_SMOKE_TIMEOUT_S:-300}" "${runner[@]}" - <<'PY'
 import json,math,os
 from pathlib import Path
 from bcod_sim.benchmark.core import Benchmark,generate_scenario
