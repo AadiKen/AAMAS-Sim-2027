@@ -37,7 +37,7 @@ def finite_training_logs(rows, policy):
 def marl_validation(model, step, episodes=32, seed=81001):
     device=next(model.parameters()).device
     """Frozen small validation mix; uses deterministic actor means."""
-    rng=np.random.default_rng(seed); rows=[]
+    rng=np.random.default_rng(seed); rows=[]; family_rows={}
     for i in range(episodes):
         family=("easy","pair","fourway","random")[i%4]
         scenario=make_four_vessel_scenario(rng,family,split="marl-validation")
@@ -50,11 +50,14 @@ def marl_validation(model, step, episodes=32, seed=81001):
             obs,_,terms,truncs,infos=env.step(actions)
             if all(terms.values()) or all(truncs.values()): break
         reason=infos[env.possible_agents[0]]["terminal_reason"]
-        rows.append((reason, tick*env.config.dt_s)); env.close()
+        rows.append((reason, tick*env.config.dt_s)); family_rows.setdefault(family,[]).append(reason); env.close()
     return {"step":step,"episodes":len(rows),"success_rate":sum(x[0]=="success" for x in rows)/len(rows),
         "collision_rate":sum(x[0]=="collision" for x in rows)/len(rows),
         "timeout_rate":sum(x[0]=="deadline" for x in rows)/len(rows),
-        "completion_time_s":float(np.mean([x[1] for x in rows]))}
+        "completion_time_s":float(np.mean([x[1] for x in rows])),
+        "by_family":{name:{"episodes":len(reasons),"success_rate":reasons.count("success")/len(reasons),
+            "collision_rate":reasons.count("collision")/len(reasons),"timeout_rate":reasons.count("deadline")/len(reasons)}
+            for name,reasons in family_rows.items()}}
 
 
 def sarl_validation(actor, step, episodes=12, seed=82001, steps=300):
