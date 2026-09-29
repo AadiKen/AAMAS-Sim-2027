@@ -8,7 +8,13 @@ if [[ "$(uname -s)" != Linux || "$(uname -m)" != x86_64 ]]; then echo 'Linux x86
 python_bin="${PYTHON_BIN:-python3}"
 "$python_bin" --version || exit 2
 command -v nvidia-smi >/dev/null && nvidia-smi || echo 'nvidia-smi unavailable'
-"$python_bin" -m venv .venv-linux || exit 2
+if [[ ! -x .venv-linux/bin/python ]] || ! .venv-linux/bin/python -m pip --version >/dev/null 2>&1; then
+if ! "$python_bin" -m venv .venv-linux; then
+  echo "ensurepip unavailable; creating venv with system pip bootstrap"
+  rm -rf .venv-linux
+  "$python_bin" -m venv --without-pip --system-site-packages .venv-linux || exit 2
+fi
+fi
 py=.venv-linux/bin/python
 "$py" -m pip install --upgrade 'pip<27' 'setuptools>=68' wheel || exit 2
 "$py" -m pip install -e '.[marl,validation,test]' || exit 2
