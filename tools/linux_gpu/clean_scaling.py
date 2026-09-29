@@ -29,7 +29,7 @@ def main():
       writer=csv.DictWriter(f,fieldnames=FIELDS);writer.writeheader();f.flush()
       for count in a.counts:
        for rep in range(a.repetitions):
-        vector=None
+        vector=None;engines=None;actions=None
         try:
          load=os.getloadavg()[0];avail=psutil.virtual_memory().available;g=gpu()
          if load>max(2,os.cpu_count() or 1)*1.5 and not os.environ.get('SLURM_JOB_ID'):contaminated=True
@@ -48,6 +48,7 @@ def main():
          writer.writerow(row);f.flush();os.fsync(f.fileno());print(count,rep,row['status'],flush=True)
         except (MemoryError,RuntimeError) as e:
          (out/'oom.log').write_text(f'count={count} rep={rep}: {e}\n');print('Partial result, stopping larger N:',e,flush=True);return 0
-        finally:del vector
+        finally:
+         del vector,engines,actions
     return 0
 if __name__=='__main__':sys.exit(main())
