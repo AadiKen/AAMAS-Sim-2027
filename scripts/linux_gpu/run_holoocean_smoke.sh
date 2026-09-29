@@ -14,12 +14,19 @@ py="${HOLOOCEAN_PYTHON:-$root/.benchmark-deps/holoocean-linux/venv/bin/python}"
 runner=("$py")
 if [[ -z "${DISPLAY:-}${WAYLAND_DISPLAY:-}" ]]; then runner=(xvfb-run -a "$py"); fi
 "${runner[@]}" - <<'PY'
+import json,math,os
+from pathlib import Path
 from bcod_sim.benchmark.core import Benchmark,generate_scenario
 from bcod_sim.benchmark.holoocean_adapter import HoloOceanAdapter
 e=Benchmark(HoloOceanAdapter())
 try:
- e.reset(generate_scenario(8))
- for _ in range(3):e.step({f'vessel_{i}':(0.,0.) for i in range(4)})
- print('HoloOcean reset and 3 steps passed')
+ e.reset(generate_scenario(8));trace=[]
+ for _ in range(3):
+  e.step({f'vessel_{i}':(0.,0.) for i in range(4)})
+  state={name:{"x_m":v.x_m,"y_m":v.y_m,"heading_rad":v.heading_rad} for name,v in e.truth.items()}
+  assert all(math.isfinite(value) for pose in state.values() for value in pose.values())
+  trace.append({"sim_time_s":e.adapter.diagnostics["sim_time_s"],"state":state})
+ Path(os.environ.get("OUTPUT_DIR","paper_results/linux_gpu/holoocean-smoke")).joinpath("trace.json").write_text(json.dumps(trace,indent=2)+"\n")
+ print('HoloOcean reset and 3 finite-state steps passed')
 finally:e.close()
 PY
