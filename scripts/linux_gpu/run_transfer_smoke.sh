@@ -5,6 +5,8 @@ root="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)";cd "$root"
 out="${OUTPUT_DIR:-paper_results/linux_gpu/transfer-smoke}"
 [[ ! -e "$out" || "${1:-}" == --overwrite ]] || { echo "Output exists: $out" >&2;exit 2; }
 mkdir -p "$out";exec >> "$out/job.log" 2>&1
+"$root/.venv-linux/bin/python" tools/linux_gpu/hardware_manifest.py --output "$out/hardware.json" >/dev/null
+printf '%s\n' "$0 $*" > "$out/commands.txt"
 "${root}/.venv-linux/bin/python" - <<'PY' | tee "$out/status.json"
 import json
 from bcod_sim.benchmark_v3.deadline_harness.marl import ResidualCoordinatorEnv,make_four_vessel_scenario,GeometricCoordinator

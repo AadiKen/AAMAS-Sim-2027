@@ -5,6 +5,8 @@ root="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)";cd "$root"
 out="${OUTPUT_DIR:-paper_results/linux_gpu/pyquaticus-smoke}"
 [[ ! -e "$out" || "${1:-}" == --overwrite ]] || { echo "Output exists: $out" >&2;exit 2; }
 mkdir -p "$out";exec >> "$out/job.log" 2>&1
+"$root/.venv-linux/bin/python" tools/linux_gpu/hardware_manifest.py --output "$out/hardware.json" >/dev/null
+printf '%s\n' "$0 $*" > "$out/commands.txt"
 py="${PYQUATICUS_PYTHON:-$root/.venv-pyquaticus/bin/python}"
 [[ -x "$py" ]] || bash scripts/install_pyquaticus_benchmark.sh
 "$py" - <<'PY'
