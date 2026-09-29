@@ -45,7 +45,7 @@ def package_from_generated(root: str | Path) -> dict:
         "frames": {"body": "FRD", "force": "FRD", "velocity": "FRD", "moment": "FRD",
                    "reference_point_frd_m": [0., 0., 0.]},
         "force_ownership": {"rigid_coriolis": "Plant6", "added_mass_coriolis": "Plant6",
-                            "linear_damping": "runtime_payload.linear_damping_matrix",
+                            "linear_damping": "runtime_payload.linear_damping_matrix plus speed-dependent Inoue derivatives",
                             "nonlinear_damping": "runtime_payload.surge_resistance",
                             "crossflow": "runtime_payload.crossflow",
                             "restoring": "runtime_payload.hydrostatics"},
@@ -75,7 +75,8 @@ def package_from_generated(root: str | Path) -> dict:
                        "reference_point_frd_m": [0., 0., 0.]},
         "surge": {"model": "tabulated_sign_aware_resistance", "curve": spec.surge_resistance},
         "maneuvering": {"linear_damping_matrix": spec.linear_damping_matrix,
-                        "crossflow": spec.crossflow, "crossflow_includes_forward_speed_lift": True},
+                        "speed_dependent_linear_damping_matrix_per_mps": spec.speed_dependent_linear_damping_matrix_per_mps,
+                        "crossflow": spec.crossflow, "crossflow_includes_forward_speed_lift": False},
         "provenance": {"geometry_hash": spec.geometry["content_hash"],
                        "normalized_geometry_hash": provenance.get("processed_geometry_sha256"),
                        "generation_request_hash": provenance.get("generation_request_sha256"),
@@ -111,6 +112,7 @@ def load_coefficient_package(path: str | Path) -> dict:
     VesselRuntime.model_validate(runtime)
     if (package["added_mass"]["matrix_6x6"] != runtime["added_mass_kg"] or
         package["maneuvering"]["linear_damping_matrix"] != runtime["linear_damping_matrix"] or
+        package["maneuvering"].get("speed_dependent_linear_damping_matrix_per_mps") != runtime.get("speed_dependent_linear_damping_matrix_per_mps") or
         package["maneuvering"]["crossflow"] != runtime["crossflow"] or
         package["surge"]["curve"] != runtime["surge_resistance"] or
         package["hydrostatics"]["restoring"] != runtime["hydrostatics"]):
@@ -126,6 +128,9 @@ def load_coefficient_package(path: str | Path) -> dict:
 def _reference_damping(package: dict, nu: np.ndarray) -> np.ndarray:
     p = package["runtime_payload"]
     matrix = np.asarray(p["linear_damping_matrix"], float)
+    speed_matrix=p.get("speed_dependent_linear_damping_matrix_per_mps")
+    if speed_matrix is not None:
+        matrix=matrix+abs(float(nu[0]))*np.asarray(speed_matrix,float)
     result = -matrix @ nu
     speeds = np.asarray(p["surge_resistance"]["speed_mps"], float)
     forces = np.asarray(p["surge_resistance"]["force_x_n"], float)
@@ -182,7 +187,9 @@ def _runtime_plant(package: dict) -> Plant6:
     return Plant6(
         MassProperties(p.mass_kg, tensor(p.cg_frd_m), tensor(p.inertia_cg_kg_m2), tensor(p.added_mass_kg)),
         Damping(tensor(p.linear_damping), tensor(p.quadratic_damping), tensor(p.linear_damping_matrix),
-                surge_resistance_curve=(tensor(p.surge_resistance["speed_mps"]), tensor(p.surge_resistance["force_x_n"]))),
+                surge_resistance_curve=(tensor(p.surge_resistance["speed_mps"]), tensor(p.surge_resistance["force_x_n"])),
+                speed_dependent_linear_matrix_per_mps=(tensor(p.speed_dependent_linear_damping_matrix_per_mps)
+                    if p.speed_dependent_linear_damping_matrix_per_mps is not None else None)),
         RestoringLUT(tensor(h["axes"]["heave_m"]), tensor(h["axes"]["roll_rad"]),
                      tensor(h["axes"]["pitch_rad"]), tensor(h["wrench_frd"])),
         OperatingEnvelope(tensor(p.max_abs_nu), p.min_substep_s, p.max_substep_s),

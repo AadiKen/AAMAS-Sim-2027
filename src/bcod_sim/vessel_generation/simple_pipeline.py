@@ -22,12 +22,13 @@ from .simple_crossflow import extract_crossflow_stations
 from .simple_wave import guarded_wave_curve, thin_ship_applicable
 from .simple_hydro_mesh import reduce_hydrodynamic_mesh, mesh_hash
 from .simple_models import (classify, crossflow, extract_stations, inertia_estimate,
-                            resistance_curve, strip_added_mass, try_bem)
+                            inoue_linear_maneuvering, resistance_curve,
+                            strip_added_mass, try_bem)
 from .simple_sections import hydrostatic_state, solve_waterline
 from .models import CanonicalVessel, ParameterLineage
 
 SCHEMA = "bcod-simple-hydrodynamics-v1"
-MODEL_ID = "bcod-passive-phase3a-1.0.0"
+MODEL_ID = "bcod-passive-model-revision-3"
 
 
 def _write(root: Path, name: str, value: dict) -> None:
@@ -201,6 +202,7 @@ def _restoring_equilibrium(restoring: dict, mass: float, length: float) -> dict:
 
 
 def _validate(mass: float, inertia: np.ndarray, added: np.ndarray, linear: np.ndarray,
+              speed_linear: np.ndarray,
               stations: list[dict], density: float, curve: dict, hydro: dict) -> dict:
     failures = []
     if not np.isfinite(inertia).all() or np.linalg.eigvalsh(inertia).min() <= 0:
@@ -209,13 +211,15 @@ def _validate(mass: float, inertia: np.ndarray, added: np.ndarray, linear: np.nd
         failures.append("added mass is not positive semidefinite")
     if not np.isfinite(linear).all() or np.linalg.eigvalsh((linear + linear.T) / 2).min() < -1e-7:
         failures.append("linear damping is not dissipative")
+    if not np.isfinite(speed_linear).all() or np.linalg.eigvalsh((speed_linear+speed_linear.T)/2).min() < -1e-7:
+        failures.append("speed-dependent linear damping is not dissipative")
     checks = []
     for u in (-2., -1., 0., 1., 2.):
         for v in (-1., 0., 1.):
             for r in (-.5, 0., .5):
                 nu = np.array((u, v, 0., 0., 0., r))
                 force = crossflow(stations, density, nu)
-                force -= linear @ nu
+                force -= (linear + abs(u)*speed_linear) @ nu
                 drag = float(np.interp(u, curve["speed_mps"], curve["force_x_n"]))
                 force[0] += drag
                 power = float(nu @ force)
@@ -235,7 +239,7 @@ def _validate(mass: float, inertia: np.ndarray, added: np.ndarray, linear: np.nd
         nu[axis] = .1
         initial = float(.5 * nu @ base @ nu)
         for _ in range(200):
-            force = -linear @ nu - stiffness @ eta + crossflow(stations, density, nu)
+            force = -(linear+abs(nu[0])*speed_linear) @ nu - stiffness @ eta + crossflow(stations, density, nu)
             force[0] += float(np.interp(nu[0], curve["speed_mps"], curve["force_x_n"]))
             nu = nu + .01 * np.linalg.solve(base, force)
             eta = eta + .01 * nu
@@ -377,6 +381,8 @@ def generate_simple_vessel(*, geometry: str | Path, output: str | Path, mass_kg:
     hull_count = len(hull_components)
     bare_hulls = trimesh.util.concatenate(hull_components)
     regime = classify(mesh, draft, hull_count, speed_range_mps[1], volume, classification)
+    resistance_length = (float(reference_length_m) if reference_length_m is not None else
+                         float(known_length_m) if known_length_m is not None else float(mesh.extents[0]))
     try:
         stations = extract_stations(bare_hulls, waterline)
     except ValueError as exc:
@@ -421,14 +427,30 @@ def generate_simple_vessel(*, geometry: str | Path, output: str | Path, mass_kg:
     if inertia.shape != (3, 3):
         raise ValueError("Inertia tensor must be 3x3")
     linear = np.zeros((6, 6))
-    # Sway/yaw lift is speed-dependent and lives in the sectional model.
-    # The quadratic separated-flow term has no arbitrary tangent velocity.
-    # Conservative critical-damping fractions are explicit low-confidence
-    # maneuvering-time estimates; radiation damping is never inserted here.
+    # Existing vertical critical-fraction estimates remain; horizontal linear
+    # maneuvering derivatives are supplied by the guarded Inoue provider.
     effective = np.diag(inertia)
     linear[2, 2] = .04 * math.sqrt(max(stiffness[2, 2], 0.) * (mass_kg + added[2, 2]))
     linear[3, 3] = .10 * math.sqrt(max(stiffness[3, 3], 0.) * (effective[0] + added[3, 3]))
     linear[4, 4] = .04 * math.sqrt(max(stiffness[4, 4], 0.) * (effective[1] + added[4, 4]))
+    maneuvering_linear = {"method":"not_applicable","confidence":"unavailable",
+                          "reason":"outside the guarded displacement-monohull domain"}
+    speed_linear=np.zeros((6,6))
+    if (hull_count==1 and regime["classification"] in {"displacement_monohull","slender_displacement_monohull"}
+        and regime["supporting_metrics"]["max_froude"]<=.4):
+        try:
+            maneuvering_linear=inoue_linear_maneuvering(mass_kg=mass_kg,density=water_density_kg_m3,
+                length_m=resistance_length,draft_m=draft,
+                block_coefficient=regime["supporting_metrics"]["block_coefficient"])
+            speed_linear=np.asarray(maneuvering_linear["damping_matrix_per_mps"],float)
+        except ValueError as exc:
+            maneuvering_linear={"method":"not_applicable","confidence":"unavailable","reason":str(exc)}
+    # Transfer the old lift response only when the new provider applies; keep
+    # it intact as the fallback outside the Inoue geometry gate.
+    if maneuvering_linear["method"]!="not_applicable":
+        for station in crossflow_stations:
+            station["lift_base_kg_per_m"]=0.
+            station["lift_method"]="disabled_owned_by_linear_maneuvering_revision_3"
     begin = perf_counter()
     speeds = np.linspace(speed_range_mps[0], speed_range_mps[1], 17)
     speeds = np.unique(np.r_[-speeds[::-1], 0., speeds])
@@ -445,8 +467,6 @@ def generate_simple_vessel(*, geometry: str | Path, output: str | Path, mass_kg:
             wave_rejection = str(exc)
     else:
         wave_rejection = "Outside guarded thin/fine displacement domain (L/B>=10, Cb<=0.55, Fn<=0.45, monohull)"
-    resistance_length = (float(reference_length_m) if reference_length_m is not None else
-                         float(known_length_m) if known_length_m is not None else float(mesh.extents[0]))
     resistance = resistance_curve(speeds, length=resistance_length,
         wetted_area=hydro["wetted_area_m2"], density=water_density_kg_m3,
         viscosity=water_kinematic_viscosity_m2_s,
@@ -468,7 +488,7 @@ def generate_simple_vessel(*, geometry: str | Path, output: str | Path, mass_kg:
                                    water_density_kg_m3, 9.80665, lut_samples, center=exact_center)
         equilibrium = _restoring_equilibrium(restoring, mass_kg, float(mesh.extents[0]))
     timings["restoring_lut_s"] = perf_counter() - begin
-    validation = _validate(mass_kg, inertia, added, linear, crossflow_stations,
+    validation = _validate(mass_kg, inertia, added, linear, speed_linear, crossflow_stations,
                            water_density_kg_m3, resistance, hydro)
     if not validation["passed"]:
         raise ValueError("Passive validation failed: " + ", ".join(validation["failures"]))
@@ -497,6 +517,7 @@ def generate_simple_vessel(*, geometry: str | Path, output: str | Path, mass_kg:
                   "canonical_frame": "FRD", "classification": regime, "bem": bem,
                   "strip": {"method": strip["method"], "stations": len(stations)},
                   "resistance_method": resistance["method"],
+                  "model_revision": 3, "linear_maneuvering": maneuvering_linear,
                   "restoring_equilibrium": equilibrium,
                   "crossflow_method": "sectional_translation_shear_v5",
                   "crossflow_provenance": crossflow_provenance,
@@ -519,8 +540,12 @@ def generate_simple_vessel(*, geometry: str | Path, output: str | Path, mass_kg:
                  "method": "rigid_body_mass_matrix", "applicability": "positive mass and positive inertia",
                  "confidence": confidence["inertia"], "provenance": prepared.source_hash},
         "linear_damping_matrix": {"value": linear.tolist(), "source": "analytical",
-            "method": "vertical_critical_fraction_only; sway_yaw_lift_in_section_model", "applicability": "vertical critical damping approximation",
+            "method": "vertical_critical_fraction_only", "applicability": "vertical critical damping approximation",
             "confidence": "low", "provenance": prepared.processed_hash},
+        "speed_dependent_linear_damping_matrix_per_mps": {"value": speed_linear.tolist(),
+            "source": "geometry-derived", "method": maneuvering_linear["method"],
+            "applicability": maneuvering_linear.get("applicability",maneuvering_linear.get("reason","not applicable")),
+            "confidence": maneuvering_linear["confidence"], "provenance": prepared.processed_hash},
         "surge_resistance": {"value": resistance["force_x_n"], "source": "analytical",
             "method": resistance["method"], "applicability": resistance["limitations"],
             "confidence": "low", "provenance": prepared.processed_hash},
@@ -532,6 +557,7 @@ def generate_simple_vessel(*, geometry: str | Path, output: str | Path, mass_kg:
             "confidence": "medium", "provenance": prepared.processed_hash}}
     coefficients = {"M_RB": rigid.tolist(), "M_A": added.tolist(),
                     "linear_damping_matrix": linear.tolist(),
+                    "speed_dependent_linear_damping_matrix_per_mps": speed_linear.tolist(),
                     "maneuvering_radiation_damping": "excluded",
                     "parameter_metadata": parameter_metadata}
     # Runtime package retains the current BCOD schema and adds optional
@@ -541,6 +567,7 @@ def generate_simple_vessel(*, geometry: str | Path, output: str | Path, mass_kg:
               "added_mass_kg": added.tolist(), "linear_damping": [0.] * 6,
               "quadratic_damping": [0.] * 6,
               "linear_damping_matrix": linear.tolist(),
+              "speed_dependent_linear_damping_matrix_per_mps": speed_linear.tolist(),
               "hydrostatics": restoring,
               "crossflow": {"model": "sectional_stations", "stations": crossflow_stations,
                             "water_density_kg_m3": water_density_kg_m3},
@@ -562,6 +589,7 @@ def generate_simple_vessel(*, geometry: str | Path, output: str | Path, mass_kg:
         "inertia_cg_kg_m2": ParameterLineage(source_kind="manual" if inertia_cg_kg_m2 is not None else "empirical", source_id=source_id),
         "added_mass_kg": ParameterLineage(source_kind=added_source, source_id=generated_id),
         "linear_damping": ParameterLineage(source_kind="empirical", source_id=generated_id),
+        "speed_dependent_linear_damping_matrix_per_mps": ParameterLineage(source_kind="analytical", source_id=generated_id),
         "quadratic_damping": ParameterLineage(source_kind="geometry-derived", source_id=generated_id),
         "buoyancy_n": ParameterLineage(source_kind="geometry-derived", source_id=generated_id),
     }
@@ -572,7 +600,8 @@ def generate_simple_vessel(*, geometry: str | Path, output: str | Path, mass_kg:
     _write(root, "resistance.json", resistance)
     _write(root, "maneuvering.json", {"crossflow": vessel["crossflow"],
              "crossflow_provenance": crossflow_provenance,
-             "linear_damping": {"method": "forward_speed_dependent_guarded_lift_in_section_model", "confidence": "low"},
+             "linear_damping": maneuvering_linear,
+             "crossflow_contribution": "nonlinear sectional drag; lift transferred only where the revision-3 linear provider applies",
              "roll_damping": {"method": "critical_fraction_placeholder", "fraction": .05, "confidence": "low"},
              "heave_pitch_damping": {"method": "critical_fraction_placeholder", "fraction": .02, "confidence": "low"},
              "calibration_hooks": provenance["calibration_hooks"]})

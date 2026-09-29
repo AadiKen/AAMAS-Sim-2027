@@ -12,6 +12,8 @@ from bcod_sim.config.registry import Registry
 from bcod_sim.config.resolver import resolve
 from bcod_sim.core.errors import PhysicalValidationError
 from bcod_sim.core.lifecycle import DirectAction
+from bcod_sim.core.lifecycle import PhysicalAction
+from bcod_sim.communication import CommunicatingAction
 from bcod_sim.frames.transforms import ned_to_web
 from bcod_sim.logging.artifacts import resolved_artifact
 from bcod_sim.logging.recorder import RunRecorder
@@ -88,14 +90,26 @@ class SimulationService:
         result = {}
         for name, value in payload.items():
             mode = engine.config_vessels[name].controller.mode
+            message = None
+            if engine.communication.config.enabled:
+                if not isinstance(value, dict) or set(value) != {"control", "message"}:
+                    raise PhysicalValidationError("Communicating action requires control and message fields")
+                message = tuple(float(x) for x in value["message"])
+                value = value["control"]
             if mode == "direct_actuator":
                 if not isinstance(value, dict): raise PhysicalValidationError("Direct action must be an object")
-                result[name] = DirectAction(tuple((key, ThrustCommand(float(command)))
-                                                  for key, command in sorted(value.items())))
+                if engine.vessels[name].physical_pipeline is not None:
+                    control = PhysicalAction(tuple((key, tuple(float(x) for x in command) if isinstance(command, list)
+                                                    else (float(command),)) for key, command in sorted(value.items())))
+                else:
+                    control = DirectAction(tuple((key, ThrustCommand(float(command)))
+                                                 for key, command in sorted(value.items())))
+                result[name] = CommunicatingAction(control, message) if message is not None else control
             elif mode == "high_level":
                 if not isinstance(value, dict) or set(value) != {"desired_speed_mps", "desired_heading_rad"}:
                     raise PhysicalValidationError("High-level action fields mismatch")
-                result[name] = HighLevelCommand(float(value["desired_speed_mps"]), float(value["desired_heading_rad"]))
+                control = HighLevelCommand(float(value["desired_speed_mps"]), float(value["desired_heading_rad"]))
+                result[name] = CommunicatingAction(control, message) if message is not None else control
             else: raise PhysicalValidationError("Scripted agents do not accept policy actions")
         return result
 

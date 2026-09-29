@@ -45,6 +45,7 @@ def write_json(path: Path, value) -> None:
 def read_config(path: Path, backend: str | None = None, seed: int | None = None,
                 action_mode: str | None = None):
     settings = yaml.safe_load(path.read_text())
+    settings.setdefault("scenario_stage", "S0")
     policy_action = settings.setdefault("policy_action", {"mode": "low_level"})
     if action_mode is not None:
         policy_action["mode"] = action_mode.replace("-", "_")
@@ -64,6 +65,55 @@ def read_config(path: Path, backend: str | None = None, seed: int | None = None,
     if settings["validation_count"] < 50:
         raise ValueError("S0 held-out bank must contain at least 50 geometries")
     return settings, task
+
+
+def resolve_recipe(recipe, seed=None):
+    """Resolve a validated paper recipe into the established V3 SARL settings."""
+    from bcod_sim.training.recipe import TrainingRecipe
+    from dataclasses import asdict
+    if not isinstance(recipe, TrainingRecipe):
+        recipe = TrainingRecipe.model_validate(recipe)
+    if recipe.trainer.library != "stable_baselines3" or recipe.trainer.algorithm != "PPO":
+        raise ValueError("V3 SARL adapter requires stable_baselines3/PPO")
+    env, trainer, evaluation = recipe.environment, recipe.trainer, recipe.evaluation
+    scenario_stage = env.scenario
+    if scenario_stage not in {"S0", "S1"}:
+        raise ValueError(f"Unsupported V3 SARL scenario: {scenario_stage}")
+    # These settings equal configs/benchmark_v3/s0_high_level_ppo.yaml defaults.
+    task = TaskConfig(agent_count=env.agent_count, dynamics=env.backend,
+        action_mode=env.action_mode, deadline_steps=env.deadline_steps,
+        dt_s=env.dt_s, half_width_m=env.half_width_m, goal_radius_m=env.goal_radius_m,
+        vessel_radius_m=env.vessel_radius_m, max_surge_mps=env.max_surge_mps,
+        max_yaw_rps=env.max_yaw_rps, max_heading_offset_rad=env.max_heading_offset_rad,
+        heading_k_p=env.heading_k_p, visibility_m=env.visibility_m,
+        discount_per_second=env.discount_per_second, progress_weight=env.progress_weight,
+        goal_bonus=env.goal_bonus, collision_penalty=env.collision_penalty,
+        step_penalty=env.step_penalty)
+    settings = {"task": asdict(task), "policy_action": {"mode": env.action_mode,
+        "max_heading_offset_rad": task.max_heading_offset_rad, "heading_k_p": task.heading_k_p},
+        "algorithm": "sb3_ppo", "policy": "MlpPolicy", "device": trainer.device,
+        "n_envs": trainer.n_envs or 1, "n_steps": trainer.rollout_steps or 2048,
+        "batch_size": trainer.batch_size or 64, "n_epochs": trainer.epochs or 10,
+        "learning_rate": trainer.learning_rate or 0.0003, "gae_lambda": trainer.gae_lambda or 0.95,
+        "clip_range": trainer.clip_range or 0.2, "ent_coef": trainer.ent_coef or 0.0,
+        "vf_coef": trainer.vf_coef or 0.5,
+        "max_grad_norm": trainer.max_grad_norm or 0.5, "total_timesteps": trainer.total_steps or 51200,
+        "seed": seed if seed is not None else recipe.seeds[0],
+        "evaluation_interval_steps": evaluation.interval_steps,
+        "validation_count": evaluation.cases, "validation_seed": evaluation.seed,
+        "scenario_stage": scenario_stage}
+    if settings["validation_count"] < 50:
+        raise ValueError("V3 held-out validation bank requires at least 50 cases")
+    if settings["n_envs"] not in (1, 8):
+        raise ValueError("V3 single-agent training requires 1 or 8 vector environments")
+    return settings, task
+
+
+def train_recipe(recipe, run_dir: Path, *, seed=None):
+    settings, _ = resolve_recipe(recipe, seed=seed)
+    settings["recipe"] = recipe.model_dump(mode="json")
+    return train_one(Path("<resolved-recipe>"), run_dir, seed=settings["seed"],
+                     total_timesteps=settings["total_timesteps"], resolved_values=settings)
 
 
 def versions():
@@ -158,6 +208,12 @@ def evaluate_checkpoint(model, task, settings, run_dir, step):
     return report
 
 
+def evaluate_run(run_dir: Path, checkpoint: Path | None = None):
+    settings, task = read_config(run_dir / "config.resolved.yaml")
+    model = load_policy(checkpoint or run_dir / "latest.zip", task)
+    return evaluate_checkpoint(model, task, settings, run_dir, int(model.num_timesteps))
+
+
 def status(model, settings, requested, state):
     steps = int(model.num_timesteps)
     return {"state": state, "requested_environment_steps": requested,
@@ -170,8 +226,12 @@ def status(model, settings, requested, state):
 
 
 def train_one(config_path: Path, run_dir: Path, *, seed=None, backend=None, total_timesteps=None,
-              action_mode=None):
-    settings, task = read_config(config_path, backend=backend, seed=seed, action_mode=action_mode)
+              action_mode=None, resolved_values=None):
+    if resolved_values is None:
+        settings, task = read_config(config_path, backend=backend, seed=seed, action_mode=action_mode)
+    else:
+        settings = dict(resolved_values)
+        task = TaskConfig(**settings["task"])
     target = int(total_timesteps or settings["total_timesteps"])
     interval = int(settings["evaluation_interval_steps"])
     rollout_transitions = settings["n_envs"] * settings["n_steps"]
@@ -186,7 +246,8 @@ def train_one(config_path: Path, run_dir: Path, *, seed=None, backend=None, tota
     bank_hash = hashlib.sha256(json.dumps([c.geometry_hash() for c in bank],
                                           separators=(",", ":")).encode()).hexdigest()
     lock = Path("configs/benchmark_v3/requirements.lock")
-    manifest = {"run_id": str(uuid.uuid4()), "created_at_utc": datetime.now(timezone.utc).isoformat(),
+    manifest = {"trainer": "stable_baselines3", "algorithm": "PPO",
+                "run_id": str(uuid.uuid4()), "created_at_utc": datetime.now(timezone.utc).isoformat(),
                 "code_revision": revision(), "dependencies": versions(),
                 "dependency_lock_sha256": hashlib.sha256(lock.read_bytes()).hexdigest(),
                 "backend": task.dynamics, "task": asdict(task), "schema": schema_record(task),

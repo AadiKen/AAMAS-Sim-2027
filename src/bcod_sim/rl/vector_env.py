@@ -9,9 +9,11 @@ from bcod_sim.batching.population import Population, flatten_population
 from bcod_sim.core.engine import EpisodeEngine, EpisodeFrame
 from bcod_sim.core.errors import DuplicateIdentityError, PhysicalValidationError
 from bcod_sim.core.lifecycle import DirectAction
+from bcod_sim.core.lifecycle import PhysicalAction
+from bcod_sim.communication import CommunicatingAction
 
 
-Action = DirectAction | HighLevelCommand
+Action = DirectAction | PhysicalAction | HighLevelCommand | CommunicatingAction
 
 
 @dataclass(frozen=True)
@@ -67,4 +69,3 @@ class VectorEnvironment:
 
     def population(self) -> Population:
         return flatten_population(self.engines)
-

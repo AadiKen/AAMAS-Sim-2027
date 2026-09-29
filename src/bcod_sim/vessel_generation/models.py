@@ -47,6 +47,7 @@ class CanonicalVessel(Strict):
     linear_damping: tuple[float, float, float, float, float, float]
     quadratic_damping: tuple[float, float, float, float, float, float]
     linear_damping_matrix: tuple[tuple[float, float, float, float, float, float], ...] | None = None
+    speed_dependent_linear_damping_matrix_per_mps: tuple[tuple[float, float, float, float, float, float], ...] | None = None
     coupled_damping_terms: tuple[dict[str, Any], ...] = ()
     hydrostatics: dict[str, Any] | None = None
     crossflow: dict[str, Any] | None = None
@@ -78,6 +79,10 @@ class CanonicalVessel(Strict):
             linear=np.asarray(self.linear_damping_matrix)
             if linear.shape!=(6,6) or not np.isfinite(linear).all() or np.linalg.eigvalsh((linear+linear.T)/2).min() < -1e-9:
                 raise ValueError("linear damping matrix must be finite 6x6 and dissipative")
+        if self.speed_dependent_linear_damping_matrix_per_mps is not None:
+            linear=np.asarray(self.speed_dependent_linear_damping_matrix_per_mps)
+            if linear.shape!=(6,6) or not np.isfinite(linear).all() or np.linalg.eigvalsh((linear+linear.T)/2).min() < -1e-9:
+                raise ValueError("speed-dependent linear damping matrix must be finite 6x6 and dissipative")
         if self.collision.get("kind") not in {"sphere", "box"}:
             raise ValueError("collision geometry must use a supported shape")
         required = {"mass_kg", "cg_frd_m", "inertia_cg_kg_m2", "added_mass_kg",
@@ -89,7 +94,7 @@ class CanonicalVessel(Strict):
     def simulator_definitions(self) -> list[dict[str, Any]]:
         payload = self.model_dump(include={"mass_kg", "cg_frd_m", "inertia_cg_kg_m2", "added_mass_kg",
             "linear_damping", "quadratic_damping", "buoyancy_n", "center_buoyancy_frd_m", "max_abs_nu",
-            "linear_damping_matrix", "coupled_damping_terms", "hydrostatics", "crossflow", "surge_resistance",
+            "linear_damping_matrix", "speed_dependent_linear_damping_matrix_per_mps", "coupled_damping_terms", "hydrostatics", "crossflow", "surge_resistance",
             "min_substep_s", "max_substep_s",
             "collision", "environment_loads"}, mode="json")
         if self.hydrostatics is not None:

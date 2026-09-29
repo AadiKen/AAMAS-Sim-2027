@@ -66,7 +66,8 @@ class BCODBackend:
                   for i, o in enumerate(scenario.obstacles)]
         raw = {"schema_version": 1, "experiment": {"id": "benchmark", "seed": scenario.seed},
                "simulation": {"dynamics_mode": "planar3" if self.reduced_fidelity else "full6", "master_dt_s": cfg.dt_s,
-                              "dynamics_substeps": 2, "policy_every_n_master_steps": 1,
+                              "dynamics_substeps": max(2, math.ceil(cfg.dt_s / .1)),
+                              "policy_every_n_master_steps": 1,
                               "max_master_steps": cfg.deadline_steps + 1},
                "world": {"source": {"kind": "parametric"},
                          "environment": {"current": {"kind": "uniform", "ned_mps": [0, 0, 0]},

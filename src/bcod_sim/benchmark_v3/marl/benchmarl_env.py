@@ -24,10 +24,10 @@ class TensorInfoNavigationEnv(NavigationParallelEnv):
 
 
 def wrap_for_benchmarl(config, scenario=None, *, scenario_sampler=None,
-                       sampler_seed=None, backend=None, device="cpu"):
+                       sampler_seed=None, backend=None, device="cpu", return_state=True):
     env = TensorInfoNavigationEnv(config, scenario=scenario,
                                   scenario_sampler=scenario_sampler,
                                   sampler_seed=sampler_seed, backend=backend)
-    return PettingZooWrapper(env=env, return_state=True,
+    return PettingZooWrapper(env=env, return_state=return_state,
                              group_map={"agents": list(env.possible_agents)},
                              categorical_actions=True, device=device)

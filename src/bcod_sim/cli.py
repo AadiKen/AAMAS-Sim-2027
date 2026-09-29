@@ -96,6 +96,9 @@ def _generate(args) -> int:
 
 def main(argv=None) -> int:
     parser=argparse.ArgumentParser(prog="bcod");commands=parser.add_subparsers(dest="command",required=True)
+    benchmark=commands.add_parser("benchmark",help="check and run paper benchmark recipes")
+    benchmark.add_argument("benchmark_args", nargs=argparse.REMAINDER)
+    benchmark.set_defaults(handler=lambda args: __import__("bcod_sim.training.benchmark", fromlist=["main"]).main(args.benchmark_args))
     train=commands.add_parser('train',help='inspect or control an active training run')
     train.add_argument('action',choices=['status','pause','resume','stop','kill','checkpoint','evaluate','set'])
     train.add_argument('run',type=Path)

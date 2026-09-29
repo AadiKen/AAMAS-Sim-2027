@@ -289,14 +289,17 @@ class ActuatorSet:
             raise PhysicalValidationError("Committing actuator dynamics requires dt")
         loads: dict[str, DeviceLoad] = {}
         states: dict[str, DeviceState] = {}
+        limited_by_id = {}
         for device in self.devices:
             if device.kind == "rudder":
                 continue
             loads[device.id], states[device.id] = device.predict(commands[device.id], motion, dt=dt)
+            limited_by_id[device.id] = (states[device.id].saturated, states[device.id].rate_limited)
         source_thrust = {name: load.thrust_n for name, load in loads.items()}
         for device in self.devices:
             if device.kind == "rudder":
                 loads[device.id], states[device.id] = device.predict(commands[device.id], motion, source_thrust=source_thrust, dt=dt)
+            limited_by_id[device.id] = (states[device.id].saturated, states[device.id].rate_limited)
         if commit:
             for device in self.devices:
                 device.state = states[device.id]

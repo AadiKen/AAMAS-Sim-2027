@@ -245,6 +245,8 @@ class Vessel(StrictModel):
     spawn: Spawn
     dynamics: str | None = None
     actuators: tuple[str, ...] = ()
+    actuator_system: dict | None = None
+    actuator_backend: Literal["physical_v1"] | None = None
     sensors: tuple[str, ...] = ()
     policy: str | None = None
 
@@ -254,6 +256,13 @@ class Vessel(StrictModel):
             raise ValueError("Duplicate actuator reference")
         if len(self.sensors) != len(set(self.sensors)):
             raise ValueError("Duplicate sensor reference")
+        if self.actuator_system is not None and self.actuators:
+            raise ValueError("Use actuator_system or legacy actuator references, not both")
+        if self.actuator_backend == "physical_v1":
+            if self.controller.mode != "direct_actuator":
+                raise ValueError("physical_v1 currently requires direct_actuator mode")
+            if self.actuator_system is None:
+                raise ValueError("physical_v1 requires an actuator_system definition")
         return self
 
 
@@ -279,6 +288,14 @@ class Logging(StrictModel):
     backpressure: Literal["block", "drop_noncritical_with_event", "terminate"] = "block"
 
 
+class Communication(StrictModel):
+    enabled: bool = False
+    message_dim: int = Field(default=4, ge=1)
+    latency_steps: int = Field(default=1, ge=1)
+    max_range_m: Positive | None = None
+    dropout_probability: float = Field(default=0, ge=0, le=1, allow_inf_nan=False)
+
+
 class ExperimentConfig(StrictModel):
     schema_version: Literal[1]
     experiment: Experiment
@@ -287,6 +304,7 @@ class ExperimentConfig(StrictModel):
     vessels: tuple[Vessel, ...] = Field(min_length=1)
     task: Task
     logging: Logging = Logging()
+    communication: Communication = Communication()
     scenario_template: str | None = None
 
     @model_validator(mode="after")

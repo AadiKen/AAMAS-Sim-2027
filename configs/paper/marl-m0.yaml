@@ -1,0 +1,25 @@
+recipe_version: 1
+environment:
+  task: navigation-v3
+  scenario: M0
+  backend: kinematic
+  agent_count: 2
+  action_mode: high_level
+  deadline_steps: 600
+trainer:
+  library: benchmarl
+  algorithm: MAPPO
+  device: cpu
+  centralized_critic: true
+  total_steps: 24000
+  rollout_frames: 6000
+  environments: 10
+  minibatch_size: 400
+  minibatch_iterations: 45
+evaluation:
+  interval_steps: 6000
+  bank: m0-dev
+  cases: 50
+selection:
+  metrics: [fleet_success, collision, completion_time, path_efficiency]
+seeds: [11, 22, 33]

@@ -44,6 +44,38 @@ class DirectAction:
 
 
 @dataclass(frozen=True)
+class PhysicalAction:
+    """Direct normalized numeric commands for an ActuatorPipeline vessel."""
+    commands: tuple[tuple[str, tuple[float, ...]], ...]
+
+    def __post_init__(self) -> None:
+        import math
+        if not isinstance(self.commands, tuple) or any(not isinstance(k, str) or not isinstance(v, tuple) or
+                not v or not all(math.isfinite(float(x)) for x in v) for k, v in self.commands):
+            raise PhysicalValidationError("Physical action commands must be immutable finite numeric tuples")
+        if len({k for k, _ in self.commands}) != len(self.commands):
+            raise PhysicalValidationError("Duplicate physical actuator command")
+
+
+def common_differential_to_thruster_commands(thrust_percent: float, difference_percent: float,
+                                             *, port_id: str = "port", starboard_id: str = "starboard",
+                                             command_limit_percent: float = 100.) -> PhysicalAction:
+    """Map logged common/differential percentages to normalized direct commands.
+
+    Mixing is performed in the recorded command domain first, then each thruster
+    command is normalized and saturated independently to [-1, 1].
+    """
+    import math
+    if (not math.isfinite(thrust_percent) or not math.isfinite(difference_percent) or
+            not math.isfinite(command_limit_percent) or command_limit_percent <= 0 or
+            not port_id or not starboard_id or port_id == starboard_id):
+        raise PhysicalValidationError("Invalid common/differential actuator command")
+    port = max(-1., min(1., (thrust_percent + difference_percent) / command_limit_percent))
+    starboard = max(-1., min(1., (thrust_percent - difference_percent) / command_limit_percent))
+    return PhysicalAction(((port_id, (port,)), (starboard_id, (starboard,))))
+
+
+@dataclass(frozen=True)
 class AgentStatus:
     rl_active: bool
     physical_active: bool

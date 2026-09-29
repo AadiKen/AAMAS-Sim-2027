@@ -159,7 +159,8 @@ def train_curriculum(out: Path, seed: int, recipe_path: Path, *, smoke_dev_cases
         minibatch_iters=recipe["minibatch_iterations"], callback=callback,
         stage_path=stage_path, normalize_advantage=True)
     import benchmarl, torchrl, pettingzoo, tensordict
-    manifest = {"recipe": recipe, "recipe_hash": file_hash(recipe_path),
+    manifest = {"trainer": "benchmarl", "algorithm": "MAPPO",
+                "recipe": recipe, "recipe_hash": file_hash(recipe_path),
                 "seed": seed, "scenario_version": M0_CURRICULUM_VERSION,
                 "smoke_dev_cases": smoke_dev_cases,
                 "task_version": TASK_VERSION, "observation_version": OBSERVATION_VERSION,

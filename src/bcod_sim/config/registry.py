@@ -53,3 +53,11 @@ class Registry:
             return self._entries[(kind, id, version)]
         except KeyError as exc:
             raise UnknownReferenceError(f"Unknown {kind}: {reference}") from exc
+
+    def register_vessel_package(self, *, id: str, version: str, path: str) -> Definition:
+        from bcod_sim.vessel_generation.package_loader import VesselPackage
+        package = VesselPackage.load(path)
+        if package.id != id or package.version != version:
+            raise ValueError("Requested vessel package identity does not match package")
+        definition = package.definition()
+        return self.register("vessel", id, version, definition["payload"], definition["source"])

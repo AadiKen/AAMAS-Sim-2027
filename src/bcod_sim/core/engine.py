@@ -11,6 +11,7 @@ from bcod_sim.actuators.allocation import ActuatorBank
 from bcod_sim.actuators.autopilot import HeadingSpeedAutopilot, HighLevelCommand
 from bcod_sim.actuators.base import Actuator, ActuatorState
 from bcod_sim.actuators.thruster import FixedThruster
+from bcod_sim.actuators.physical import ActuatorPipeline, VesselMotion
 from bcod_sim.collision.broadphase import CollisionBody
 from bcod_sim.collision.shapes import Box, Capsule, CollisionShape, ConvexHull, Sphere, bounding_radius
 from bcod_sim.collision.solver import ContactEvent, ContactMaterial, resolve_contacts
@@ -20,8 +21,9 @@ from bcod_sim.core.environment_loads import ENVIRONMENT_TERMS, EnvironmentLoadMo
 from bcod_sim.core.errors import (BCODSimError, ExternalDataCoverageError,
                                   ExternalDataUnavailableError, NonFiniteStateError,
                                   PhysicalValidationError)
-from bcod_sim.core.lifecycle import AgentStatus, DirectAction, TerminationReason
+from bcod_sim.core.lifecycle import AgentStatus, DirectAction, PhysicalAction, TerminationReason
 from bcod_sim.frames.transforms import rpy_to_quaternion
+from bcod_sim.frames.tensor import rotate_world_to_body
 from bcod_sim.dynamics.crossflow import NoCrossflow
 from bcod_sim.rl.observation import ObservationContract
 from bcod_sim.scenario.generator import ResolvedScenario, ScenarioTemplate, generate
@@ -34,6 +36,7 @@ from bcod_sim.world.wake import GaussianWakeEmitter, WakeEmission
 from bcod_sim.world.world import ParametricWorld
 from bcod_sim.world.environment import Environment
 from bcod_sim.config.hashing import content_hash
+from bcod_sim.communication import CommunicationConfig, CommunicatingAction, MessageChannel
 
 
 @dataclass(frozen=True)
@@ -58,6 +61,7 @@ class EpisodeVessel:
     autopilot: HeadingSpeedAutopilot | None = None
     scripted_controller: ConstantScriptedController | None = None
     wake_emitter: GaussianWakeEmitter | None = None
+    physical_pipeline: ActuatorPipeline | None = None
 
 
 @dataclass(frozen=True)
@@ -96,6 +100,9 @@ class EpisodeCheckpoint:
     terminated: bool
     termination_reason: TerminationReason | None
     sensor_states: Mapping[tuple[int, int, str], object] = field(default_factory=dict)
+    physical_pipeline_states: Mapping[str, object] = field(default_factory=dict)
+    communication_state: object = None
+    policy_step: int = 0
 
 
 class EpisodeEngine:
@@ -138,7 +145,9 @@ class EpisodeEngine:
                 raise PhysicalValidationError("Dynamics substep violates vessel operating envelope")
             if vessel.environment_loads is None:
                 raise PhysicalValidationError("Every vessel requires explicit environment loads")
-            if authoring.controller.mode == "high_level" and vessel.autopilot is None:
+            if authoring.actuator_backend == "physical_v1" and vessel.physical_pipeline is None:
+                raise PhysicalValidationError("physical_v1 requires the Plant6 physical actuator pipeline")
+            if authoring.controller.mode == "high_level" and vessel.autopilot is None and vessel.physical_pipeline is None:
                 raise PhysicalValidationError("High-level vessel requires autopilot")
             if authoring.controller.mode == "scripted" and vessel.scripted_controller is None:
                 raise PhysicalValidationError("Scripted vessel requires controller")
@@ -148,6 +157,10 @@ class EpisodeEngine:
             for component in (*vessel.actuators, *vessel.sensors):
                 if component.config.env_id != 0 or component.config.owner_vessel_id != vessel.vessel_id:
                     raise PhysicalValidationError("Component owner mismatch")
+            if vessel.physical_pipeline is not None:
+                ids = tuple(device.id for device in vessel.physical_pipeline.actuators.devices)
+                if len(ids) != len(set(ids)):
+                    raise PhysicalValidationError("Physical actuator IDs must be unique")
             environment = Environment(self.world)
             for sensor in vessel.sensors:
                 requirements = frozenset(getattr(sensor, "requirements", ()))
@@ -191,8 +204,14 @@ class EpisodeEngine:
         self.held_commands: dict[tuple[int, int, str], object] = {}
         self.latest_packets: dict[tuple[int, str], SensorPacket] = {}
         self.last_propulsion: dict[str, torch.Tensor] = {}
+        self.last_actuator_diagnostics: dict[str, object] = {}
+        cfg = resolved.config.communication
+        self.communication = MessageChannel(CommunicationConfig(cfg.enabled, cfg.message_dim,
+            cfg.latency_steps, cfg.max_range_m, cfg.dropout_probability), resolved.config.experiment.seed,
+            tuple(name for name, v in self.config_vessels.items() if v.controller.mode != "scripted"))
         self.scheduler: SensorScheduler | None = None
         self.master_step = 0
+        self.policy_step = 0
         self.terminated = False
         self.termination_reason: TerminationReason | None = None
 
@@ -289,6 +308,8 @@ class EpisodeEngine:
         effective_seed = self.resolved.config.experiment.seed if seed is None else seed
         self.scenario = generate(self.resolved, self.template, seed=effective_seed,
                                  episode_index=episode_index)
+        self.communication.reset(effective_seed)
+        self._messages_for_step = {}
         self.world.wake = type(self.world.wake)()
         self.states = {}
         self.statuses = {}
@@ -306,12 +327,22 @@ class EpisodeEngine:
             self.statuses[spawn.instance_id] = AgentStatus(mode != "scripted", True, controller)
         self.actuator_states = {(0, a.config.owner_vessel_id, a.config.instance_id): ActuatorState()
                                 for a in self.all_actuators}
+        for vessel in self.vessels.values():
+            if vessel.physical_pipeline is not None:
+                for device in vessel.physical_pipeline.actuators.devices:
+                    device.state = type(device.state)()
+                vessel.physical_pipeline.allocator.last_valid = vessel.physical_pipeline.actuators.current_commands()
+                vessel.physical_pipeline.commands = vessel.physical_pipeline.actuators.current_commands()
+                vessel.physical_pipeline.elapsed = math.inf
+                vessel.physical_pipeline.allocation_feedback = None
         self.held_commands = {}
         self.latest_packets = {}
         self.last_propulsion = {name: state.nu_body.new_zeros((6,)) for name, state in self.states.items()}
+        self.last_actuator_diagnostics = {}
         self.scheduler = SensorScheduler(self.all_sensors,
             master_dt_s=self.resolved.config.simulation.master_dt_s)
         self.master_step = 0
+        self.policy_step = 0
         self.terminated = False
         self.termination_reason = None
         self.task.reset(self.states)
@@ -320,7 +351,7 @@ class EpisodeEngine:
         return EpisodeFrame(0, 0.0, self._state_snapshot(), observations, pending, delivered,
                             None, None, (), False, None, observation_freshness=freshness)
 
-    def _action_commands(self, actions: Mapping[str, DirectAction | HighLevelCommand],
+    def _action_commands(self, actions: Mapping[str, DirectAction | PhysicalAction | HighLevelCommand],
                          *, policy_tick: bool) -> None:
         active = {name for name, status in self.statuses.items() if status.rl_active}
         if policy_tick and set(actions) != active:
@@ -337,20 +368,38 @@ class EpisodeEngine:
                 action = vessel.scripted_controller.command(self.master_step, self.states[name])
             elif status.rl_active and policy_tick:
                 action = actions[name]
+                if isinstance(action, CommunicatingAction):
+                    if not self.communication.config.enabled:
+                        raise PhysicalValidationError("Communication action supplied while communication is disabled")
+                    if len(action.message) != self.communication.config.message_dim:
+                        raise PhysicalValidationError("Communication message dimension mismatch")
+                    self._messages_for_step = getattr(self, "_messages_for_step", {})
+                    self._messages_for_step[name] = tuple(action.message)
+                    action = action.control
             if action is None:
                 continue
             if status.controller == "policy_high_level":
                 if not isinstance(action, HighLevelCommand):
                     raise PhysicalValidationError("High-level controller requires HighLevelCommand")
+                if vessel.physical_pipeline is not None:
+                    self.held_commands[(0, vessel.vessel_id, "__physical_action__")] = copy.deepcopy(action)
+                    continue
                 from bcod_sim.dynamics.plant6 import _yaw
                 thrusters = tuple(a for a in vessel.actuators if isinstance(a, FixedThruster))
                 if len(thrusters) != len(vessel.actuators):
-                    raise PhysicalValidationError("High-level adapter supports fixed thrusters only")
+                    raise PhysicalValidationError("Legacy high-level adapter supports fixed thrusters only")
                 commands = vessel.autopilot.commands(action,
                     current_speed_mps=self.states[name].nu_body[0].item(),
                     current_heading_rad=_yaw(self.states[name].q_body_to_ned).item(),
                     thrusters=thrusters)
             else:
+                if vessel.physical_pipeline is not None and isinstance(action, PhysicalAction):
+                    commands = dict(action.commands)
+                    expected = set(vessel.physical_pipeline.actuators.by_id)
+                    if set(commands) != expected:
+                        raise PhysicalValidationError(f"Actuator commands do not match vessel {name}")
+                    self.held_commands[(0, vessel.vessel_id, "__physical_action__")] = action
+                    continue
                 if not isinstance(action, DirectAction):
                     raise PhysicalValidationError("Direct controller requires DirectAction")
                 commands = dict(action.commands)
@@ -379,14 +428,21 @@ class EpisodeEngine:
         else:
             self.statuses[name] = AgentStatus(False, True, status.controller, reason)
 
-    def step(self, actions: Mapping[str, DirectAction | HighLevelCommand]) -> EpisodeFrame:
+    def step(self, actions: Mapping[str, DirectAction | PhysicalAction | HighLevelCommand]) -> EpisodeFrame:
         if self.scenario is None or self.scheduler is None or self.terminated:
             raise PhysicalValidationError("Episode must be active before step")
         config = self.resolved.config.simulation
         dt = config.master_dt_s
         dt_sub = dt / config.dynamics_substeps
         try:
-            self._action_commands(actions, policy_tick=self.master_step % config.policy_every_n_master_steps == 0)
+            policy_tick = self.master_step % config.policy_every_n_master_steps == 0
+            if self.communication.config.enabled and policy_tick:
+                messages = {name: tuple(action.message) for name, action in actions.items()
+                            if isinstance(action, CommunicatingAction)}
+                self.communication.send(self.policy_step,
+                    {name: tuple(float(x) for x in state.position_ned[:2]) for name, state in self.states.items()}, messages)
+                self.policy_step += 1
+            self._action_commands(actions, policy_tick=policy_tick)
             self.world.wake.begin_step()
             contact_events: list[ContactEvent] = []
             for substep in range(config.dynamics_substeps):
@@ -394,19 +450,55 @@ class EpisodeEngine:
                 active_actuators = tuple(a for a in self.all_actuators if
                     self.statuses[next(name for name, vessel in self.vessels.items()
                                        if vessel.vessel_id == a.config.owner_vessel_id)].physical_active)
-                bank = ActuatorBank(active_actuators)
-                keys = set(bank.actuators)
-                if not keys.issubset(self.held_commands):
-                    raise PhysicalValidationError("Missing held actuator command")
-                bank_result = bank.step({key: self.held_commands[key] for key in keys},
-                                        {key: self.actuator_states[key] for key in keys}, dt_sub)
-                self.actuator_states.update(bank_result.states)
+                legacy = tuple(a for a in active_actuators if self.vessels[next(
+                    name for name, v in self.vessels.items() if v.vessel_id == a.config.owner_vessel_id)].physical_pipeline is None)
+                bank_result = None
+                if legacy:
+                    bank = ActuatorBank(legacy)
+                    keys = set(bank.actuators)
+                    if not keys.issubset(self.held_commands):
+                        raise PhysicalValidationError("Missing held actuator command")
+                    bank_result = bank.step({key: self.held_commands[key] for key in keys},
+                                            {key: self.actuator_states[key] for key in keys}, dt_sub)
+                    self.actuator_states.update(bank_result.states)
                 stepped = {}
                 for name in sorted(self.vessels):
                     if not self.statuses[name].physical_active:
                         continue
                     vessel, state = self.vessels[name], self.states[name]
-                    wrench = bank_result.wrenches_by_owner.get((0, vessel.vessel_id), (0.,)*6)
+                    if vessel.physical_pipeline is not None:
+                        action = self.held_commands.get((0, vessel.vessel_id, "__physical_action__"))
+                        if action is None:
+                            raise PhysicalValidationError("Missing physical pipeline command")
+                        from bcod_sim.dynamics.plant6 import _yaw
+                        state = self.states[name]
+                        current = self._water_velocity_ned(vessel, state, sub_time)
+                        current_body = (state.nu_body.new_zeros(3) if current is None else rotate_world_to_body(current, state.q_body_to_ned))
+                        motion = VesselMotion(tuple(float(x) for x in state.nu_body[:3]),
+                            tuple(float(x) for x in state.nu_body[3:]),
+                            tuple(float(x) for x in current_body),
+                            float(_yaw(state.q_body_to_ned)), 1025.)
+                        if isinstance(action, HighLevelCommand): mode, value = "DESIRED_SPEED_HEADING", (action.desired_speed_mps, action.desired_heading_rad)
+                        elif isinstance(action, PhysicalAction):
+                            mode = "DIRECT_ACTUATOR"
+                            value = dict(action.commands)
+                        elif isinstance(action, DirectAction):
+                            mode = "DIRECT_ACTUATOR"
+                            raise PhysicalValidationError("Physical actuator systems require PhysicalAction for direct commands")
+                        else: raise PhysicalValidationError("Physical pipeline requires DirectAction or HighLevelCommand")
+                        prediction = vessel.physical_pipeline.step(mode, value, motion, dt_sub)
+                        wrench = prediction.wrench_frd
+                        allocation = vessel.physical_pipeline.allocation_feedback
+                        self.last_actuator_diagnostics[name] = {"requested": value,
+                            "requested_wrench": None if allocation is None else allocation.requested_wrench,
+                            "achieved_wrench": prediction.wrench_frd,
+                            "allocation_residual": None if allocation is None else allocation.residual,
+                            "allocation": allocation,
+                            "saturated": any(device.saturated for device in prediction.devices),
+                            "rate_limited": any(device.rate_limited for device in prediction.devices)}
+                    else:
+                        wrench = (bank_result.wrenches_by_owner.get((0, vessel.vessel_id), (0.,)*6)
+                                  if bank_result is not None else (0.,)*6)
                     propulsion = state.nu_body.new_tensor(wrench)
                     self.last_propulsion[name] = propulsion.clone()
                     external = self._external(vessel, state, sub_time, propulsion)
@@ -432,6 +524,11 @@ class EpisodeEngine:
             sim_time_s = self.master_step * dt
             delivered = self.scheduler.tick(self.master_step, self._sensor_contexts(sim_time_s))
             observations, pending, freshness = self._deliver(delivered, sim_time_s)
+            if self.communication.config.enabled and policy_tick:
+                for name, status in self.statuses.items():
+                    if status.rl_active:
+                        observations[name] = {**observations.get(name, {}),
+                                              "received_messages": self.communication.receive(self.policy_step, name)}
             active = tuple(sorted(name for name, status in self.statuses.items() if status.rl_active))
             evaluation = self.task.evaluate(self.states, active)
             reward = compose_reward(evaluation, self.resolved.config.task.reward, active)
@@ -466,7 +563,13 @@ class EpisodeEngine:
             frozenset(self.scheduler.disabled_owners), self.world.wake._current,
             self.world.wake.generation, self.task.snapshot(), self.terminated, self.termination_reason,
             {key: copy.deepcopy(sensor.snapshot()) for key, sensor in self.scheduler.sensors.items()
-             if callable(getattr(sensor, "snapshot", None))})
+             if callable(getattr(sensor, "snapshot", None))},
+            {name: copy.deepcopy(([(device.id, copy.deepcopy(device.state)) for device in vessel.physical_pipeline.actuators.devices],
+                vessel.physical_pipeline.commands, vessel.physical_pipeline.elapsed,
+                vessel.physical_pipeline.allocation_feedback, vessel.physical_pipeline.controller.speed_integral if vessel.physical_pipeline.controller else None,
+                vessel.physical_pipeline.allocator.last_valid))
+             for name, vessel in self.vessels.items() if vessel.physical_pipeline is not None},
+            copy.deepcopy(self.communication.queued), self.policy_step)
 
     def restore(self, checkpoint: EpisodeCheckpoint) -> None:
         if self.scenario is None or self.scheduler is None or self.scenario.content_hash != checkpoint.scenario_hash:
@@ -486,6 +589,16 @@ class EpisodeEngine:
         for key, state in checkpoint.sensor_states.items():
             sensor = self.scheduler.sensors[key]
             sensor.restore(copy.deepcopy(state))
+        for name, snapshot in checkpoint.physical_pipeline_states.items():
+            pipeline = self.vessels[name].physical_pipeline
+            assert pipeline is not None
+            states, pipeline.commands, pipeline.elapsed, pipeline.allocation_feedback, integral, pipeline.allocator.last_valid = copy.deepcopy(snapshot)
+            for device_id, state in states:
+                pipeline.actuators.by_id[device_id].state = state
+            if pipeline.controller is not None and integral is not None:
+                pipeline.controller.speed_integral = integral
+        self.communication.queued = copy.deepcopy(checkpoint.communication_state or {})
+        self.policy_step = checkpoint.policy_step
         self.world.wake._current = checkpoint.wake_current
         self.world.wake.generation = checkpoint.wake_generation
         self.task.restore(checkpoint.task_snapshot)

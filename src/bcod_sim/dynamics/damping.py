@@ -29,6 +29,7 @@ class Damping:
     coupled_terms:tuple[CoupledDampingTerm,...]=()
     intended_dissipative:bool=True
     surge_resistance_curve:tuple[torch.Tensor,torch.Tensor]|None=None
+    speed_dependent_linear_matrix_per_mps:torch.Tensor|None=None
 
     def validate(self,*,dtype:torch.dtype,device:torch.device)->None:
         for name,value in (("linear",self.linear),("quadratic",self.quadratic)):
@@ -41,6 +42,13 @@ class Damping:
                 symmetric=(matrix+matrix.T)/2
                 if torch.linalg.eigvalsh(symmetric)[0].item() < -1e-10*max(1.,torch.linalg.matrix_norm(matrix).item()):
                     raise PhysicalValidationError("Intended-dissipative linear damping is not positive semidefinite")
+        if self.speed_dependent_linear_matrix_per_mps is not None:
+            matrix=self.speed_dependent_linear_matrix_per_mps
+            if matrix.shape!=(6,6) or matrix.dtype!=dtype or matrix.device!=device or not torch.isfinite(matrix).all().item():
+                raise PhysicalValidationError("Speed-dependent linear damping must be finite 6x6 and match plant")
+            symmetric=(matrix+matrix.T)/2
+            if self.intended_dissipative and torch.linalg.eigvalsh(symmetric)[0].item() < -1e-10*max(1.,torch.linalg.matrix_norm(matrix).item()):
+                raise PhysicalValidationError("Speed-dependent damping is not dissipative")
         for term in self.coupled_terms: term.validate()
         if self.surge_resistance_curve is not None:
             speeds,forces=self.surge_resistance_curve
@@ -53,6 +61,8 @@ class Damping:
 
     def components(self,nu_relative:torch.Tensor)->tuple[torch.Tensor,torch.Tensor]:
         matrix=torch.diag(self.linear) if self.linear_matrix is None else self.linear_matrix
+        if self.speed_dependent_linear_matrix_per_mps is not None:
+            matrix=matrix+nu_relative[0].abs()*self.speed_dependent_linear_matrix_per_mps
         linear=-(matrix@nu_relative)
         nonlinear=-self.quadratic*nu_relative.abs()*nu_relative
         if self.surge_resistance_curve is not None:

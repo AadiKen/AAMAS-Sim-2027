@@ -19,7 +19,7 @@ from ..centralized_state import CENTRALIZED_STATE_VERSION, STATE_SCHEMA_HASH
 from ..observations import SCHEMA_HASH as ACTOR_SCHEMA_HASH
 from .evaluate import BenchMARLActorPolicy, evaluate_m0
 from .scenarios import M0_SCENARIO_VERSION, bank_hash, m0_dev_bank, m0_test_bank
-from .task import V3M0Task
+from .task import V3BenchMARLTask, V3M0Task
 
 
 def write_json(path, value):
@@ -95,8 +95,15 @@ class DevSelection(Callback):
 
 def make_experiment(out, seed, *, frames, rollout_frames, envs, minibatch_size,
                     minibatch_iters, callback, stage_path=None,
-                    normalize_advantage=False):
-    task = V3M0Task(stage_path=stage_path)
+                    normalize_advantage=False, task_config=None, scenario_sampler=None,
+                    centralized_state=True):
+    if task_config is None and scenario_sampler is None:
+        task = V3M0Task(stage_path=stage_path)
+    else:
+        if task_config is None or scenario_sampler is None:
+            raise ValueError("task_config and scenario_sampler must be supplied together")
+        task = V3BenchMARLTask(task_config, scenario_sampler=scenario_sampler,
+                               centralized_state=centralized_state)
     algorithm = MappoConfig.get_from_yaml()
     model = MlpConfig.get_from_yaml()
     config = replace(ExperimentConfig.get_from_yaml(),
@@ -122,7 +129,8 @@ def make_experiment(out, seed, *, frames, rollout_frames, envs, minibatch_size,
 
 
 def train_one(out: Path, seed: int, *, frames=24000, rollout_frames=6000,
-              envs=10, minibatch_size=400, minibatch_iters=45):
+              envs=10, minibatch_size=400, minibatch_iters=45,
+              task_config=None, scenario_sampler=None, centralized_state=True):
     out.mkdir(parents=True, exist_ok=False)
     (out / "checkpoints").mkdir()
     callback = DevSelection(out, evaluation_interval=rollout_frames,
@@ -131,9 +139,11 @@ def train_one(out: Path, seed: int, *, frames=24000, rollout_frames=6000,
     experiment, algorithm, model, config = make_experiment(
         out, seed, frames=frames, rollout_frames=rollout_frames, envs=envs,
         minibatch_size=minibatch_size, minibatch_iters=minibatch_iters,
-        callback=callback)
+        callback=callback, task_config=task_config, scenario_sampler=scenario_sampler,
+        centralized_state=centralized_state)
     import benchmarl, torchrl, tensordict, pettingzoo
-    manifest = {"stage": "M0", "backend": "kinematic", "seed": seed,
+    manifest = {"trainer": "benchmarl", "algorithm": "MAPPO",
+                "stage": "M0", "backend": "kinematic", "seed": seed,
                 "algorithm": "BenchMARL MAPPO", "action_schema": "desired-speed-heading-v1",
                 "actor_observation_schema_hash": ACTOR_SCHEMA_HASH,
                 "centralized_state_schema_version": CENTRALIZED_STATE_VERSION,

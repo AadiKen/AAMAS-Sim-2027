@@ -1,0 +1,226 @@
+bundle_version: 1
+config:
+  schema_version: 1
+  experiment:
+    id: rl-example-2
+    seed: 1
+    numerical_profile: validation
+  simulation:
+    dynamics_mode: full6
+    master_dt_s: 0.1
+    dynamics_substeps: 1
+    policy_every_n_master_steps: 1
+    max_master_steps: 20
+  world:
+    source:
+      kind: parametric
+    environment:
+      current:
+        kind: uniform
+        ned_mps:
+        - 0
+        - 0
+        - 0
+      wind:
+        kind: uniform
+        ned_mps:
+        - 0
+        - 0
+        - 0
+      waves:
+        kind: calm
+      visibility_m: 1000
+    bathymetry:
+      kind: flat
+      bottom_ned_z_m: 20
+      vertical_datum: MSL
+  vessels:
+  - instance_id: agent_0
+    definition: example-vessel-0@1
+    actuators:
+    - prop-0@1
+    sensors:
+    - truth-0@1
+    controller:
+      mode: direct_actuator
+    spawn:
+      ned_m:
+      - 0
+      - 0
+      - 0
+      rpy_rad:
+      - 0
+      - 0
+      - 0
+  - instance_id: agent_1
+    definition: example-vessel-0@1
+    actuators:
+    - prop-0@1
+    sensors:
+    - truth-0@1
+    controller:
+      mode: direct_actuator
+    spawn:
+      ned_m:
+      - 0
+      - 2
+      - 0
+      rpy_rad:
+      - 0
+      - 0
+      - 0
+  task:
+    type: waypoint@1
+    reward:
+      individual_weight: 1
+      team_weight: 0
+    disabled_agent_behavior: deactivate_keep_physical
+definitions:
+- kind: actuator
+  id: prop
+  version: '1'
+  payload: &id001
+    kind: fixed_thruster
+    mount_frd_m:
+    - 0
+    - 0
+    - 0
+    mount_q_to_frd:
+    - 1
+    - 0
+    - 0
+    - 0
+    thrust_bounds_n:
+    - -100
+    - 100
+  source: example
+- kind: sensor
+  id: truth
+  version: '1'
+  payload: &id002
+    kind: ground_truth_state
+    rate_hz: 10
+  source: example
+- kind: task
+  id: waypoint
+  version: '1'
+  payload:
+    kind: waypoint
+    agent_id: agent_0
+    target_ned_m:
+    - 10
+    - 0
+    - 0
+    radius_m: 0.1
+  source: example
+- kind: vessel
+  id: example-vessel-0
+  version: '1'
+  payload:
+    mass_kg: 10
+    cg_frd_m:
+    - 0
+    - 0
+    - 0
+    inertia_cg_kg_m2:
+    - - 4
+      - 0
+      - 0
+    - - 0
+      - 5
+      - 0
+    - - 0
+      - 0
+      - 6
+    added_mass_kg:
+    - - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    linear_damping:
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    quadratic_damping:
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    buoyancy_n: 98.0665
+    center_buoyancy_frd_m:
+    - 0
+    - 0
+    - 0
+    max_abs_nu:
+    - 100
+    - 100
+    - 100
+    - 100
+    - 100
+    - 100
+    max_substep_s: 0.2
+    collision:
+      kind: sphere
+      radius_m: 0.2
+    environment_loads:
+    - 0
+    - 0
+    - 0
+    - 0
+  source: example
+- kind: actuator
+  id: prop-0
+  version: '1'
+  payload: *id001
+  source: example
+- kind: sensor
+  id: truth-0
+  version: '1'
+  payload: *id002
+  source: example
+rl:
+  observation: sensor_dict
+  allow_ground_truth: true
+  action:
+    mode: direct_actuator
+  centralized_state:
+  - position_ned
+  - nu_body
+  - rl_active

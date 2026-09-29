@@ -6,7 +6,8 @@ import os
 import numpy as np
 import trimesh
 
-from .simple_sections import section_properties
+from .simple_crossflow import _clip_section
+from .simple_sections import polygon_properties, section_properties
 
 
 def classify(mesh: trimesh.Trimesh, draft: float, hull_count: int, speed_max: float,
@@ -47,20 +48,16 @@ def extract_stations(mesh: trimesh.Trimesh, waterline: float, *, count: int = 31
     for x in np.linspace(lo + dx / 2, hi - dx / 2, count):
         loops = section_properties(mesh, 0, float(x))["loops"]
         for loop in loops:
-            wet = loop[loop[:, 2] >= waterline]
-            if len(wet) < 2:
+            coords = _clip_section(loop, waterline)
+            if len(coords) < 3:
                 continue
-            # Include waterline crossings for the actual submerged lateral span.
-            extra = []
-            for p, q in zip(loop[:-1], loop[1:]):
-                if (p[2] - waterline) * (q[2] - waterline) < 0:
-                    extra.append(p + (waterline - p[2]) / (q[2] - p[2]) * (q - p))
-            coords = np.vstack((wet, extra)) if extra else wet
             beam = float(np.ptp(coords[:, 1]))
             draft = float(coords[:, 2].max() - waterline)
             if beam > 1e-6 and draft > 1e-6:
-                stations.append({"x_m": float(x), "y_m": float(np.mean(coords[:, 1])),
+                area, yc, _, _, _ = polygon_properties(coords, 1, 2)
+                stations.append({"x_m": float(x), "y_m": yc,
                                  "beam_m": beam, "draft_m": draft, "dx_m": float(dx),
+                                 "section_area_m2": float(area),
                                  "section_family": "unknown"})
     if len(stations) < 3:
         raise ValueError("Hull cannot be sectioned for strip/cross-flow baseline")
@@ -68,20 +65,28 @@ def extract_stations(mesh: trimesh.Trimesh, waterline: float, *, count: int = 31
 
 
 def strip_added_mass(stations: list[dict], density: float) -> dict:
-    """Elliptic sectional potential-flow baseline; couplings emerge from x arms."""
+    """Area-informed equivalent-ellipse strip estimate with analytic ellipse terms."""
     matrix = np.zeros((6, 6))
     for station in stations:
         x, b, t, dx = (station[k] for k in ("x_m", "beam_m", "draft_m", "dx_m"))
-        sway = density * math.pi * (t / 2) ** 2 * dx
-        heave = density * math.pi * (b / 2) ** 2 * dx
+        a = b/2
+        if "section_area_m2" in station:
+            area = float(station["section_area_m2"])
+            if not math.isfinite(area) or area <= 0 or area > b*t*(1+1e-8):
+                raise ValueError("Section area must be positive and no larger than its bounding box")
+            c = min(t/2, area/(math.pi*a))
+        else:
+            c = t/2
+        sway = density * math.pi * c**2 * dx
+        heave = density * math.pi * a**2 * dx
         vy = np.array((0., 1., 0., 0., 0., x))
         vz = np.array((0., 0., 1., 0., -x, 0.))
         matrix += sway * np.outer(vy, vy) + heave * np.outer(vz, vz)
         # An elliptic section gives only a rough roll inertia without appendages.
-        matrix[3, 3] += density * math.pi / 8 * ((b / 2) ** 2 - (t / 2) ** 2) ** 2 * dx
-    return {"matrix_6x6": matrix.tolist(), "method": "elliptic_section_strip_v1",
+        matrix[3, 3] += density * math.pi / 8 * (a*a-c*c)**2 * dx
+    return {"matrix_6x6": matrix.tolist(), "method": "area_equivalent_ellipse_strip_v2",
             "confidence": "low", "source": "strip", "unavailable_terms": ["surge_added_mass", "off_axis_appendage_couplings"],
-            "applicability": "Sectionable displacement hull; section shapes approximated by ellipses"}
+            "applicability": "CAD section area and beam define equivalent ellipses; section shape and free-surface effects remain approximated"}
 
 
 def _wetted_capytaine_panels(mesh: trimesh.Trimesh, waterline_frd: float):
@@ -293,25 +298,51 @@ def resistance_curve(speeds: np.ndarray, *, length: float, wetted_area: float,
             components.append({"friction_n": 0., "wave_n": 0., "form_factor": 1.})
             continue
         reynolds = max(speed * length / viscosity, 1e3)
-        cf = .075 / (math.log10(reynolds) - 2) ** 2 if reynolds > 1e5 else 1.328 / math.sqrt(reynolds)
-        # Friction is defensible; the simple form factor is only a low-confidence
-        # placeholder for wave, transom, and multihull interference resistance.
-        form = 1. if wave is not None else (1.2 if classification.startswith("slender") else 1.5)
-        if "catamaran" in classification or "multihull" in classification:
-            form *= 1.2
-        if "planing" in classification:
-            form *= 1.5
-        friction = .5 * density * wetted_area * cf * form * speed * speed
+        ittc_applicable = 1e5 <= reynolds <= 1e9
+        cf = .075 / (math.log10(reynolds) - 2) ** 2 if reynolds >= 1e5 else 1.328 / math.sqrt(reynolds)
+        form = 1.
+        friction = .5 * density * wetted_area * cf * speed * speed
         wave_force = 0. if wave is None else float(wave["wave_resistance_n"][index])
         drag = friction + wave_force
-        components.append({"friction_n": friction, "wave_n": wave_force, "form_factor": form})
+        components.append({"friction_n": friction, "wave_n": wave_force,
+                           "form_factor": form, "form_increment_n": 0.,
+                           "other_corrections_n": 0., "reynolds_number": reynolds,
+                           "friction_coefficient_ittc57": cf,
+                           "friction_method": "ittc57" if reynolds >= 1e5 else "laminar_plate_extrapolation",
+                           "ittc57_applicable": ittc_applicable})
         values.append(-math.copysign(drag, u))
     return {"speed_mps": [float(x) for x in speeds], "force_x_n": values,
             "components": components, "wave": wave,
-            "method": "ittc57_plus_guarded_michell_v2" if wave else "ittc57_friction_with_low_confidence_form_factor_v1", "confidence": "low",
+            "method": "ittc57_friction_plus_guarded_michell_v3" if wave else "ittc57_friction_line_v3", "confidence": "low",
             "source": "analytical_empirical", "reverse_behavior": "odd extension; unvalidated",
-            "limitations": ("Michell thin-ship theory excludes viscous pressure, trim, planing, and nonlinear waves"
-                            if wave else "No wave calculation in this regime; no Savitsky trim or validated multihull interference model")}
+            "provider": {"name":"ITTC-1957 smooth-plate correlation line",
+                         "form_factor":"not applied; requires measured or validated-CFD input",
+                         "applicability":"friction only; guarded Michell wave term only in thin-ship domain",
+                         "reynolds_gate":"1e5 <= Re <= 1e9; outside values are reported as extrapolated",
+                         "standard_source":"ITTC Recommended Procedure 7.5-02-02-01, Resistance Tests"},
+            "limitations": ("Michell thin-ship theory excludes viscous pressure, planing, trim, and shallow-water effects"
+                            if wave else "No wave calculation in this regime; form factor, viscous pressure, transom, trim, planing, and multihull interference are not estimated")}
+
+
+def inoue_linear_maneuvering(*, mass_kg: float, density: float, length_m: float,
+                             draft_m: float, block_coefficient: float) -> dict:
+    """Inoue-Hirano-Kijima (1981) even-keel linear maneuvering derivatives."""
+    vals=(mass_kg,density,length_m,draft_m,block_coefficient)
+    if not all(math.isfinite(x) and x>0 for x in vals): raise ValueError("Inoue inputs must be positive and finite")
+    if not 8. <= length_m/draft_m <= 20.: raise ValueError("Inoue derivatives gated to 8 <= L/T <= 20 displacement hulls")
+    if not .4 <= block_coefficient <= .85: raise ValueError("Inoue derivatives gated to block coefficient 0.4..0.85")
+    k=2*draft_m/length_m; mp=mass_kg/(.5*density*length_m**2*draft_m)
+    deriv={"Y_v":-.5*math.pi*k-.7*mp,"Y_r":.25*math.pi*k,"N_v":-k,"N_r":-.54*k+k*k}
+    fy=.5*density*length_m*draft_m; mn=fy*length_m; d=np.zeros((6,6))
+    d[1,1]=-fy*deriv["Y_v"];d[1,5]=-fy*length_m*deriv["Y_r"]
+    d[5,1]=-mn*deriv["N_v"];d[5,5]=-mn*length_m*deriv["N_r"]
+    eig=np.linalg.eigvalsh((d+d.T)/2)
+    if eig.min() < -1e-10*max(1.,np.linalg.norm(d)): raise ValueError("Inoue derivatives are not passive")
+    return {"method":"inoue_hirano_kijima_1981_even_keel_v1","confidence":"low",
+            "applicability":"single displacement monohull; even keel; 8<=L/T<=20; 0.4<=Cb<=0.85",
+            "source":"Inoue, Hirano & Kijima (1981), DOI 10.3233/ISP-1981-2832103",
+            "k":k,"mass_prime":mp,"derivatives_prime":deriv,
+            "damping_matrix_per_mps":d.tolist(),"symmetric_part_eigenvalues":eig.tolist()}
 
 
 def inertia_estimate(mass: float, extents: np.ndarray) -> np.ndarray:

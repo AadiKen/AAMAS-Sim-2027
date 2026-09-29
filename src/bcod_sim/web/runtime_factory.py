@@ -8,6 +8,7 @@ import torch
 from bcod_sim.actuators.autopilot import HeadingSpeedAutopilot
 from bcod_sim.actuators.base import ActuatorConfig, Bounds
 from bcod_sim.actuators.thruster import FixedThruster
+from bcod_sim.actuators.physical import ActuatorPipeline, ActuatorSet, SpeedHeadingController
 from bcod_sim.collision.shapes import Box, Sphere
 from bcod_sim.config.resolver import ResolvedExperiment
 from bcod_sim.core.engine import EpisodeEngine, EpisodeVessel
@@ -44,6 +45,7 @@ class VesselRuntime(Strict):
     linear_damping: tuple[float, float, float, float, float, float]
     quadratic_damping: tuple[float, float, float, float, float, float]
     linear_damping_matrix: tuple[tuple[float, float, float, float, float, float], ...] | None = None
+    speed_dependent_linear_damping_matrix_per_mps: tuple[tuple[float, float, float, float, float, float], ...] | None = None
     coupled_damping_terms: tuple[dict, ...] = ()
     buoyancy_n: float | None = Field(default=None, gt=0, allow_inf_nan=False)
     center_buoyancy_frd_m: tuple[float, float, float] | None = None
@@ -114,7 +116,8 @@ class SensorRuntime(Strict):
 def _definition(resolved: ResolvedExperiment, kind: str, reference: str):
     identity, _, version = reference.partition("@")
     matches = [d for d in resolved.definitions if d.kind == kind and d.id == identity and d.version == version]
-    if len(matches) != 1: raise ConfigSchemaError(f"Resolved {kind} definition mismatch: {reference}")
+    if not matches or len({definition.content_hash for definition in matches}) != 1:
+        raise ConfigSchemaError(f"Resolved {kind} definition mismatch: {reference}")
     return matches[0]
 
 
@@ -153,7 +156,7 @@ def _sensor(definition, vessel_id: int):
         raise ConfigSchemaError(f"Invalid runtime sensor definition: {definition.id}@{definition.version}") from exc
 
 
-def build_engine(resolved: ResolvedExperiment) -> EpisodeEngine:
+def build_engine(resolved: ResolvedExperiment, *, observation_contracts=None) -> EpisodeEngine:
     vessels = []
     dtype = torch.float64 if resolved.config.experiment.numerical_profile == "validation" else torch.float32
     for vessel_id, authored in enumerate(resolved.config.vessels, start=1):
@@ -192,6 +195,11 @@ def build_engine(resolved: ResolvedExperiment) -> EpisodeEngine:
             axes=item["axes"]
             hydro=RestoringLUT(tensor(axes["heave_m"]),tensor(axes["roll_rad"]),
                                tensor(axes["pitch_rad"]),tensor(item["wrench_frd"]))
+        elif "axes" in spec.hydrostatics and "wrench_frd" in spec.hydrostatics:
+            item = spec.hydrostatics
+            axes = item["axes"]
+            hydro = RestoringLUT(tensor(axes["heave_m"]), tensor(axes["roll_rad"]),
+                                 tensor(axes["pitch_rad"]), tensor(item["wrench_frd"]))
         else:
             raise ConfigSchemaError("Unsupported explicit hydrostatic model")
         crossflow = None
@@ -213,8 +221,11 @@ def build_engine(resolved: ResolvedExperiment) -> EpisodeEngine:
             resistance_curve=(tensor(item["speed_mps"]),tensor(item["force_x_n"]))
         linear_matrix=tensor(spec.linear_damping_matrix) if spec.linear_damping_matrix is not None else None
         coupled=tuple(CoupledDampingTerm(**term) for term in spec.coupled_damping_terms)
+        speed_linear=(tensor(spec.speed_dependent_linear_damping_matrix_per_mps)
+                      if spec.speed_dependent_linear_damping_matrix_per_mps is not None else None)
         plant = Plant6(properties, Damping(tensor(spec.linear_damping), tensor(spec.quadratic_damping),linear_matrix,coupled,
-                                            surge_resistance_curve=resistance_curve), hydro,
+                                            surge_resistance_curve=resistance_curve,
+                                            speed_dependent_linear_matrix_per_mps=speed_linear), hydro,
             OperatingEnvelope(tensor(spec.max_abs_nu), spec.min_substep_s, spec.max_substep_s),
             mode=resolved.config.simulation.dynamics_mode, planar_equilibrium=equilibrium, crossflow=crossflow,
             maneuvering_surface=(surface_from_payload(spec.maneuvering_surface)
@@ -230,6 +241,22 @@ def build_engine(resolved: ResolvedExperiment) -> EpisodeEngine:
             shape = Box(tuple(collision["half_extents_m"]))
         else: raise ConfigSchemaError("Unsupported or malformed runtime collision shape")
         actuators = []
+        physical_pipeline = None
+        if authored.actuator_system is not None:
+            try:
+                system = authored.actuator_system
+                if system.get("schema_version") != "manta-actuator-v1":
+                    raise ValueError("Unsupported actuator schema")
+                aset = ActuatorSet(list(system["actuators"]), allocation=system.get("control_allocation"))
+                parameters = system.get("controller", {})
+                effective_mass = float(plant.total_mass[0, 0])
+                yaw_inertia = float(plant.total_mass[5, 5])
+                controller = SpeedHeadingController(effective_mass, yaw_inertia,
+                    float(spec.linear_damping[0]), float(spec.linear_damping[5])) if authored.controller.mode == "high_level" else None
+                physical_pipeline = ActuatorPipeline(aset, controller,
+                    float(system.get("allocation_period_s", resolved.config.simulation.master_dt_s)))
+            except Exception as exc:
+                raise ConfigSchemaError(f"Invalid physical actuator system for vessel {authored.instance_id}") from exc
         for reference in authored.actuators:
             definition = _definition(resolved, "actuator", reference)
             try: actuator = FixedThrusterRuntime.model_validate(dict(definition.payload))
@@ -254,5 +281,6 @@ def build_engine(resolved: ResolvedExperiment) -> EpisodeEngine:
             wave_loads=KinematicWaveLoads(tuple(item["linear_drag"]),tuple(item["quadratic_drag"]),tuple(item["inertia_coefficients"]))
         autopilot = HeadingSpeedAutopilot(*spec.autopilot_gains) if spec.autopilot_gains else None
         vessels.append(EpisodeVessel(authored.instance_id, vessel_id, plant, shape, tuple(actuators), sensors, loads,
-                                     wind_loads=wind_loads,wave_loads=wave_loads,autopilot=autopilot))
-    return EpisodeEngine(resolved, tuple(vessels))
+                                     wind_loads=wind_loads,wave_loads=wave_loads,autopilot=autopilot,
+                                     physical_pipeline=physical_pipeline))
+    return EpisodeEngine(resolved, tuple(vessels), observation_contracts=observation_contracts)
