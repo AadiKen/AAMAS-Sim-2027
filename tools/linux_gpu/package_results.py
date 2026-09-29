@@ -16,6 +16,13 @@ for f in src.rglob('*'):
  else:
   target=out/rel;target.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(f,target)
 (out/'checkpoint_index.json').write_text(json.dumps(index,indent=2)+'\n')
-(out/'hardware.json').write_text(json.dumps(manifest(),indent=2,default=str)+'\n')
-(out/'manifest.json').write_text(json.dumps({'source':str(src.resolve()),'checkpoints_indexed':len(index),'checkpoints_copied':0},indent=2)+'\n')
+preflight=src/'preflight.json'
+if preflight.is_file():
+ hardware=json.loads(preflight.read_text())['hardware']
+ hardware_source=str(preflight)
+else:
+ hardware=manifest()
+ hardware_source='packaging_host'
+(out/'hardware.json').write_text(json.dumps(hardware,indent=2,default=str)+'\n')
+(out/'manifest.json').write_text(json.dumps({'source':str(src.resolve()),'hardware_source':hardware_source,'checkpoints_indexed':len(index),'checkpoints_copied':0},indent=2)+'\n')
 print(out)
