@@ -1,0 +1,98 @@
+schema: public-benchmark-sources-v1
+retrieval_date: 2026-09-28
+sources:
+  - id: nmri-kvlcc2m-static-drift-data
+    source_organization: NMRI
+    original_url: https://www.nmri.go.jp/study/research_organization/fluid_performance/cfd/cfdws05/Detail/data/KVLCC2m_data/NMRI/KVLCC2M_hydro_forces_in_oblique_flow_1424.dat
+    local_filename: raw_sources/KVLCC2M_hydro_forces_in_oblique_flow_1424.dat
+    sha256: 517ff1a1556c3f84f2c12cfa2c09312b976179441950d86cac24080733e5fcfc
+    data_type: official numeric experimental table, static oblique tow coefficients
+    quality: A
+    publication: NMRI 2005 CFD Workshop Test Case 3; see admitted_reference.json for complete mapping
+    acquisition: previously acquired and hash-recorded in validation/source_matrix/admitted_reference.json; copied byte-for-byte by campaign fetcher
+    status: available
+  - id: nmri-kvlcc2m-geometry-grid
+    source_organization: NMRI
+    original_url: https://www.nmri.go.jp/study/research_organization/fluid_performance/cfd/cfdws05/Detail/KVLCC/kvlcc_g%26c.htm
+    local_filename: raw_sources/kvlcc2m_dat.zip
+    sha256: b0d83589d85673d8f56ec4a06cbbbe9215ce34bb9d0947a951e8e0af6a8da024
+    data_type: official surface-grid archive
+    quality: A
+    publication: NMRI KVLCC2M geometry page
+    acquisition: previously acquired and hash-recorded; copied byte-for-byte by campaign fetcher
+    status: available
+  - id: nmri-kvlcc2m-offsets
+    source_organization: NMRI
+    original_url: https://www.nmri.go.jp/study/research_organization/fluid_performance/cfd/cfdws05/Detail/KVLCC/kvlcc_g%26c.htm
+    local_filename: raw_sources/kvlcc2m_offsets.lst
+    sha256: 8b3fe86c37bfbb73e7fd26da07f46ed72eab2a9883e3a5ef7a019dfb4e1cad1b
+    data_type: official hull offsets
+    quality: A
+    publication: NMRI KVLCC2M geometry page, design full row
+    acquisition: previously acquired and hash-recorded; copied byte-for-byte by campaign fetcher
+    status: available
+  - id: nmri-kvlcc2m-testcase-instructions
+    source_organization: NMRI
+    original_url: https://www.nmri.go.jp/study/research_organization/fluid_performance/cfd/cfdws05/Detail/a3/index.html
+    local_filename: raw_sources/nmri_test_case_3_instructions.pdf
+    sha256: 509c765f6a908665124842c9e791e5c22021aa0dd12a8be28c3dec2912607324
+    data_type: experimental protocol and conventions
+    quality: A
+    publication: NMRI 2005 CFD Workshop Test Case 3
+    acquisition: previously acquired and hash-recorded; copied byte-for-byte by campaign fetcher
+    status: available
+  - id: atma-kvlcc2m-coefficient-reproduction
+    source_organization: ATMA
+    original_url: https://www.atma.asso.fr/dyn/memoires/memoire_6.pdf
+    local_filename: raw_sources/atma_2006_kvlcc2m.pdf
+    sha256: 28d2e64490375009e39fb1b2ecc895c095e22fc2382b2724fa5bb9dd7e28c43b
+    data_type: peer-reviewed paper reproducing experimental coefficients
+    quality: B
+    publication: ATMA 2006, Section 4/Table 1
+    acquisition: previously acquired and hash-recorded; copied byte-for-byte by campaign fetcher
+    status: available
+  - id: kcs-resistance
+    source_organization: KRISO experiment, reproduced in Journal of the Society of Naval Architects of Korea
+    original_url: https://jsnak.org/_PR/view/?aidx=25693&bidx=2292
+    local_filename: ../benchmarks/kcs/reference/resistance.json
+    sha256: null
+    data_type: experimental total resistance coefficient reproduced in a peer-reviewed paper
+    quality: B
+    publication: Van et al. (1998) data reproduced in Kang et al. (2020), Table 2; KCS design Fn=0.26
+    status: NUMERIC_REFERENCE_RECOVERED; original page/PDF bytes could not be downloaded in this network-restricted runtime
+  - id: nmri-kcs-geometry
+    source_organization: NMRI
+    original_url: https://www.nmri.go.jp/study/research_organization/fluid_performance/cfd/cfdws05/Detail/KCS/kcs_g%26c.htm
+    local_filename: null
+    sha256: null
+    data_type: official KCS model geometry and experiment condition page
+    quality: A
+    publication: NMRI CFD Workshop Tokyo 2005 KCS case
+    status: PUBLIC_GEOMETRY_NOT_STAGED; existing source audit has no accepted local KCS surface grid or geometry
+  - id: dtmb5512-pmm
+    source_organization: University of Iowa IIHR
+    original_url: https://www.iihr.uiowa.edu/shiphydro/wp-content/uploads/sites/27/2013/12/DTMB5512.pdf
+    local_filename: null
+    sha256: null
+    data_type: official experimental dataset page; forces/moments and PMM conditions documented, numeric files not acquired
+    quality: A
+    publication: University of Iowa DTMB 5512 captive maneuvering documentation
+    status: NUMERIC_TIME_HISTORY_NOT_RECOVERED; official page confirms force/moment datasets; current source audit rejects quantitative mapping due to appendage/reference uncertainty
+  - id: kvlcc2-maneuvering-derivatives
+    source_organization: SIMMAN / peer-reviewed literature
+    original_url: null
+    local_filename: null
+    sha256: null
+    data_type: published maneuvering derivatives
+    quality: B
+    publication: common KVLCC2 derivative set; not KVLCC2M
+    status: CONTEXTUAL_VALUES_ONLY; values reproduced in peer-reviewed paper, original geometry/reference data not acquired
+  - id: nmri-kvlcc2m-resistance
+    source_organization: NMRI / CFD Workshop Tokyo 2005
+    original_url: https://www.nmri.go.jp/study/research_organization/fluid_performance/cfd/cfdws05/Detail/a5/index.html
+    local_filename: ../benchmarks/kvlcc2m/reference/resistance.json
+    sha256: null
+    data_type: experimental total resistance coefficient reproduced in peer-reviewed CFD paper
+    quality: B
+    publication: KVLCC2M-GRIDS experimental resistance table; official Test Case 5 reports U_D=0.7% of C_T
+    status: NUMERIC_REFERENCE_RECOVERED; original paper bytes could not be downloaded in this network-restricted runtime

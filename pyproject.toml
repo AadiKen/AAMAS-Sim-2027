@@ -7,7 +7,7 @@ name = "bcod-sim"
 version = "0.0.0"
 description = "BCOD-Sim ground-up rewrite (phase 0 scaffold)"
 requires-python = ">=3.12"
-dependencies = ["fastapi>=0.115,<1", "numpy>=2,<3", "onnx>=1.17,<2", "onnxruntime>=1.20,<2", "pyarrow>=18,<24", "pydantic>=2,<3", "PyYAML>=6,<7", "torch>=2.4", "trimesh>=5,<6", "uvicorn>=0.34,<1"]
+dependencies = ["fastapi>=0.115,<1", "numpy>=2,<3", "onnx>=1.17,<2", "onnxruntime>=1.20,<2", "pyarrow>=18,<24", "pydantic>=2,<3", "PyYAML>=6,<7", "scipy>=1.14,<2", "torch>=2.4", "trimesh>=5,<6", "uvicorn>=0.34,<1"]
 
 [project.scripts]
 bcod = "bcod_sim.cli:main"

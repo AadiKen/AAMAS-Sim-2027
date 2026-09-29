@@ -1,0 +1,83 @@
+{
+  "campaign_revision": 3,
+  "captured_at_local_date": "2026-09-28",
+  "environment": {
+    "lockfile": "requirements.lock",
+    "numpy": "2.5.3",
+    "python": "3.14.6",
+    "pyyaml": "6.0.3",
+    "torch": "2.14.0",
+    "trimesh": "5.1.0"
+  },
+  "generator": {
+    "model_id": "bcod-passive-phase3a-1.0.0",
+    "package_schema": "manta-hydrodynamics-v1",
+    "source_hashes_sha256": {
+      "src/bcod_sim/dynamics/crossflow.py": "2cbd78292bf7e9143eaaa69dceb49b3982467c7132c471d87616daeb1b75feec",
+      "src/bcod_sim/vessel_generation/coefficient_package.py": "01f09c6e6bbfb011163e491b4447a32bc13b7d014629fc63ea12a8297f11f214",
+      "src/bcod_sim/vessel_generation/simple_crossflow.py": "d6d25c960943604cd8f207c451111df4ad67d22ae47e61197ebd23b943442a8e",
+      "src/bcod_sim/vessel_generation/simple_geometry.py": "e44f7c6677fcc2f590fc7457650e8b65a44e6a61c728d0d90ff1825b81ce60d0",
+      "src/bcod_sim/vessel_generation/simple_hydro_mesh.py": "ca2fd6beacd9c355763a79beeff10eddf2b8d912d6bc6d13e5e6c8b4e203e2fe",
+      "src/bcod_sim/vessel_generation/simple_models.py": "f08ffff7b7ac42feae32c73ce2d3184fc2f053e81d53db9a74a68386912af528",
+      "src/bcod_sim/vessel_generation/simple_pipeline.py": "d64e39ade9639be991dab089993a754348efad4d27a963a97a1ab6079b619337",
+      "src/bcod_sim/vessel_generation/simple_sections.py": "b480bba2a772e3728ed11991f7c3af2864b692a802e3b20e0a7c6b27b6ffd773",
+      "src/bcod_sim/vessel_generation/simple_wave.py": "02c71801a23995fd19335cf3f1f2deb8c4d0e1b402de6e155b248cb21293bbe4",
+      "src/bcod_sim/vessel_generation/volume_clip.py": "9368e032cedc603db4be1f600fe9ef3010a258beb371906755cbd48e02c842bf"
+    }
+  },
+  "git_commit": "4bb33c17c8c4ad11057c0f57f44461e97945a59c",
+  "git_worktree": "dirty at capture; existing modifications were preserved",
+  "m1_suite": {
+    "command": "CAPYTAINE_CACHE_DIR=$PWD/docs/passive_hull_validation/.capytaine-cache MPLCONFIGDIR=$PWD/docs/passive_hull_validation/.mplconfig .venv/bin/python -m pytest tests/vessel_generation/test_milestone1_coefficients.py tests/vessel_generation/test_simple_pipeline.py tests/physics/test_plant6.py tests/vessel_generation/test_design_waterline_mode.py -q",
+    "completed_before_accuracy_scoring": true,
+    "result": "PASS: 55 passed in 27.13s"
+  },
+  "notes": [
+    "No generator constants were changed by this campaign setup.",
+    "The starting worktree already contained unrelated and M1-related user changes; all were retained.",
+    "Frozen hashes represent the exact dirty worktree files at campaign start, not solely the commit tree.",
+    "Campaign revision 2 fixes an independently reproduced geometry-integrity bug: degenerate-face removal opened qualified meshes. The cleanup now retains those zero-area faces only when removal breaks watertight topology.",
+    "Revision 1 source hashes are preserved in revision_history; all generated packages and scores must be produced under revision 2.",
+    "Campaign revision 3 adds generic design_waterline_submerged_hull input mode with local restoring stiffness only, plus explicit Lpp and water viscosity input for condition fidelity. No resistance, added-mass, cross-flow, coefficient, or Plant6 force-ownership formula was changed. New rectangular and curved fixture regression checks verify hydrostatics and horizontal wrench invariance."
+  ],
+  "plant6": {
+    "contract": "Plant6 owns rigid and added-mass Coriolis; passive fluid evaluation adds dissipative terms from linear damping, nonlinear surge resistance, and sectional crossflow. Dynamic fluid reaction is negative added-mass acceleration, negative added-mass Coriolis, and negative damping under the body equation convention.",
+    "source": "src/bcod_sim/dynamics/plant6.py",
+    "version": "git-revision-at-capture"
+  },
+  "revision_history": [
+    {
+      "campaign_revision": 1,
+      "generator_hashes": {
+        "src/bcod_sim/dynamics/crossflow.py": "2cbd78292bf7e9143eaaa69dceb49b3982467c7132c471d87616daeb1b75feec",
+        "src/bcod_sim/vessel_generation/coefficient_package.py": "c2c37a555cfea0b79b85949b7db3fc80ca64641b1d0345065227ab126259c992",
+        "src/bcod_sim/vessel_generation/simple_crossflow.py": "d6d25c960943604cd8f207c451111df4ad67d22ae47e61197ebd23b943442a8e",
+        "src/bcod_sim/vessel_generation/simple_geometry.py": "0613ebb5eb2d556d2fe9506c1333489085b4923f45b475a8c42853664fde813c",
+        "src/bcod_sim/vessel_generation/simple_hydro_mesh.py": "ca2fd6beacd9c355763a79beeff10eddf2b8d912d6bc6d13e5e6c8b4e203e2fe",
+        "src/bcod_sim/vessel_generation/simple_models.py": "f08ffff7b7ac42feae32c73ce2d3184fc2f053e81d53db9a74a68386912af528",
+        "src/bcod_sim/vessel_generation/simple_pipeline.py": "ffd249b5790253206f379b5e9b191995a87d0b99e037f5dafcfd159507772c54",
+        "src/bcod_sim/vessel_generation/simple_sections.py": "e01931f1e779e73102561882586aabddc8060c3bc0e09aaf9abb52101190fd5b",
+        "src/bcod_sim/vessel_generation/simple_wave.py": "02c71801a23995fd19335cf3f1f2deb8c4d0e1b402de6e155b248cb21293bbe4",
+        "src/bcod_sim/vessel_generation/volume_clip.py": "9368e032cedc603db4be1f600fe9ef3010a258beb371906755cbd48e02c842bf"
+      },
+      "outcome": "Package generation failed because cleanup removed 15 zero-area indexed stern facets, leaving a 17-edge boundary. No revision-1 physical comparison was scored."
+    },
+    {
+      "campaign_revision": 2,
+      "generator_hashes": {
+        "src/bcod_sim/dynamics/crossflow.py": "2cbd78292bf7e9143eaaa69dceb49b3982467c7132c471d87616daeb1b75feec",
+        "src/bcod_sim/vessel_generation/coefficient_package.py": "c2c37a555cfea0b79b85949b7db3fc80ca64641b1d0345065227ab126259c992",
+        "src/bcod_sim/vessel_generation/simple_crossflow.py": "d6d25c960943604cd8f207c451111df4ad67d22ae47e61197ebd23b943442a8e",
+        "src/bcod_sim/vessel_generation/simple_geometry.py": "e44f7c6677fcc2f590fc7457650e8b65a44e6a61c728d0d90ff1825b81ce60d0",
+        "src/bcod_sim/vessel_generation/simple_hydro_mesh.py": "ca2fd6beacd9c355763a79beeff10eddf2b8d912d6bc6d13e5e6c8b4e203e2fe",
+        "src/bcod_sim/vessel_generation/simple_models.py": "f08ffff7b7ac42feae32c73ce2d3184fc2f053e81d53db9a74a68386912af528",
+        "src/bcod_sim/vessel_generation/simple_pipeline.py": "ffd249b5790253206f379b5e9b191995a87d0b99e037f5dafcfd159507772c54",
+        "src/bcod_sim/vessel_generation/simple_sections.py": "e01931f1e779e73102561882586aabddc8060c3bc0e09aaf9abb52101190fd5b",
+        "src/bcod_sim/vessel_generation/simple_wave.py": "02c71801a23995fd19335cf3f1f2deb8c4d0e1b402de6e155b248cb21293bbe4",
+        "src/bcod_sim/vessel_generation/volume_clip.py": "9368e032cedc603db4be1f600fe9ef3010a258beb371906755cbd48e02c842bf"
+      },
+      "outcome": "Preserved prior frozen M1 revision before adding generic design-waterline input support; horizontal hydrodynamic algorithms and Plant6 force ownership were retained."
+    }
+  ],
+  "schema": "manta-passive-hull-frozen-baseline-v1"
+}

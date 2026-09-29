@@ -8,8 +8,43 @@ from __future__ import annotations
 import math
 
 
-REQUIRED = ("reference_point_m", "frame", "sign_convention", "normalization",
+REQUIRED = ("reference_point_m", "frame", "force_frame", "sign_convention", "normalization",
             "motion_definition", "load_definition", "vessel_configuration")
+
+FORCE_FRAMES = ("body_frd", "tow_track")
+
+
+def body_to_tow_force(x_body: float, y_body: float, beta_deg: float) -> tuple[float, float]:
+    """Rotate body FRD force into the towing-track frame at positive drift.
+
+    Positive beta means body sway velocity is negative. Tow-track +X follows
+    vessel travel and +Y points starboard of that track.
+    """
+    if not all(math.isfinite(v) for v in (x_body, y_body, beta_deg)):
+        raise ValueError("Finite force and drift required")
+    beta = math.radians(beta_deg)
+    c, s = math.cos(beta), math.sin(beta)
+    return c*x_body-s*y_body, s*x_body+c*y_body
+
+
+def normalize_static_drift(y_newton: float, n_newton_m: float, *, rho: float,
+                           speed: float, length: float, draft: float) -> tuple[float, float]:
+    """NMRI CY/CN convention, with the supplied force already in its declared frame."""
+    if not all(math.isfinite(v) for v in (y_newton, n_newton_m, rho, speed, length, draft)):
+        raise ValueError("Finite load and reference properties required")
+    if min(rho, speed, length, draft) <= 0:
+        raise ValueError("Positive reference properties required")
+    y_denom = .5*rho*speed**2*length*draft
+    return y_newton/y_denom, n_newton_m/(y_denom*length)
+
+
+def shift_yaw_moment(n_about_a: float, x_force: float, y_force: float,
+                     a_xy: tuple[float, float], b_xy: tuple[float, float]) -> float:
+    """Shift physical yaw moment A→B with (A−B)×F in one common frame."""
+    values = (n_about_a, x_force, y_force, *a_xy, *b_xy)
+    if len(a_xy) != 2 or len(b_xy) != 2 or not all(math.isfinite(v) for v in values):
+        raise ValueError("Finite planar force and origins required")
+    return n_about_a + (a_xy[0]-b_xy[0])*y_force - (a_xy[1]-b_xy[1])*x_force
 
 
 def _unresolved(value: object) -> bool:
@@ -38,6 +73,8 @@ def assert_comparable(cfd: dict, reference: dict, *, kind: str) -> None:
                         if _unresolved(record.get(field))]
         if missing:
             raise ValueError(f"{name} missing: {', '.join(missing)}")
+        if record["force_frame"] not in FORCE_FRAMES:
+            raise ValueError(f"{name} has unsupported force frame")
         if record.get("comparison_family") != kind:
             raise ValueError(f"{name} is not {kind}")
     for field in REQUIRED[1:]:

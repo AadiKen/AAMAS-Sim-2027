@@ -9,6 +9,20 @@ from bcod_sim.vessel_generation.simple_pipeline import generate_simple_vessel
 from bcod_sim.vessel_generation.simple_models import (crossflow, validate_bem_matrix,
     bem_frame_matrix, panel_resolution_change, hmri_total_sway_prime, try_bem)
 from bcod_sim.vessel_generation.simple_geometry import prepare_geometry
+from bcod_sim.vessel_generation.simple_geometry import _remove_degenerate_faces_preserving_closure
+
+
+def test_degenerate_facet_is_retained_when_it_closes_surface():
+    # A collapsed stern facet can have zero area while its indexed edges still
+    # close the source volume. Blind removal leaves the volume open.
+    vertices = np.array([[0., 0., 0.], [1., 0., 0.], [2., 0., 0.], [0., 0., 1.]])
+    faces = np.array([[0, 1, 2], [0, 3, 1], [1, 3, 2], [2, 3, 0]])
+    mesh = trimesh.Trimesh(vertices=vertices, faces=faces, process=False)
+    assert mesh.is_watertight
+    cleaned, removed, retained = _remove_degenerate_faces_preserving_closure(mesh)
+    assert cleaned.is_watertight
+    assert removed == 0
+    assert retained
 from bcod_sim.vessel_generation.simple_hydro_mesh import reduce_hydrodynamic_mesh
 from bcod_sim.vessel_generation.simple_sections import hydrostatic_state
 from bcod_sim.vessel_generation.simple_calibration import apply_passive_scales

@@ -5,7 +5,7 @@ import numpy as np
 import torch
 from bcod_sim.benchmark.core import *
 from bcod_sim.benchmark.runner import SharedActorCritic
-base=Path('/Users/aadikenchammanaold/Downloads/benchmark-bcod-50k-corrected')
+base=Path.home()/'Downloads'/'benchmark-bcod-50k-corrected'
 torch.set_num_threads(1);torch.manual_seed(11);model=SharedActorCritic();config=BenchmarkConfig()
 observations=[]
 for index in range(100):

@@ -13,6 +13,8 @@ from bcod_sim.vessel_generation.identification import DOF, FluidModel, MotionTyp
 from bcod_sim.vessel_generation.workflow import identify_package, read_observations
 from bcod_sim.vessel_generation.qualified_observations import qualify_case
 from bcod_sim.vessel_generation.simple_pipeline import generate_simple_vessel
+from bcod_sim.vessel_generation.coefficient_package import validate_coefficients
+from bcod_sim.vessel_generation.input_contract import generate_from_config
 from bcod_sim.rl.training_control import TrainingRun
 
 
@@ -64,6 +66,14 @@ def _qualify(args) -> int:
 
 
 def _generate(args) -> int:
+    if args.config is not None:
+        if args.geometry is not None or args.mass is not None or args.cg is not None:
+            raise ValueError("--config cannot be combined with --geometry/--mass/--cg")
+        root=generate_from_config(args.config, args.output)
+        print(json.dumps({"package":str(root),"validation":validate_coefficients(root/"coefficient_package.yaml")},indent=2))
+        return 0
+    if args.geometry is None or args.mass is None or args.cg is None or (args.units is None and args.known_length is None):
+        raise ValueError("direct generation requires --geometry, --mass, --cg and --units or --known-length")
     cg = tuple(float(x) for x in args.cg)
     inertia = None
     if args.inertia:
@@ -73,11 +83,14 @@ def _generate(args) -> int:
         geometry=args.geometry, output=args.output, mass_kg=args.mass,
         cg_frd_m=cg, units=args.units, known_length_m=args.known_length,
         source_frame=args.source_frame, draft_m=args.draft,
+        geometry_mode=args.geometry_mode, reference_draft_m=args.reference_draft,
+        reference_length_m=args.reference_length,
+        water_kinematic_viscosity_m2_s=args.water_viscosity,
         water_density_kg_m3=args.water_density, inertia_cg_kg_m2=inertia,
         speed_range_mps=tuple(args.speed_range), classification=args.classification,
         disable_bem=args.disable_bem, lut_samples=args.lut_samples,
         confidence_policy=args.confidence_policy, bem_panel_target=args.bem_panel_target)
-    print(result)
+    print(json.dumps({"package":str(result),"validation":validate_coefficients(result/"coefficient_package.yaml")},indent=2))
     return 0
 
 
@@ -103,16 +116,21 @@ def main(argv=None) -> int:
     train.set_defaults(handler=train_handler)
     vessel=commands.add_parser("vessel");vessel_commands=vessel.add_subparsers(dest="vessel_command",required=True)
     generate=vessel_commands.add_parser("generate",help="generate passive vessel dynamics from geometry without CFD")
-    generate.add_argument("--geometry",required=True,type=Path)
-    generate.add_argument("--mass",required=True,type=float)
-    generate.add_argument("--cg",required=True,nargs=3,type=float,metavar=("X","Y","Z"))
+    generate.add_argument("--config",type=Path,help="YAML vessel input; supports mass or draft loading")
+    generate.add_argument("--geometry",type=Path)
+    generate.add_argument("--mass",type=float)
+    generate.add_argument("--cg",nargs=3,type=float,metavar=("X","Y","Z"))
     generate.add_argument("--output",required=True,type=Path)
-    scale=generate.add_mutually_exclusive_group(required=True)
+    scale=generate.add_mutually_exclusive_group()
     scale.add_argument("--units",choices=("m","cm","mm","ft","in"))
     scale.add_argument("--known-length",type=float)
     generate.add_argument("--source-frame",choices=("FRD","FPU"),default="FRD")
     generate.add_argument("--draft",type=float)
+    generate.add_argument("--geometry-mode",choices=("full_hull","design_waterline_submerged_hull"),default="full_hull")
+    generate.add_argument("--reference-draft",type=float)
+    generate.add_argument("--reference-length",type=float)
     generate.add_argument("--water-density",type=float,default=1025.)
+    generate.add_argument("--water-viscosity",type=float,default=1.05e-6)
     generate.add_argument("--inertia",nargs=9,type=float,metavar="I")
     generate.add_argument("--speed-range",nargs=2,type=float,default=(0.,3.),metavar=("MIN","MAX"))
     generate.add_argument("--classification")
@@ -121,6 +139,14 @@ def main(argv=None) -> int:
     generate.add_argument("--confidence-policy",choices=("allow_low","strict"),default="allow_low")
     generate.add_argument("--lut-samples",type=int,default=9)
     generate.set_defaults(handler=_generate)
+    validate=vessel_commands.add_parser("validate-coefficients",help="validate coefficient package against Plant6")
+    validate.add_argument("package",type=Path)
+    validate.add_argument("--grid-size",type=int,default=7)
+    def validate_handler(args):
+        package=args.package if args.package.is_file() else args.package/"coefficient_package.yaml"
+        print(json.dumps(validate_coefficients(package,grid_size=args.grid_size),indent=2))
+        return 0
+    validate.set_defaults(handler=validate_handler)
     identify=vessel_commands.add_parser("identify",help="prepare or fit an offline 6-DOF CFD identification campaign")
     identify.add_argument("--geometry",required=True);identify.add_argument("--mass",required=True,type=float)
     identify.add_argument("--cg",required=True,help="body-FRD x,y,z in metres");identify.add_argument("--output",required=True)

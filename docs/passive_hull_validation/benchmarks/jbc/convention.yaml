@@ -1,0 +1,18 @@
+benchmark: Tokyo 2015 JBC Case 1.1a (NMRI), design full load, bare hull
+status: BLOCKED_OFFICIAL_GEOMETRY_AND_RAW_EXPERIMENT_DOWNLOAD
+body_frame: MANTA FRD; +x forward, +y starboard, +z down
+source_frame: Tokyo 2015 JBC right-handed; x streamwise, y port-to-starboard, z positive upward; origin FP at undisturbed water plane
+model_scale: 1:40
+reference_length_m: 7.0
+reference_area_m2: 12.2206
+force_normalization: CT=RT/(0.5*rho*U^2*S0_w/oESD), S0/Lpp^2=0.2494
+speed_mps: 1.179
+froude_number: 0.142
+reynolds_number: 7.46e6 (workshop instruction); NMRI resistance summary also reports 7.569e6
+density_kg_m3: 998.2
+kinematic_viscosity_m2_s: 1.107e-6
+gravity_m_s2: 9.80
+case_attitude: FR_z_theta (free heave and pitch)
+sinkage_sign: positive upward
+trim_sign: positive bow up
+generator_modified: false

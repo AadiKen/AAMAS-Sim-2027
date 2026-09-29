@@ -8,7 +8,7 @@ from bcod_sim.benchmark.runner import SharedActorCritic, make_adapter, _action, 
 from bcod_sim.benchmark.rl_diagnostics import EpisodeDiagnostics,action_summary
 
 torch.set_num_threads(1);torch.manual_seed(909)
-source=Path('/Users/aadikenchammanaold/Downloads/benchmark-bcod-50k-corrected/checkpoint-000038250.pt')
+source=Path.home()/'Downloads'/'benchmark-bcod-50k-corrected'/'checkpoint-000038250.pt'
 saved=torch.load(source,map_location='cpu',weights_only=False);model=SharedActorCritic();model.load_state_dict(saved['model'])
 optimizer=torch.optim.SGD(model.parameters(),lr=0.);config=BenchmarkConfig(**saved['manifest']['benchmark'])
 output=Path('artifacts/shared-rl-audit/bcod-frozen-gradient-probe');output.mkdir(exist_ok=False)

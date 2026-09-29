@@ -1,0 +1,18 @@
+{
+  "benchmark": "KCS bare-hull resistance holdout",
+  "source_quality": "B",
+  "source_organization": "KRISO experiment, reproduced in peer-reviewed Journal of the Society of Naval Architects of Korea paper",
+  "source": "Kang et al. (2020), An Effect of Numerical Region with High Resolution for Kelvin Wave on Ship Resistance, Table 2; experimental value attributed to Van et al. (1998)",
+  "source_url": "https://jsnak.org/_PR/view/?aidx=25693&bidx=2292",
+  "doi": "10.3744/SNAK.2020.57.5.278",
+  "condition": {"Lpp_m": 7.2786, "model_speed_mps": 2.196, "Fn": 0.26, "Re": 14040000.0,
+                "draft_m": 0.3418, "bare_hull": true, "calm_water": true},
+  "experimental": {"CT": 0.003557},
+  "experimental_uncertainty_percent": 1.0,
+  "normalization": "KCS total resistance coefficient as reported in the experimental comparison",
+  "mapping_notes": [
+    "The paper reports CT*1000=3.557 and states the experiment is from Van et al. (1998).",
+    "NMRI/KRISO official KCS geometry is not present in the workspace, so the holdout package was not generated.",
+    "The original source page could not be saved byte-for-byte because terminal network DNS is unavailable."
+  ]
+}

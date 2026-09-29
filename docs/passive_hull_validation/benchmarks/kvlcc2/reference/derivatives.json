@@ -1,0 +1,14 @@
+{
+  "benchmark": "Original KVLCC2 contextual maneuvering derivatives",
+  "source_quality": "B",
+  "source": "Peer-reviewed KVLCC2 hydrodynamic derivative table reproduced in a 2025 paper, citing prior KVLCC2 calm-water sources",
+  "source_url": "https://journals.sagepub.com/doi/10.3233/PMST250035",
+  "geometry_warning": "KVLCC2 is not KVLCC2M; no automatic transfer is allowed.",
+  "published_values": {
+    "Yv_prime": -0.315, "Yr_prime": 0.083, "Nv_prime": -0.137, "Nr_prime": -0.049,
+    "Yvvv_prime": -1.607, "Yvvr_prime": 0.379, "Yvrr_prime": -0.391, "Yrrr_prime": 0.008,
+    "Nvvv_prime": -0.03, "Nvvr_prime": -0.294, "Nvrr_prime": 0.055, "Nrrr_prime": -0.013
+  },
+  "definition_status": "CONVENTION_AMBIGUOUS",
+  "quantitative_score": "excluded until exact dimensionalization and source KVLCC2 geometry are established"
+}

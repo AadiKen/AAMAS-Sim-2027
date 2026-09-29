@@ -32,6 +32,12 @@ def polygon_properties(poly: np.ndarray, a: int, b: int) -> tuple[float, float, 
 def section_properties(mesh: trimesh.Trimesh, axis: int, coordinate: float) -> dict:
     other = tuple(i for i in range(3) if i != axis)
     loops = plane_section(mesh, axis, coordinate)
+    if not loops and axis == 2:
+        # At a waterline that is also a closed mesh boundary, some trimesh
+        # versions return no section path. The indexed cap triangles are the
+        # exact section in that case.
+        coplanar = mesh.triangles[np.all(np.abs(mesh.triangles[:, :, 2] - coordinate) <= 1e-10, axis=1)]
+        loops = [np.vstack((triangle, triangle[0])) for triangle in coplanar]
     parts = [polygon_properties(loop, *other) for loop in loops]
     area = sum(v[0] for v in parts)
     if area <= 0:
@@ -47,10 +53,12 @@ def section_properties(mesh: trimesh.Trimesh, axis: int, coordinate: float) -> d
 def hydrostatic_state(mesh: trimesh.Trimesh, waterline_z: float, *, density: float = 1025.,
                       gravity: float = 9.80665, samples: int = 81,
                       include_wetted: bool = True,
-                      include_waterplane: bool = True) -> dict:
+                      include_waterplane: bool = True,
+                      waterline_is_boundary: bool = False) -> dict:
     """Clip triangles exactly below a FRD waterline (z increases downward)."""
     zmax = float(mesh.bounds[1, 2])
-    if not mesh.bounds[0, 2] < waterline_z < zmax:
+    lower = float(mesh.bounds[0, 2])
+    if not (lower <= waterline_z < zmax if waterline_is_boundary else lower < waterline_z < zmax):
         raise ValueError("Waterline must cut the hull between its vertical bounds")
     volume, cb_array = submerged_volume_centroid(mesh, waterline_z)
     cb = cb_array.tolist()
@@ -58,6 +66,10 @@ def hydrostatic_state(mesh: trimesh.Trimesh, waterline_z: float, *, density: flo
     wetted = 0.
     if include_wetted:
         for triangle in mesh.triangles:
+            # A design-waterline cap closes the displaced volume but is not
+            # part of the wetted hull surface used by resistance calculations.
+            if waterline_is_boundary and np.all(np.abs(triangle[:, 2] - waterline_z) <= 1e-10):
+                continue
             poly = []
             points = list(triangle)
             for p, q in zip(points, points[1:] + points[:1]):

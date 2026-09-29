@@ -1,0 +1,51 @@
+recipe_version: m0-highlevel-mappo-curriculum-v1
+algorithm: MAPPO
+library: benchmarl
+library_version: 1.5.2
+backend: kinematic
+task_version: navigation-v3
+scenario_version: m0-highlevel-curriculum-v1
+agent_count: 2
+action_mode: high_level
+action_schema: desired-speed-heading-v1
+observation_schema: ego-relative-v2
+centralized_state_schema: fleet-global-state-v1
+seeds: [11, 22, 33]
+device: cpu
+rollout_frames: 6000
+n_envs: 10
+minibatch_size: 400
+minibatch_iterations: 45
+evaluation_interval: 6000
+selection: [fleet_success, collision, deadline, completion_time, path_efficiency]
+early_stop_patience: 3
+stages:
+  - name: A
+    scenario_distribution: low_conflict
+    promotion_metric: fleet_success
+    success_threshold: 0.90
+    collision_ceiling: null
+    consecutive_evaluations: 2
+    minimum_training_steps: 12000
+    maximum_training_steps: 48000
+  - name: B
+    scenario_distribution: moderate_interaction
+    promotion_metric: fleet_success_and_collision
+    success_threshold: 0.85
+    collision_ceiling: 0.10
+    consecutive_evaluations: 2
+    minimum_training_steps: 12000
+    maximum_training_steps: 48000
+  - name: C
+    scenario_distribution: full_interaction
+    promotion_metric: qualification
+    success_threshold: 0.85
+    collision_ceiling: 0.10
+    consecutive_evaluations: 2
+    minimum_training_steps: 12000
+    maximum_training_steps: 48000
+qualification:
+  mean_test_fleet_success_min: 0.85
+  every_seed_test_fleet_success_min: 0.75
+  mean_test_collision_max: 0.10
+  no_deadlock_or_deadline_dominated_seed: true

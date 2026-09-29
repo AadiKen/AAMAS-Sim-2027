@@ -1,0 +1,39 @@
+schema: surveyor-validation-assumptions-v1
+status: blocked_by_geometry_gate
+source_of_truth: uploaded_STEP
+reference_dimensions_m:
+  length: 1.83
+  beam: 0.91
+  role: sanity_check_only
+loading:
+  nominal_mass_kg: 52.3
+  sensitivity_mass_kg: [49.0]
+  published_draft_m: 0.17
+  published_length_m: 1.83
+  published_beam_m: 0.91
+  published_specification_url: https://okeanus.com/wp-content/uploads/2025/08/sr-surveyorm18-specsheet-new01.pdf
+  waterline: impossible_for_current_section_envelopes_at_nominal_mass
+cg:
+  lateral_m: 0.0
+  lateral_basis: assumed_symmetry
+  longitudinal_m: null
+  longitudinal_status: unresolved_no_accepted_hull_frame_or_component_mass
+inertia:
+  formula: Iz = mass_kg * (length_m^2 + beam_m^2) / 12
+  status: metadata_estimate_only_not_used_in_simulation
+  previous_49kg_estimate_kg_m2: 16.6114083333
+  scale_sensitivity: [0.7, 1.0, 1.3]
+  nominal_52_3kg_estimate_kg_m2: 18.2047583333
+  nominal_52_3kg_scaled_kg_m2: [12.7433308333, 18.2047583333, 23.6661858333]
+propulsion:
+  count: 2
+  position_frd_m: null
+  direction_frd: null
+  physical_location_status: unresolved_in_open_surface_assembly
+hydrodynamics:
+  generator: frozen_m1
+  trajectory_fitting_allowed: false
+  accepted_coefficient_packages: 0
+environment:
+  shared_current_enu_mps: null
+  status: unestimated

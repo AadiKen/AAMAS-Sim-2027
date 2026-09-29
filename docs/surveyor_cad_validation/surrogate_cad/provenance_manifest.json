@@ -1,0 +1,330 @@
+{
+  "schema": "surveyor-constrained-hydrodynamic-surrogate-v1",
+  "source_step_sha256": "1490d6a7769c1bd79e1a14cf2fac330ce0b08818105997a9f28ec4331601282a",
+  "source_section_mesh_sha256": "286b1d28bddf5a6e2b4de491e84fc48143d870082ee85678290e59bcf9f21882",
+  "source_units": "inch AP214; Gmsh import in mm",
+  "cad_units": "mm",
+  "stl_units": "m",
+  "transform": "FRD x=(source Z-915)/1000; y=-source X/1000; z=-source Y/1000",
+  "authoritative_representation": "OCC B-rep STEP; STL is triangulation",
+  "script_sha256": "b328c095daa8bcb789ba8e3cb066286f34059a4f0a9121478ddebb662906ddbc",
+  "water_density_kg_m3": 1000,
+  "mass_kg": 52.3,
+  "variants": {
+    "nominal": {
+      "input_section_sha256": "a83dfbfc69fbb504c1288c2504d73187f8614720cbc8898ebd3e5db2c6ee232f",
+      "step_sha256": "6ad3d2ce62cdaa73bd63a011fb9a7dfcd027b9ba6ecea13ededee6707a4fe114",
+      "stl_sha256": "457a713c6d0c4eadcd592113d65e45095a0c50f5afa637c17ceb80cd14d8ac3b",
+      "mesh": {
+        "watertight": true,
+        "winding_consistent": true,
+        "component_count": 2,
+        "duplicate_faces": 0,
+        "volume_m3": 0.09356179352352201,
+        "brep_volume_m3": 0.09345501199221931,
+        "brep_mesh_volume_relative_difference": 0.0011425982301686154,
+        "bounds_frd_m": [
+          [
+            -0.8650000000000001,
+            -0.41509949999999995,
+            -0.02212456354132024
+          ],
+          [
+            0.8350000000000001,
+            0.41509949999999995,
+            0.2469794491347553
+          ]
+        ],
+        "face_count": 98492,
+        "pass": true
+      },
+      "hydrostatics": {
+        "waterline_z_frd_m": 0.07495727540983414,
+        "volume_m3": 0.05229999264409522,
+        "displacement_kg": 52.29999264409522,
+        "center_buoyancy_frd_m": [
+          -0.047650690261925255,
+          4.3746222316132284e-06,
+          0.14623598796766385
+        ],
+        "waterplane_area_m2": 0.41562147107615927,
+        "waterplane_centroid_frd_m": [
+          -0.0919362668887325,
+          -4.0910237366192784e-09,
+          0.07495727540983414
+        ],
+        "waterplane_i_roll_m4": 0.04806939035906653,
+        "waterplane_i_pitch_m4": 0.08204504036394791,
+        "wetted_area_m2": 1.3913659711130424,
+        "integration_method": "exact_triangle_clip_v1",
+        "integration_samples": 0
+      },
+      "draft_m": 0.17202217372492118,
+      "draft_gate_pass": true,
+      "source_deviation": {
+        "assessed_points": 6083,
+        "median_mm": 0.000977618798381549,
+        "p95_mm": 0.7056821335356784,
+        "max_mm": 5.900185450448303,
+        "pass": false,
+        "excluded_source_Z_mm": [
+          [
+            325,
+            350
+          ],
+          [
+            900,
+            1200
+          ]
+        ]
+      },
+      "whole_vehicle_dimensions_sanity_only": {
+        "length_m": 1.7000000000000002,
+        "beam_m": 0.8301989999999999,
+        "length_error_fraction": 0.07103825136612016,
+        "beam_error_fraction": 0.08769340659340673
+      },
+      "source_pontoon_dimension_comparison": {
+        "source": {
+          "length_mm": 1745.0419971309304,
+          "individual_max_width_mm": 147.0368021048909,
+          "combined_beam_symmetric_mm": 823.0786132619094,
+          "centerline_spacing_symmetric_mm": 676.0418111570184
+        },
+        "surrogate": {
+          "length_mm": 1699.999988079071,
+          "individual_max_width_mm": 147.0775306224823,
+          "combined_beam_symmetric_mm": 822.9497075080872,
+          "centerline_spacing_symmetric_mm": 675.8721768856049
+        },
+        "length_relative_error": 0.02581141836466638,
+        "beam_relative_error": 0.00015661414565414165,
+        "individual_width_relative_error": 0.0002769953984876218,
+        "spacing_error_mm": 0.1696342714135426,
+        "pass": false
+      }
+    },
+    "fuller": {
+      "input_section_sha256": "119f759081437a157660a4d84e3b83c62b77adad7bf9e0df6f5c2ac3acc99af3",
+      "step_sha256": "c9fed62bee26127e8fe0f45da9a16feba029c9f879701742e0c03526c0fc7972",
+      "stl_sha256": "3bb8eb624fa719695b6baa8c86098b21547a27da6bea034625e53d213df16c3e",
+      "mesh": {
+        "watertight": true,
+        "winding_consistent": true,
+        "component_count": 2,
+        "duplicate_faces": 0,
+        "volume_m3": 0.09362636874898071,
+        "brep_volume_m3": 0.09356185545361907,
+        "brep_mesh_volume_relative_difference": 0.0006895256090086939,
+        "bounds_frd_m": [
+          [
+            -0.8650000000000002,
+            -0.41509949999999995,
+            -0.02212456354132024
+          ],
+          [
+            0.8350000000000001,
+            0.41509949999999995,
+            0.2469794491347553
+          ]
+        ],
+        "face_count": 98652,
+        "pass": true
+      },
+      "hydrostatics": {
+        "waterline_z_frd_m": 0.07511279747550015,
+        "volume_m3": 0.05229995696770595,
+        "displacement_kg": 52.29995696770595,
+        "center_buoyancy_frd_m": [
+          -0.04735056323411618,
+          -9.503318443112612e-06,
+          0.14627521098077617
+        ],
+        "waterplane_area_m2": 0.41554459686110845,
+        "waterplane_centroid_frd_m": [
+          -0.09194394552674254,
+          3.020746352052362e-08,
+          0.07511279747550015
+        ],
+        "waterplane_i_roll_m4": 0.04806031528250052,
+        "waterplane_i_pitch_m4": 0.08202427082731784,
+        "wetted_area_m2": 1.3905474055112597,
+        "integration_method": "exact_triangle_clip_v1",
+        "integration_samples": 0
+      },
+      "draft_m": 0.17186665165925516,
+      "draft_gate_pass": true,
+      "source_deviation": {
+        "assessed_points": 6082,
+        "median_mm": 0.0009760973660514378,
+        "p95_mm": 0.7057020011146593,
+        "max_mm": 5.900185450448303,
+        "pass": false,
+        "excluded_source_Z_mm": [
+          [
+            325,
+            350
+          ],
+          [
+            900,
+            1200
+          ]
+        ]
+      },
+      "whole_vehicle_dimensions_sanity_only": {
+        "length_m": 1.7000000000000002,
+        "beam_m": 0.8301989999999999,
+        "length_error_fraction": 0.07103825136612016,
+        "beam_error_fraction": 0.08769340659340673
+      },
+      "source_pontoon_dimension_comparison": {
+        "source": {
+          "length_mm": 1745.0419971309304,
+          "individual_max_width_mm": 147.0368021048909,
+          "combined_beam_symmetric_mm": 823.0786132619094,
+          "centerline_spacing_symmetric_mm": 676.0418111570184
+        },
+        "surrogate": {
+          "length_mm": 1699.999988079071,
+          "individual_max_width_mm": 147.0775306224823,
+          "combined_beam_symmetric_mm": 822.9497075080872,
+          "centerline_spacing_symmetric_mm": 675.8721768856049
+        },
+        "length_relative_error": 0.02581141836466638,
+        "beam_relative_error": 0.00015661414565414165,
+        "individual_width_relative_error": 0.0002769953984876218,
+        "spacing_error_mm": 0.1696342714135426,
+        "pass": false
+      }
+    },
+    "finer": {
+      "input_section_sha256": "389f0d2455ae9ea84e532f1eca71f4d88909562b31eabc11a3558f9aea51054a",
+      "step_sha256": "e2b26e9f4966af4cfb97266ab48d991e54eba123ea9351442ed116b45f064a65",
+      "stl_sha256": "80ee16578f5f4b413b816a97ed55c4f9aa8c9a169d2f7313d0598aad733c956d",
+      "mesh": {
+        "watertight": true,
+        "winding_consistent": true,
+        "component_count": 2,
+        "duplicate_faces": 0,
+        "volume_m3": 0.09348353023665272,
+        "brep_volume_m3": 0.09341497103542969,
+        "brep_mesh_volume_relative_difference": 0.0007339209172053531,
+        "bounds_frd_m": [
+          [
+            -0.8650000000000002,
+            -0.41509949999999995,
+            -0.02212456354132024
+          ],
+          [
+            0.8350000000000001,
+            0.41509949999999995,
+            0.2469794491347553
+          ]
+        ],
+        "face_count": 98512,
+        "pass": true
+      },
+      "hydrostatics": {
+        "waterline_z_frd_m": 0.0747709568955214,
+        "volume_m3": 0.05229996167246528,
+        "displacement_kg": 52.29996167246528,
+        "center_buoyancy_frd_m": [
+          -0.04801743108148008,
+          -1.1222713450181686e-05,
+          0.1461850883982908
+        ],
+        "waterplane_area_m2": 0.4157136164812332,
+        "waterplane_centroid_frd_m": [
+          -0.09192702588636259,
+          1.4214732380723052e-10,
+          0.0747709568955214
+        ],
+        "waterplane_i_roll_m4": 0.04808026289911496,
+        "waterplane_i_pitch_m4": 0.08206993105410307,
+        "wetted_area_m2": 1.3972750849628992,
+        "integration_method": "exact_triangle_clip_v1",
+        "integration_samples": 0
+      },
+      "draft_m": 0.1722084922392339,
+      "draft_gate_pass": true,
+      "source_deviation": {
+        "assessed_points": 6090,
+        "median_mm": 0.0009768880043319605,
+        "p95_mm": 0.7055430604828127,
+        "max_mm": 5.900185450448303,
+        "pass": false,
+        "excluded_source_Z_mm": [
+          [
+            325,
+            350
+          ],
+          [
+            900,
+            1200
+          ]
+        ]
+      },
+      "whole_vehicle_dimensions_sanity_only": {
+        "length_m": 1.7000000000000002,
+        "beam_m": 0.8301989999999999,
+        "length_error_fraction": 0.07103825136612016,
+        "beam_error_fraction": 0.08769340659340673
+      },
+      "source_pontoon_dimension_comparison": {
+        "source": {
+          "length_mm": 1745.0419971309304,
+          "individual_max_width_mm": 147.0368021048909,
+          "combined_beam_symmetric_mm": 823.0786132619094,
+          "centerline_spacing_symmetric_mm": 676.0418111570184
+        },
+        "surrogate": {
+          "length_mm": 1699.999988079071,
+          "individual_max_width_mm": 147.0775306224823,
+          "combined_beam_symmetric_mm": 822.9497075080872,
+          "centerline_spacing_symmetric_mm": 675.8721768856049
+        },
+        "length_relative_error": 0.02581141836466638,
+        "beam_relative_error": 0.00015661414565414165,
+        "individual_width_relative_error": 0.0002769953984876218,
+        "spacing_error_mm": 0.1696342714135426,
+        "pass": false
+      }
+    }
+  },
+  "m1_run": false,
+  "mesh_convergence": {
+    "coarse_volume_m3": 0.09345131495339087,
+    "nominal_volume_m3": 0.09356179352807614,
+    "fine_volume_m3": 0.09360707146487551,
+    "nominal_to_fine_volume_relative": 0.0004837020974036168,
+    "nominal_to_fine_cb_m": 0.0001024806457988401,
+    "nominal_to_fine_waterplane_relative": 8.60276162910531e-05,
+    "pass": true
+  },
+  "cad_validation_pass": false,
+  "certification": {
+    "status": "NOT_ACCEPTED",
+    "whole_vehicle_dimension_gate_removed": true,
+    "source_pontoon_dimensions_pass": false,
+    "trusted_surface_fidelity_pass": false,
+    "brep_independent_certification_pass": false,
+    "step_stl_consistency_pass": true,
+    "hydrostatics_pass": true,
+    "fairness_certified": false,
+    "m1_run": false,
+    "source_length_relative_error": 0.02581141836466638,
+    "source_beam_relative_error": 0.00015661414565414165,
+    "source_centerline_spacing_error_mm": 0.1696342714135426,
+    "evidence_paths": [
+      "validation/pontoon_dimensions.json",
+      "source_comparison/area_weighted_surface_distance.json",
+      "validation/brep_certification.json",
+      "validation/step_stl_consistency.json",
+      "validation/fairness_metrics.json"
+    ],
+    "note": "Certification inspected existing CAD only; no STEP/STL geometry regenerated.",
+    "build_script_sha256_at_generation": "b328c095daa8bcb789ba8e3cb066286f34059a4f0a9121478ddebb662906ddbc",
+    "current_builder_sha256_after_gate_correction": "c5c7141283679da5af4e469de9822ef2dec846dc3be1405d77ceaf209d389711",
+    "builder_change": "Only future dimensional gate logic changed; existing STEP/STL geometry was not regenerated."
+  }
+}

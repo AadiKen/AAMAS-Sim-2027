@@ -1,0 +1,96 @@
+{
+  "benchmark": "Tokyo 2015 JBC Case 1.1a (NMRI), design full load, bare hull",
+  "geometry_status": "official download not acquired in this runtime; do not substitute secondary geometry",
+  "experimental_data_status": "workshop result values available from published NMRI workshop/papers; official xlsx bytes not acquired in this runtime",
+  "model_scale": {
+    "scale": 40,
+    "Lpp_m": 7.0,
+    "Lwl_m": 7.125,
+    "beam_waterline_m": 1.125,
+    "depth_m": 0.625,
+    "draft_mid_m": 0.4125,
+    "displacement_m3": 2.7870,
+    "wetted_area_without_ESD_m2": 12.2206
+  },
+  "full_scale": {
+    "Lpp_m": 280.0,
+    "Lwl_m": 285.0,
+    "beam_waterline_m": 45.0,
+    "depth_m": 25.0,
+    "draft_m": 16.5,
+    "displacement_m3": 178369.9,
+    "wetted_area_without_ESD_m2": 19556.1
+  },
+  "case_1_1a": {
+    "wave": "calm",
+    "condition": "towing",
+    "ESD": "without",
+    "propeller": "without",
+    "rudder": "without",
+    "attitude": "FR_z_theta (free heave and pitch)",
+    "speed_mps": 1.179,
+    "froude_number": 0.142,
+    "reynolds_number_source_values": {
+      "instruction_value": "7.46e6",
+      "NMRI_resistance_test_value": "7.569e6"
+    },
+    "density_kg_m3": 998.2,
+    "kinematic_viscosity_m2_s": 1.107e-6,
+    "gravity_m_s2": 9.80,
+    "CT": 0.00429,
+    "CT_uncertainty": null,
+    "sinkage_over_Lpp_percent_positive_up": -0.0857,
+    "sinkage_m_positive_up": -0.005999,
+    "sinkage_uncertainty": null,
+    "trim_over_Lpp_percent_positive_bow_up": -0.180,
+    "trim_m_positive_bow_up": -0.01260,
+    "trim_uncertainty": null,
+    "reported_resistance_repeatability_note": "The Case 1.1a paper's alternative comparison of EFD 4.289 versus 4.29 x10^-3 reflects reported precision/rounding; no explicit EFD uncertainty interval was available in accessed source extracts.",
+    "uncertainty_note": "No measurement uncertainty identified in accessible published summaries. The NMRI raw resistance/self-propulsion spreadsheet is listed by NMRI but access is contact-gated."
+  },
+  "sources": [
+    {
+      "url": "https://www.t2015.nmri.go.jp/jbc_gc.html",
+      "publisher": "Tokyo 2015 CFD Workshop / NMRI",
+      "supports": "official JBC particulars, design-full Case 1.1 loading/attitude, official IGES geometry listing, above-water geometry listing",
+      "accessed": "2026-09-28",
+      "bytes_archived": false
+    },
+    {
+      "url": "https://www.nmri.go.jp/study/intellectual/db/jbc2/",
+      "publisher": "NMRI",
+      "supports": "existence of experimental resistance and self-propulsion spreadsheet; contact-gated download",
+      "accessed": "2026-09-28",
+      "bytes_archived": false
+    },
+    {
+      "url": "https://t2015.nmri.go.jp/Presentations/Day1-AM4-JBC-Resist_etc-Larsson.pdf",
+      "publisher": "Tokyo 2015 CFD Workshop / NMRI",
+      "supports": "published NMRI towing resistance, sinkage, and trim result summary",
+      "accessed": "2026-09-28",
+      "bytes_archived": false
+    },
+    {
+      "url": "https://t2015.nmri.go.jp/Instructions_JBC/Case_1-1a.html",
+      "publisher": "Tokyo 2015 CFD Workshop / NMRI",
+      "supports": "Case 1.1a conditions, force coefficient reference area, sign convention, EFD file format",
+      "accessed": "2026-09-28",
+      "bytes_archived": false
+    },
+    {
+      "url": "https://dcwan.sjtu.edu.cn/userfiles/Tokyo_JBC_SUNTAO_YINCH_WUJW.pdf",
+      "publisher": "Shanghai Jiao Tong University authors",
+      "supports": "reproduced EFD result table and reported comparison precision; secondary cross-check",
+      "accessed": "2026-09-28",
+      "bytes_archived": false
+    },
+    {
+      "url": "https://www.nmri.go.jp/service/repository_data/PNM22220305-01.pdf",
+      "publisher": "NMRI",
+      "supports": "above-water IGES geometry metadata and design full-scale coordinate origin",
+      "accessed": "2026-09-28",
+      "bytes_archived": false
+    }
+  ],
+  "provenance_warning": "Values are preserved here as source-attributed transcriptions, not as byte-verified source records. Do not treat this as geometry acquisition or a completed blind validation."
+}

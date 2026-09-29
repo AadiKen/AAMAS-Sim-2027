@@ -1,0 +1,237 @@
+{
+  "benchmark": "NMRI 2005 workshop test case 3 KVLCC2M oblique tow",
+  "source_url": "https://www.nmri.go.jp/study/research_organization/fluid_performance/cfd/cfdws05/Detail/a3/index.html",
+  "data_url": "https://www.nmri.go.jp/study/research_organization/fluid_performance/cfd/cfdws05/Detail/data/KVLCC2m_data/NMRI/KVLCC2M_hydro_forces_in_oblique_flow_1424.dat",
+  "geometry_url": "https://www.nmri.go.jp/study/research_organization/fluid_performance/cfd/cfdws05/Detail/KVLCC/kvlcc_g%26c.htm",
+  "configuration": {
+    "value": "KVLCC2M bare hull, without rudder, fixed even keel, double-model flow",
+    "status": "KNOWN"
+  },
+  "Lpp_m": {
+    "value": 4.97,
+    "status": "KNOWN"
+  },
+  "beam_m": {
+    "value": 0.9008,
+    "status": "KNOWN"
+  },
+  "draft_m": {
+    "value": 0.323,
+    "status": "KNOWN"
+  },
+  "speed_mps": {
+    "value": 0.994,
+    "status": "KNOWN"
+  },
+  "Re": {
+    "value": 3945000.0,
+    "status": "KNOWN"
+  },
+  "nu_m2_s": {
+    "value": 1.2522636248415715e-06,
+    "status": "DERIVED"
+  },
+  "physical_Fn": {
+    "value": 0.14237962745421556,
+    "status": "DERIVED",
+    "note": "Workshop lists Fn=0 as the double-model condition."
+  },
+  "displacement_m3": {
+    "value": 1.17142,
+    "status": "KNOWN",
+    "evidence": "Official KVLCC2M offsets, DESIGN FULL row at design draft; not used in force normalization."
+  },
+  "mass_kg": {
+    "value": null,
+    "status": "MISSING",
+    "note": "Experimental water density is not reported; mass is not needed for static force coefficients."
+  },
+  "CG_coordinates_m": {
+    "value": null,
+    "status": "MISSING",
+    "note": "Published moment is about midship, so CG is not needed for this comparison."
+  },
+  "moment_origin": {
+    "value": "midship on undisturbed waterplane",
+    "status": "KNOWN"
+  },
+  "axes_signs": {
+    "value": "Official Figure 1: body X forward, Y starboard, positive beta gives body v<0 and positive CY/CN",
+    "status": "KNOWN"
+  },
+  "normalization": {
+    "value": "CY=Y/(0.5*rho*U^2*Lpp*T); CN=N/(0.5*rho*U^2*Lpp^2*T)",
+    "status": "KNOWN"
+  },
+  "motion": {
+    "value": "steady oblique tow, beta listed in degrees",
+    "status": "KNOWN"
+  },
+  "frequency_hz": {
+    "value": null,
+    "status": "KNOWN",
+    "note": "Not applicable to steady tow."
+  },
+  "phase_convention": {
+    "value": null,
+    "status": "KNOWN",
+    "note": "Not applicable to steady tow."
+  },
+  "inertial_correction": {
+    "value": "No unsteady inertia for steady fixed-hull tow",
+    "status": "KNOWN"
+  },
+  "load_definition": {
+    "value": "Physical fluid-on-hull measured steady force and moment coefficients",
+    "status": "KNOWN"
+  },
+  "uncertainty": {
+    "value": "Numerical uncertainty tabulated at beta 0, 9, 18; absent at beta 6",
+    "status": "KNOWN"
+  },
+  "rho_kg_m3": {
+    "value": null,
+    "status": "MISSING",
+    "note": "Cancels in EFD-vs-CFD nondimensional coefficient comparison."
+  },
+  "rows": [
+    {
+      "beta_deg": -3,
+      "CY": -0.01246,
+      "CX": -0.01804,
+      "CN": -0.00708,
+      "CY_uncertainty": null,
+      "CN_uncertainty": null
+    },
+    {
+      "beta_deg": -2,
+      "CY": -0.00842,
+      "CX": -0.01795,
+      "CN": -0.00456,
+      "CY_uncertainty": null,
+      "CN_uncertainty": null
+    },
+    {
+      "beta_deg": -1,
+      "CY": -0.00456,
+      "CX": -0.01789,
+      "CN": -0.00207,
+      "CY_uncertainty": null,
+      "CN_uncertainty": null
+    },
+    {
+      "beta_deg": 0,
+      "CY": -4e-05,
+      "CX": -0.01756,
+      "CN": -6e-05,
+      "CY_uncertainty": 0.00027,
+      "CN_uncertainty": 0.0001
+    },
+    {
+      "beta_deg": 1,
+      "CY": 0.00493,
+      "CX": -0.01773,
+      "CN": 0.00159,
+      "CY_uncertainty": null,
+      "CN_uncertainty": null
+    },
+    {
+      "beta_deg": 2,
+      "CY": 0.00903,
+      "CX": -0.01769,
+      "CN": 0.00407,
+      "CY_uncertainty": null,
+      "CN_uncertainty": null
+    },
+    {
+      "beta_deg": 3,
+      "CY": 0.01263,
+      "CX": -0.01776,
+      "CN": 0.00612,
+      "CY_uncertainty": null,
+      "CN_uncertainty": null
+    },
+    {
+      "beta_deg": 4,
+      "CY": 0.01661,
+      "CX": -0.0177,
+      "CN": 0.00837,
+      "CY_uncertainty": null,
+      "CN_uncertainty": null
+    },
+    {
+      "beta_deg": 5,
+      "CY": 0.0211,
+      "CX": -0.01767,
+      "CN": 0.01125,
+      "CY_uncertainty": null,
+      "CN_uncertainty": null
+    },
+    {
+      "beta_deg": 6,
+      "CY": 0.0256,
+      "CX": -0.01771,
+      "CN": 0.01392,
+      "CY_uncertainty": null,
+      "CN_uncertainty": null
+    },
+    {
+      "beta_deg": 9,
+      "CY": 0.04553,
+      "CX": -0.01729,
+      "CN": 0.0194,
+      "CY_uncertainty": 0.00145,
+      "CN_uncertainty": 0.00084
+    },
+    {
+      "beta_deg": 12,
+      "CY": 0.07082,
+      "CX": -0.0175,
+      "CN": 0.02539,
+      "CY_uncertainty": null,
+      "CN_uncertainty": null
+    },
+    {
+      "beta_deg": 15,
+      "CY": 0.0981,
+      "CX": -0.01643,
+      "CN": 0.03056,
+      "CY_uncertainty": null,
+      "CN_uncertainty": null
+    },
+    {
+      "beta_deg": 18,
+      "CY": 0.12391,
+      "CX": -0.0137,
+      "CN": 0.03494,
+      "CY_uncertainty": 0.00384,
+      "CN_uncertainty": 0.00129
+    }
+  ],
+  "archived_sources": {
+    "KVLCC2M_hydro_forces_in_oblique_flow_1424.dat": {
+      "sha256": "517ff1a1556c3f84f2c12cfa2c09312b976179441950d86cac24080733e5fcfc",
+      "bytes": 1531
+    },
+    "kvlcc2m_dat.zip": {
+      "sha256": "b0d83589d85673d8f56ec4a06cbbbe9215ce34bb9d0947a951e8e0af6a8da024",
+      "bytes": 2068973
+    },
+    "kvlcc2m_offsets.lst": {
+      "sha256": "8b3fe86c37bfbb73e7fd26da07f46ed72eab2a9883e3a5ef7a019dfb4e1cad1b",
+      "bytes": 39739
+    },
+    "nmri_test_case_3_instructions.pdf": {
+      "sha256": "509c765f6a908665124842c9e791e5c22021aa0dd12a8be28c3dec2912607324",
+      "bytes": 751429
+    },
+    "nmri_axis_1.png": {
+      "sha256": "e66a1b532b2cabd7a9cf02ca8f316b62b5b2716600292b93553cf7dbe5cde55e",
+      "bytes": 10304
+    },
+    "atma_2006_kvlcc2m.pdf": {
+      "sha256": "28d2e64490375009e39fb1b2ecc895c095e22fc2382b2724fa5bb9dd7e28c43e",
+      "bytes": 546615
+    }
+  }
+}

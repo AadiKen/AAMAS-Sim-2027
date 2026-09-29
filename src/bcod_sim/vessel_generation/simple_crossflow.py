@@ -90,6 +90,8 @@ def extract_crossflow_stations(mesh: trimesh.Trimesh, waterline: float,
                     "section_fullness": fullness, "section_aspect_ratio": beam/depth,
                     "section_family": "bluff" if provenance["rectangle_weight"] >= .5 else "rounded",
                     "dx_m": float(dx), "cd": cd, "cd_provenance": provenance,
+                    "axial_rotation_area_m2": float(beam*depth*dx/length),
+                    "axial_rotation_cd": 1.0,
                     "lift_base_kg_per_m": 0.})
         if not local:
             continue
@@ -128,5 +130,8 @@ def extract_crossflow_stations(mesh: trimesh.Trimesh, waterline: float,
         "transition": {"method": "translation_shear_v5", "weight": "q_mean^2/(mean_abs_u^2+q_mean^2)",
                        "source": "uniform-drift incidence saturation with separate rotational-shear cross-flow; no fitted constant",
                        "confidence": "low"},
+        "axial_rotation": {"method": "per_hull_rotational_axial_drag_v1",
+                           "source": "bounded empirical Cd=1 on section frontal area; acts only on yaw-induced local surge",
+                           "straight_surge_overlap": "none at zero yaw", "confidence": "low"},
         "linear_lift": methods, "hull_components": len(components), "stations": len(stations),
         "reference_point_frd_m": [0., 0., 0.]}

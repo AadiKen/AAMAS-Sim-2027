@@ -1,0 +1,42 @@
+{
+  "files": [
+    {
+      "bytes": 1531,
+      "filename": "KVLCC2M_hydro_forces_in_oblique_flow_1424.dat",
+      "sha256": "517ff1a1556c3f84f2c12cfa2c09312b976179441950d86cac24080733e5fcfc",
+      "source_identifier": "NMRI/ATMA archived source matrix"
+    },
+    {
+      "bytes": 2068973,
+      "filename": "kvlcc2m_dat.zip",
+      "sha256": "b0d83589d85673d8f56ec4a06cbbbe9215ce34bb9d0947a951e8e0af6a8da024",
+      "source_identifier": "NMRI/ATMA archived source matrix"
+    },
+    {
+      "bytes": 39739,
+      "filename": "kvlcc2m_offsets.lst",
+      "sha256": "8b3fe86c37bfbb73e7fd26da07f46ed72eab2a9883e3a5ef7a019dfb4e1cad1b",
+      "source_identifier": "NMRI/ATMA archived source matrix"
+    },
+    {
+      "bytes": 751429,
+      "filename": "nmri_test_case_3_instructions.pdf",
+      "sha256": "509c765f6a908665124842c9e791e5c22021aa0dd12a8be28c3dec2912607324",
+      "source_identifier": "NMRI/ATMA archived source matrix"
+    },
+    {
+      "bytes": 10304,
+      "filename": "nmri_axis_1.png",
+      "sha256": "e66a1b532b2cabd7a9cf02ca8f316b62b5b2716600292b93553cf7dbe5cde55e",
+      "source_identifier": "NMRI/ATMA archived source matrix"
+    },
+    {
+      "bytes": 546615,
+      "filename": "atma_2006_kvlcc2m.pdf",
+      "sha256": "28d2e64490375009e39fb1b2ecc895c095e22fc2382b2724fa5bb9dd7e28c43e",
+      "source_identifier": "NMRI/ATMA archived source matrix"
+    }
+  ],
+  "method": "byte-for-byte copy from existing provenance-audited acquisition",
+  "retrieval_date": "2026-09-28"
+}

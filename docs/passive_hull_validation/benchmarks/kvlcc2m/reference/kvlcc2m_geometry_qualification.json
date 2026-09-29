@@ -1,0 +1,47 @@
+{
+  "source_sha256": "b0d83589d85673d8f56ec4a06cbbbe9215ce34bb9d0947a951e8e0af6a8da024",
+  "source_surface": "kvlcc2m_whole.dat",
+  "source_face_count": 160000,
+  "closure": "flat cap along official design-waterline coordinates",
+  "transform": "(x,y,z)_BCOD_FRD = (-x,-y,-z)_NMRI * 4.970 m",
+  "vertices": 80400,
+  "faces": 160796,
+  "watertight": true,
+  "winding_consistent": true,
+  "open_edges": 0,
+  "nonmanifold_edges": 0,
+  "connected_components": 1,
+  "bounds_frd_m": [
+    [
+      -2.570421756505966,
+      -0.45044884860515594,
+      0.0
+    ],
+    [
+      2.6099161142110825,
+      0.45044884860515594,
+      0.32309242382645603
+    ]
+  ],
+  "volume_m3": 1.1712830351765102,
+  "area_m2": 10.717228087185799,
+  "removed_zero_area_seam_fragments": [
+    {
+      "faces": 2,
+      "area_m2": 6.496990794549708e-06
+    }
+  ],
+  "component_face_counts": [
+    160796
+  ],
+  "open_edge_endpoints_m": [],
+  "nonmanifold_edge_endpoints_m": [],
+  "stl_sha256": "4e973adb64bbf991dfe03e4351cc115f1eb6fee607e1b415fca1c9916fb604ce",
+  "official_displacement_m3": 1.17142,
+  "displacement_relative_error": -0.00011692204631108538,
+  "official_block_coefficient": 0.8099,
+  "official_offsets_reference": "kvlcc2m_offsets.lst, DESIGN FULL row at draft 0.323050 m",
+  "wetted_area_m2": 6.6767367580719945,
+  "official_wetted_area_m2": 6.58919,
+  "wetted_area_relative_error": 0.013286421862473974
+}

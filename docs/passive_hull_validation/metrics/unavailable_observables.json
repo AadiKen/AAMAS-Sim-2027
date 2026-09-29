@@ -1,0 +1,31 @@
+[
+  {
+    "benchmark": "KVLCC2M",
+    "observable": "frozen_M1_resistance_score",
+    "status": "REFERENCE_RECOVERED_UNSCORED",
+    "reference_CT": 0.0042612,
+    "uncertainty_percent": 0.7,
+    "reason": "Peer-reviewed paper reproduces the experimental row and official NMRI Test Case 5 gives 0.7% CT uncertainty; package generation is blocked by the waterline-only geometry restoring envelope."
+  },
+  {
+    "benchmark": "KVLCC2",
+    "observable": "frozen_M1_derivative_score",
+    "status": "CONTEXTUAL_ONLY",
+    "reason": "Peer-reviewed derivative values were recovered, but original KVLCC2 geometry and derivative scaling definitions are not established; values must not score KVLCC2M."
+  },
+  {
+    "benchmark": "DTMB5512",
+    "observable": "dynamic_PMM_score",
+    "status": "NUMERIC_DATA_MAPPING_UNAVAILABLE",
+    "reason": "Official University of Iowa page confirms force/moment data at Fr 0.138, 0.28, and 0.41, but current source audit cannot map downloadable numeric records, bilge-keel geometry, and moment origin defensibly."
+  },
+  {
+    "benchmark": "KCS",
+    "observable": "frozen_M1_holdout_score",
+    "status": "REFERENCE_RECOVERED_UNSCORED",
+    "reference_CT": 0.003557,
+    "Fn": 0.26,
+    "uncertainty_percent": 1.0,
+    "reason": "Peer-reviewed paper reproduces KCS experimental CT, but the official KCS geometry is not staged and no KCS package was generated."
+  }
+]

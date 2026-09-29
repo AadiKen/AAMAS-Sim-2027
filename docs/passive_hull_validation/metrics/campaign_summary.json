@@ -1,0 +1,10 @@
+{
+  "source_acquisition": "PARTIAL",
+  "geometry": "PASS",
+  "convention_adapters": "PARTIAL_REFERENCE_MAPPING_ONLY",
+  "kvlcc2m_static_drift": "UNSCORED_PACKAGE_GATE",
+  "kvlcc2m_resistance": "REFERENCE_RECOVERED_UNSCORED",
+  "kvlcc2_derivatives": "PARTIAL_CONTEXT_ONLY",
+  "dtmb5512_dynamic_pmm": "PARTIAL_UNSCORED",
+  "kcs_held_out_resistance": "REFERENCE_RECOVERED_UNSCORED"
+}

@@ -87,10 +87,16 @@ def strip_added_mass(stations: list[dict], density: float) -> dict:
 def _wetted_capytaine_panels(mesh: trimesh.Trimesh, waterline_frd: float):
     """Clip existing triangles at the design waterline without creating a lid."""
     transform = np.array((1., -1., -1.))
+    # STL is float32. Points intended to lie on the waterline can return a few
+    # nanometres above/below it, producing nearly zero-area clipping slivers.
+    snap_tolerance = 1e-7 * max(float(mesh.extents.max()), 1.)
     vertices = []
     faces = []
     for triangle in mesh.triangles:
         poly = [p * transform + np.array((0., 0., waterline_frd)) for p in triangle]
+        for point in poly:
+            if abs(point[2]) <= snap_tolerance:
+                point[2] = 0.
         clipped = []
         for p, q in zip(poly, poly[1:] + poly[:1]):
             inside_p, inside_q = p[2] <= 0, q[2] <= 0
@@ -265,6 +271,11 @@ def crossflow(stations: list[dict], density: float, nu: np.ndarray, cd_scale: fl
         force = drag + lift
         tau[1] += force
         tau[5] += (s["x_m"] - s.get("x_reference_m", 0.)) * force
+        if "axial_rotation_area_m2" in s:
+            rotational_u = -s["y_m"] * r
+            axial = (-.5*density*s.get("axial_rotation_cd", 1.)*
+                     s["axial_rotation_area_m2"]*abs(rotational_u)*rotational_u)
+            tau[5] -= s["y_m"]*axial
     return tau
 
 

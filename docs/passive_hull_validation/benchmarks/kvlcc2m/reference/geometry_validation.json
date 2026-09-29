@@ -1,0 +1,42 @@
+{
+  "benchmark": "KVLCC2M model scale",
+  "source_geometry": "NMRI surface grid; design-waterline cap",
+  "watertight": true,
+  "dimensions": {
+    "Lpp_m": {
+      "reference": 4.97,
+      "mesh_bbox_x_m": 5.180337870717048,
+      "note": "bbox length is LOA including official overhang; Lpp retained from NMRI perpendiculars"
+    },
+    "beam_m": {
+      "reference": 0.9008,
+      "mesh_bbox_y_m": 0.9008976972103119,
+      "relative_error": 0.0001084560505237913
+    },
+    "draft_m": {
+      "reference": 0.323,
+      "mesh_bbox_z_m": 0.32309242382645603,
+      "relative_error": 0.0002861418775728262
+    },
+    "wetted_area_m2": {
+      "reference": 6.58919,
+      "mesh": 6.6767367580719945,
+      "relative_error": 0.013286421862473974
+    },
+    "displacement_m3": {
+      "reference": 1.17142,
+      "mesh": 1.1712830351765102,
+      "relative_error": -0.00011692204631108538
+    },
+    "block_coefficient": {
+      "reference": 0.8099,
+      "mesh": 0.809855137177153
+    }
+  },
+  "transformations": [
+    "NMRI normalized grid scaled by Lpp=4.970 m",
+    "NMRI axes transformed to BCOD FRD by sign reversal",
+    "design waterline section capped; stern closure from source grid",
+    "OBJ used to preserve shared vertex topology for M1 import"
+  ]
+}

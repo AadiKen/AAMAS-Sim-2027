@@ -1,0 +1,47 @@
+actuator_system:
+  schema_version: manta-actuator-v1
+  status: estimated
+  provenance:
+    positions: supplied
+    propulsion_model: default
+  control_allocation:
+    weights: [1, 1, 1, 1, 1, 1]
+    delta_penalty: 0.000001
+    effort_penalty: 0.00000001
+  actuators:
+    - id: port
+      type: fixed_thruster
+      status: low_confidence
+      pose:
+        position_frd: [-1, -0.5, 0]
+        direction_frd: [1, 0, 0]
+      propulsion:
+        model: power_law
+        command_bounds: [-1, 1]
+        max_forward_n: 10
+        max_reverse_n: 8
+        exponent: 2
+      dynamics:
+        thrust_tau_s: 0.3
+        thrust_rate_nps: 50
+      provenance:
+        position: supplied
+        propulsion_model: default
+    - id: starboard
+      type: fixed_thruster
+      status: low_confidence
+      pose:
+        position_frd: [-1, 0.5, 0]
+        direction_frd: [1, 0, 0]
+      propulsion:
+        model: power_law
+        command_bounds: [-1, 1]
+        max_forward_n: 10
+        max_reverse_n: 8
+        exponent: 2
+      dynamics:
+        thrust_tau_s: 0.3
+        thrust_rate_nps: 50
+      provenance:
+        position: supplied
+        propulsion_model: default

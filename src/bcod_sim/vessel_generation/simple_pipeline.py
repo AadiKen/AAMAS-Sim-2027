@@ -60,6 +60,28 @@ def _restoring_lut(mesh: trimesh.Trimesh, waterline: float, mass: float,
             "method": "exact_triangle_clip_v1", "confidence": "medium"}
 
 
+def _local_restoring_lut(stiffness: np.ndarray, draft: float) -> dict:
+    """Build a small linear restoring neighborhood without inventing topsides."""
+    heave_limit = max(min(.01 * draft, .01), 1e-4)
+    roll_limit = pitch_limit = .01
+    axes = (np.linspace(-heave_limit, heave_limit, 3),
+            np.linspace(-roll_limit, roll_limit, 3),
+            np.linspace(-pitch_limit, pitch_limit, 3))
+    grid = np.zeros((3, 3, 3, 6), dtype=float)
+    for i, heave in enumerate(axes[0]):
+        for j, roll in enumerate(axes[1]):
+            for k, pitch in enumerate(axes[2]):
+                displacement = np.array((0., 0., heave, roll, pitch, 0.))
+                grid[i, j, k] = -(stiffness @ displacement)
+    return {"model": "local_design_waterline_linear_restoring_lut",
+            "axes": {"heave_m": axes[0].tolist(), "roll_rad": axes[1].tolist(),
+                     "pitch_rad": axes[2].tolist()}, "wrench_frd": grid.tolist(),
+            "out_of_domain": "error", "interpolation": "trilinear",
+            "method": "waterplane_local_stiffness_v1", "confidence": "medium",
+            "mode": "local_design_waterline", "nonlinear_vertical_motion_supported": False,
+            "validity": {"heave": "local", "roll": "local", "pitch": "local"}}
+
+
 def _exact_restoring_load(mesh: trimesh.Trimesh, waterline: float, mass: float,
                           cg: np.ndarray, density: float, gravity: float,
                           heave: float, roll: float, pitch: float) -> np.ndarray:
@@ -229,9 +251,13 @@ def _validate(mass: float, inertia: np.ndarray, added: np.ndarray, linear: np.nd
 def generate_simple_vessel(*, geometry: str | Path, output: str | Path, mass_kg: float,
                            cg_frd_m: tuple[float, float, float], units: str | None = None,
                            known_length_m: float | None = None, source_frame: str = "FRD",
+                           reference_length_m: float | None = None,
+                           water_kinematic_viscosity_m2_s: float = 1.05e-6,
                            draft_m: float | None = None, water_density_kg_m3: float = 1025.,
                            inertia_cg_kg_m2: np.ndarray | None = None,
                            speed_range_mps: tuple[float, float] = (0., 3.),
+                           geometry_mode: str = "full_hull",
+                           reference_draft_m: float | None = None,
                            classification: str | None = None, disable_bem: bool = False,
                            lut_samples: int = 9, confidence_policy: str = "allow_low",
                            bem_panel_target: int = 900) -> Path:
@@ -239,10 +265,16 @@ def generate_simple_vessel(*, geometry: str | Path, output: str | Path, mass_kg:
         raise ValueError("Positive mass and finite FRD CG are required")
     if water_density_kg_m3 <= 0 or speed_range_mps[0] < 0 or speed_range_mps[1] <= speed_range_mps[0]:
         raise ValueError("Invalid water density or speed range")
+    if not math.isfinite(water_kinematic_viscosity_m2_s) or water_kinematic_viscosity_m2_s <= 0:
+        raise ValueError("Water kinematic viscosity must be positive")
     if lut_samples < 3 or lut_samples % 2 != 1:
         raise ValueError("LUT sample count must be odd and at least 3")
     if confidence_policy not in {"allow_low", "strict"}:
         raise ValueError("confidence_policy must be allow_low or strict")
+    if geometry_mode not in {"full_hull", "design_waterline_submerged_hull"}:
+        raise ValueError("geometry_mode must be full_hull or design_waterline_submerged_hull")
+    if geometry_mode == "design_waterline_submerged_hull" and (reference_draft_m is None or reference_draft_m <= 0):
+        raise ValueError("design_waterline_submerged_hull requires a positive reference_draft_m")
     if bem_panel_target < 20 or bem_panel_target > 1200:
         raise ValueError("bem_panel_target must be in [20, 1200]")
     root = Path(output)
@@ -250,7 +282,9 @@ def generate_simple_vessel(*, geometry: str | Path, output: str | Path, mass_kg:
     module_root = Path(__file__).parent
     code_hash = sha256(b"".join((module_root / name).read_bytes() for name in
         ("simple_pipeline.py", "simple_geometry.py", "simple_sections.py",
-         "simple_hydro_mesh.py", "simple_models.py", "simple_crossflow.py", "simple_wave.py", "volume_clip.py"))).hexdigest()
+         "simple_hydro_mesh.py", "simple_models.py", "simple_crossflow.py", "simple_wave.py",
+         "volume_clip.py", "coefficient_package.py")) +
+         (module_root.parent / "dynamics" / "crossflow.py").read_bytes()).hexdigest()
     try:
         capytaine_version = version("capytaine")
     except PackageNotFoundError:
@@ -262,8 +296,11 @@ def generate_simple_vessel(*, geometry: str | Path, output: str | Path, mass_kg:
     request = {"schema": SCHEMA, "code_sha256": code_hash,
         "geometry_sha256": sha256(Path(geometry).read_bytes()).hexdigest(),
         "mass_kg": mass_kg, "cg_frd_m": list(cg_frd_m), "units": units,
-        "known_length_m": known_length_m, "source_frame": source_frame,
+        "known_length_m": known_length_m, "reference_length_m": reference_length_m,
+        "water_kinematic_viscosity_m2_s": water_kinematic_viscosity_m2_s,
+        "source_frame": source_frame,
         "draft_m": draft_m, "water_density_kg_m3": water_density_kg_m3,
+        "geometry_mode": geometry_mode, "reference_draft_m": reference_draft_m,
         "inertia_cg_kg_m2": None if inertia_cg_kg_m2 is None else np.asarray(inertia_cg_kg_m2).tolist(),
         "speed_range_mps": list(speed_range_mps), "classification": classification,
         "disable_bem": disable_bem, "lut_samples": lut_samples,
@@ -276,6 +313,11 @@ def generate_simple_vessel(*, geometry: str | Path, output: str | Path, mass_kg:
     if all((root / name).exists() for name in required):
         previous = json.loads((root / "provenance.json").read_text())
         if previous.get("generation_request_sha256") == request_hash:
+            if not (root / "normalized_geometry.stl").exists() and (root / "processed_geometry.stl").exists():
+                (root / "normalized_geometry.stl").write_bytes((root / "processed_geometry.stl").read_bytes())
+            from .coefficient_package import write_coefficient_package
+            if not (root / "coefficient_package.yaml").exists():
+                write_coefficient_package(root)
             return root
     timings = {}
     begin = perf_counter()
@@ -284,7 +326,22 @@ def generate_simple_vessel(*, geometry: str | Path, output: str | Path, mass_kg:
     mesh = prepared.mesh
     timings["geometry_s"] = perf_counter() - begin
     begin = perf_counter()
-    if draft_m is None:
+    if geometry_mode == "design_waterline_submerged_hull":
+        waterline = float(mesh.bounds[0, 2])
+        mesh_draft = float(mesh.bounds[1, 2] - waterline)
+        draft_error = abs(mesh_draft - float(reference_draft_m)) / float(reference_draft_m)
+        if draft_error > .01:
+            raise ValueError(f"Capped geometry depth contradicts reference draft: {draft_error:.2%}")
+        hydro = hydrostatic_state(mesh, waterline, density=water_density_kg_m3,
+            include_wetted=True, include_waterplane=True, waterline_is_boundary=True)
+        error = abs(hydro["displacement_kg"] - mass_kg) / mass_kg
+        if error > .05:
+            raise ValueError(f"Design-waterline displaced mass contradicts loading: {error:.1%}")
+        hydro.update({"mode": "local_design_waterline", "reference_draft_m": float(reference_draft_m),
+            "nonlinear_vertical_motion_supported": False,
+            "validity": {"heave": "local", "roll": "local", "pitch": "local"},
+            "waterline_cap_excluded_from_wetted_area": True})
+    elif draft_m is None:
         hydro = solve_waterline(mesh, mass_kg, water_density_kg_m3)
     else:
         level = float(mesh.bounds[1, 2] - draft_m)
@@ -388,19 +445,28 @@ def generate_simple_vessel(*, geometry: str | Path, output: str | Path, mass_kg:
             wave_rejection = str(exc)
     else:
         wave_rejection = "Outside guarded thin/fine displacement domain (L/B>=10, Cb<=0.55, Fn<=0.45, monohull)"
-    resistance = resistance_curve(speeds, length=float(mesh.extents[0]),
+    resistance_length = (float(reference_length_m) if reference_length_m is not None else
+                         float(known_length_m) if known_length_m is not None else float(mesh.extents[0]))
+    resistance = resistance_curve(speeds, length=resistance_length,
         wetted_area=hydro["wetted_area_m2"], density=water_density_kg_m3,
+        viscosity=water_kinematic_viscosity_m2_s,
         classification=regime["classification"], wave=wave)
     resistance["wave_selection"] = "accepted" if wave is not None else "fallback"
     if wave is None:
         resistance["wave_rejection"] = wave_rejection
     timings["resistance_s"] = perf_counter() - begin
     begin = perf_counter()
-    exact_center = _exact_restoring_equilibrium(mesh, waterline, mass_kg,
-        np.asarray(cg_frd_m), water_density_kg_m3, 9.80665)
-    restoring = _restoring_lut(mesh, waterline, mass_kg, np.asarray(cg_frd_m),
-                               water_density_kg_m3, 9.80665, lut_samples, center=exact_center)
-    equilibrium = _restoring_equilibrium(restoring, mass_kg, float(mesh.extents[0]))
+    if geometry_mode == "design_waterline_submerged_hull":
+        exact_center = (0., 0., 0.)
+        restoring = _local_restoring_lut(stiffness, draft)
+        equilibrium = {"heave_m": 0., "roll_rad": 0., "pitch_rad": 0.,
+                       "method": "reference_design_waterline_local_equilibrium"}
+    else:
+        exact_center = _exact_restoring_equilibrium(mesh, waterline, mass_kg,
+            np.asarray(cg_frd_m), water_density_kg_m3, 9.80665)
+        restoring = _restoring_lut(mesh, waterline, mass_kg, np.asarray(cg_frd_m),
+                                   water_density_kg_m3, 9.80665, lut_samples, center=exact_center)
+        equilibrium = _restoring_equilibrium(restoring, mass_kg, float(mesh.extents[0]))
     timings["restoring_lut_s"] = perf_counter() - begin
     validation = _validate(mass_kg, inertia, added, linear, crossflow_stations,
                            water_density_kg_m3, resistance, hydro)
@@ -423,6 +489,9 @@ def generate_simple_vessel(*, geometry: str | Path, output: str | Path, mass_kg:
                   "hydrodynamic_mesh_sha256": reduced_mesh_hash,
                   "hydrodynamic_mesh_reduction": reduction,
                   "input_mass_kg": mass_kg, "input_cg_frd_m": list(cg_frd_m),
+                  "geometry_mode": geometry_mode, "reference_draft_m": reference_draft_m,
+                  "reference_length_m": resistance_length,
+                  "water_kinematic_viscosity_m2_s": water_kinematic_viscosity_m2_s,
                   "input_inertia_cg_kg_m2": None if inertia_cg_kg_m2 is None else inertia.tolist(),
                   "water_density_kg_m3": water_density_kg_m3, "source_frame": source_frame,
                   "canonical_frame": "FRD", "classification": regime, "bem": bem,
@@ -431,7 +500,8 @@ def generate_simple_vessel(*, geometry: str | Path, output: str | Path, mass_kg:
                   "restoring_equilibrium": equilibrium,
                   "crossflow_method": "sectional_translation_shear_v5",
                   "crossflow_provenance": crossflow_provenance,
-                  "lut": {"samples_per_axis": lut_samples, "out_of_domain": "error"},
+                  "lut": {"samples_per_axis": 3 if geometry_mode == "design_waterline_submerged_hull" else lut_samples,
+                          "out_of_domain": "error"},
                   "calibration_hooks": ["surge_resistance_scale", "crossflow_cd_scale", "linear_sway_scale",
                                         "linear_yaw_scale", "added_mass_scale", "roll_damping_scale"],
                   "confidence_policy": confidence_policy,
@@ -515,6 +585,7 @@ def generate_simple_vessel(*, geometry: str | Path, output: str | Path, mass_kg:
     _write(root, "hydrodynamic_mesh.json", {"sha256": reduced_mesh_hash, **reduction})
     hydromesh.export(root / "hydrodynamic_mesh.stl")
     mesh.export(root / "processed_geometry.stl")
+    (root / "normalized_geometry.stl").write_bytes((root / "processed_geometry.stl").read_bytes())
     _write(root, "runtime_payload.json", canonical.simulator_definitions()[0]["payload"])
     (root / "vessel.yaml").write_text(yaml.safe_dump(canonical.model_dump(mode="json"), sort_keys=False))
     lines = [f"# {root.name}: passive vessel generation", "",
@@ -527,4 +598,6 @@ def generate_simple_vessel(*, geometry: str | Path, output: str | Path, mass_kg:
              "BEM is optional and may be unavailable/rejected. Wave/planing/interference resistance is unvalidated. Linear sway/yaw and roll/vertical damping are conservative, unvalidated estimates with low confidence.",
              "Hydrodynamic mesh reduction is applied only when topology and hydrostatic tolerances pass; otherwise the full cleaned mesh is retained."]
     (root / "validation_report.md").write_text("\n".join(lines) + "\n")
+    from .coefficient_package import write_coefficient_package
+    write_coefficient_package(root)
     return root

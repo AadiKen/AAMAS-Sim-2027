@@ -1,0 +1,19 @@
+benchmark: KVLCC2M NMRI static oblique tow
+status: tested_against_NMRI_figure_and_admitted_reference
+body_frame: BCOD FRD; +x forward, +y starboard, +z down
+published_axes: NMRI X forward, Y starboard; transformed into BCOD with official figure basis
+positive_sway: BCOD starboard; NMRI positive beta maps to v=-U*sin(beta) under the reported convention
+positive_yaw: right-hand about +z-down axis, verified by signed force/moment conversion in the existing EFD extraction adapter
+drift_angle_definition: beta listed by NMRI; v=-U*sin(beta), u=U*cos(beta)
+force_sign: fluid-on-hull physical force
+moment_reference_point: midship at undisturbed waterplane
+reference_length_m: 4.970
+reference_area_m2: null
+reference_speed_mps: 0.994
+force_normalization: 0.5*rho*U^2*Lpp*T; rho cancels for coefficient comparison
+moment_normalization: 0.5*rho*U^2*Lpp^2*T
+acceleration_normalization: not applicable, steady fixed tow
+self_tests:
+  beta_zero_symmetry: required; published CX/CY/CN compared at zero drift
+  plus_minus_beta_symmetry: required; check odd CY/CN and even CX on NMRI numeric data
+  known_positive_beta: beta=6 deg, published CY=0.02560, CN=0.01392

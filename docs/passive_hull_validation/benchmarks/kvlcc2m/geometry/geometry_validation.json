@@ -1,0 +1,58 @@
+{
+  "benchmark": "NMRI KVLCC2M model-scale design-full underwater hull",
+  "source": "official NMRI KVLCC2M surface-grid archive, source surface kvlcc2m_whole.dat",
+  "source_archive_sha256": "b0d83589d85673d8f56ec4a06cbbbe9215ce34bb9d0947a951e8e0af6a8da024",
+  "geometry_sha256": "b19c8d9763f1376edcc872f3a66bf22479a6086825a93ca5e285b9f6305fbf0a",
+  "frame": "BCOD FRD, +x forward +y starboard +z down",
+  "origin": "NMRI normalized source origin retained; midship/waterplane reference convention used for moments",
+  "units": "m",
+  "bounds_frd_m": [
+    [
+      -2.57042176,
+      -0.45044885,
+      0.0
+    ],
+    [
+      2.60991611,
+      0.45044885,
+      0.32309242
+    ]
+  ],
+  "bbox_length_m": 5.18033787,
+  "Lpp_m": 4.97,
+  "Lpp_note": "Lpp between published perpendiculars; mesh x extent is LOA including source overhang",
+  "beam_m": 0.9008977,
+  "beam_reference_m": 0.9008,
+  "beam_relative_error": 0.00010845914742448752,
+  "draft_m": 0.32309242,
+  "draft_reference_m": 0.323,
+  "draft_relative_error": 0.00028613003095969645,
+  "volume_m3": 1.1712830370755274,
+  "volume_reference_m3": 1.17142,
+  "volume_relative_error": -0.00011692042518696693,
+  "displaced_mass_kg_at_1025": 1200.5651130024155,
+  "published_volume_mass_kg_at_1025": 1200.7054999999998,
+  "wetted_area_m2_cap_excluded": 6.676736762404254,
+  "wetted_area_reference_m2": 6.58919,
+  "wetted_area_relative_error": 0.013286422519953753,
+  "waterplane_area_m2": 4.040491318062585,
+  "waterplane_centroid_frd_m": [
+    0.0012120956862184068,
+    -4.579571052254722e-18,
+    0.0
+  ],
+  "waterplane_I_roll_m4": 0.24469735236037723,
+  "waterplane_I_pitch_m4": 7.058817937686365,
+  "watertight": true,
+  "winding_consistent": true,
+  "volume_positive_outward_orientation": true,
+  "euler_number": 2,
+  "boundary_edges": 0,
+  "nonmanifold_edges": 0,
+  "connected_components": 1,
+  "geometry_mode": "design_waterline_submerged_hull",
+  "waterline_cap": "official design-waterline grid boundary closed as planar cap; cap excluded from wetted area; no topsides invented",
+  "closure_provenance": "official grid mirrored and closed at source waterline; stern closure per archived reconstruction script",
+  "tolerances": "existing geometry gate: displacement within 5%; design depth within 1%; beam checked against published NMRI BWL",
+  "gate": "PASS_WITH_WETTED_AREA_1.33_PERCENT_MESH_REFERENCE_DIFFERENCE"
+}

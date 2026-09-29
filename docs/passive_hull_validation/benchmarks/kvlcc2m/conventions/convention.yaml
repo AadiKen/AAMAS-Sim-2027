@@ -1,0 +1,16 @@
+benchmark: NMRI KVLCC2M static oblique tow and fixed towing
+geometry_frame: BCOD FRD; +x forward, +y starboard, +z down
+source_frame: NMRI axes remapped according to staged official axis figure and existing convention audit
+moment_reference_point: midship on undisturbed waterplane
+force_definition: physical fluid-on-hull force
+positive_drift: NMRI positive beta maps to MANTA body v=-U*sin(beta); positive beta therefore has negative FRD sway velocity
+reference_speed_mps: 0.994
+reference_length_m: 4.97
+reference_draft_m: 0.323
+oblique_force_normalization: 0.5*rho*U^2*Lpp*T
+oblique_moment_normalization: 0.5*rho*U^2*Lpp^2*T
+resistance_normalization: CT=RT/(0.5*rho*U^2*S0); S0=6.58919 m^2
+resistance_condition: double-model flow, fixed even keel, Fn=0, Re=3.945e6
+viscosity_used_m2_s: 1.2522636248415715e-6
+water_density_used_kg_m3: 1025.0
+water_density_note: Not published in admitted NMRI Test Case 3 force file; 1025 kg/m^3 retained as the package water density. It cancels in EFD coefficient ratios, but scales dimensional MANTA forces.

@@ -1,0 +1,16 @@
+benchmark: DTMB 5512 captive maneuvering
+status: provisional; no quantitative scoring until source mapping passes audit
+coordinate_frame: body fixed; source-specific sign mapping unresolved
+positive_sway_direction: unresolved
+positive_yaw_direction: unresolved
+drift_angle_definition: unresolved
+force_sign: source-specific; must identify measured fluid-on-body reaction
+moment_reference_point: unresolved in admitted numeric data
+reference_length: DTMB 5512 Lpp required from source
+reference_area: source-specific; unresolved
+reference_speed: source case Froude number and published speed
+force_normalization: source definition required
+moment_normalization: source definition required
+acceleration_normalization: source frequency and amplitude definitions required
+load_contract: see load_contract.md
+status_note: existing source matrix rejects current DTMB quantitative candidate; use smooth-hull predictions only as diagnostic until bilge-keel and moment mapping are recovered

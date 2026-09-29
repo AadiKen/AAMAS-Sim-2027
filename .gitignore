@@ -2,7 +2,14 @@ __pycache__/
 *.py[cod]
 .pytest_cache/
 .venv/
+.venv-*/
+.venv-*
+venv/
+venv*/
+env/
 .venv-pyquaticus/
+.venv-training-v2/
+.venv-training-v3/
 .benchmark-deps/
 build/
 dist/
@@ -11,6 +18,7 @@ node_modules/
 *.ses
 .bcod_runs/
 *.egg-info/
+*.egg
 # Generated benchmark and experiment outputs
 **/results/
 **/*_results/
@@ -23,3 +31,32 @@ stage3_results/
 stage4_results/
 stage5_results/
 experiments/
+
+# Generated research outputs and runtime data
+/artifacts/
+/runs/
+/paper_results/
+/stage*_results/
+/validation/benchmark_1/
+processor*/
+postProcessing/
+**/.capytaine-cache/
+**/.mplconfig/
+
+# Model checkpoints
+*.pt
+*.pth
+*.ckpt
+
+# Generated Surveyor CAD and mesh experiment artifacts
+docs/surveyor_cad_validation/**/*.zip
+docs/surveyor_cad_validation/**/*.step
+docs/surveyor_cad_validation/**/*.STEP
+docs/surveyor_cad_validation/**/*.stl
+docs/surveyor_cad_validation/**/*.STL
+docs/passive_hull_validation/benchmarks/**/package/
+docs/passive_hull_validation/benchmarks/**/*.stl
+docs/passive_hull_validation/benchmarks/**/*.STL
+docs/passive_hull_validation/benchmarks/**/*.obj
+docs/passive_hull_validation/benchmarks/**/*.OBJ
+docs/passive_hull_validation/raw_sources/*

@@ -1,0 +1,39 @@
+task:
+  task_version: navigation-v3
+  agent_count: 1
+  dynamics: kinematic
+  dt_s: 0.2
+  deadline_steps: 600
+  half_width_m: 50.0
+  goal_radius_m: 2.0
+  vessel_radius_m: 1.0
+  max_surge_mps: 2.0
+  max_yaw_rps: 0.25
+  visibility_m: 30.0
+  discount_per_second: 0.99
+  progress_weight: 1.0
+  goal_bonus: 20.0
+  collision_penalty: 50.0
+  step_penalty: 0.01
+policy_action:
+  mode: high_level
+  max_heading_offset_rad: 3.141592653589793
+  heading_k_p: 0.5
+algorithm: sb3_ppo
+policy: MlpPolicy
+device: cpu
+n_envs: 1
+n_steps: 2048
+batch_size: 64
+n_epochs: 10
+learning_rate: 0.0003
+gae_lambda: 0.95
+clip_range: 0.2
+ent_coef: 0.0
+vf_coef: 0.5
+max_grad_norm: 0.5
+total_timesteps: 51200
+seed: 11
+evaluation_interval_steps: 10240
+validation_count: 50
+validation_seed: 2027

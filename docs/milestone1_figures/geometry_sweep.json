@@ -1,0 +1,147 @@
+{
+  "beam": [
+    {
+      "factor": 0.75,
+      "name": "beam_0.75",
+      "package_sha256": "e7c53b27d1bf9b3e9828a8e2b68c014806e69bc9b026e0cf6ded300f7b9ea497",
+      "surge_drag_n_at_1_mps": -24.18035213148052,
+      "sway_force_n_at_v_0p2": -5.65517293775718,
+      "volume_m3": 1.500000138978273,
+      "yaw_moment_nm_at_r_0p2": -81.82944080517558
+    },
+    {
+      "factor": 1.0,
+      "name": "beam_1.0",
+      "package_sha256": "3836269f70d7d56ef9bd367a3d9a9b8740a4073957efe58b67a00b68af7d811d",
+      "surge_drag_n_at_1_mps": -30.398156848242294,
+      "sway_force_n_at_v_0p2": -5.65517293775718,
+      "volume_m3": 2.000000185304364,
+      "yaw_moment_nm_at_r_0p2": -81.82944080517558
+    },
+    {
+      "factor": 1.25,
+      "name": "beam_1.25",
+      "package_sha256": "d6023d8ac0dc140b663d16bd75273459de55803a1e0dfa6c386e862f52f597ce",
+      "surge_drag_n_at_1_mps": -36.61596156500407,
+      "sway_force_n_at_v_0p2": -5.65517293775718,
+      "volume_m3": 2.500000231630455,
+      "yaw_moment_nm_at_r_0p2": -81.82944080517561
+    }
+  ],
+  "catamaran_spacing": [
+    {
+      "half_spacing_m": 0.7,
+      "name": "spacing_0.7",
+      "package_sha256": "4e5eb47e2c8f8c9a1bfd3ccfdbd2c1ecab9d335d585c1814fea2f45a24e62ae4",
+      "surge_drag_n_at_1_mps": -31.171928561249555,
+      "sway_force_n_at_v_0p2": -11.310345875514379,
+      "volume_m3": 1.2000000992616884,
+      "yaw_moment_nm_at_r_0p2": -165.76833181178364
+    },
+    {
+      "half_spacing_m": 1.0,
+      "name": "spacing_1.0",
+      "package_sha256": "4161faa7f84ad8900c2d0a595615d0337f7968bb620b578c4a243b5d0779c7b5",
+      "surge_drag_n_at_1_mps": -31.171927671785458,
+      "sway_force_n_at_v_0p2": -11.310345875514372,
+      "volume_m3": 1.200000039657038,
+      "yaw_moment_nm_at_r_0p2": -169.80888126374057
+    },
+    {
+      "half_spacing_m": 1.3,
+      "name": "spacing_1.3",
+      "package_sha256": "9c743a6b480cf70323c3ade502067ea5a936f96b88cbe93f5ae505fe44edae62",
+      "surge_drag_n_at_1_mps": -31.171929450713666,
+      "sway_force_n_at_v_0p2": -11.310345875514376,
+      "volume_m3": 1.2000001588663385,
+      "yaw_moment_nm_at_r_0p2": -177.17043377082715
+    }
+  ],
+  "depth": [
+    {
+      "factor": 0.75,
+      "name": "depth_0.75",
+      "package_sha256": "b90d534c4a32c24464ae7fe3b0e086d43a03d3c279868a838bdcabcff7c3c942",
+      "surge_drag_n_at_1_mps": -28.325555105294093,
+      "sway_force_n_at_v_0p2": -4.241379703317889,
+      "volume_m3": 1.500000138978273,
+      "yaw_moment_nm_at_r_0p2": -61.37208060388167
+    },
+    {
+      "factor": 1.0,
+      "name": "depth_1.0",
+      "package_sha256": "3836269f70d7d56ef9bd367a3d9a9b8740a4073957efe58b67a00b68af7d811d",
+      "surge_drag_n_at_1_mps": -30.398156848242294,
+      "sway_force_n_at_v_0p2": -5.65517293775718,
+      "volume_m3": 2.000000185304364,
+      "yaw_moment_nm_at_r_0p2": -81.82944080517558
+    },
+    {
+      "factor": 1.25,
+      "name": "depth_1.25",
+      "package_sha256": "f8537493210d01452f09d76cabe0e3bd28e9576d00ae950395b5fbb11a87d090",
+      "surge_drag_n_at_1_mps": -32.470758591190496,
+      "sway_force_n_at_v_0p2": -7.068966172196477,
+      "volume_m3": 2.5000002316304553,
+      "yaw_moment_nm_at_r_0p2": -102.28680100646952
+    }
+  ],
+  "fullness": [
+    {
+      "exponent": 0.75,
+      "name": "fullness_0.75",
+      "package_sha256": "6fe196ec8b1ecdc144ce04f4f513cb3e544aa2ab8ca16f2b6bf4e45c446ab38a",
+      "surge_drag_n_at_1_mps": -24.97856948047428,
+      "sway_force_n_at_v_0p2": -5.175356192711055,
+      "volume_m3": 2.5657677557703575,
+      "yaw_moment_nm_at_r_0p2": -55.604965753750605
+    },
+    {
+      "exponent": 1.0,
+      "name": "fullness_1.0",
+      "package_sha256": "94702f7bd54e93a5c18edb1c5d7d32725ac56c717f90db76b9f3ddd42c0bc62b",
+      "surge_drag_n_at_1_mps": -21.512118287475392,
+      "sway_force_n_at_v_0p2": -2.8889485905257737,
+      "volume_m3": 2.023525249475113,
+      "yaw_moment_nm_at_r_0p2": -28.922317952730843
+    },
+    {
+      "exponent": 1.25,
+      "name": "fullness_1.25",
+      "package_sha256": "e3cd6c47ce37ff582e807eb45df97de4b009b78413258c645add4b5023e58c35",
+      "surge_drag_n_at_1_mps": -18.616410286470142,
+      "sway_force_n_at_v_0p2": -2.553839688347132,
+      "volume_m3": 1.5617410431700098,
+      "yaw_moment_nm_at_r_0p2": -22.1026122545142
+    }
+  ],
+  "length": [
+    {
+      "factor": 0.75,
+      "name": "length_0.75",
+      "package_sha256": "c29db2661103f150121ebf96c0dae08342757035882f85a1630a0787eb3359cc",
+      "surge_drag_n_at_1_mps": -24.823934878797772,
+      "sway_force_n_at_v_0p2": -4.241379703317885,
+      "volume_m3": 1.500000138978273,
+      "yaw_moment_nm_at_r_0p2": -25.891346504762588
+    },
+    {
+      "factor": 1.0,
+      "name": "length_1.0",
+      "package_sha256": "3836269f70d7d56ef9bd367a3d9a9b8740a4073957efe58b67a00b68af7d811d",
+      "surge_drag_n_at_1_mps": -30.398156848242294,
+      "sway_force_n_at_v_0p2": -5.65517293775718,
+      "volume_m3": 2.000000185304364,
+      "yaw_moment_nm_at_r_0p2": -81.82944080517558
+    },
+    {
+      "factor": 1.25,
+      "name": "length_1.25",
+      "package_sha256": "4a7514461ce419bb9939008678cdb4c0af029eb1dcdb825764d0e14a6eccaa71",
+      "surge_drag_n_at_1_mps": -35.77839966631639,
+      "sway_force_n_at_v_0p2": -7.068966172196475,
+      "volume_m3": 2.500000231630455,
+      "yaw_moment_nm_at_r_0p2": -199.77890821576074
+    }
+  ]
+}

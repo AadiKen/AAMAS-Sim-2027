@@ -1,0 +1,22 @@
+{
+  "benchmark": "KVLCC2M fixed towing, NMRI CFD Workshop 2005 Test Case 5 / Test Case 1.4 condition",
+  "source_quality": "B",
+  "source_organization": "NMRI experiment, reproduced by peer-reviewed CFD paper",
+  "source": "Unstructured Grid Based Navier-Stokes Solver for Free-Surface Flow around Surface Ships, resistance-component table for KVLCC2M-GRIDS",
+  "source_url": "https://www.researchgate.net/publication/253234664_Unstructured_Grid_Based_Navier-Stokes_Solver_for_Free-Surface_Flow_around_Surface_Ships",
+  "official_condition_url": "https://www.nmri.go.jp/study/research_organization/fluid_performance/cfd/cfdws05/Detail/a5/index.html",
+  "official_condition": {
+    "fixed_even_keel": true,
+    "double_model_flow": true,
+    "Fn": 0.0,
+    "Re": 3945000.0,
+    "experimental_uncertainty_percent_of_CT": 0.7
+  },
+  "experimental": {"CT": 0.0042612, "form_factor_1_plus_k": 1.2},
+  "normalization": "CT=RT/(0.5*rho*U^2*S); source table reports component coefficients and wetted-area reference",
+  "mapping_notes": [
+    "Numeric EFD coefficient is recovered from the paper's reproduced experimental row.",
+    "The MANTA comparison remains unscored because frozen M1 did not complete a package from the public waterline-only geometry.",
+    "The original source file was not saved byte-for-byte: terminal network DNS is unavailable; the source identifier and numerical table are versioned here."
+  ]
+}

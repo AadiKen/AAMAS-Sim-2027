@@ -1,0 +1,13 @@
+benchmark,term,published_definition,published_value,manta_dimensional,manta_converted,difference,status
+KVLCC2 contextual,Yv_prime,source symbol prime; exact normalization unresolved,-0.315,,,,CONVENTION_AMBIGUOUS_GEOMETRY_UNAVAILABLE
+KVLCC2 contextual,Yr_prime,source symbol prime; exact normalization unresolved,0.083,,,,CONVENTION_AMBIGUOUS_GEOMETRY_UNAVAILABLE
+KVLCC2 contextual,Nv_prime,source symbol prime; exact normalization unresolved,-0.137,,,,CONVENTION_AMBIGUOUS_GEOMETRY_UNAVAILABLE
+KVLCC2 contextual,Nr_prime,source symbol prime; exact normalization unresolved,-0.049,,,,CONVENTION_AMBIGUOUS_GEOMETRY_UNAVAILABLE
+KVLCC2 contextual,Yvvv_prime,source symbol prime; exact normalization unresolved,-1.607,,,,CONVENTION_AMBIGUOUS_GEOMETRY_UNAVAILABLE
+KVLCC2 contextual,Yvvr_prime,source symbol prime; exact normalization unresolved,0.379,,,,CONVENTION_AMBIGUOUS_GEOMETRY_UNAVAILABLE
+KVLCC2 contextual,Yvrr_prime,source symbol prime; exact normalization unresolved,-0.391,,,,CONVENTION_AMBIGUOUS_GEOMETRY_UNAVAILABLE
+KVLCC2 contextual,Yrrr_prime,source symbol prime; exact normalization unresolved,0.008,,,,CONVENTION_AMBIGUOUS_GEOMETRY_UNAVAILABLE
+KVLCC2 contextual,Nvvv_prime,source symbol prime; exact normalization unresolved,-0.03,,,,CONVENTION_AMBIGUOUS_GEOMETRY_UNAVAILABLE
+KVLCC2 contextual,Nvvr_prime,source symbol prime; exact normalization unresolved,-0.294,,,,CONVENTION_AMBIGUOUS_GEOMETRY_UNAVAILABLE
+KVLCC2 contextual,Nvrr_prime,source symbol prime; exact normalization unresolved,0.055,,,,CONVENTION_AMBIGUOUS_GEOMETRY_UNAVAILABLE
+KVLCC2 contextual,Nrrr_prime,source symbol prime; exact normalization unresolved,-0.013,,,,CONVENTION_AMBIGUOUS_GEOMETRY_UNAVAILABLE

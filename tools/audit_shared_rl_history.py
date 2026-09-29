@@ -1,7 +1,7 @@
 import json
 from pathlib import Path
 import numpy as np
-base=Path('/Users/aadikenchammanaold/Downloads/benchmark-bcod-50k-corrected')
+base=Path.home()/'Downloads'/'benchmark-bcod-50k-corrected'
 t=[json.loads(l) for l in (base/'training.jsonl').read_text().splitlines()]
 e=[json.loads(l) for l in (base/'episodes.jsonl').read_text().splitlines()]
 e=[r for r in e if r['environment_steps']<=t[-1]['environment_steps']]

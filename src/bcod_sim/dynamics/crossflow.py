@@ -93,6 +93,8 @@ class SectionalCrossflow:
     incidence_blend: bool = False
     shear_blend: bool = False
     translation_shear_v5: bool = False
+    station_axial_rotation_area_m2: torch.Tensor | None = None
+    station_axial_rotation_cd: torch.Tensor | None = None
 
     @classmethod
     def from_stations(cls, stations: list[dict], *, density: float = 1025.,
@@ -104,11 +106,15 @@ class SectionalCrossflow:
         blended = methods in ({"incidence_blend_v3"}, {"shear_incidence_blend_v4"})
         shear = methods == {"shear_incidence_blend_v4"}
         translation_shear = methods == {"translation_shear_v5"}
+        axial_area = values("axial_rotation_area_m2") if all("axial_rotation_area_m2" in s for s in stations) else None
+        axial_cd = values("axial_rotation_cd") if all("axial_rotation_cd" in s for s in stations) else None
         return cls(values("x_m"), values("y_m"), values("beam_m"),
                    values("draft_m"), values("dx_m"), density, cd_scale,
                    station_cd=cd, station_lift_base_kg_per_m=lift,
                    incidence_blend=blended, shear_blend=shear,
-                   translation_shear_v5=translation_shear)
+                   translation_shear_v5=translation_shear,
+                   station_axial_rotation_area_m2=axial_area,
+                   station_axial_rotation_cd=axial_cd)
 
     def validate(self, *, dtype: torch.dtype, device: torch.device) -> None:
         arrays = (self.station_x_body_m, self.station_y_body_m, self.station_beam_m,
@@ -121,7 +127,9 @@ class SectionalCrossflow:
             or not math.isfinite(self.moment_reference_x_m)):
             raise PhysicalValidationError("Invalid sectional cross-flow stations")
         for name, array in (("station_cd", self.station_cd),
-                            ("station_lift_base_kg_per_m", self.station_lift_base_kg_per_m)):
+                            ("station_lift_base_kg_per_m", self.station_lift_base_kg_per_m),
+                            ("station_axial_rotation_area_m2", self.station_axial_rotation_area_m2),
+                            ("station_axial_rotation_cd", self.station_axial_rotation_cd)):
             if array is not None and (array.shape != arrays[0].shape or array.dtype != dtype or
                 array.device != device or not torch.isfinite(array).all().item() or
                 (array < 0).any().item()):
@@ -175,6 +183,14 @@ class SectionalCrossflow:
         tau = nu.new_zeros(6)
         tau[1] = fy.sum()
         tau[5] = ((self.station_x_body_m-self.moment_reference_x_m) * fy).sum()
+        axial_rotation = torch.zeros_like(local)
+        if self.station_axial_rotation_area_m2 is not None and self.station_axial_rotation_cd is not None:
+            rotational_u = -self.station_y_body_m * nu[5]
+            axial_rotation = (-.5 * self.water_density_kg_m3 * self.station_axial_rotation_cd *
+                              self.station_axial_rotation_area_m2 * rotational_u.abs() * rotational_u)
+            # Only the rotational resistance is owned here. Straight surge
+            # resistance remains wholly owned by the resistance curve.
+            tau[5] -= (self.station_y_body_m * axial_rotation).sum()
         return WrenchResult(tau, self.model_name, {"station_local_sway_mps": local,
                              "station_local_surge_mps": local_u,
                              "station_local_incidence_rad": torch.atan2(local, local_u.abs()),
@@ -183,5 +199,6 @@ class SectionalCrossflow:
                              "section_x_m": self.station_x_body_m,
                              "section_drag_force_n": drag, "section_lift_force_n": lift,
                              "section_force_n": fy,
+                             "section_axial_rotation_force_n": axial_rotation,
                              "section_yaw_moment_nm": (self.station_x_body_m-self.moment_reference_x_m)*fy,
                              "moment_reference_x_m": self.moment_reference_x_m})
