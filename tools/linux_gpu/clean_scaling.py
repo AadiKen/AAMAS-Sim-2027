@@ -19,16 +19,17 @@ def gpu():
         return (max((v[0] for v in values),default=None),sum(v[1] for v in values))
     except Exception:return (None,None)
 def main():
-    p=argparse.ArgumentParser();p.add_argument('--output-dir',default='paper_results/linux_gpu/scaling');p.add_argument('--repetitions',type=int,default=5);p.add_argument('--steps',type=int,default=8);p.add_argument('--warmup',type=int,default=2);p.add_argument('--counts',type=int,nargs='+',default=[1,8,32,128,512,2048,8192]);p.add_argument('--overwrite',action='store_true');a=p.parse_args()
+    p=argparse.ArgumentParser();p.add_argument('--output-dir',default='paper_results/linux_gpu/scaling');p.add_argument('--repetitions',type=int,default=5);p.add_argument('--steps',type=int,default=8);p.add_argument('--warmup',type=int,default=2);p.add_argument('--counts',type=int,nargs='+',default=[1,8,32,128,512,2048,8192]);p.add_argument('--rep-offset',type=int,default=0);p.add_argument('--overwrite',action='store_true');a=p.parse_args()
     out=Path(a.output_dir);out.mkdir(parents=True,exist_ok=True);csvpath=out/'scaling.csv'
     if csvpath.exists() and not a.overwrite:raise SystemExit('Existing scaling.csv; use --overwrite or new output-dir')
     (out/'hardware.json').write_text(json.dumps(manifest(),indent=2,default=str)+'\n')
-    (out/'manifest.json').write_text(json.dumps({'simulator_physics_device':'CPU','policy_training_device':'none','vessels_per_environment':4,'dt_s':0.1,'workload':'stage5c light','slurm_allocation':os.environ.get('SLURM_JOB_ID'),'counts':a.counts,'repetitions':a.repetitions,'steps':a.steps,'warmup':a.warmup},indent=2)+'\n')
+    (out/'manifest.json').write_text(json.dumps({'simulator_physics_device':'CPU','policy_training_device':'none','vessels_per_environment':4,'dt_s':0.1,'workload':'stage5c light','slurm_allocation':os.environ.get('SLURM_JOB_ID'),'counts':a.counts,'repetitions':a.repetitions,'rep_offset':a.rep_offset,'steps':a.steps,'warmup':a.warmup},indent=2)+'\n')
     proc=psutil.Process(); contaminated=False
     with csvpath.open('w',newline='') as f:
       writer=csv.DictWriter(f,fieldnames=FIELDS);writer.writeheader();f.flush()
       for count in a.counts:
-       for rep in range(a.repetitions):
+       for index in range(a.repetitions):
+        rep=index+a.rep_offset
         vector=None;engines=None;actions=None
         try:
          load=os.getloadavg()[0];avail=psutil.virtual_memory().available;g=gpu()
