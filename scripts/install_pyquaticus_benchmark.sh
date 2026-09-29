@@ -25,7 +25,12 @@ fi
 if [[ ! -x "${venv_root}/bin/python" ]]; then
     "$uv_bin" venv "${venv_root}" --python 3.10
 fi
-"$uv_bin" pip install --python "${venv_root}/bin/python" -r "${repo_root}/configs/pyquaticus-requirements.lock"
+requirements="${repo_root}/configs/pyquaticus-requirements.lock"
+if [[ "$(uname -s)" == Linux ]]; then
+    requirements="${repo_root}/.benchmark-deps/pyquaticus-linux-requirements.txt"
+    awk '!/^pyobjc-/' "${repo_root}/configs/pyquaticus-requirements.lock" > "$requirements"
+fi
+"$uv_bin" pip install --python "${venv_root}/bin/python" -r "$requirements"
 # pymoos is a bridge to physical MOOS hardware, unused by this benchmark, and
 # has no matching macOS ARM wheel. The local simulator is installed without it.
 "$uv_bin" pip install --python "${venv_root}/bin/python" --no-deps "${source_root}"

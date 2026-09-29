@@ -8,9 +8,9 @@ mkdir -p "$out";exec >> "$out/job.log" 2>&1
 "$root/.venv-linux/bin/python" tools/linux_gpu/hardware_manifest.py --output "$out/hardware.json" >/dev/null
 printf '%s\n' "$0 $*" > "$out/commands.txt"
 [[ "$(uname -s)" == Linux ]] || { echo 'REQUIRES_LINUX_VERIFICATION';exit 2; }
-[[ -n "${DISPLAY:-}${WAYLAND_DISPLAY:-}" || -x "$(command -v xvfb-run || true)" ]] || { echo 'X display or xvfb-run required';exit 2; }
 py="${HOLOOCEAN_PYTHON:-$root/.benchmark-deps/holoocean-linux/venv/bin/python}"
 [[ -x "$py" ]] || timeout "${HOLOOCEAN_SETUP_TIMEOUT_S:-1200}" bash scripts/setup_holoocean_linux.sh
+[[ -n "${DISPLAY:-}${WAYLAND_DISPLAY:-}" || -x "$(command -v xvfb-run || true)" ]] || { echo 'X display or xvfb-run required';exit 2; }
 runner=("$py")
 if [[ -z "${DISPLAY:-}${WAYLAND_DISPLAY:-}" ]]; then runner=(xvfb-run -a "$py"); fi
 timeout "${HOLOOCEAN_SMOKE_TIMEOUT_S:-300}" "${runner[@]}" - <<'PY'
