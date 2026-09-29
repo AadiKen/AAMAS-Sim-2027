@@ -10,11 +10,12 @@ printf '%s\n' "$0 $*" > "$out/commands.txt"
 py="${PYQUATICUS_PYTHON:-$root/.venv-pyquaticus/bin/python}"
 [[ -x "$py" ]] || bash scripts/install_pyquaticus_benchmark.sh
 "$py" - <<'PY'
-import json,sys,importlib.metadata
+import json,sys,os,importlib.metadata
+from pathlib import Path
 from pyquaticus.envs.pyquaticus import PyQuaticusEnv
 env=PyQuaticusEnv();obs,info=env.reset(seed=11)
 for _ in range(3):
     actions={agent:env.action_space(agent).sample() for agent in env.agents}
     obs,reward,terminated,truncated,info=env.step(actions)
-env.close();print(json.dumps({'interpreter':sys.executable,'version':importlib.metadata.version('pyquaticus'),'steps':3}))
+env.close();result={'interpreter':sys.executable,'version':importlib.metadata.version('pyquaticus'),'steps':3};Path(os.environ.get('OUTPUT_DIR','paper_results/linux_gpu/pyquaticus-smoke')).joinpath('status.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result))
 PY
