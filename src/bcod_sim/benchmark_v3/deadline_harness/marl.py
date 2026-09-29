@@ -33,9 +33,11 @@ def dcpa_tcpa(rx, ry, rvx, rvy):
 
 def make_four_vessel_scenario(rng: np.random.Generator, family: str = "mixture", split="train"):
     """Generate nonconflict, pair, corner, or four-way crossing cases."""
-    if family == "mixture":
+    if family in ("mixture", "pair_focus"):
+        probabilities = ([.2, .3, .15, .2, .15] if family == "mixture"
+                         else [.1, .6, .1, .1, .1])
         family = rng.choice(["easy", "pair", "corner", "fourway", "random"],
-                            p=[.2, .3, .15, .2, .15])
+                            p=probabilities)
     seed = int(rng.integers(0, 2**31 - 1))
     d = float(rng.uniform(20., 25.))
     lane = float(rng.uniform(5., 8.))

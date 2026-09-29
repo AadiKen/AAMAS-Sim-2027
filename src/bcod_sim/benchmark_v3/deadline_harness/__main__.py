@@ -266,6 +266,7 @@ def main():
     for name in ("marl-train","sarl-train"):
         sub.choices[name].add_argument("--smoke-report",default=f"runs/deadline/{name.split('-')[0]}-smoke.pt.smoke.json")
         sub.choices[name].add_argument("--init-checkpoint")
+    sub.choices["marl-train"].add_argument("--scenario-mixture",choices=("mixture","pair_focus"),default="mixture")
     a=p.parse_args()
     if hasattr(a,"device") and a.device.startswith("cuda") and not torch.cuda.is_available():
         raise SystemExit(f"CUDA requested ({a.device}) but torch.cuda.is_available() is false")
@@ -365,7 +366,7 @@ def main():
         raise SystemExit(f"Initialization checkpoint is missing: {a.init_checkpoint}")
     if a.command=="marl-train":
         rng=np.random.default_rng(a.seed)
-        env=ResidualCoordinatorEnv(scenario_sampler=lambda r: make_four_vessel_scenario(r,"mixture"),sampler_seed=a.seed)
+        env=ResidualCoordinatorEnv(scenario_sampler=lambda r: make_four_vessel_scenario(r,a.scenario_mixture),sampler_seed=a.seed)
         initial=torch.load(a.init_checkpoint or a.bc,map_location="cpu",weights_only=True)["model"]
         train_mappo(env,steps=a.steps,seed=a.seed,output=a.output,device=a.device,initial_state=initial,
             validate=lambda model,step:marl_validation(model,step)); env.close()
