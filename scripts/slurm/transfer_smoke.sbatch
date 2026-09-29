@@ -7,5 +7,5 @@
 #SBATCH --output=slurm-%j.out
 #SBATCH --error=slurm-%j.err
 set -euo pipefail
-cd "$(dirname "${BASH_SOURCE[0]}")/../.."
+cd "${SLURM_SUBMIT_DIR:?Submit from the repository root}"
 exec bash scripts/linux_gpu/run_transfer_smoke.sh
