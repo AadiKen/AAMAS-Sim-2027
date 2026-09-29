@@ -89,8 +89,51 @@ def strip_added_mass(stations: list[dict], density: float) -> dict:
             "applicability": "CAD section area and beam define equivalent ellipses; section shape and free-surface effects remain approximated"}
 
 
-def _wetted_capytaine_panels(mesh: trimesh.Trimesh, waterline_frd: float):
-    """Clip existing triangles at the design waterline without creating a lid."""
+def reduce_bem_closed_mesh(mesh: trimesh.Trimesh, target_faces: int) -> tuple[trimesh.Trimesh, dict]:
+    """Make a solver-only, topology-preserving decimation of a closed hull.
+
+    The canonical geometry and hydrostatics mesh are never replaced. Volume,
+    wetted area, principal extents, component count, watertightness and winding
+    are checked before this solver mesh is admitted.
+    """
+    if target_faces < 100:
+        raise ValueError("BEM decimation target must contain at least 100 faces")
+    parts=mesh.split(only_watertight=True)
+    if len(parts)!=len(mesh.split(only_watertight=False)):
+        raise ValueError("BEM source has an open or non-watertight component")
+    weights=np.asarray([max(float(p.area),1e-12) for p in parts]);budgets=np.maximum(40,np.floor(target_faces*weights/weights.sum()).astype(int))
+    # Preserve the requested approximate total while allocating no fewer than
+    # 40 panels to any disconnected physical pontoon.
+    budgets[-1]+=max(0,target_faces-int(budgets.sum()))
+    reduced=[]
+    for part,budget in zip(parts,budgets):
+        if len(part.faces)<=budget:
+            reduced.append(part.copy());continue
+        candidate=part.simplify_quadric_decimation(face_count=int(budget))
+        candidate.merge_vertices(digits_vertex=10)
+        candidate.remove_unreferenced_vertices();candidate.fix_normals()
+        if not candidate.is_watertight or not candidate.is_winding_consistent or candidate.volume<=0:
+            raise ValueError("BEM decimation broke closed component topology")
+        reduced.append(candidate)
+    out=trimesh.util.concatenate(reduced);out.fix_normals()
+    volume_error=abs(float(out.volume)-float(mesh.volume))/max(abs(float(mesh.volume)),1e-12)
+    area_error=abs(float(out.area)-float(mesh.area))/max(float(mesh.area),1e-12)
+    extent_error=np.max(np.abs(out.extents-mesh.extents)/np.maximum(mesh.extents,1e-12))
+    if len(out.split(only_watertight=True))!=len(parts) or not out.is_watertight or not out.is_winding_consistent:
+        raise ValueError("BEM decimated mesh component/topology gate failed")
+    if volume_error>.01 or area_error>.03 or extent_error>.005:
+        raise ValueError(f"BEM decimation exceeded geometry error gates (volume={volume_error:.2%}, area={area_error:.2%}, extent={extent_error:.2%})")
+    return out,{"target_faces":int(target_faces),"actual_faces":len(out.faces),"components":len(parts),
+        "watertight":bool(out.is_watertight),"winding_consistent":bool(out.is_winding_consistent),
+        "volume_relative_error":volume_error,"surface_area_relative_error":area_error,
+        "max_extent_relative_error":float(extent_error)}
+
+
+def _wetted_capytaine_panels(mesh: trimesh.Trimesh, waterline_frd: float, *,
+                             omit_waterline_cap: bool = False,
+                             filter_tiny_slivers: bool = False,
+                             return_quality: bool = False):
+    """Clip the wetted hull, optionally excluding a mesh's artificial waterline closure."""
     transform = np.array((1., -1., -1.))
     # STL is float32. Points intended to lie on the waterline can return a few
     # nanometres above/below it, producing nearly zero-area clipping slivers.
@@ -98,6 +141,8 @@ def _wetted_capytaine_panels(mesh: trimesh.Trimesh, waterline_frd: float):
     vertices = []
     faces = []
     for triangle in mesh.triangles:
+        if omit_waterline_cap and np.all(np.abs(triangle[:, 2] - waterline_frd) <= snap_tolerance):
+            continue
         poly = [p * transform + np.array((0., 0., waterline_frd)) for p in triangle]
         for point in poly:
             if abs(point[2]) <= snap_tolerance:
@@ -118,7 +163,23 @@ def _wetted_capytaine_panels(mesh: trimesh.Trimesh, waterline_frd: float):
             start = len(vertices)
             vertices.extend(tri)
             faces.append((start, start + 1, start + 2, start + 2))
-    return np.asarray(vertices), np.asarray(faces, dtype=int)
+    vertices=np.asarray(vertices);faces=np.asarray(faces,dtype=int)
+    quality={"input_clipped_panels":len(faces),"filtered_sliver_panels":0,
+             "filtered_sliver_area_fraction":0.}
+    if filter_tiny_slivers and len(faces):
+        triangles=vertices[faces[:,:3]]
+        edge_lengths=np.stack([np.linalg.norm(triangles[:,j]-triangles[:,(j+1)%3],axis=1)
+                               for j in range(3)],axis=1)
+        aspect=edge_lengths.max(axis=1)/np.maximum(edge_lengths.min(axis=1),1e-15)
+        areas=np.linalg.norm(np.cross(triangles[:,1]-triangles[:,0],
+                                      triangles[:,2]-triangles[:,0]),axis=1)/2
+        slivers=aspect>200.
+        quality["filtered_sliver_panels"]=int(slivers.sum())
+        quality["filtered_sliver_area_fraction"]=float(areas[slivers].sum()/max(areas.sum(),1e-15))
+        if quality["filtered_sliver_area_fraction"]>1e-3:
+            raise ValueError("High-aspect BEM slivers carry more than 0.1% of wetted area")
+        faces=faces[~slivers]
+    return (vertices,faces,quality) if return_quality else (vertices,faces)
 
 
 def validate_bem_matrix(matrix: np.ndarray, strip: dict | None) -> tuple[np.ndarray, dict]:
@@ -163,38 +224,56 @@ def bem_frame_matrix(matrix: np.ndarray) -> np.ndarray:
     return sign @ np.asarray(matrix) @ sign
 
 
-def panel_resolution_change(coarse: np.ndarray, fine: np.ndarray) -> dict:
-    indices = {"A22": 1, "A33": 2, "A44": 3, "A55": 4, "A66": 5}
+def panel_resolution_change(coarse: np.ndarray, fine: np.ndarray, *, reference_length_m: float = 1.) -> dict:
+    indices = {"A11": 0, "A22": 1, "A33": 2, "A44": 3, "A55": 4, "A66": 5}
     changes = {name: float(abs(fine[i, i] - coarse[i, i]) / max(abs(fine[i, i]), 1e-12))
                for name, i in indices.items()}
-    return {"relative_changes": changes, "maximum_relative_change": max(changes.values()),
-            "stable": max(changes.values()) <= .15}
+    q=np.diag((1.,1.,1.,1/reference_length_m,1/reference_length_m,1/reference_length_m))
+    coarse_nd=q@np.asarray(coarse)@q;fine_nd=q@np.asarray(fine)@q
+    matrix_change=float(np.linalg.norm(fine_nd-coarse_nd)/max(np.linalg.norm(fine_nd),1e-12))
+    maximum=max(*changes.values(),matrix_change)
+    return {"relative_changes": changes, "nondimensional_matrix_relative_change":matrix_change,
+            "maximum_relative_change": maximum,"stable": maximum <= .15}
 
 
 def try_bem(mesh: trimesh.Trimesh, strip: dict | None, *, enabled: bool,
             waterline_frd: float, density: float,
-            refined_mesh: trimesh.Trimesh | None = None) -> dict:
+            refined_mesh: trimesh.Trimesh | None = None,
+            formulation_revision: int = 1,
+            required_resolution_change: float = .15,
+            maximum_panel_count: int = 1200) -> dict:
     if not enabled:
-        return {"status": "disabled", "method": "capytaine", "confidence": "unavailable"}
+        return {"status": "disabled", "reason_code": "BEM_DISABLED_BY_GENERATION_SETTING",
+                "method": "capytaine", "confidence": "unavailable"}
     try:
         import capytaine as cpt
     except (ImportError, OSError, PermissionError) as exc:
-        return {"status": "unavailable", "reason": "Capytaine is not installed", "method": "capytaine",
+        return {"status": "unavailable", "reason_code": "SOLVER_FAILURE",
+                "reason": f"Capytaine import failed: {type(exc).__name__}: {exc}", "method": "capytaine",
                 "confidence": "unavailable"}
     try:
         names = ("Surge", "Sway", "Heave", "Roll", "Pitch", "Yaw")
         solver = cpt.BEMSolver()
         def solve(surface: trimesh.Trimesh):
-            vertices, faces = _wetted_capytaine_panels(surface, waterline_frd)
-            if len(faces) < 20 or len(faces) > 1200:
-                raise ValueError(f"Wetted panel count {len(faces)} outside guarded BEM range 20–1200")
+            vertices, faces, clipping_quality = _wetted_capytaine_panels(surface, waterline_frd,
+                omit_waterline_cap=formulation_revision >= 2,
+                filter_tiny_slivers=formulation_revision >= 2,return_quality=True)
+            if len(faces) == 0 or not np.isfinite(vertices).all():
+                raise ValueError("Wetted-body clipping produced no finite panels")
+            if len(faces) < 20 or len(faces) > maximum_panel_count:
+                raise ValueError(f"Wetted panel count {len(faces)} outside guarded BEM range 20–{maximum_panel_count}")
             edges = vertices[faces[:, :3]]
             lengths = np.stack([np.linalg.norm(edges[:, j] - edges[:, (j+1)%3], axis=1) for j in range(3)], axis=1)
             aspect = float((lengths.max(axis=1) / np.maximum(lengths.min(axis=1), 1e-12)).max())
             if aspect > 200:
                 raise ValueError(f"Excessive wetted-panel aspect ratio {aspect:.1f}")
             panel_mesh = cpt.Mesh(vertices=vertices, faces=faces)
-            piercing = bool(surface.bounds[0, 2] < waterline_frd < surface.bounds[1, 2])
+            tol = 1e-7 * max(float(surface.extents.max()), 1.)
+            # A submerged body ending at the design waterline is still open at
+            # the free surface. Generate Capytaine's numerical lid from this
+            # open boundary; the excluded hydrostatic cap never enters the body mesh.
+            piercing = bool(surface.bounds[0, 2] < waterline_frd + tol and
+                            surface.bounds[1, 2] >= waterline_frd - tol)
             lid = panel_mesh.generate_lid(z=0.0) if piercing else None
             if piercing and (lid is None or lid.nb_faces == 0):
                 raise ValueError("Surface-piercing hull produced no irregular-frequency lid")
@@ -209,26 +288,26 @@ def try_bem(mesh: trimesh.Trimesh, strip: dict | None, *, enabled: bool,
             if not np.isfinite(b).all():
                 raise ValueError("Non-finite radiation damping")
             raw_symmetry = float(np.linalg.norm(a - a.T) / max(np.linalg.norm(a), 1e-12))
-            a, comparison = validate_bem_matrix(a, strip)
+            a, comparison = validate_bem_matrix(a, None if formulation_revision >= 2 else strip)
             return a, b, comparison, {"wetted_panels": len(faces), "lid_panels": 0 if lid is None else lid.nb_faces,
                 "lid_forces_excluded": lid is not None and body.mesh.nb_faces == len(faces),
                 "maximum_panel_edge_ratio": aspect,
-                "raw_symmetry_relative": raw_symmetry}
+                "raw_symmetry_relative": raw_symmetry,**clipping_quality}
         a, b, comparison, coarse_quality = solve(mesh)
         refinement = None
         if refined_mesh is not None:
             fine, _, _, fine_quality = solve(refined_mesh)
-            refinement = panel_resolution_change(a, fine)
+            refinement = panel_resolution_change(a, fine, reference_length_m=max(float(mesh.extents[0]),1e-6))
             refinement["coarse"] = coarse_quality
             refinement["fine"] = fine_quality
         severe = any(comparison[name] < .3 or comparison[name] > 3.
                      for name in ("Sway", "Heave", "Yaw") if name in comparison)
         if severe:
             raise ValueError(f"Severe strip disagreement: {comparison}")
-        if refinement is not None and not refinement["stable"]:
-            raise ValueError(f"Panel-resolution change exceeds 15%: {refinement['relative_changes']}")
+        if refinement is not None and refinement["maximum_relative_change"] > required_resolution_change:
+            raise ValueError(f"Panel-resolution change exceeds {required_resolution_change:.1%}: {refinement['relative_changes']}")
         moderate = any(r < .7 or r > 1.3 for r in comparison.values())
-        return {"status": "accepted", "method": "capytaine_radiation_v1", "version": getattr(cpt, "__version__", "unknown"),
+        return {"status": "accepted", "reason_code": "BEM_SUCCESS", "method": f"capytaine_radiation_v{formulation_revision}", "version": getattr(cpt, "__version__", "unknown"),
                 "frequencies_rad_s": [0.0], "added_mass_6x6": [a.tolist()],
                 "radiation_damping_6x6": [b.tolist()],
                 "strip_agreement_ratios": comparison, "panel_count": coarse_quality["wetted_panels"],
@@ -236,7 +315,12 @@ def try_bem(mesh: trimesh.Trimesh, strip: dict | None, *, enabled: bool,
                 "confidence": "high" if refinement and not moderate else "medium",
                 "maneuvering_selection": "zero-frequency radiation added mass; radiation damping excluded"}
     except Exception as exc:
-        return {"status": "rejected", "reason": str(exc), "version": getattr(cpt, "__version__", "unknown"),
+        message=str(exc);lower=message.lower()
+        reason_code=("INVALID_WETTED_SURFACE" if "wetted-body clipping" in lower else
+                     "MESH_FAILURE" if any(x in lower for x in ("panel", "mesh", "lid", "strip disagreement", "eigenvalue", "asymmetry", "ill-conditioned")) else
+                     "CONVERGENCE_FAILURE" if any(x in lower for x in ("converg", "singular")) else
+                     "SOLVER_FAILURE")
+        return {"status": "rejected", "reason_code": reason_code, "reason": f"{type(exc).__name__}: {message}", "version": getattr(cpt, "__version__", "unknown"),
                 "method": "capytaine", "confidence": "unavailable",
                 "strip_fallback_available": strip is not None}
 

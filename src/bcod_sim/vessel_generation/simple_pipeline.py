@@ -23,12 +23,14 @@ from .simple_wave import guarded_wave_curve, thin_ship_applicable
 from .simple_hydro_mesh import reduce_hydrodynamic_mesh, mesh_hash
 from .simple_models import (classify, crossflow, extract_stations, inertia_estimate,
                             inoue_linear_maneuvering, resistance_curve,
-                            strip_added_mass, try_bem)
-from .simple_sections import hydrostatic_state, solve_waterline
+                            reduce_bem_closed_mesh, strip_added_mass, try_bem)
+from .revision4_resistance import curve as revision4_resistance_curve
+from .simple_sections import hydrostatic_state, solve_waterline, section_properties
 from .models import CanonicalVessel, ParameterLineage
 
 SCHEMA = "bcod-simple-hydrodynamics-v1"
 MODEL_ID = "bcod-passive-model-revision-3"
+MODEL_ID_V4 = "bcod-passive-model-revision-4"
 
 
 def _write(root: Path, name: str, value: dict) -> None:
@@ -264,7 +266,10 @@ def generate_simple_vessel(*, geometry: str | Path, output: str | Path, mass_kg:
                            reference_draft_m: float | None = None,
                            classification: str | None = None, disable_bem: bool = False,
                            lut_samples: int = 9, confidence_policy: str = "allow_low",
+                           model_revision: int = 3,
                            bem_panel_target: int = 900) -> Path:
+    if model_revision not in (3, 4):
+        raise ValueError("Supported passive model revisions are 3 and 4")
     if not math.isfinite(mass_kg) or mass_kg <= 0 or len(cg_frd_m) != 3 or not np.isfinite(cg_frd_m).all():
         raise ValueError("Positive mass and finite FRD CG are required")
     if water_density_kg_m3 <= 0 or speed_range_mps[0] < 0 or speed_range_mps[1] <= speed_range_mps[0]:
@@ -288,6 +293,7 @@ def generate_simple_vessel(*, geometry: str | Path, output: str | Path, mass_kg:
         ("simple_pipeline.py", "simple_geometry.py", "simple_sections.py",
          "simple_hydro_mesh.py", "simple_models.py", "simple_crossflow.py", "simple_wave.py",
          "volume_clip.py", "coefficient_package.py")) +
+         ((module_root / "revision4_resistance.py").read_bytes() if model_revision >= 4 else b"") +
          (module_root.parent / "dynamics" / "crossflow.py").read_bytes()).hexdigest()
     try:
         capytaine_version = version("capytaine")
@@ -310,6 +316,7 @@ def generate_simple_vessel(*, geometry: str | Path, output: str | Path, mass_kg:
         "disable_bem": disable_bem, "lut_samples": lut_samples,
         "bem_panel_target": bem_panel_target,
         "confidence_policy": confidence_policy, "capytaine_version": capytaine_version,
+        "model_revision": model_revision,
         "fast_simplification_version": simplification_version}
     request_hash = sha256(json.dumps(request, sort_keys=True).encode()).hexdigest()
     required = ("vessel.yaml", "runtime_payload.json", "coefficients.json", "provenance.json",
@@ -393,26 +400,48 @@ def generate_simple_vessel(*, geometry: str | Path, output: str | Path, mass_kg:
         density=water_density_kg_m3)
     if not disable_bem:
         os.environ.setdefault("CAPYTAINE_CACHE_DIR", str(root / ".capytaine_cache"))
-    bem_key = sha256(json.dumps({"mesh": mesh_hash(hydromesh), "waterline": waterline,
+    bem_input=hydromesh
+    bem_refined=None
+    bem_mesh_quality=None
+    if model_revision>=4 and not disable_bem:
+        try:
+            # The KVLCC2M analytic calibration showed that 2k→3k facets left
+            # roll added mass just outside the 5% gate. 3k→4k is stable while
+            # keeping the solver mesh bounded.
+            bem_input,bem_mesh_quality=reduce_bem_closed_mesh(mesh,3000)
+            bem_refined,bem_fine_quality=reduce_bem_closed_mesh(mesh,4000)
+            bem_mesh_quality["fine_mesh"]=bem_fine_quality
+        except (ValueError, RuntimeError) as exc:
+            bem_mesh_quality={"status":"rejected","reason_code":"MESH_FAILURE","reason":f"{type(exc).__name__}: {exc}"}
+    bem_key = sha256(json.dumps({"mesh": mesh_hash(bem_input), "fine_mesh":None if bem_refined is None else mesh_hash(bem_refined), "waterline": waterline,
         "density": water_density_kg_m3, "version": capytaine_version,
         "panel_target": bem_panel_target, "code": code_hash}, sort_keys=True).encode()).hexdigest()
     bem_cache = root / "bem_cache.json"
     if len(hull_components) != len(components) and not disable_bem:
         bem = {"status": "rejected", "method": "capytaine", "confidence": "unavailable",
+               "reason_code": "UNSUPPORTED_GEOMETRY",
                "reason": "Unlabeled appendage candidates require explicit BEM inclusion decision"}
+    elif model_revision>=4 and bem_mesh_quality is not None and bem_mesh_quality.get("status")=="rejected":
+        bem={"status":"rejected","method":"capytaine","confidence":"unavailable",
+             "reason_code":"MESH_FAILURE","reason":bem_mesh_quality["reason"]}
     elif not disable_bem and bem_cache.exists() and json.loads(bem_cache.read_text()).get("key") == bem_key:
         bem = json.loads(bem_cache.read_text())["result"]
         bem["cache_hit"] = True
     else:
-        refined = None
-        if not disable_bem and len(mesh.faces) > bem_panel_target:
+        refined = bem_refined
+        if model_revision<4 and not disable_bem and len(mesh.faces) > bem_panel_target:
             refined, _ = reduce_hydrodynamic_mesh(mesh, waterline, hydro,
                 target_faces=min(1200, int(bem_panel_target * 1.15)))
             if mesh_hash(refined) == mesh_hash(hydromesh):
                 refined = None
-        bem = try_bem(hydromesh, strip, enabled=not disable_bem,
+        bem = try_bem(bem_input, strip, enabled=not disable_bem,
                       waterline_frd=waterline, density=water_density_kg_m3,
-                      refined_mesh=refined)
+                      refined_mesh=refined,
+                      formulation_revision=2 if model_revision >= 4 else 1,
+                      required_resolution_change=.05 if model_revision >= 4 else .15,
+                      maximum_panel_count=3500 if model_revision >= 4 else 1200)
+        if bem_mesh_quality is not None:
+            bem["solver_mesh_quality"]=bem_mesh_quality
         if not disable_bem:
             _write(root, "bem_cache.json", {"key": bem_key, "result": bem})
     added = np.asarray(bem["added_mass_6x6"][0] if bem["status"] == "accepted" else strip["matrix_6x6"])
@@ -467,13 +496,41 @@ def generate_simple_vessel(*, geometry: str | Path, output: str | Path, mass_kg:
             wave_rejection = str(exc)
     else:
         wave_rejection = "Outside guarded thin/fine displacement domain (L/B>=10, Cb<=0.55, Fn<=0.45, monohull)"
-    resistance = resistance_curve(speeds, length=resistance_length,
-        wetted_area=hydro["wetted_area_m2"], density=water_density_kg_m3,
-        viscosity=water_kinematic_viscosity_m2_s,
-        classification=regime["classification"], wave=wave)
-    resistance["wave_selection"] = "accepted" if wave is not None else "fallback"
-    if wave is None:
-        resistance["wave_rejection"] = wave_rejection
+    resistance_descriptors = None
+    if model_revision >= 4:
+        waterplane_loops = section_properties(mesh, 2, waterline)["loops"]
+        waterplane_points = (np.concatenate([np.asarray(loop) for loop in waterplane_loops], axis=0)
+                             if waterplane_loops else np.empty((0, 3)))
+        lwl = float(np.ptp(waterplane_points[:, 0])) if len(waterplane_points) else 0.
+        resistance_descriptors = {"lwl_m": lwl, "beam_m": float(mesh.extents[1]),
+            "draft_m": draft, "volume_m3": volume, "wetted_area_m2": hydro["wetted_area_m2"],
+            "max_section_area_m2": max(float(s["section_area_m2"]) for s in stations),
+            "waterplane_area_m2": float(hydro["waterplane_area_m2"]),
+            "lcb_from_midship_m": (float(cb[0] - (float(waterplane_points[:, 0].min()) + lwl/2))
+                                   if len(waterplane_points) else 0.),
+            "hull_count": hull_count, "catamaran": hull_count > 1,
+            "planing_candidate": regime["classification"] == "planing_candidate"}
+        resistance = revision4_resistance_curve(speeds, geometry=resistance_descriptors,
+            rho=water_density_kg_m3, nu=water_kinematic_viscosity_m2_s)
+        if not resistance.get("applicable", False):
+            fallback = resistance_curve(speeds, length=resistance_length,
+                wetted_area=hydro["wetted_area_m2"], density=water_density_kg_m3,
+                viscosity=water_kinematic_viscosity_m2_s,
+                classification=regime["classification"], wave=None)
+            fallback.update({"provider": "ittc57_friction_only_low_confidence",
+                "residual_provider_status": "inapplicable",
+                "residual_provider_reason_codes": resistance.get("reason_codes", []),
+                "geometry_descriptors": resistance_descriptors})
+            resistance = fallback
+    else:
+        resistance = resistance_curve(speeds, length=resistance_length,
+            wetted_area=hydro["wetted_area_m2"], density=water_density_kg_m3,
+            viscosity=water_kinematic_viscosity_m2_s,
+            classification=regime["classification"], wave=wave)
+        resistance["wave_selection"] = "accepted" if wave is not None else "fallback"
+        if wave is None:
+            resistance["wave_rejection"] = wave_rejection
+    resistance["geometry_descriptors"] = resistance_descriptors
     timings["resistance_s"] = perf_counter() - begin
     begin = perf_counter()
     if geometry_mode == "design_waterline_submerged_hull":
@@ -503,7 +560,8 @@ def generate_simple_vessel(*, geometry: str | Path, output: str | Path, mass_kg:
     confidence["geometry"] = "low"  # Global self-intersection check is unavailable.
     if confidence_policy == "strict" and confidence["overall_passive_model"] == "low":
         raise ValueError("Strict confidence policy rejected low-confidence passive model")
-    provenance = {"schema": SCHEMA, "model_identifier": MODEL_ID,
+    model_id = MODEL_ID_V4 if model_revision >= 4 else MODEL_ID
+    provenance = {"schema": SCHEMA, "model_identifier": model_id,
                   "original_geometry_sha256": prepared.source_hash,
                   "processed_geometry_sha256": prepared.processed_hash,
                   "hydrodynamic_mesh_sha256": reduced_mesh_hash,
@@ -517,7 +575,7 @@ def generate_simple_vessel(*, geometry: str | Path, output: str | Path, mass_kg:
                   "canonical_frame": "FRD", "classification": regime, "bem": bem,
                   "strip": {"method": strip["method"], "stations": len(stations)},
                   "resistance_method": resistance["method"],
-                  "model_revision": 3, "linear_maneuvering": maneuvering_linear,
+                  "model_revision": model_revision, "linear_maneuvering": maneuvering_linear,
                   "restoring_equilibrium": equilibrium,
                   "crossflow_method": "sectional_translation_shear_v5",
                   "crossflow_provenance": crossflow_provenance,

@@ -187,7 +187,8 @@ def train_td3(env, *, steps=400_000, seed=11, warmup=0, batch=256,
 
 
 def train_mappo(env, *, steps=400_000, seed=11, output="marl-mappo.pt",
-                device="cpu", initial_state=None, validate=None):
+                device="cpu", initial_state=None, validate=None,
+                anchor_observations=None, anchor_actions=None, anchor_weight=0.):
     """Shared-actor centralized-critic PPO. Steps count complete fleet ticks."""
     torch.manual_seed(seed); np.random.seed(seed); random.seed(seed)
     started=time.perf_counter()
@@ -197,8 +198,27 @@ def train_mappo(env, *, steps=400_000, seed=11, output="marl-mappo.pt",
     torch.save({"model":model.state_dict(),"steps":0,"seed":seed},output+".step-0.pt")
     actor_opt=torch.optim.Adam(list(model.actor.parameters())+[model.log_std],lr=1e-4)
     critic_opt=torch.optim.Adam(model.critic.parameters(),lr=3e-4)
+    if anchor_weight < 0 or (anchor_observations is None) != (anchor_actions is None):
+        raise ValueError("BC anchor requires paired observations/actions and nonnegative weight")
+    anchor_x=(torch.as_tensor(anchor_observations,dtype=torch.float32,device=device)
+              if anchor_observations is not None else None)
+    anchor_y=(torch.as_tensor(anchor_actions,dtype=torch.float32,device=device)
+              if anchor_actions is not None else None)
+    if anchor_weight and (anchor_x is None or anchor_x.ndim!=2 or anchor_y.shape!=(len(anchor_x),2)):
+        raise ValueError("BC anchor has invalid observation/action shape")
     obs,_=env.reset(seed=seed); names=list(env.possible_agents)
     horizon=128; gamma=.995; lam=.95; best=None; best_collision=None
+    if validate is not None:
+        baseline=validate(model,0)
+        best=(baseline.get("success_rate",0.),-baseline.get("collision_rate",1.),
+              -baseline.get("completion_time_s",float("inf")))
+        best_collision=(-baseline.get("collision_rate",1.),baseline.get("success_rate",0.),
+                        -baseline.get("completion_time_s",float("inf")))
+        record={"step":0,"validation":baseline}
+        with open(output+".validation.jsonl","a") as stream: stream.write(json.dumps(record)+"\n")
+        payload={"model":model.state_dict(),"steps":0,"validation":baseline}
+        torch.save(payload,output+".best-success.pt")
+        torch.save(payload,output+".best-low-collision.pt")
     total_steps=(steps//horizon)*horizon
     for update in range(total_steps//horizon):
         ro=[]; rs=[]; raws=[]; logps=[]; vals=[]; nextvals=[]; states=[]; dones=[]; truncs=[]; action_rows=[]
@@ -237,7 +257,7 @@ def train_mappo(env, *, steps=400_000, seed=11, output="marl-mappo.pt",
         flat_states=torch.as_tensor(np.repeat(np.stack(states),len(names),axis=0),device=device)
         flat_targets=torch.as_tensor(np.repeat(targets,len(names)),device=device)
         n=len(flat_obs); ids=np.arange(n)
-        epoch_kl=[]; policy_losses=[]; value_losses=[]; entropies=[]; grad_norms=[]
+        epoch_kl=[]; policy_losses=[]; value_losses=[]; entropies=[]; grad_norms=[]; anchor_losses=[]
         entropy_coef=.002+(.0005-.002)*min(1.,update/max(total_steps//horizon-1,1))
         for _epoch in range(5):
             epoch_kls=[]
@@ -248,6 +268,13 @@ def train_mappo(env, *, steps=400_000, seed=11, output="marl-mappo.pt",
                 lp=dist.log_prob(flat_raw[ix]).sum(-1); logratio=lp-oldlp[ix]; ratio=logratio.exp()
                 a=flat_adv[ix]; entropy=dist.entropy().sum(-1).mean()
                 loss_actor=-torch.minimum(ratio*a,ratio.clamp(.8,1.2)*a).mean()-entropy_coef*entropy
+                if anchor_weight:
+                    anchor_ix=torch.randint(len(anchor_x),(len(ix),),device=device)
+                    anchor_raw=model.mean_action(anchor_x[anchor_ix])
+                    anchor_pred=torch.stack((torch.sigmoid(anchor_raw[:,0]),torch.tanh(anchor_raw[:,1])),-1)
+                    anchor_loss=(anchor_pred-anchor_y[anchor_ix]).square().mean()
+                    loss_actor=loss_actor+anchor_weight*anchor_loss
+                    anchor_losses.append(float(anchor_loss.detach()))
                 normalized_targets=(flat_targets[ix]-model.value_mean)/model.value_std
                 normalized_values=model.critic(flat_states[ix]).squeeze(-1)
                 loss_value=(normalized_values-normalized_targets).square().mean()
@@ -272,6 +299,8 @@ def train_mappo(env, *, steps=400_000, seed=11, output="marl-mappo.pt",
             "steps_per_s":step/(time.perf_counter()-started),"policy_loss":float(np.mean(policy_losses)),
             "value_loss":float(np.mean(value_losses)),"entropy":float(np.mean(entropies)),
             "entropy_coef":entropy_coef,"action_std":model.log_std.detach().exp().cpu().tolist(),
+            "bc_anchor_weight":anchor_weight,
+            "bc_anchor_loss":float(np.mean(anchor_losses)) if anchor_losses else None,
             "approx_kl_by_epoch":epoch_kl,"explained_variance":explained,
             "gradient_norm_max":float(np.max(grad_norms)),"return_mean":float(np.mean(rs)),
             "zero_speed_action_fraction":float(np.mean(action_array[:,0]<.01)),

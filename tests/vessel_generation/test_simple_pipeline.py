@@ -198,8 +198,10 @@ def test_bem_frame_resolution_and_hmri_total_mass():
 
 
 def test_bem_disabled_returns_without_adapter_invocation():
-    assert try_bem(trimesh.creation.box(), None, enabled=False,
-                   waterline_frd=0., density=1025.)["status"] == "disabled"
+    result=try_bem(trimesh.creation.box(), None, enabled=False,
+                   waterline_frd=0., density=1025.)
+    assert result["status"] == "disabled"
+    assert result["reason_code"] == "BEM_DISABLED_BY_GENERATION_SETTING"
 
 
 def test_surface_piercing_lid_and_strip_comparison():
@@ -214,6 +216,16 @@ def test_surface_piercing_lid_and_strip_comparison():
     assert result["panel_quality"]["lid_forces_excluded"]
     assert 1.5 < result["strip_agreement_ratios"]["Sway"] < 2.5
     assert result["confidence"] == "medium"
+
+
+def test_revision4_bem_omits_hydrostatic_waterline_cap():
+    from bcod_sim.vessel_generation.simple_models import _wetted_capytaine_panels
+    mesh=trimesh.creation.box(extents=(2.,1.,2.))
+    mesh.apply_translation((0.,0.,1.))
+    vertices,faces=_wetted_capytaine_panels(mesh,0.,omit_waterline_cap=True)
+    # The closed box's entire bottom face is an artificial design-waterline cap.
+    assert len(faces)>0
+    assert not np.any(np.all(np.abs(vertices[faces[:,:3],2]) < 1e-9,axis=1))
 
 
 def test_bem_cache_reuses_and_invalidates(tmp_path, monkeypatch):

@@ -35,6 +35,7 @@ def finite_training_logs(rows, policy):
 
 
 def marl_validation(model, step, episodes=32, seed=81001):
+    device=next(model.parameters()).device
     """Frozen small validation mix; uses deterministic actor means."""
     rng=np.random.default_rng(seed); rows=[]
     for i in range(episodes):
@@ -44,7 +45,7 @@ def marl_validation(model, step, episodes=32, seed=81001):
         for tick in range(env.config.deadline_steps):
             names=list(env.possible_agents)
             with torch.no_grad():
-                actions_np=model.act(torch.as_tensor(np.stack([obs[n] for n in names])),deterministic=True)[0].numpy()
+                actions_np=model.act(torch.as_tensor(np.stack([obs[n] for n in names]),device=device),deterministic=True)[0].cpu().numpy()
             actions={n:actions_np[j].astype(np.float32) for j,n in enumerate(names)}
             obs,_,terms,truncs,infos=env.step(actions)
             if all(terms.values()) or all(truncs.values()): break
@@ -57,6 +58,7 @@ def marl_validation(model, step, episodes=32, seed=81001):
 
 
 def sarl_validation(actor, step, episodes=12, seed=82001, steps=300):
+    device=next(actor.parameters()).device
     """Nominal held-out command tracking score for TD3 checkpoint selection."""
     from ..control.high_level import wrap_angle
     speed_rmse=[]; heading_rmse=[]; saturation=[]; actions=[]
@@ -66,7 +68,7 @@ def sarl_validation(actor, step, episodes=12, seed=82001, steps=300):
         if i%2: env.desired_heading=wrap_angle(env.desired_heading+np.deg2rad(45.))
         se=[]; he=[]; sat=[]
         for _ in range(steps):
-            with torch.no_grad(): action=actor(torch.as_tensor(obs).float()).numpy()
+            with torch.no_grad(): action=actor(torch.as_tensor(obs,device=device).float()).cpu().numpy()
             actions.append(action)
             obs,_,term,trunc,info=env.step(action); se.append(info["speed_error"]); he.append(info["heading_error"])
             sat.extend(info["saturation"].values())
@@ -209,7 +211,7 @@ def preflight(output, seed=11, easy_cases=50, marl_bc=None, sarl_bc=None, policy
                 for _ in range(300):
                     if label=="pid": action,_=teacher.predict(obs,env=env)
                     else:
-                        with torch.no_grad(): action=actor(torch.as_tensor(obs).float()).numpy()
+                        with torch.no_grad(): action=actor(torch.as_tensor(obs).float()).cpu().numpy()
                     obs,_,term,trunc,info=env.step(action)
                     se.append(info["command"][0]-info["actual_speed"]); he.append(info["heading_error"])
                     sat.extend(info["saturation"].values())
@@ -248,25 +250,27 @@ def main():
     c.add_argument("--marl-bc"); c.add_argument("--sarl-bc")
     for policy in ("marl","sarl"):
         c=sub.add_parser(policy+"-preflight"); c.add_argument("--output",default=f"runs/deadline/{policy}-preflight.json"); c.add_argument("--seed",type=int,default=11); c.add_argument("--bc",default=f"runs/deadline/{policy}-bc.pt")
-    c=sub.add_parser("marl-eval"); c.add_argument("--checkpoint",default="runs/deadline/marl-mappo.pt.best-success.pt"); c.add_argument("--output",default="runs/deadline/marl-eval"); c.add_argument("--per-family",type=int,default=50); c.add_argument("--seed",type=int,default=62001)
-    c=sub.add_parser("sarl-eval"); c.add_argument("--checkpoint",default="runs/deadline/sarl-td3.pt.best-tracking.pt"); c.add_argument("--output",default="runs/deadline/sarl-eval"); c.add_argument("--episodes",type=int,default=60); c.add_argument("--steps",type=int,default=500); c.add_argument("--seed",type=int,default=44001)
+    c=sub.add_parser("marl-eval"); c.add_argument("--device",default="cpu"); c.add_argument("--checkpoint",default="runs/deadline/marl-mappo.pt.best-success.pt"); c.add_argument("--output",default="runs/deadline/marl-eval"); c.add_argument("--per-family",type=int,default=50); c.add_argument("--seed",type=int,default=62001)
+    c=sub.add_parser("sarl-eval"); c.add_argument("--device",default="cpu"); c.add_argument("--checkpoint",default="runs/deadline/sarl-td3.pt.best-tracking.pt"); c.add_argument("--output",default="runs/deadline/sarl-eval"); c.add_argument("--episodes",type=int,default=60); c.add_argument("--steps",type=int,default=500); c.add_argument("--seed",type=int,default=44001)
     for policy in ("marl","sarl"):
-        c=sub.add_parser(policy+"-smoke"); c.add_argument("--preflight",default=f"runs/deadline/{policy}-preflight.json"); c.add_argument("--bc",default=f"runs/deadline/{policy}-bc.pt"); c.add_argument("--replay-data",default="runs/deadline/sarl-pid.npz"); c.add_argument("--steps",type=int,default=5000); c.add_argument("--seed",type=int,default=11); c.add_argument("--output",default=f"runs/deadline/{policy}-smoke.pt")
+        c=sub.add_parser(policy+"-smoke"); c.add_argument("--preflight",default=f"runs/deadline/{policy}-preflight.json"); c.add_argument("--bc",default=f"runs/deadline/{policy}-bc.pt"); c.add_argument("--replay-data",default="runs/deadline/sarl-pid.npz"); c.add_argument("--steps",type=int,default=5000); c.add_argument("--device",default="cpu"); c.add_argument("--seed",type=int,default=11); c.add_argument("--output",default=f"runs/deadline/{policy}-smoke.pt")
     c=sub.add_parser("marl-data"); c.add_argument("--output",default="runs/deadline/marl-teacher.npz"); c.add_argument("--steps",type=int,default=50_000); c.add_argument("--seed",type=int,default=11)
     c=sub.add_parser("sarl-data"); c.add_argument("--output",default="runs/deadline/sarl-pid.npz"); c.add_argument("--transitions",type=int,default=100_000); c.add_argument("--seed",type=int,default=11)
     c=sub.add_parser("marl-bc"); c.add_argument("--data",default="runs/deadline/marl-teacher.npz"); c.add_argument("--output",default="runs/deadline/marl-bc.pt"); c.add_argument("--epochs",type=int,default=20)
     c=sub.add_parser("sarl-bc"); c.add_argument("--data",default="runs/deadline/sarl-pid.npz"); c.add_argument("--output",default="runs/deadline/sarl-bc.pt"); c.add_argument("--epochs",type=int,default=20)
-    c=sub.add_parser("marl-train"); c.add_argument("--preflight",default="runs/deadline/marl-preflight.json"); c.add_argument("--bc",default="runs/deadline/marl-bc.pt"); c.add_argument("--steps",type=int,default=400_000); c.add_argument("--seed",type=int,default=11); c.add_argument("--output",default="runs/deadline/marl-mappo.pt")
-    c=sub.add_parser("sarl-train"); c.add_argument("--preflight",default="runs/deadline/sarl-preflight.json"); c.add_argument("--bc",default="runs/deadline/sarl-bc.pt"); c.add_argument("--replay-data",default="runs/deadline/sarl-pid.npz"); c.add_argument("--steps",type=int,default=400_000); c.add_argument("--seed",type=int,default=11); c.add_argument("--output",default="runs/deadline/sarl-td3.pt")
+    c=sub.add_parser("marl-train"); c.add_argument("--preflight",default="runs/deadline/marl-preflight.json"); c.add_argument("--bc",default="runs/deadline/marl-bc.pt"); c.add_argument("--steps",type=int,default=400_000); c.add_argument("--device",default="cpu"); c.add_argument("--seed",type=int,default=11); c.add_argument("--output",default="runs/deadline/marl-mappo.pt")
+    c=sub.add_parser("sarl-train"); c.add_argument("--preflight",default="runs/deadline/sarl-preflight.json"); c.add_argument("--bc",default="runs/deadline/sarl-bc.pt"); c.add_argument("--replay-data",default="runs/deadline/sarl-pid.npz"); c.add_argument("--steps",type=int,default=400_000); c.add_argument("--device",default="cpu"); c.add_argument("--seed",type=int,default=11); c.add_argument("--output",default="runs/deadline/sarl-td3.pt")
     for name in ("marl-train","sarl-train"):
         sub.choices[name].add_argument("--smoke-report",default=f"runs/deadline/{name.split('-')[0]}-smoke.pt.smoke.json")
     a=p.parse_args()
+    if hasattr(a,"device") and a.device.startswith("cuda") and not torch.cuda.is_available():
+        raise SystemExit(f"CUDA requested ({a.device}) but torch.cuda.is_available() is false")
     if a.command=="preflight": print(json.dumps(preflight(a.output,a.seed,a.easy_cases,a.marl_bc,a.sarl_bc,a.policy),indent=2)); return
     if a.command in ("marl-preflight","sarl-preflight"):
         policy=a.command.split("-")[0]; kwargs={"marl_bc":a.bc} if policy=="marl" else {"sarl_bc":a.bc}
         print(json.dumps(preflight(a.output,a.seed,50,policy=policy,**kwargs),indent=2)); return
-    if a.command=="marl-eval": print(json.dumps(evaluate_marl(a.checkpoint,a.output,per_family=a.per_family,seed=a.seed),indent=2)); return
-    if a.command=="sarl-eval": print(json.dumps(evaluate_sarl(a.checkpoint,a.output,episodes=a.episodes,steps=a.steps,seed=a.seed),indent=2)); return
+    if a.command=="marl-eval": print(json.dumps(evaluate_marl(a.checkpoint,a.output,per_family=a.per_family,seed=a.seed,device=a.device),indent=2)); return
+    if a.command=="sarl-eval": print(json.dumps(evaluate_sarl(a.checkpoint,a.output,episodes=a.episodes,steps=a.steps,seed=a.seed,device=a.device),indent=2)); return
     if a.command=="marl-data": print(json.dumps(collect_marl_teacher(a.output,fleet_steps=a.steps,seed=a.seed))); return
     if a.command=="sarl-data": print(json.dumps(collect_sarl_pid(a.output,transitions=a.transitions,seed=a.seed))); return
     if a.command in ("marl-bc","sarl-bc"):
@@ -307,7 +311,7 @@ def main():
             initial=torch.load(a.bc,map_location="cpu",weights_only=True)["model"]
             baseline_model=MAPPO(); baseline_model.load_state_dict(initial); baseline_model.eval()
             baseline=marl_validation(baseline_model,0,episodes=32,seed=81001)
-            train_mappo(env,steps=a.steps,seed=a.seed,output=a.output,initial_state=initial,
+            train_mappo(env,steps=a.steps,seed=a.seed,output=a.output,device=a.device,initial_state=initial,
                 validate=lambda model,step:marl_validation(model,step,episodes=32,seed=81001))
             env.close()
             with open(a.output+".metrics.jsonl") as stream: logs=[json.loads(line) for line in stream if line.strip()]
@@ -327,7 +331,7 @@ def main():
                 terminal_rows[:-1]=np.maximum(terminal_rows[:-1],episode_ids[1:]!=episode_ids[:-1])
                 replay=(data["observations"],data["actions"],data["rewards"],
                     data["next_observations"],terminal_rows)
-            train_td3(env,steps=a.steps,seed=a.seed,output=a.output,initial_actor=initial,
+            train_td3(env,steps=a.steps,seed=a.seed,output=a.output,device=a.device,initial_actor=initial,
                 initial_replay=replay,validate=lambda actor,step:sarl_validation(actor,step,episodes=4,steps=200))
             env.close()
             with open(a.output+".metrics.jsonl") as stream: logs=[json.loads(line) for line in stream if line.strip()]
@@ -357,7 +361,7 @@ def main():
         rng=np.random.default_rng(a.seed)
         env=ResidualCoordinatorEnv(scenario_sampler=lambda r: make_four_vessel_scenario(r,"mixture"),sampler_seed=a.seed)
         initial=torch.load(a.bc,map_location="cpu",weights_only=True)["model"]
-        train_mappo(env,steps=a.steps,seed=a.seed,output=a.output,initial_state=initial,
+        train_mappo(env,steps=a.steps,seed=a.seed,output=a.output,device=a.device,initial_state=initial,
             validate=lambda model,step:marl_validation(model,step)); env.close()
     else:
         env=SARLTrackingEnv(); initial=torch.load(a.bc,map_location="cpu",weights_only=True)["model"]
@@ -366,7 +370,7 @@ def main():
             terminal_rows[:-1]=np.maximum(terminal_rows[:-1],episode_ids[1:]!=episode_ids[:-1])
             replay=(data["observations"],data["actions"],data["rewards"],
                     data["next_observations"],terminal_rows)
-        train_td3(env,steps=a.steps,seed=a.seed,output=a.output,initial_actor=initial,
+        train_td3(env,steps=a.steps,seed=a.seed,output=a.output,device=a.device,initial_actor=initial,
                   initial_replay=replay,validate=lambda actor,step:sarl_validation(actor,step)); env.close()
 
 

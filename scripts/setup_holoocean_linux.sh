@@ -16,8 +16,8 @@ if sys.version_info < (3, 12):
     raise SystemExit("Python 3.12+ is required by bcod-sim; set PYTHON_BIN to Python 3.12+")
 PY
 
-sudo apt-get update
-sudo apt-get install -y build-essential git python3-venv libgl1 libglib2.0-0 libsm6 libxext6 libxrender1
+if ! command -v git >/dev/null; then echo "git is required" >&2; exit 2; fi
+if ! command -v cc >/dev/null; then echo "C compiler unavailable; binary wheels may be required" >&2; fi
 "$python_bin" -m venv "$install_root/venv"
 "$install_root/venv/bin/python" -m pip install --upgrade pip
 if [[ ! -d "$install_root/source/.git" ]]; then

@@ -16,9 +16,9 @@ from .algorithms import MAPPO
 from ..control.high_level import wrap_angle
 
 
-def evaluate_sarl(checkpoint, output, *, episodes=6, seed=44001, steps=500):
+def evaluate_sarl(checkpoint, output, *, episodes=6, seed=44001, steps=500,device="cpu"):
     payload=torch.load(checkpoint,map_location="cpu",weights_only=True)
-    actor=TD3Actor(); actor.load_state_dict(payload.get("actor",payload.get("model"))); actor.eval()
+    actor=TD3Actor().to(device); actor.load_state_dict(payload.get("actor",payload.get("model"))); actor.eval()
     out=Path(output); tsdir=out/"timeseries"; tsdir.mkdir(parents=True,exist_ok=True)
     families=("nominal","heading","combined","current","wind","parameter")
     reports=[]
@@ -42,7 +42,7 @@ def evaluate_sarl(checkpoint, output, *, episodes=6, seed=44001, steps=500):
             for tick in range(steps):
                 if controller=="pid": action,_=teacher.predict(obs,env=env)
                 else:
-                    with torch.no_grad(): action=actor(torch.as_tensor(obs).float()).cpu().numpy()
+                    with torch.no_grad(): action=actor(torch.as_tensor(obs,device=device).float()).cpu().numpy()
                 obs,_,term,trunc,info=env.step(action)
                 row={"episode":episode,"seed":seed_i,"family":family,"controller":controller,
                     "step":tick,"time_s":info["time_s"],"command_speed_mps":info["command"][0],
@@ -89,9 +89,9 @@ def evaluate_sarl(checkpoint, output, *, episodes=6, seed=44001, steps=500):
     return summary
 
 
-def evaluate_marl(checkpoint,output,*,per_family=50,seed=62001):
+def evaluate_marl(checkpoint,output,*,per_family=50,seed=62001,device="cpu"):
     payload=torch.load(checkpoint,map_location="cpu",weights_only=True)
-    model=MAPPO(); model.load_state_dict(payload.get("model",payload)); model.eval()
+    model=MAPPO().to(device); model.load_state_dict(payload.get("model",payload)); model.eval()
     out=Path(output);out.mkdir(parents=True,exist_ok=True);rows=[];rng=np.random.default_rng(seed)
     families=("fourway","pairwise_corner","random","mild_current")
     family_names=("four_way","pairwise_corner","randomized","mild_current")
@@ -111,7 +111,7 @@ def evaluate_marl(checkpoint,output,*,per_family=50,seed=62001):
                     else:
                         names=list(env.possible_agents)
                         with torch.no_grad():
-                            matrix=model.act(torch.as_tensor(np.stack([obs[n] for n in names])),deterministic=True)[0].numpy()
+                            matrix=model.act(torch.as_tensor(np.stack([obs[n] for n in names]),device=device),deterministic=True)[0].cpu().numpy()
                         actions={n:matrix[i].astype(np.float32) for i,n in enumerate(names)}
                     obs,_,terms,truncs,infos=env.step(actions)
                     minimum=min(minimum,env.task.min_separation_m)
