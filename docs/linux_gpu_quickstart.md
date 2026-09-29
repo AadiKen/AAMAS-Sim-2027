@@ -33,3 +33,18 @@ sbatch --partition=YOUR_GPU_PARTITION scripts/slurm/transfer_smoke.sbatch
 ```
 
 SLURM stdout/stderr use `slurm-%j.*` in the submit directory. Run logs and metadata are also written to each output directory. HoloOcean needs a working OpenGL display or `xvfb-run` installed by the site. Set `INSTALL_HOLOOCEAN=1` or `INSTALL_PYQUATICUS=1` on bootstrap to attempt optional installations; failures are isolated. Pyquaticus uses its pinned separate Python 3.10 environment; `PYQUATICUS_PYTHON` may override its interpreter.
+
+## If the ignored deadline inputs are absent
+
+The deadline launchers require BC checkpoints, policy preflight reports, and a SARL replay dataset. Generate them in Slurm allocations, or copy the matching artifacts into `runs/deadline/` and verify their SHA-256 hashes. The generation commands are:
+
+```bash
+.venv-linux/bin/python -m bcod_sim.benchmark_v3.deadline_harness marl-data --output runs/deadline/marl-teacher.npz --steps 50000
+.venv-linux/bin/python -m bcod_sim.benchmark_v3.deadline_harness marl-bc --data runs/deadline/marl-teacher.npz --output runs/deadline/marl-bc.pt
+.venv-linux/bin/python -m bcod_sim.benchmark_v3.deadline_harness marl-preflight --bc runs/deadline/marl-bc.pt --output runs/deadline/marl-preflight.json
+.venv-linux/bin/python -m bcod_sim.benchmark_v3.deadline_harness sarl-data --output runs/deadline/sarl-pid.npz --transitions 100000
+.venv-linux/bin/python -m bcod_sim.benchmark_v3.deadline_harness sarl-bc --data runs/deadline/sarl-pid.npz --output runs/deadline/sarl-bc.pt
+.venv-linux/bin/python -m bcod_sim.benchmark_v3.deadline_harness sarl-preflight --bc runs/deadline/sarl-bc.pt --output runs/deadline/sarl-preflight.json
+```
+
+Run data generation and training on compute nodes. The Linux launchers set a private CUDA MPS pipe path because CodeNimbus's shared default MPS socket blocked CUDA initialization during verification. HoloOcean's pinned upstream source requires an authorized Epic-linked GitHub account; `HOLOOCEAN_SOURCE_URL` can select an accessible authorized mirror.
