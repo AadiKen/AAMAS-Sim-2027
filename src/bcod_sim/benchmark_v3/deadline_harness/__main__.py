@@ -265,6 +265,7 @@ def main():
     c=sub.add_parser("sarl-train"); c.add_argument("--preflight",default="runs/deadline/sarl-preflight.json"); c.add_argument("--bc",default="runs/deadline/sarl-bc.pt"); c.add_argument("--replay-data",default="runs/deadline/sarl-pid.npz"); c.add_argument("--steps",type=int,default=400_000); c.add_argument("--device",default="cpu"); c.add_argument("--seed",type=int,default=11); c.add_argument("--output",default="runs/deadline/sarl-td3.pt")
     for name in ("marl-train","sarl-train"):
         sub.choices[name].add_argument("--smoke-report",default=f"runs/deadline/{name.split('-')[0]}-smoke.pt.smoke.json")
+        sub.choices[name].add_argument("--init-checkpoint")
     a=p.parse_args()
     if hasattr(a,"device") and a.device.startswith("cuda") and not torch.cuda.is_available():
         raise SystemExit(f"CUDA requested ({a.device}) but torch.cuda.is_available() is false")
@@ -360,14 +361,17 @@ def main():
     if not smoke.get("pass"):
         raise SystemExit(f"Production mode refused: {policy.upper()} smoke report has not passed.")
     if not Path(a.bc).is_file(): raise SystemExit(f"Required BC initialization is missing: {a.bc}")
+    if a.init_checkpoint and not Path(a.init_checkpoint).is_file():
+        raise SystemExit(f"Initialization checkpoint is missing: {a.init_checkpoint}")
     if a.command=="marl-train":
         rng=np.random.default_rng(a.seed)
         env=ResidualCoordinatorEnv(scenario_sampler=lambda r: make_four_vessel_scenario(r,"mixture"),sampler_seed=a.seed)
-        initial=torch.load(a.bc,map_location="cpu",weights_only=True)["model"]
+        initial=torch.load(a.init_checkpoint or a.bc,map_location="cpu",weights_only=True)["model"]
         train_mappo(env,steps=a.steps,seed=a.seed,output=a.output,device=a.device,initial_state=initial,
             validate=lambda model,step:marl_validation(model,step)); env.close()
     else:
-        env=SARLTrackingEnv(); initial=torch.load(a.bc,map_location="cpu",weights_only=True)["model"]
+        env=SARLTrackingEnv(); source=torch.load(a.init_checkpoint or a.bc,map_location="cpu",weights_only=True)
+        initial=source["actor"] if a.init_checkpoint else source["model"]
         with np.load(a.replay_data,allow_pickle=False) as data:
             terminal_rows=data["terminals"].copy(); episode_ids=data["episode_ids"]
             terminal_rows[:-1]=np.maximum(terminal_rows[:-1],episode_ids[1:]!=episode_ids[:-1])
