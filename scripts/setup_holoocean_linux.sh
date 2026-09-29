@@ -8,8 +8,16 @@ fi
 
 repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 source_ref="${HOLOOCEAN_REF:-v2.3.0}"
+source_url="${HOLOOCEAN_SOURCE_URL:-https://github.com/byu-holoocean/HoloOcean.git}"
 install_root="${HOLOOCEAN_INSTALL_ROOT:-$repo_root/.benchmark-deps/holoocean-linux}"
 python_bin="${PYTHON_BIN:-python3}"
+if [[ ! -d "$install_root/source/.git" ]]; then
+  ref_line="$(git ls-remote "$source_url" "$source_ref" 2>/dev/null || true)"
+  if [[ -z "$ref_line" ]]; then
+    echo "HoloOcean source/ref unavailable: $source_url $source_ref. The upstream repository requires authorized GitHub access (Epic-linked account); set HOLOOCEAN_SOURCE_URL to an accessible mirror if available." >&2
+    exit 3
+  fi
+fi
 "$python_bin" - <<'PY'
 import sys
 if sys.version_info < (3, 12):
@@ -26,7 +34,7 @@ if [[ ! -x "$install_root/venv/bin/python" ]] || ! "$install_root/venv/bin/pytho
 fi
 "$install_root/venv/bin/python" -m pip install --upgrade "pip<27"
 if [[ ! -d "$install_root/source/.git" ]]; then
-  git clone https://github.com/byu-holoocean/HoloOcean.git "$install_root/source"
+  git clone "$source_url" "$install_root/source"
 fi
 git -C "$install_root/source" fetch --tags origin
 if ! git -C "$install_root/source" rev-parse --verify "$source_ref^{commit}" >/dev/null 2>&1; then
