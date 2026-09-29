@@ -8,7 +8,9 @@ mkdir -p "$out";exec >> "$out/job.log" 2>&1
 "$root/.venv-linux/bin/python" tools/linux_gpu/hardware_manifest.py --output "$out/hardware.json" >/dev/null
 printf '%s\n' "$0 $*" > "$out/commands.txt"
 py="${PYQUATICUS_PYTHON:-$root/.venv-pyquaticus/bin/python}"
-[[ -x "$py" ]] || timeout "${PYQUATICUS_SETUP_TIMEOUT_S:-1200}" bash scripts/install_pyquaticus_benchmark.sh
+if [[ ! -x "$py" ]] || ! "$py" -c 'import pyquaticus' >/dev/null 2>&1; then
+    timeout "${PYQUATICUS_SETUP_TIMEOUT_S:-1200}" bash scripts/install_pyquaticus_benchmark.sh
+fi
 "$py" - <<'PY'
 import json,sys,os,importlib.metadata
 from pathlib import Path
