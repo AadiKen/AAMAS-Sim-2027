@@ -1,0 +1,17 @@
+payload:
+  current:
+    kind: uniform
+    ned_mps:
+    - 0
+    - 0
+    - 0
+  visibility_m: 1000
+  waves:
+    kind: calm
+  wind:
+    kind: uniform
+    ned_mps:
+    - 0
+    - 0
+    - 0
+schema_version: 1

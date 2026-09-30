@@ -1,0 +1,81 @@
+payload:
+  experiment:
+    id: navigation-demo
+    seed: 7
+  logging:
+    backpressure: block
+    metrics:
+    - reward
+    - success
+    - collision_count
+    - distance_traveled
+    queue_capacity: 16
+    sensor_payloads: false
+    states: true
+  schema_version: 1
+  simulation:
+    dynamics_mode: full6
+    dynamics_substeps: 1
+    master_dt_s: 0.1
+    max_master_steps: 100
+    policy_every_n_master_steps: 1
+  task:
+    disabled_agent_behavior: deactivate_keep_physical
+    reward:
+      individual_weight: 1
+      team_weight: 0
+    type: waypoint@1
+  vessels:
+  - actuators:
+    - port@1
+    - starboard@1
+    controller:
+      mode: high_level
+    definition: web-vessel@1
+    instance_id: agent
+    sensors:
+    - gps@1
+    - imu@1
+    - sonar@1
+    spawn:
+      ned_m:
+      - 0
+      - 0
+      - 0
+      rpy_rad:
+      - 0
+      - 0
+      - 0
+  world:
+    bathymetry:
+      bottom_ned_z_m: 20
+      kind: flat
+      vertical_datum: MSL
+    environment:
+      current:
+        kind: uniform
+        ned_mps:
+        - 0
+        - 0
+        - 0
+      visibility_m: 1000
+      waves:
+        kind: calm
+      wind:
+        kind: uniform
+        ned_mps:
+        - 0
+        - 0
+        - 0
+    source:
+      kind: parametric
+    static_entities:
+    - id: marker
+      position_ned_m:
+      - 7
+      - 3
+      - 0
+      shape:
+        kind: sphere
+        radius_m: 0.4
+schema_version: 1

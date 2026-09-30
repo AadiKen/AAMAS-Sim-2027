@@ -44,7 +44,8 @@ def package_from_generated(root: str | Path) -> dict:
         "schema_version": SCHEMA,
         "frames": {"body": "FRD", "force": "FRD", "velocity": "FRD", "moment": "FRD",
                    "reference_point_frd_m": [0., 0., 0.]},
-        "force_ownership": {"rigid_coriolis": "Plant6", "added_mass_coriolis": "Plant6",
+        "force_ownership": {"rigid_coriolis": "Plant6",
+                            "added_mass_coriolis": spec.steady_coriolis_owner,
                             "linear_damping": "runtime_payload.linear_damping_matrix plus speed-dependent Inoue derivatives",
                             "nonlinear_damping": "runtime_payload.surge_resistance",
                             "crossflow": "runtime_payload.crossflow",
@@ -71,10 +72,12 @@ def package_from_generated(root: str | Path) -> dict:
         "mass": {"rigid_body_mass_kg": spec.mass_kg, "cg_frd_m": list(spec.cg_frd_m),
                  "inertia_cg_kg_m2": spec.inertia_cg_kg_m2},
         "added_mass": {"matrix_6x6": spec.added_mass_kg, "method": added["source"],
+                       "inertia_owner": "bem", "steady_coriolis_owner": spec.steady_coriolis_owner,
                        "frequency_assumption": "zero_frequency" if added["source"] == "bem" else "not_applicable_strip_estimate",
                        "reference_point_frd_m": [0., 0., 0.]},
         "surge": {"model": "tabulated_sign_aware_resistance", "curve": spec.surge_resistance},
-        "maneuvering": {"linear_damping_matrix": spec.linear_damping_matrix,
+        "maneuvering": {"interpretation": spec.maneuvering_interpretation,
+                        "linear_damping_matrix": spec.linear_damping_matrix,
                         "speed_dependent_linear_damping_matrix_per_mps": spec.speed_dependent_linear_damping_matrix_per_mps,
                         "crossflow": spec.crossflow, "crossflow_includes_forward_speed_lift": False},
         "provenance": {"geometry_hash": spec.geometry["content_hash"],
@@ -110,6 +113,18 @@ def load_coefficient_package(path: str | Path) -> dict:
         raise ValueError("coefficient package hash mismatch")
     runtime = package["runtime_payload"]
     VesselRuntime.model_validate(runtime)
+    owner = package.get("added_mass", {}).get("steady_coriolis_owner")
+    interpretation = package.get("maneuvering", {}).get("interpretation")
+    if (owner is not None or interpretation is not None or
+            "maneuvering_interpretation" in runtime or "steady_coriolis_owner" in runtime):
+        expected = {("total_steady_hull_load", "maneuvering_model"),
+                    ("residual_viscous", "bem")}
+        if (interpretation, owner) not in expected:
+            raise ValueError("coefficient package has conflicting steady added-mass Coriolis ownership")
+        if runtime.get("maneuvering_interpretation") != interpretation or runtime.get("steady_coriolis_owner") != owner:
+            raise ValueError("coefficient package ownership summary and runtime payload disagree")
+        if runtime.get("added_mass_coriolis_enabled", True) != (owner == "bem"):
+            raise ValueError("coefficient package ownership conflicts with runtime Coriolis setting")
     if (package["added_mass"]["matrix_6x6"] != runtime["added_mass_kg"] or
         package["maneuvering"]["linear_damping_matrix"] != runtime["linear_damping_matrix"] or
         package["maneuvering"].get("speed_dependent_linear_damping_matrix_per_mps") != runtime.get("speed_dependent_linear_damping_matrix_per_mps") or
@@ -120,7 +135,8 @@ def load_coefficient_package(path: str | Path) -> dict:
     package["canonical_sha256"] = digest
     if package["runtime_payload"].get("maneuvering_surface") is not None:
         raise ValueError("baseline coefficient package cannot own a captive force surface")
-    if package["runtime_payload"].get("added_mass_coriolis_enabled", True) is not True:
+    if (owner is None and package["runtime_payload"].get("added_mass_coriolis_enabled", True) is not True
+            and package["runtime_payload"].get("maneuvering_surface") is None):
         raise ValueError("baseline requires analytic added-mass Coriolis ownership")
     return package
 
@@ -194,7 +210,9 @@ def _runtime_plant(package: dict) -> Plant6:
                      tensor(h["axes"]["pitch_rad"]), tensor(h["wrench_frd"])),
         OperatingEnvelope(tensor(p.max_abs_nu), p.min_substep_s, p.max_substep_s),
         crossflow=SectionalCrossflow.from_stations(p.crossflow["stations"],
-                     density=p.crossflow["water_density_kg_m3"], dtype=torch.float64))
+                     density=p.crossflow["water_density_kg_m3"], dtype=torch.float64),
+        added_mass_coriolis_enabled=p.added_mass_coriolis_enabled,
+        steady_coriolis_owner=p.steady_coriolis_owner)
 
 
 def validate_coefficients(path: str | Path, *, grid_size: int = 7) -> dict:

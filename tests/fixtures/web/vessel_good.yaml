@@ -1,0 +1,95 @@
+payload:
+  added_mass_kg:
+  - - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+  - - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+  - - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+  - - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+  - - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+  - - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+  autopilot_gains:
+  - 30
+  - 15
+  buoyancy_n: 98.0665
+  center_buoyancy_frd_m:
+  - 0
+  - 0
+  - 0
+  cg_frd_m:
+  - 0
+  - 0
+  - 0
+  collision:
+    half_extents_m:
+    - 1.2
+    - 0.45
+    - 0.3
+    kind: box
+  environment_loads:
+  - 0
+  - 0
+  - 0
+  - 0
+  inertia_cg_kg_m2:
+  - - 4
+    - 0
+    - 0
+  - - 0
+    - 5
+    - 0
+  - - 0
+    - 0
+    - 6
+  linear_damping:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  mass_kg: 10
+  max_abs_nu:
+  - 100
+  - 100
+  - 100
+  - 100
+  - 100
+  - 100
+  max_substep_s: 0.2
+  quadratic_damping:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+schema_version: 1

@@ -1,0 +1,10 @@
+{
+  "model_outputs": [
+    "action"
+  ],
+  "adapter": "high_level_v1",
+  "fields": [
+    "desired_speed_mps",
+    "desired_heading_rad"
+  ]
+}

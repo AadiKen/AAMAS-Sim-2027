@@ -1,0 +1,21 @@
+{
+  "model_inputs": [
+    "observation"
+  ],
+  "adapter": "navigation_sensors_v1",
+  "required_sensors": [
+    "gps",
+    "imu",
+    "sonar"
+  ],
+  "features": [
+    "north_m",
+    "east_m",
+    "velocity_north_mps",
+    "velocity_east_mps",
+    "yaw_rate_radps",
+    "sonar_min_range_m",
+    "goal_north_m",
+    "goal_east_m"
+  ]
+}

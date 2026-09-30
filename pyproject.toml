@@ -11,6 +11,7 @@ dependencies = ["fastapi>=0.115,<1", "numpy>=2,<3", "onnx>=1.17,<2", "onnxruntim
 
 [project.scripts]
 bcod = "bcod_sim.cli:main"
+manta-runner = "bcod_sim.web.runner_cli:main"
 
 [project.optional-dependencies]
 sysid = ["scipy>=1.14,<2"]

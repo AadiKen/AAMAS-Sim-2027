@@ -31,6 +31,7 @@ from .models import CanonicalVessel, ParameterLineage
 SCHEMA = "bcod-simple-hydrodynamics-v1"
 MODEL_ID = "bcod-passive-model-revision-3"
 MODEL_ID_V4 = "bcod-passive-model-revision-4"
+MODEL_ID_V5 = "bcod-passive-model-revision-5"
 
 
 def _write(root: Path, name: str, value: dict) -> None:
@@ -268,8 +269,8 @@ def generate_simple_vessel(*, geometry: str | Path, output: str | Path, mass_kg:
                            lut_samples: int = 9, confidence_policy: str = "allow_low",
                            model_revision: int = 3,
                            bem_panel_target: int = 900) -> Path:
-    if model_revision not in (3, 4):
-        raise ValueError("Supported passive model revisions are 3 and 4")
+    if model_revision not in (3, 4, 5):
+        raise ValueError("Supported passive model revisions are 3, 4 and 5")
     if not math.isfinite(mass_kg) or mass_kg <= 0 or len(cg_frd_m) != 3 or not np.isfinite(cg_frd_m).all():
         raise ValueError("Positive mass and finite FRD CG are required")
     if water_density_kg_m3 <= 0 or speed_range_mps[0] < 0 or speed_range_mps[1] <= speed_range_mps[0]:
@@ -560,7 +561,7 @@ def generate_simple_vessel(*, geometry: str | Path, output: str | Path, mass_kg:
     confidence["geometry"] = "low"  # Global self-intersection check is unavailable.
     if confidence_policy == "strict" and confidence["overall_passive_model"] == "low":
         raise ValueError("Strict confidence policy rejected low-confidence passive model")
-    model_id = MODEL_ID_V4 if model_revision >= 4 else MODEL_ID
+    model_id = MODEL_ID_V5 if model_revision == 5 else MODEL_ID_V4 if model_revision == 4 else MODEL_ID
     provenance = {"schema": SCHEMA, "model_identifier": model_id,
                   "original_geometry_sha256": prepared.source_hash,
                   "processed_geometry_sha256": prepared.processed_hash,
@@ -623,6 +624,10 @@ def generate_simple_vessel(*, geometry: str | Path, output: str | Path, mass_kg:
     vessel = {"schema_version": 1, "id": root.name, "version": "1.0.0", "mass_kg": mass_kg,
               "cg_frd_m": list(cg_frd_m), "inertia_cg_kg_m2": inertia.tolist(),
               "added_mass_kg": added.tolist(), "linear_damping": [0.] * 6,
+              "maneuvering_interpretation": ("total_steady_hull_load" if maneuvering_linear["method"] != "not_applicable"
+                                               else "residual_viscous"),
+              "steady_coriolis_owner": ("maneuvering_model" if maneuvering_linear["method"] != "not_applicable"
+                                         else "bem"),
               "quadratic_damping": [0.] * 6,
               "linear_damping_matrix": linear.tolist(),
               "speed_dependent_linear_damping_matrix_per_mps": speed_linear.tolist(),

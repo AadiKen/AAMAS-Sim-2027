@@ -1,0 +1,9 @@
+{
+  "simulator_commit": "fixture",
+  "training_config_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+  "trainer_commit": "fixture",
+  "trainer_version": "fixture",
+  "seeds": [
+    7
+  ]
+}

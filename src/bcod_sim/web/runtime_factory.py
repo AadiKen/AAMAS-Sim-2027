@@ -52,6 +52,8 @@ class VesselRuntime(Strict):
     hydrostatics: dict | None = None
     crossflow: dict | None = None
     maneuvering_surface: dict | None = None
+    maneuvering_interpretation: Literal["total_steady_hull_load", "residual_viscous"] = "residual_viscous"
+    steady_coriolis_owner: Literal["bem", "maneuvering_model"] = "bem"
     added_mass_coriolis_enabled: bool = True
     surge_resistance: dict | None = None
     wind_loads: dict | None = None
@@ -76,6 +78,13 @@ class VesselRuntime(Strict):
             raise ValueError("Legacy buoyancy force and center must be provided together")
         if legacy == (self.hydrostatics is not None):
             raise ValueError("Select exactly one legacy or explicit hydrostatic model")
+        expected_owner = ("maneuvering_model" if self.maneuvering_interpretation == "total_steady_hull_load" else "bem")
+        if self.steady_coriolis_owner != expected_owner:
+            raise ValueError("maneuvering interpretation conflicts with steady added-mass Coriolis owner")
+        expected_enabled = self.steady_coriolis_owner == "bem"
+        surface_fallback = self.maneuvering_surface is not None and expected_enabled and not self.added_mass_coriolis_enabled
+        if self.added_mass_coriolis_enabled != expected_enabled and not surface_fallback:
+            raise ValueError("steady Coriolis ownership conflicts with added_mass_coriolis_enabled")
         return self
 
 
@@ -231,6 +240,7 @@ def build_engine(resolved: ResolvedExperiment, *, observation_contracts=None) ->
             maneuvering_surface=(surface_from_payload(spec.maneuvering_surface)
                                  if spec.maneuvering_surface is not None else None),
             added_mass_coriolis_enabled=spec.added_mass_coriolis_enabled,
+            steady_coriolis_owner=spec.steady_coriolis_owner,
             surface_min_forward_speed_mps=(spec.maneuvering_surface.get("min_forward_speed_mps",
                                                        .2*spec.maneuvering_surface["coefficients"]["reference_speed_mps"])
                                            if spec.maneuvering_surface is not None else 0.))

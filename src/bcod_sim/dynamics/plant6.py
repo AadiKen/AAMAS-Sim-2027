@@ -76,6 +76,7 @@ class Plant6:
                  crossflow: CrossflowModel | None = None,
                  maneuvering_surface: CoefficientSurface | None = None,
                  added_mass_coriolis_enabled: bool = True,
+                 steady_coriolis_owner: Literal["bem", "maneuvering_model"] = "bem",
                  surface_min_forward_speed_mps: float = 0.) -> None:
         if mode not in ("full6", "planar3"):
             raise PhysicalValidationError("Unknown dynamics mode")
@@ -91,6 +92,12 @@ class Plant6:
         envelope.validate(dtype=total.dtype, device=total.device)
         if maneuvering_surface is not None and added_mass_coriolis_enabled:
             raise PhysicalValidationError("CFD/system-ID surface requires added-mass Coriolis disabled")
+        if steady_coriolis_owner not in ("bem", "maneuvering_model"):
+            raise PhysicalValidationError("Unknown steady added-mass Coriolis owner")
+        if steady_coriolis_owner == "maneuvering_model" and added_mass_coriolis_enabled:
+            raise PhysicalValidationError("Maneuvering model and BEM cannot both own steady added-mass Coriolis")
+        if steady_coriolis_owner == "bem" and not added_mass_coriolis_enabled and maneuvering_surface is None:
+            raise PhysicalValidationError("BEM steady Coriolis owner requires the term enabled outside captive surfaces")
         if not math.isfinite(surface_min_forward_speed_mps) or surface_min_forward_speed_mps < 0:
             raise PhysicalValidationError("Invalid surface forward-speed threshold")
         self.mass = mass
@@ -107,6 +114,7 @@ class Plant6:
         self.active_mass = total.index_select(0, self.active).index_select(1, self.active)
         self.maneuvering_surface = maneuvering_surface
         self.added_mass_coriolis_enabled = added_mass_coriolis_enabled
+        self.steady_coriolis_owner = steady_coriolis_owner
         self.surface_min_forward_speed_mps = surface_min_forward_speed_mps
 
     @property
@@ -147,7 +155,11 @@ class Plant6:
                              "extrapolated_fr" if fr >= .30 else "surface")
         # The captive physical Y/N surface includes C_A(nu)nu. Retain the
         # original V5 + C_A path only when the surface is outside its domain.
-        use_added_coriolis = (not surface_active and
+        # A captive surface owns steady Y/N loads only within its envelope.
+        # Outside that envelope, BEM ownership restores C_A(nu)nu unless the
+        # package explicitly assigns the total steady hull load to the
+        # maneuvering model.
+        use_added_coriolis = (not surface_active and self.steady_coriolis_owner == "bem" and
                              (self.added_mass_coriolis_enabled or self.maneuvering_surface is not None))
         terms["added_mass_coriolis"] = (-coriolis_wrench(self.added_mass, nu) if use_added_coriolis
                                          else torch.zeros_like(nu))

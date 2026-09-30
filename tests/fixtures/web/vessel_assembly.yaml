@@ -1,0 +1,195 @@
+definitions:
+- id: web-vessel
+  kind: vessel
+  payload:
+    added_mass_kg:
+    - - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    autopilot_gains:
+    - 30
+    - 15
+    buoyancy_n: 98.0665
+    center_buoyancy_frd_m:
+    - 0
+    - 0
+    - 0
+    cg_frd_m:
+    - 0
+    - 0
+    - 0
+    collision:
+      half_extents_m:
+      - 1.2
+      - 0.45
+      - 0.3
+      kind: box
+    environment_loads:
+    - 0
+    - 0
+    - 0
+    - 0
+    inertia_cg_kg_m2:
+    - - 4
+      - 0
+      - 0
+    - - 0
+      - 5
+      - 0
+    - - 0
+      - 0
+      - 6
+    linear_damping:
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    mass_kg: 10
+    max_abs_nu:
+    - 100
+    - 100
+    - 100
+    - 100
+    - 100
+    - 100
+    max_substep_s: 0.2
+    quadratic_damping:
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+  source: web-preset
+  version: '1'
+- id: port
+  kind: actuator
+  payload:
+    kind: fixed_thruster
+    mount_frd_m:
+    - -0.6
+    - -0.3
+    - 0
+    mount_q_to_frd:
+    - 1
+    - 0
+    - 0
+    - 0
+    thrust_bounds_n:
+    - -30
+    - 30
+  source: web-preset
+  version: '1'
+- id: starboard
+  kind: actuator
+  payload:
+    kind: fixed_thruster
+    mount_frd_m:
+    - -0.6
+    - 0.3
+    - 0
+    mount_q_to_frd:
+    - 1
+    - 0
+    - 0
+    - 0
+    thrust_bounds_n:
+    - -30
+    - 30
+  source: web-preset
+  version: '1'
+- id: gps
+  kind: sensor
+  payload:
+    kind: gps
+    origin_wgs84_rad_m:
+    - 0.7
+    - -1.5
+    - 0
+    rate_hz: 10
+  source: web-preset
+  version: '1'
+- id: imu
+  kind: sensor
+  payload:
+    kind: imu
+    rate_hz: 10
+  source: web-preset
+  version: '1'
+- id: sonar
+  kind: sensor
+  payload:
+    beam_count: 5
+    fov_rad: 0.5
+    kind: sonar
+    max_range_m: 30
+    min_range_m: 0
+    mount_frd_m:
+    - 0.7
+    - 0
+    - 0.1
+    mount_q_to_frd:
+    - 1
+    - 0
+    - 0
+    - 0
+    rate_hz: 10
+  source: web-preset
+  version: '1'
+schema_version: 1
+vessel:
+  actuators:
+  - port@1
+  - starboard@1
+  controller:
+    mode: high_level
+  definition: web-vessel@1
+  instance_id: agent
+  sensors:
+  - gps@1
+  - imu@1
+  - sonar@1
+  spawn:
+    ned_m:
+    - 0
+    - 0
+    - 0
+    rpy_rad:
+    - 0
+    - 0
+    - 0

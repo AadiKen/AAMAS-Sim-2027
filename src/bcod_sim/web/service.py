@@ -3,6 +3,7 @@
 from base64 import b64decode
 import json
 from pathlib import Path
+import re
 import tempfile
 from typing import Mapping
 
@@ -114,12 +115,15 @@ class SimulationService:
         return result
 
     def upload_policy(self, policy_id: str, files: Mapping[str, str], observation_hash: str, action_hash: str) -> dict:
-        if set(files) != set(REQUIRED_FILES) or not policy_id or policy_id in self.policies:
+        if (set(files) != set(REQUIRED_FILES) or not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_.-]{0,127}", policy_id)
+                or policy_id in self.policies or (self.artifact_root/"policies"/policy_id).exists()):
             raise PhysicalValidationError("Policy upload file set or identity is invalid")
         root = self.artifact_root/"policies"/policy_id; root.mkdir(parents=True, exist_ok=False)
         try:
             for name, encoded in files.items(): (root/name).write_bytes(b64decode(encoded, validate=True))
             bundle = PolicyBundle.load(root, expected_observation_hash=observation_hash, expected_action_hash=action_hash)
+            if bundle.manifest.policy_id != policy_id:
+                raise PhysicalValidationError("Policy folder identity does not match manifest")
         except Exception:
             import shutil; shutil.rmtree(root, ignore_errors=True); raise
         self.policies[policy_id] = bundle

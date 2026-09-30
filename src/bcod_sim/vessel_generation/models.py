@@ -44,6 +44,8 @@ class CanonicalVessel(Strict):
     cg_frd_m: tuple[float, float, float]
     inertia_cg_kg_m2: tuple[tuple[float, float, float], tuple[float, float, float], tuple[float, float, float]]
     added_mass_kg: tuple[tuple[float, float, float, float, float, float], ...]
+    maneuvering_interpretation: Literal["total_steady_hull_load", "residual_viscous"] = "residual_viscous"
+    steady_coriolis_owner: Literal["bem", "maneuvering_model"] = "bem"
     linear_damping: tuple[float, float, float, float, float, float]
     quadratic_damping: tuple[float, float, float, float, float, float]
     linear_damping_matrix: tuple[tuple[float, float, float, float, float, float], ...] | None = None
@@ -75,6 +77,9 @@ class CanonicalVessel(Strict):
             raise ValueError("inertia must be positive definite and satisfy the triangle inequality")
         if min(self.linear_damping) < 0 or min(self.quadratic_damping) < 0 or min(self.max_abs_nu) <= 0:
             raise ValueError("damping and operating envelope must be physically valid")
+        expected_owner = ("maneuvering_model" if self.maneuvering_interpretation == "total_steady_hull_load" else "bem")
+        if self.steady_coriolis_owner != expected_owner:
+            raise ValueError("maneuvering interpretation conflicts with steady added-mass Coriolis owner")
         if self.linear_damping_matrix is not None:
             linear=np.asarray(self.linear_damping_matrix)
             if linear.shape!=(6,6) or not np.isfinite(linear).all() or np.linalg.eigvalsh((linear+linear.T)/2).min() < -1e-9:
@@ -93,6 +98,7 @@ class CanonicalVessel(Strict):
 
     def simulator_definitions(self) -> list[dict[str, Any]]:
         payload = self.model_dump(include={"mass_kg", "cg_frd_m", "inertia_cg_kg_m2", "added_mass_kg",
+            "maneuvering_interpretation", "steady_coriolis_owner",
             "linear_damping", "quadratic_damping", "buoyancy_n", "center_buoyancy_frd_m", "max_abs_nu",
             "linear_damping_matrix", "speed_dependent_linear_damping_matrix_per_mps", "coupled_damping_terms", "hydrostatics", "crossflow", "surge_resistance",
             "min_substep_s", "max_substep_s",
@@ -100,6 +106,7 @@ class CanonicalVessel(Strict):
         if self.hydrostatics is not None:
             payload.pop("buoyancy_n",None);payload.pop("center_buoyancy_frd_m",None)
         payload.update({"geometry": self.geometry.model_dump(mode="json"),
+                        "added_mass_coriolis_enabled": self.steady_coriolis_owner == "bem",
                         "equilibrium_heave_roll_pitch": list(self.equilibrium_heave_roll_pitch),
                         "provenance": {k: v.model_dump(mode="json") for k, v in self.provenance.items()},
                         "validation_claim": self.validation_claim,"validation_state":self.validation_state})

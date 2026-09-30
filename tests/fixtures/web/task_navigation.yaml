@@ -1,0 +1,9 @@
+payload:
+  agent_id: agent
+  kind: waypoint
+  radius_m: 1
+  target_ned_m:
+  - 8
+  - 0
+  - 0
+schema_version: 1

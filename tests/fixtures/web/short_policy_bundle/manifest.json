@@ -1,0 +1,18 @@
+{
+  "policy_id": "navigation-constant",
+  "version": "1",
+  "model_format": "onnx",
+  "model_sha256": "3d11f94395c1228b65da578086644d119e1f289b9aa00f746d02b4e039c5f8a9",
+  "observation_contract_hash": "79ce813698182796044cd80cf8b27a848040016a5eaa3f85f8eb198180ff641b",
+  "action_contract_hash": "62e112a8ef3985fedaf0d1a238e28f3768efac0e60be6b0da1912ad546945b39",
+  "simulator_commit": "fixture",
+  "training_config_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+  "trainer_commit": "fixture",
+  "trainer_version": "fixture",
+  "seeds": [
+    7
+  ],
+  "preprocessing_sha256": "2bffd32a6c9ece2ce56a9e90b9f2a24f6d9d04afa9f1eb1d26a54949fca302e7",
+  "normalization_provenance": "6e1aa5866786412c96b5462c2f7c14d57817cf3d11942891e08f4b8ad28e1b31",
+  "training_provenance_sha256": "d212e70a3abe1b753c2ae4c4b8ddd7deea4e25f092a06daa2361ed5dfd9c77f1"
+}

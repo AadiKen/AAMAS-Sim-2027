@@ -1,0 +1,11 @@
+# Web config transport contract (initial slice)
+
+`POST /v1/configs/{vessel|environment|scenario|task}/{normalize|validate|migrate|diff}` accepts `{ "document": { "schema_version": 1, "payload": ... } }`; `diff` accepts `left` and `right` documents. The envelope's version describes this web transport, while the scenario payload retains core `ExperimentConfig.schema_version: 1`. Registry definitions retain their own `id@version` identity.
+
+Payload authorities: vessel is `VesselRuntime` definition payload; environment is `Environment`; scenario is the complete `ExperimentConfig` (world, vessel spawns, task and timeout); task is a supported primitive definition payload. Existing simulator validation and construction remain under `resolve` and `build_engine`. Strict unknown-field rejection prevents silent loss. `normalize` produces canonical model JSON; `validate` returns a stable SHA-256 content hash. `migrate` currently accepts only version 1 and performs validation/normalization; it does not invent legacy mappings. `diff` compares normalized payloads and reports JSON-pointer-like paths.
+
+An individual scenario payload still needs its referenced registry definitions. The complete experiment exporter carries those definitions and is headlessly runnable. Training recipes remain a separate future integration.
+
+Complete experiments can be imported and exported as JSON or YAML with `config` and `definitions` at the root. `/v1/experiments/parse` rejects duplicate keys and resolves references; `/v1/experiments/serialize` normalizes the core config. Individual `/v1/configs/{kind}/import` accepts either a bare canonical payload or the versioned wrapper; `/export` emits the wrapper. The UI keeps complete registry definitions alongside the scenario so an exported experiment is headlessly runnable.
+
+For vessel exchange, `/v1/vessel-assembly/parse|serialize` carries the core `Vessel` instance plus exactly its referenced vessel, actuator, and sensor `Definition` records in a versioned wrapper. This preserves two actuators and mounted sensors when exporting a vessel separately. The records retain their canonical payloads, identities, versions, and sources; the wrapper adds no simulator behavior.
